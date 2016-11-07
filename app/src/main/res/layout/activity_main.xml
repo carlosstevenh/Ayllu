@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
         android:id="@+id/txtName"
-        android:hint="Identificación" />
+        android:hint="@string/identificacion" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -43,10 +43,10 @@
         android:layout_below="@+id/txtName"
         android:layout_alignLeft="@+id/txtName"
         android:layout_alignStart="@+id/txtName"
-        android:hint="Contraseña" />
+        android:hint="@string/contrasena" />
 
     <Button
-        android:text="Login"
+        android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -57,4 +57,5 @@
         android:visibility="visible"
         android:layout_below="@+id/txtPsw"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

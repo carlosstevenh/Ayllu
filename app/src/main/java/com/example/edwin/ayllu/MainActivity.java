@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.edwin.ayllu.Adiminstrador.Administrador;
 import com.example.edwin.ayllu.Domain.Usuario;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             String tipo = user.getTipo_usu();
             if(tipo.equals("A")){
                 Log.i("TAG", "Bienvenido administrador!! ");
-                //menuAdministrador();
+                menuAdministrador();
             }
             else {
                 Log.i("TAG", "Bienvenido monitor!! ");
@@ -83,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+    }
+    void menuAdministrador(){
+
+        Intent i=new Intent(this, Administrador
+                .class);
+        startActivity(i);
 
     }
 }

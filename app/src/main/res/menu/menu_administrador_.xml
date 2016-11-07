@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.edwin.ayllu.Adiminstrador.Administrador_Activity">
+    <item
+        android:id="@+id/admin"
+        android:orderInCategory="100"
+        android:title="@string/administrador"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/moni"
+        android:orderInCategory="100"
+        android:title="@string/monitor"
+        app:showAsAction="never" />
+</menu>

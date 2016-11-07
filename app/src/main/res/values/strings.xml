@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Ayllu</string>
+
+    <string name="login">Login</string>
+    <string name="identificacion">Identificación</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="title_activity_administrador_">Bienvenido administrador</string>
+    <string name="administrador">Administrador</string>
+    <string name="monitor">Monitor</string>
+    <string name="addMonitor">Registrar monitor</string>
+    <string name="editMonitor">Registrar monitor</string>
+    <string name="deleteMonitor">Registrar monitor</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="newMonitor">Agregar monitor</string>
+    <string name="name">Nombre</string>
+    <string name="apellido">Apellido</string>
 </resources>
