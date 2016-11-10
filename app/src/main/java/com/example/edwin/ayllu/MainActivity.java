@@ -1,6 +1,7 @@
 package com.example.edwin.ayllu;
 
 import android.content.Intent;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,10 @@ import com.example.edwin.ayllu.Adiminstrador.Administrador;
 import com.example.edwin.ayllu.Domain.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(View v) {
 
         loginUser(et1.getText().toString(),et2.getText().toString());
+        //loginUserSin(et1.getText().toString(),et2.getText().toString());
         if (user!=null){
             String tipo = user.getTipo_usu();
             if(tipo.equals("A")){
@@ -51,11 +55,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    void loginUser(String ide, String pw){
+    void loginUserSin(String ide,String pw){
         final Retrofit retrofit = new Retrofit.Builder().baseUrl(RestClient.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
-        RestClient service = retrofit.create(RestClient.class);
+        RestClient restClient = retrofit.create(RestClient.class);
+        try {
+            Call<ArrayList<Usuario>> requestUser = restClient.getUsuario(ide,pw);
+            Log.i("TAG", "una parte");
+            Response<ArrayList<Usuario>> a = requestUser.execute();
+            Log.i("TAG", "Segunda parte");
+            u = a.body();
+            Log.i("TAG", "Tercera parte");
+            user = u.get(0);
+            Log.i("TAG", "cuarta parte");
+            Log.i("TAG", u.get(0).toString());
+        }
+        catch (Exception e){
+            //Log.i("TAG", e.getMessage());
+            Log.i("TAG", "Parte mala");
+        }
+
+
+
+    }
+
+    void loginUser(String ide, String pw){
+
+        RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Usuario>> requestUser = service.getUsuario(ide,pw);
         requestUser.enqueue(new Callback<ArrayList<Usuario>>() {
             @Override
@@ -65,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     user=u.get(0);
                     Log.i("TAG", "error " );
 
+
                 } else {
                     int statusCode = response.code();
                     Log.i("TAG", "error " + response.code());
@@ -72,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     // handle request errors yourself
                     //ResponseBody errorBody = response.errorBody();
                 }
+
 
             }
 
@@ -85,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
 
     }
     void menuAdministrador(){
