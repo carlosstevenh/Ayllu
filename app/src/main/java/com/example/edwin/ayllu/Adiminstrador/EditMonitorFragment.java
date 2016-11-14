@@ -1,14 +1,27 @@
 package com.example.edwin.ayllu.Adiminstrador;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.edwin.ayllu.AdminSQLite;
+import com.example.edwin.ayllu.Domain.Usuario;
 import com.example.edwin.ayllu.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,8 +32,15 @@ import com.example.edwin.ayllu.R;
 public class EditMonitorFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private ArrayList<Usuario> listaUsuarios;
+    private Usuario user;
+    private ListView usuarios;
+    private Activity activity;
+    private Boolean ban= false;
+    private ArrayAdapter<String> items;
 
     public EditMonitorFragment() {
+        //getUsuarios("01");
         // Required empty public constructor
     }
 
@@ -28,8 +48,76 @@ public class EditMonitorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_monitor, container, false);
+        activity = getActivity();
+
+        AdminSQLite admin = new AdminSQLite(activity,"login", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        Cursor datos = bd.rawQuery(
+                "select * from "+ admin.TABLENAME + " where "+ admin.TIP_USU + "='M'", null);
+
+        Log.i("TAG", "registro=> " + datos.getCount());
+        String[] nombres = new String[datos.getCount()];
+        listaUsuarios = new ArrayList<Usuario>(datos.getCount());
+        int i = 0;
+        String pais = "";
+        if (datos.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                user = new Usuario();
+                Log.i("TAG", "cpdigo::> " + datos.getInt(1));
+                user.setCodigo_usu(datos.getInt(1));
+                user.setIdentificacion_usu(datos.getString(2));
+                user.setNombre_usu(datos.getString(3));
+                user.setApellido_usu(datos.getString(4));
+                user.setTipo_usu(datos.getString(5));
+                user.setContrasena_usu(datos.getString(6));
+                user.setPais_usu(datos.getString(7));
+
+                listaUsuarios.add(user);
+
+                String nombre = datos.getString(0)+" "+datos.getString(1);
+                nombres[i] = nombre;
+                i++;
+                pais = datos.getString(2);
+
+            } while(datos.moveToNext());
+        }
+
+        bd.close();
+
+        UsuariosAdapter ua = new UsuariosAdapter(getActivity(),listaUsuarios);
+
+        items = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_list_item_1,
+                nombres);
+        usuarios = (ListView)view.findViewById(R.id.listUser);
+        usuarios.setFastScrollEnabled(true);
+        usuarios.setAdapter(ua);
+
+        usuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle parametro = new Bundle();
+                Usuario aux = (Usuario) usuarios.getItemAtPosition(i);
+                parametro.putInt("codigo", aux.getCodigo_usu());
+                parametro.putString("iden", aux.getIdentificacion_usu());
+                parametro.putString("nombre", aux.getNombre_usu());
+                parametro.putString("apellido", aux.getApellido_usu());
+                parametro.putString("tipo", aux.getTipo_usu());
+                parametro.putString("con", aux.getContrasena_usu());
+                parametro.putString("pais", aux.getPais_usu());
+
+                Intent intent = new Intent(getActivity(),EditMonitor.class);
+                intent.putExtras(parametro);
+                startActivity(intent);
+
+                /*Toast.makeText(getActivity(),
+                        "Iniciar screen de detalle para: \n" + usuarios.getItemAtPosition(i).toString(),
+                        Toast.LENGTH_SHORT).show();*/
+            }
+        });
         return view;
     }
 
@@ -38,6 +126,19 @@ public class EditMonitorFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onStop() {
+        Log.i("TAG", "Esta en stop> " );
+        super.onStop();
+
+    }
+
+    @Override
+    public void onPause() {
+        Log.i("TAG", "Esta en pause> " );
+        super.onPause();
     }
 
     @Override
@@ -71,4 +172,5 @@ public class EditMonitorFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

@@ -19,7 +19,7 @@ public class Usuario {
     private String tipo_usu;
     @SerializedName("contrasena_usu")
     private String contrasena_usu;
-    @SerializedName("pais_usu")
+    @SerializedName("codigo_pais")
     private String pais_usu;
 
     public int getCodigo_usu() {
@@ -37,7 +37,6 @@ public class Usuario {
     public void setIdentificacion_usu(String identificacion_usu) {
         this.identificacion_usu = identificacion_usu;
     }
-
     public String getNombre_usu() {
         return nombre_usu;
     }

@@ -17,6 +17,7 @@ import retrofit2.http.Path;
 public interface RestClient {
 
     String BASE_URL="http://192.168.56.1/webservice/";
+    //String BASE_URL="http://192.168.1.5/webservice/";
 
     @GET("login/{ide_usu}/{pw_usu}")
     Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,
@@ -29,6 +30,15 @@ public interface RestClient {
                                        @Path("tipo") String tipo,
                                        @Path("con") String con,
                                        @Path("pais") String pais);
+
+    @GET("edit/{ide}/{nom}/{ape}/{con}/{codigo}")
+    Call<ArrayList<String>> editUsuario(@Path("ide") String ide,
+                                       @Path("nom") String nom,
+                                       @Path("ape") String ape,
+                                       @Path("con") String con,
+                                       @Path("codigo") String pais);
+    @GET("getMonitores/{pais}")
+    Call<ArrayList<Usuario>> getUsuarios(@Path("pais") String pais);
 
     public static final Retrofit retrofit = new Retrofit.Builder().baseUrl(RestClient.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build();

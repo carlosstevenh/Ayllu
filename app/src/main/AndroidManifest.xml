@@ -21,6 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Adiminstrador.Administrador" />
+        <activity android:name=".Adiminstrador.UsuariosAdapter" />
+        <activity android:name=".Adiminstrador.EditMonitor"></activity>
     </application>
 
 </manifest>

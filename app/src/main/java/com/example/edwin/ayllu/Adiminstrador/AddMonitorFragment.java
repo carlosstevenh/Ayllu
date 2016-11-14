@@ -1,7 +1,10 @@
 package com.example.edwin.ayllu.Adiminstrador;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.Domain.Usuario;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.RestClient;
@@ -61,7 +65,22 @@ public class AddMonitorFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 activity = getActivity();
-                //Toast prueba = Toast.makeText(activity, "Registro adicionado", Toast.LENGTH_SHORT);
+                AdminSQLite al = new AdminSQLite(activity, "login", null, 1);
+                SQLiteDatabase bd1 = al.getWritableDatabase();
+                ContentValues monitores = new ContentValues();
+
+                monitores.put(al.COD_USU, 100);
+                monitores.put(al.IDE_USU, etI.getText().toString());
+                monitores.put(al.NOM_USU, etN.getText().toString());
+                monitores.put(al.APE_USU, etA.getText().toString());
+                monitores.put(al.TIP_USU, "M");
+                monitores.put(al.CON_USU, etC.getText().toString());
+                monitores.put(al.PAI_USU, "01");
+                bd1.insert(al.TABLENAME, null, monitores);
+
+                bd1.close();
+
+                    //Toast prueba = Toast.makeText(activity, "Registro adicionado", Toast.LENGTH_SHORT);
                 //prueba.show();
                 addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),"01");
                 if(res != null){
@@ -126,6 +145,7 @@ public class AddMonitorFragment extends Fragment {
             Toast login = Toast.makeText(getContext(),
                     "Registro adicionado", Toast.LENGTH_SHORT);
             login.show();
+            menuAdministrador(getActivity());
         }
         else {
             Toast login = Toast.makeText(getContext(),
@@ -159,5 +179,12 @@ public class AddMonitorFragment extends Fragment {
 
             }
         });
+    }
+    void menuAdministrador(Activity activity){
+
+        Intent i=new Intent(activity, Administrador
+                .class);
+        startActivity(i);
+
     }
 }
