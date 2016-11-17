@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<Usuario> lista;//usuarios pertenecientes a el pais del administrador
     public static Usuario user;
     private EditText et1,et2;
-    Activity activity;
     private static final String TAG = "ERRORES";
 
     @Override
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         if (user!=null){
             AdminSQLite admin1 = new AdminSQLite(this, "login", null, 1);
             getUsuarios(user.getPais_usu(),admin1);
-
             String tipo = user.getTipo_usu();
             if(tipo.equals("A")){
                 Log.i("TAG", "Bienvenido administrador!! ");
@@ -66,11 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
                 registro.put(admin.COD_USU, user.getCodigo_usu());
                 registro.put(admin.IDE_USU, user.getIdentificacion_usu());
-                registro.put(admin.NOM_USU,user.getNombre_usu());
-                registro.put(admin.APE_USU,user.getApellido_usu());
-                registro.put(admin.TIP_USU,user.getTipo_usu());
+                registro.put(admin.NOM_USU, user.getNombre_usu());
+                registro.put(admin.APE_USU, user.getApellido_usu());
+                registro.put(admin.TIP_USU, user.getTipo_usu());
                 registro.put(admin.CON_USU, user.getContrasena_usu());
-                registro.put(admin.PAI_USU,user.getPais_usu());
+                registro.put(admin.CLA_API, user.getClave_api());
+                registro.put(admin.PAI_USU, user.getPais_usu());
 
                 bd.insert(admin.TABLENAME,null,registro);
 
@@ -97,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     void getUsuarios(String pais, final AdminSQLite al){
+        Log.i("TAG", "AA:> " +pais);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Usuario>> requestUsers = service.getUsuarios(pais);
         requestUsers.enqueue(new Callback<ArrayList<Usuario>>() {
@@ -108,17 +108,17 @@ public class MainActivity extends AppCompatActivity {
                     SQLiteDatabase bd1 = al.getWritableDatabase();
                     ContentValues monitores = new ContentValues();
                     for(int i = 0; i < lista.size(); i++){
-
+                        Log.i("TAG", "entra ciclo: "+ lista.size() );
                         monitores.put(al.COD_USU, lista.get(i).getCodigo_usu());
                         monitores.put(al.IDE_USU, lista.get(i).getIdentificacion_usu());
                         monitores.put(al.NOM_USU, lista.get(i).getNombre_usu());
                         monitores.put(al.APE_USU, lista.get(i).getApellido_usu());
                         monitores.put(al.TIP_USU, lista.get(i).getTipo_usu());
                         monitores.put(al.CON_USU, lista.get(i).getContrasena_usu());
+                        monitores.put(al.CLA_API,lista.get(i).getClave_api());
                         monitores.put(al.PAI_USU, lista.get(i).getPais_usu());
                         bd1.insert(al.TABLENAME, null, monitores);
-
-
+                        bd1.close();
 
                     }
                     Log.i("TAG", "Numero de monitores: "+ lista.size() );

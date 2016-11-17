@@ -21,6 +21,7 @@ public class AdminSQLite extends SQLiteOpenHelper {
     public static final String APE_USU = "apellido";
     public static final String TIP_USU = "tipo";
     public static final String CON_USU = "contrasena";
+    public static final String CLA_API = "clave";
     public static final String PAI_USU = "pais";
 
 
@@ -32,6 +33,7 @@ public class AdminSQLite extends SQLiteOpenHelper {
             + APE_USU + " text not null,"
             + TIP_USU + " text not null,"
             + CON_USU + " text not null,"
+            + CLA_API + " text not null,"
             + PAI_USU + " text not null);";
 
     private static final  String SQL_CREATE= "create table " + TABLE_NAME + " ("

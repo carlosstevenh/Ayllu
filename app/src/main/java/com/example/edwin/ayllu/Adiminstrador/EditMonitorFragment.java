@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.Domain.Usuario;
@@ -72,7 +71,8 @@ public class EditMonitorFragment extends Fragment {
                 user.setApellido_usu(datos.getString(4));
                 user.setTipo_usu(datos.getString(5));
                 user.setContrasena_usu(datos.getString(6));
-                user.setPais_usu(datos.getString(7));
+                user.setClave_api(datos.getString(7));
+                user.setPais_usu(datos.getString(8));
 
                 listaUsuarios.add(user);
 
@@ -107,6 +107,7 @@ public class EditMonitorFragment extends Fragment {
                 parametro.putString("apellido", aux.getApellido_usu());
                 parametro.putString("tipo", aux.getTipo_usu());
                 parametro.putString("con", aux.getContrasena_usu());
+                parametro.putString("cla" , aux.getClave_api());
                 parametro.putString("pais", aux.getPais_usu());
 
                 Intent intent = new Intent(getActivity(),EditMonitor.class);

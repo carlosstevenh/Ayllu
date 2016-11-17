@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu.Adiminstrador;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,7 +14,10 @@ import android.widget.FrameLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import com.example.edwin.ayllu.AdminSQLite;
+import com.example.edwin.ayllu.MainActivity;
 import com.example.edwin.ayllu.R;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +48,8 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AddMonitorFragment(), "Registrar monitor");
-        adapter.addFragment(new EditMonitorFragment(), "Editar Monitor");
-        adapter.addFragment(new DeleteMonitorFragment(), "Eliminar Monitor");
+        adapter.addFragment(new EditMonitorFragment(), "Editar/eliminar Monitor");
+        adapter.addFragment(new DeleteMonitorFragment(), "Editar información");
         viewPager.setAdapter(adapter);
     }
 
@@ -63,13 +67,19 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
             return true;
         }*/
         switch (id) {
-            case R.id.admin:
+            case R.id.moni:
                 //Intent i	=	new	Intent(this,Main2Activity.class);
                 //startActivity(i);
                 //fragmentAdministrador();
                 return true;
-            case R.id.moni:
-                //fragmentMonitor();
+            case R.id.salir:
+                Intent i	=	new	Intent(this, MainActivity.class);
+                startActivity(i);
+                AdminSQLite admin = new AdminSQLite(getApplicationContext(),"login", null, 1);
+                SQLiteDatabase bd = admin.getWritableDatabase();
+                bd.delete(admin.TABLENAME,null,null);
+                //bd.execSQL("TRUNCATE TABLE "+admin.TABLENAME, null);
+                bd.close();
                 return true;
         }
         return super.onOptionsItemSelected(item);

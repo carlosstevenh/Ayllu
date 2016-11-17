@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class AddMonitorFragment extends Fragment {
     private Button bt;
     private ArrayList<String> res;
     private Activity activity;
+    private String pais;
     private static final String TAG = "ERRORES";
     private OnFragmentInteractionListener mListener;
 
@@ -64,37 +66,87 @@ public class AddMonitorFragment extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity = getActivity();
-                AdminSQLite al = new AdminSQLite(activity, "login", null, 1);
-                SQLiteDatabase bd1 = al.getWritableDatabase();
-                ContentValues monitores = new ContentValues();
 
-                monitores.put(al.COD_USU, 100);
-                monitores.put(al.IDE_USU, etI.getText().toString());
-                monitores.put(al.NOM_USU, etN.getText().toString());
-                monitores.put(al.APE_USU, etA.getText().toString());
-                monitores.put(al.TIP_USU, "M");
-                monitores.put(al.CON_USU, etC.getText().toString());
-                monitores.put(al.PAI_USU, "01");
-                bd1.insert(al.TABLENAME, null, monitores);
+                AdminSQLite admin = new AdminSQLite(getContext(),"login", null, 1);
+                SQLiteDatabase bd = admin.getReadableDatabase();
+                Cursor datos = bd.rawQuery(
+                        "select "+admin.PAI_USU+ " from "+ admin.TABLENAME + " where "+ admin.TIP_USU + "='A'", null);
 
-                bd1.close();
+                Log.i("TAG", "error " + datos.getCount());
+                if (datos.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        pais = datos.getString(0);
 
-                    //Toast prueba = Toast.makeText(activity, "Registro adicionado", Toast.LENGTH_SHORT);
-                //prueba.show();
-                addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),"01");
-                if(res != null){
-                    if(res.get(0).equals("1")){
-                        Toast login = Toast.makeText(activity,
-                                "Registro adicionado", Toast.LENGTH_SHORT);
-                        login.show();
-                    }
-                    else {
-                        Toast login = Toast.makeText(activity,
-                                "NO se pudo registrar usuario", Toast.LENGTH_SHORT);
-                        login.show();
-                    }
+                    } while(datos.moveToNext());
                 }
+
+                //String pais = "01";
+                bd.close();
+
+                RestClient service = RestClient.retrofit.create(RestClient.class);
+                Call<ArrayList<String>> requestAdd = service.addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),pais);
+                requestAdd.enqueue(new Callback<ArrayList<String>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                        if (response.isSuccessful()) {
+                            res = response.body();
+                            Toast login = Toast.makeText(getContext(),
+                                    "Registro adicionado", Toast.LENGTH_SHORT);
+                            login.show();
+
+                            RestClient service = RestClient.retrofit.create(RestClient.class);
+                            Call<ArrayList<Usuario>> requestAdd = service.update(etI.getText().toString());
+                            requestAdd.enqueue(new Callback<ArrayList<Usuario>>() {
+                                @Override
+                                public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
+                                    ArrayList<Usuario> up = response.body();
+                                    activity = getActivity();
+                                    AdminSQLite al = new AdminSQLite(activity, "login", null, 1);
+                                    SQLiteDatabase bd1 = al.getWritableDatabase();
+                                    ContentValues monitores = new ContentValues();
+
+                                    monitores.put(al.COD_USU, up.get(0).getCodigo_usu());
+                                    monitores.put(al.IDE_USU, etI.getText().toString());
+                                    monitores.put(al.NOM_USU, etN.getText().toString());
+                                    monitores.put(al.APE_USU, etA.getText().toString());
+                                    monitores.put(al.TIP_USU, "M");
+                                    monitores.put(al.CON_USU, etC.getText().toString());
+                                    monitores.put(al.CLA_API, up.get(0).getClave_api());
+                                    monitores.put(al.PAI_USU, pais);
+                                    bd1.insert(al.TABLENAME, null, monitores);
+
+                                    bd1.close();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
+
+                                }
+                            });
+                            Log.i("TAG", "error "+ res.get(0) );
+
+                        } else {
+                            Toast login = Toast.makeText(getContext(),
+                                    "NO se pudo registrar usuario", Toast.LENGTH_SHORT);
+                            login.show();
+                            int statusCode = response.code();
+                            Log.i("TAG", "error " + response.code());
+
+                            // handle request errors yourself
+                            //ResponseBody errorBody = response.errorBody();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+
+                    }
+                });
+
+                //Toast prueba = Toast.makeText(activity, "Registro adicionado", Toast.LENGTH_SHORT);
+                //prueba.show();
 
             }
         });
@@ -155,30 +207,7 @@ public class AddMonitorFragment extends Fragment {
     }
     private void addUsuario(String ide, String nom, String ape, String tipo, String con, String pais){
 
-        RestClient service = RestClient.retrofit.create(RestClient.class);
-        Call<ArrayList<String>> requestAdd = service.addUsuario(ide,nom,ape,tipo,con,pais);
-        requestAdd.enqueue(new Callback<ArrayList<String>>() {
-            @Override
-            public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                if (response.isSuccessful()) {
-                    res = response.body();
 
-                    Log.i("TAG", "error "+ res.get(0) );
-
-                } else {
-                    int statusCode = response.code();
-                    Log.i("TAG", "error " + response.code());
-
-                    // handle request errors yourself
-                    //ResponseBody errorBody = response.errorBody();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-
-            }
-        });
     }
     void menuAdministrador(Activity activity){
 

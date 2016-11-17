@@ -24,7 +24,8 @@ public class EditMonitor extends AppCompatActivity {
     private TextView id, nom, ape, con;
     int codigo ;
     private String pais;
-    private String tipo;
+    private String tipo,ide;
+    private String clave;
     private ArrayList<String> res;
     private Activity activity;
     @Override
@@ -36,7 +37,8 @@ public class EditMonitor extends AppCompatActivity {
         codigo = bundle.getInt("codigo");
         pais = bundle.getString("pais");
         tipo = bundle.getString("tipo");
-
+        clave = bundle.getString("cla");
+        ide = bundle.getString("iden");
         id = (TextView)findViewById(R.id.txtide);
         nom = (TextView)findViewById(R.id.txtname);
         ape = (TextView)findViewById(R.id.txtApe);
@@ -48,35 +50,76 @@ public class EditMonitor extends AppCompatActivity {
         con.setText(bundle.getString("con"));
 
     }
+    public void eliminar(View view){
+        RestClient service = RestClient.retrofit.create(RestClient.class);
+        Call<ArrayList<String>> requestDelete = service.deleteUsuario(ide);
+        requestDelete.enqueue(new Callback<ArrayList<String>>() {
+            @Override
+            public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                res = response.body();
+                String aux = res.get(0);
+                if(aux.equals("1")){
+                    AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                    SQLiteDatabase bd1 = admin1.getWritableDatabase();
+                    bd1.delete(admin1.TABLENAME, admin1.IDE_USU +"='"+ ide +"'", null);
+                    bd1.close();
+                    Intent intent = new Intent(getApplicationContext(),Administrador.class);
+                    startActivity(intent);
+                    Toast login = Toast.makeText(getApplicationContext(),
+                            "Eliminación exitosa", Toast.LENGTH_SHORT);
+                }
+                else{
+                    Toast login = Toast.makeText(getApplicationContext(),
+                            "No se pudo eliminar", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                Toast login = Toast.makeText(getApplicationContext(),
+                        "No se pudo eliminar", Toast.LENGTH_SHORT);
+            }
+        });
+    }
     public void editar(View view){
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<String>> requestAdd = service.editUsuario(id.getText().toString(),nom.getText().toString()
-        ,ape.getText().toString(),con.getText().toString(),""+codigo);
+        ,ape.getText().toString(),con.getText().toString(),""+clave);
         requestAdd.enqueue(new Callback<ArrayList<String>>() {
             @Override
             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
                 if (response.isSuccessful()) {
                     res = response.body();
-                    AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-                    SQLiteDatabase bd = admin.getWritableDatabase();
-                    String update = "UPDATE " +admin.TABLENAME+" SET "+ admin.IDE_USU + "='" +id.getText().toString() +"', "
-                            + admin.NOM_USU+ "='"+nom.getText().toString()+ "', "
-                            +admin.APE_USU +"='" +ape.getText().toString() +"', "
-                            +admin.CON_USU + "='" + con.getText().toString() +"' WHERE "
-                            + admin.CON_USU + "='"+codigo+"'";
-                    bd.execSQL(update);
-                    bd.close();
-                    Toast login = Toast.makeText(getApplicationContext(),
-                            "Registro adicionado", Toast.LENGTH_SHORT);
-                    login.show();
-                    Intent intent = new Intent(getApplicationContext(),Administrador.class);
-                    startActivity(intent);
+                    String aux = res.get(0);
+                    if(aux.equals("1")){
+                        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                        SQLiteDatabase bd = admin.getWritableDatabase();
+                        String update = "UPDATE " +admin.TABLENAME+" SET "+ admin.IDE_USU + "='" +id.getText().toString() +"', "
+                                + admin.NOM_USU+ "='"+nom.getText().toString()+ "', "
+                                + admin.APE_USU +"='" +ape.getText().toString() +"', "
+                                + admin.CON_USU + "='" + con.getText().toString() +"' WHERE "
+                                + admin.CLA_API + "='"+clave+"'";
+                        bd.execSQL(update);
+                        bd.close();
+                        Toast login = Toast.makeText(getApplicationContext(),
+                                "Registro adicionado", Toast.LENGTH_SHORT);
+                        login.show();
+                        Intent intent = new Intent(getApplicationContext(),Administrador.class);
+                        startActivity(intent);
 
-                    Log.i("TAG", "error "+ res.get(0) );
+                        Log.i("TAG", "error "+ res.get(0) );
+                    }
+                    else{
+                        Toast login = Toast.makeText(getApplicationContext(),
+                                "Error al registrar", Toast.LENGTH_SHORT);
+                    }
+
 
                 } else {
                     int statusCode = response.code();
                     Log.i("TAG", "error " + response.code());
+                    Toast login = Toast.makeText(getApplicationContext(),
+                            "Error al registrar", Toast.LENGTH_SHORT);
 
                     // handle request errors yourself
                     //ResponseBody errorBody = response.errorBody();
@@ -85,7 +128,8 @@ public class EditMonitor extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-
+                Toast login = Toast.makeText(getApplicationContext(),
+                        "Error al registrar", Toast.LENGTH_SHORT);
             }
         });
     }

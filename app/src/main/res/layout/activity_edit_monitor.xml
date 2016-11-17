@@ -10,17 +10,6 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_marginTop="25dp"
-        android:id="@+id/txtide"
-        android:hint="@string/identificacion"
-        android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:layout_marginTop="14dp"
         android:id="@+id/txtname"
         android:hint="@string/name"
@@ -73,4 +62,74 @@
         android:layout_alignLeft="@+id/txtApe"
         android:layout_alignStart="@+id/txtApe"
         android:layout_marginTop="16dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="25dp"
+        android:id="@+id/txtide"
+        android:hint="@string/identificacion"
+        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/btnReg"
+        android:layout_alignStart="@+id/btnReg" />
+
+    <TextView
+        android:text="@string/identificacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtide"
+        android:layout_toLeftOf="@+id/txtide"
+        android:layout_toStartOf="@+id/txtide"
+        android:layout_marginRight="42dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginTop="11dp"
+        android:id="@+id/textView5" />
+
+    <TextView
+        android:text="@string/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtApe"
+        android:layout_alignRight="@+id/textView5"
+        android:layout_alignEnd="@+id/textView5"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="11dp"
+        android:id="@+id/textView7"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
+
+    <TextView
+        android:text="@string/contrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtCon"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginTop="12dp"
+        android:id="@+id/textView9" />
+
+    <Button
+        android:text="@string/drop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnReg"
+        android:layout_toRightOf="@+id/btnReg"
+        android:layout_toEndOf="@+id/btnReg"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:id="@+id/button"
+        android:onClick="eliminar" />
+
+    <TextView
+        android:text="@string/apellido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:layout_alignBaseline="@+id/txtApe"
+        android:layout_alignBottom="@+id/txtApe"
+        android:layout_alignLeft="@+id/textView7"
+        android:layout_alignStart="@+id/textView7" />
 </RelativeLayout>

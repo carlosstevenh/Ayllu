@@ -6,10 +6,11 @@
     <string name="contrasena">Contraseña</string>
     <string name="title_activity_administrador_">Bienvenido administrador</string>
     <string name="administrador">Administrador</string>
-    <string name="monitor">Monitor</string>
+    <string name="monitor">Monitorear</string>
     <string name="addMonitor">Registrar monitor</string>
     <string name="editMonitor">Editar monitor</string>
     <string name="deleteMonitor">Eliminar monitor</string>
+    <string name="salir">Salir</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -18,4 +19,5 @@
     <string name="name">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="edit">Editar</string>
+    <string name="drop">Eliminar</string>
 </resources>

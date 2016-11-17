@@ -19,7 +19,9 @@ public class Usuario {
     private String tipo_usu;
     @SerializedName("contrasena_usu")
     private String contrasena_usu;
-    @SerializedName("codigo_pais")
+    @SerializedName("claveapi")
+    private String clave_api;
+    @SerializedName("pais_usu")
     private String pais_usu;
 
     public int getCodigo_usu() {
@@ -65,6 +67,14 @@ public class Usuario {
         return contrasena_usu;
     }
 
+    public String getClave_api() {
+        return clave_api;
+    }
+
+    public void setClave_api(String clave_api) {
+        this.clave_api = clave_api;
+    }
+
     public void setContrasena_usu(String contrasena_usu) {
         this.contrasena_usu = contrasena_usu;
     }
@@ -86,6 +96,7 @@ public class Usuario {
                 ", apellido_usu='" + apellido_usu + '\'' +
                 ", tipo_usu='" + tipo_usu + '\'' +
                 ", contrasena_usu='" + contrasena_usu + '\'' +
+                ", clave_api='" + clave_api + '\'' +
                 ", pais_usu='" + pais_usu + '\'' +
                 '}';
     }
