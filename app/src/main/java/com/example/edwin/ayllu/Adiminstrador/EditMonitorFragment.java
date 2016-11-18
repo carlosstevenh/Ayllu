@@ -7,7 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,8 @@ public class EditMonitorFragment extends Fragment {
     private Activity activity;
     private Boolean ban= false;
     private ArrayAdapter<String> items;
+    private SwipeRefreshLayout swipeContainer;
+    private View view;
 
     public EditMonitorFragment() {
         //getUsuarios("01");
@@ -47,9 +51,65 @@ public class EditMonitorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_monitor, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_monitor, container, false);
         activity = getActivity();
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.srlContainer);
 
+
+
+        UsuariosAdapter ua = cargarLista();
+
+        /*items = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_list_item_1,
+                nombres);*/
+        usuarios = (ListView)view.findViewById(R.id.listUser);
+        usuarios.setFastScrollEnabled(true);
+        usuarios.setAdapter(ua);
+
+        usuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle parametro = new Bundle();
+                Usuario aux = (Usuario) usuarios.getItemAtPosition(i);
+                parametro.putInt("codigo", aux.getCodigo_usu());
+                parametro.putString("iden", aux.getIdentificacion_usu());
+                parametro.putString("nombre", aux.getNombre_usu());
+                parametro.putString("apellido", aux.getApellido_usu());
+                parametro.putString("tipo", aux.getTipo_usu());
+                parametro.putString("con", aux.getContrasena_usu());
+                parametro.putString("cla" , aux.getClave_api());
+                parametro.putString("pais", aux.getPais_usu());
+
+                Intent intent = new Intent(getActivity(),EditMonitor.class);
+                intent.putExtras(parametro);
+                startActivity(intent);
+
+                /*Toast.makeText(getActivity(),
+                        "Iniciar screen de detalle para: \n" + usuarios.getItemAtPosition(i).toString(),
+                        Toast.LENGTH_SHORT).show();*/
+            }
+        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UsuariosAdapter ua = cargarLista();
+                        usuarios = (ListView)view.findViewById(R.id.listUser);
+                        usuarios.setFastScrollEnabled(true);
+                        usuarios.setAdapter(ua);
+                        swipeContainer.setRefreshing(false);
+                    }
+                }, 3000);
+
+            }
+        });
+        return view;
+    }
+    public UsuariosAdapter cargarLista(){
         AdminSQLite admin = new AdminSQLite(activity,"login", null, 1);
         SQLiteDatabase bd = admin.getWritableDatabase();
         Cursor datos = bd.rawQuery(
@@ -85,43 +145,9 @@ public class EditMonitorFragment extends Fragment {
         }
 
         bd.close();
-
         UsuariosAdapter ua = new UsuariosAdapter(getActivity(),listaUsuarios);
-
-        items = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_list_item_1,
-                nombres);
-        usuarios = (ListView)view.findViewById(R.id.listUser);
-        usuarios.setFastScrollEnabled(true);
-        usuarios.setAdapter(ua);
-
-        usuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle parametro = new Bundle();
-                Usuario aux = (Usuario) usuarios.getItemAtPosition(i);
-                parametro.putInt("codigo", aux.getCodigo_usu());
-                parametro.putString("iden", aux.getIdentificacion_usu());
-                parametro.putString("nombre", aux.getNombre_usu());
-                parametro.putString("apellido", aux.getApellido_usu());
-                parametro.putString("tipo", aux.getTipo_usu());
-                parametro.putString("con", aux.getContrasena_usu());
-                parametro.putString("cla" , aux.getClave_api());
-                parametro.putString("pais", aux.getPais_usu());
-
-                Intent intent = new Intent(getActivity(),EditMonitor.class);
-                intent.putExtras(parametro);
-                startActivity(intent);
-
-                /*Toast.makeText(getActivity(),
-                        "Iniciar screen de detalle para: \n" + usuarios.getItemAtPosition(i).toString(),
-                        Toast.LENGTH_SHORT).show();*/
-            }
-        });
-        return view;
+        return ua;
     }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

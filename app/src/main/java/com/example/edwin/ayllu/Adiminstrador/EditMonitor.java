@@ -39,6 +39,7 @@ public class EditMonitor extends AppCompatActivity {
         tipo = bundle.getString("tipo");
         clave = bundle.getString("cla");
         ide = bundle.getString("iden");
+
         id = (TextView)findViewById(R.id.txtide);
         nom = (TextView)findViewById(R.id.txtname);
         ape = (TextView)findViewById(R.id.txtApe);
