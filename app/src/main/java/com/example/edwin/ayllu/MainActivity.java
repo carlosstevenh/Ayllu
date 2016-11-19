@@ -284,7 +284,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (opci){
                                     case 1:
-                                        startActivity(new Intent(MainActivity.this, FormActivity.class));
+                                        Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                                        intent.putExtra("AREA",""+opciones[3]);
+                                        startActivity(intent);
                                         finish();
                                         break;
                                     case 2:

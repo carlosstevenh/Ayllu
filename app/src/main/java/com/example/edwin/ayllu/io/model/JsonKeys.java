@@ -20,4 +20,11 @@ public class JsonKeys {
     public static final String TIPO_AREA = "tipo_area";
     public static final String PROPIEDAD_NOMINADA = "propiedad_nominada";
     public static final String CODIGO_SECCION_AREA = "seccion";
+
+    public static final String CODIGO_FACTOR = "codigo_factor";
+    public static final String NOMBRE_FACTOR = "nombre_factor";
+
+    public static final String CODIGO_FACTOR_VARIABLE = "factor";
+    public static final String CODIGO_VARIABLE = "codigo_variable";
+    public static final String NOMBRE_VARIABLE = "nombre_variable";
 }

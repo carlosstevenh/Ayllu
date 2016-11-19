@@ -22,4 +22,89 @@
         android:gravity="center"
         android:textColor="#000000"
         android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_below="@+id/tv_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="157dp"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="67dp"
+        android:id="@+id/et_longitud" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_below="@+id/et_longitud"
+        android:layout_alignRight="@+id/et_longitud"
+        android:layout_alignEnd="@+id/et_longitud"
+        android:layout_marginTop="57dp"
+        android:id="@+id/et_latitud"
+        android:layout_alignLeft="@+id/et_longitud"
+        android:layout_alignStart="@+id/et_longitud" />
+
+    <GridLayout
+        android:id="@+id/gl_menu"
+        android:columnCount="2"
+        android:rowCount="8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_below="@+id/et_latitud"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="98dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_tramos"
+            android:text="FACTORES"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_subtramos"
+            android:text="VARIABLES"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/btn_factores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tramo"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/btn_variables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_subtramos"
+            android:layout_gravity="center"/>
+    </GridLayout>
+
+    <TextView
+        android:text="LONGITUD: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/et_latitud"
+        android:layout_toLeftOf="@+id/gl_menu"
+        android:layout_toStartOf="@+id/gl_menu"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:text="LATITUD:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_alignBaseline="@+id/et_latitud"
+        android:layout_alignBottom="@+id/et_latitud"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 </RelativeLayout>
