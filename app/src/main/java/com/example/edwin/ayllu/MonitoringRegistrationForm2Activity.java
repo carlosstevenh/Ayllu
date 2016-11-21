@@ -5,23 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.edwin.ayllu.domain.Area;
 import com.example.edwin.ayllu.domain.Factor;
-import com.example.edwin.ayllu.domain.Seccion;
-import com.example.edwin.ayllu.domain.Subtramo;
 import com.example.edwin.ayllu.domain.Task;
-import com.example.edwin.ayllu.domain.Tramo;
 import com.example.edwin.ayllu.domain.Variable;
 import com.example.edwin.ayllu.io.ApiAylluService;
 import com.example.edwin.ayllu.io.ApiConstants;
@@ -37,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FormActivity extends AppCompatActivity implements View.OnClickListener {
+public class MonitoringRegistrationForm2Activity extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<Factor> factores = new ArrayList<>();
     ArrayList<Variable> variables = new ArrayList<>();
@@ -161,7 +153,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         for (int i=0; i<factores.size(); i++) items_factores[i] = factores.get(i).getNombre_factor();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form);
+        setContentView(R.layout.activity_monitoring_registration_form2);
 
         Intent intent = getIntent();
         codArea = intent.getStringExtra("AREA");
@@ -248,7 +240,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 Toast.makeText(
-                        FormActivity.this,
+                        MonitoringRegistrationForm2Activity.this,
                         "Seleccionaste: " + items[which],
                         Toast.LENGTH_SHORT)
                         .show();
@@ -306,7 +298,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                                             }
                                         });
 
-                                        startActivity(new Intent(FormActivity.this, WelcomeActivity.class));
+                                        startActivity(new Intent(MonitoringRegistrationForm2Activity.this, MonitorMenuActivity.class));
                                         finish();
                                         break;
                                     case 2:

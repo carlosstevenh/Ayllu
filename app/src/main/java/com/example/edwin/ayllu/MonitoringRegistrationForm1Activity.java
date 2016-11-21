@@ -4,7 +4,6 @@ package com.example.edwin.ayllu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import com.example.edwin.ayllu.domain.Tramo;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MonitoringRegistrationForm1Activity extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<Tramo> tramos = new ArrayList<>();
     ArrayList<Subtramo> subtramos = new ArrayList<>();
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i=0; i<tramos.size(); i++) items_tramos[i] = tramos.get(i).getDescripcion_t();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_monitoring_registration_form1);
 
         imgBtn_tramos = (ImageButton) findViewById(R.id.btn_tramos);
         imgBtn_subtramos = (ImageButton) findViewById(R.id.btn_subtramos);
@@ -263,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
 
                         Toast.makeText(
-                                MainActivity.this,
+                                MonitoringRegistrationForm1Activity.this,
                                 "Seleccionaste: " + items[which],
                                 Toast.LENGTH_SHORT)
                                 .show();
@@ -284,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (opci){
                                     case 1:
-                                        Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                                        Intent intent = new Intent(MonitoringRegistrationForm1Activity.this, MonitoringRegistrationForm2Activity.class);
                                         intent.putExtra("AREA",""+opciones[3]);
                                         startActivity(intent);
                                         finish();
