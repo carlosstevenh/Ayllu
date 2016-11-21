@@ -80,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 Log.i("TAG", "Bienvenido monitor!! ");
-                //menuMonitor();
+                Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
+                startActivity(intent);
+                finish();
             }
         }
 

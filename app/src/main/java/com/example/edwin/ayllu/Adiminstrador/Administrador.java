@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 
 import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.MainActivity;
+import com.example.edwin.ayllu.MonitorMenuActivity;
 import com.example.edwin.ayllu.R;
 import android.content.Intent;
 
@@ -68,9 +69,9 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
         }*/
         switch (id) {
             case R.id.moni:
-                //Intent i	=	new	Intent(this,Main2Activity.class);
-                //startActivity(i);
-                //fragmentAdministrador();
+                Intent intent = new Intent(Administrador.this, MonitorMenuActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
             case R.id.salir:
                 Intent i	=	new	Intent(this, MainActivity.class);
