@@ -51,7 +51,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
                 R.layout.slide_register_monitoring,
                 R.layout.slide_update_monitoring,
                 R.layout.slide_statistical_maps,
-                R.layout.slide_visualize_qhapaq_ñan};
+                R.layout.slide_visualize_qhapaq_nan};
 
         // adding bottom dots
         addBottomDots(0);
