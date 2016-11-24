@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
-import com.example.edwin.ayllu.Domain.Usuario;
+import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.RestClient;
 
@@ -27,10 +27,6 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.example.edwin.ayllu.MainActivity.user;
 
 /**
  * A simple {@link Fragment} subclass.

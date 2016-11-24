@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
     CharSequence[] items_factores, items_variables;
     ArrayList<String> list_factores, list_variables;
 
-    ImageButton imgBtn_factores, imgBtn_variables;
+    Button btn_factores, btn_variables;
     EditText et_longitud, et_latitud;
     FloatingActionButton fab_reg;
 
@@ -158,19 +159,19 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
         Intent intent = getIntent();
         codArea = intent.getStringExtra("AREA");
 
-        imgBtn_factores = (ImageButton) findViewById(R.id.btn_factores);
-        imgBtn_variables = (ImageButton) findViewById(R.id.btn_variables);
+        btn_factores = (Button) findViewById(R.id.btn_factores);
+        btn_variables = (Button) findViewById(R.id.btn_variables);
         et_longitud = (EditText) findViewById(R.id.et_longitud);
         et_latitud = (EditText) findViewById(R.id.et_latitud);
 
         fab_reg = (FloatingActionButton) findViewById(R.id.fab_reg);
 
-        imgBtn_factores.setOnClickListener(this);
-        imgBtn_variables.setOnClickListener(this);
+        btn_factores.setOnClickListener(this);
+        btn_variables.setOnClickListener(this);
 
         fab_reg.setOnClickListener(this);
 
-        imgBtn_variables.setEnabled(false);
+        btn_variables.setEnabled(false);
     }
 
     @Override
@@ -225,7 +226,7 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                         for (int i = 0; i < list_variables.size(); i++)
                             items_variables[i] = list_variables.get(i);
 
-                        imgBtn_variables.setEnabled(true);
+                        btn_variables.setEnabled(true);
                         break;
                     case 2:
                         for (int i=0; i<variables.size(); i++){
@@ -298,7 +299,8 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                                             }
                                         });
 
-                                        startActivity(new Intent(MonitoringRegistrationForm2Activity.this, MonitorMenuActivity.class));
+                                        Intent intent = new Intent(MonitoringRegistrationForm2Activity.this, MonitorMenuActivity.class);
+                                        startActivity(intent);
                                         finish();
                                         break;
                                     case 2:

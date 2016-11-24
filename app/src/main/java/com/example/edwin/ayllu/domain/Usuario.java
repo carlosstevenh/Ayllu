@@ -1,4 +1,4 @@
-package com.example.edwin.ayllu.Domain;
+package com.example.edwin.ayllu.domain;
 
 import com.google.gson.annotations.SerializedName;
 
