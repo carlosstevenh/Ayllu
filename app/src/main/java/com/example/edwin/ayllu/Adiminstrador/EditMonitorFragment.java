@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.edwin.ayllu.AdminSQLite;
-import com.example.edwin.ayllu.Domain.Usuario;
+import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
 
 import java.util.ArrayList;

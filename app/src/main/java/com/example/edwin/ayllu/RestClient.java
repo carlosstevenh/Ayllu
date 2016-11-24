@@ -1,6 +1,6 @@
 package com.example.edwin.ayllu;
 
-import com.example.edwin.ayllu.Domain.Usuario;
+import com.example.edwin.ayllu.domain.Usuario;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -17,7 +16,7 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://192.168.1.102/webservice/";
+    String BASE_URL="http://192.168.56.1/webservice/";
     //String BASE_URL="http://192.168.1.5/webservice/";
 
     @GET("login/{ide_usu}/{pw_usu}")

@@ -42,4 +42,7 @@
     <string name="apellido">Apellido</string>
     <string name="edit">Editar</string>
     <string name="drop">Eliminar</string>
+    <string name="title_activity_monitoring_registration_form3">
+        MonitoringRegistrationForm3Activity
+    </string>
 </resources>

@@ -298,7 +298,7 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                                             }
                                         });
 
-                                        startActivity(new Intent(MonitoringRegistrationForm2Activity.this, MonitorMenuActivity.class));
+                                        startActivity(new Intent(MonitoringRegistrationForm2Activity.this, MonitoringRegistrationForm3Activity.class));
                                         finish();
                                         break;
                                     case 2:
