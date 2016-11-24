@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import com.example.edwin.ayllu.Domain.Usuario;
+import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
 
 import java.util.ArrayList;

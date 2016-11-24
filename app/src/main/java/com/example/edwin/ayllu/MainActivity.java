@@ -1,6 +1,5 @@
 package com.example.edwin.ayllu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
@@ -12,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.Adiminstrador.Administrador;
-import com.example.edwin.ayllu.Domain.Usuario;
+import com.example.edwin.ayllu.domain.Usuario;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,49 +42,77 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View v) {
 
-        //coneccion a SQLite
-        AdminSQLite admin = new AdminSQLite(this, "login", null, 1);
-        SQLiteDatabase bd = admin.getWritableDatabase();
+        RestClient service = RestClient.retrofit.create(RestClient.class);
+        Call<ArrayList<Usuario>> requestUser = service.getUsuario(et1.getText().toString(),et2.getText().toString());
+        requestUser.enqueue(new Callback<ArrayList<Usuario>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Usuario>>call, Response<ArrayList<Usuario>> response) {
+                if (response.isSuccessful()) {
+                    u = response.body();
+                    user=u.get(0);
 
-        loginUser(et1.getText().toString(),et2.getText().toString());
+                    String tipo = user.getTipo_usu();
+                    if(tipo.equals("A")){
+
+                        Log.i("TAG", "Bienvenido administrador!! ");
+                        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                        SQLiteDatabase bd = admin.getWritableDatabase();
+
+                        ContentValues registro = new ContentValues();
+
+                        registro.put(admin.COD_USU, user.getCodigo_usu());
+                        registro.put(admin.IDE_USU, user.getIdentificacion_usu());
+                        registro.put(admin.NOM_USU, user.getNombre_usu());
+                        registro.put(admin.APE_USU, user.getApellido_usu());
+                        registro.put(admin.TIP_USU, user.getTipo_usu());
+                        registro.put(admin.CON_USU, user.getContrasena_usu());
+                        registro.put(admin.CLA_API, user.getClave_api());
+                        registro.put(admin.PAI_USU, user.getPais_usu());
+
+                        bd.insert(admin.TABLENAME,null,registro);
+                        bd.close();
+
+                        AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                        getUsuarios(user.getPais_usu(),admin1);
+
+                        menuAdministrador();
+
+                    }
+                    else {
+                        Log.i("TAG", "Bienvenido monitor!! ");
+                        Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+
+                } else {
+                    int statusCode = response.code();
+                    Log.i("TAG", "error " + response.code());
+
+                    // handle request errors yourself
+                    //ResponseBody errorBody = response.errorBody();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
+                Log.e(TAG,"Error al iniciar sesión!!!!"+ t.getMessage());
+                Toast login = Toast.makeText(getApplicationContext(),
+                        "Error al iniciar sesión", Toast.LENGTH_SHORT);
+                login.show();
+                //et3.setText("xxxxxx");
+            }
+
+        });
+
         /*try {
             loginUserSin(et1.getText().toString(),et2.getText().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        if (user!=null){
-            AdminSQLite admin1 = new AdminSQLite(this, "login", null, 1);
-            getUsuarios(user.getPais_usu(),admin1);
-            String tipo = user.getTipo_usu();
-            if(tipo.equals("A")){
-                Log.i("TAG", "Bienvenido administrador!! ");
-
-                ContentValues registro = new ContentValues();
-
-                registro.put(admin.COD_USU, user.getCodigo_usu());
-                registro.put(admin.IDE_USU, user.getIdentificacion_usu());
-                registro.put(admin.NOM_USU, user.getNombre_usu());
-                registro.put(admin.APE_USU, user.getApellido_usu());
-                registro.put(admin.TIP_USU, user.getTipo_usu());
-                registro.put(admin.CON_USU, user.getContrasena_usu());
-                registro.put(admin.CLA_API, user.getClave_api());
-                registro.put(admin.PAI_USU, user.getPais_usu());
-
-                bd.insert(admin.TABLENAME,null,registro);
-
-                bd.close();
-
-                menuAdministrador();
-
-            }
-            else {
-                Log.i("TAG", "Bienvenido monitor!! ");
-                Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
-
     }
     void loginUserSin(String ide,String pw) throws IOException {
         RestClient service = RestClient.retrofit.create(RestClient.class);
@@ -120,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         monitores.put(al.CLA_API,lista.get(i).getClave_api());
                         monitores.put(al.PAI_USU, lista.get(i).getPais_usu());
                         bd1.insert(al.TABLENAME, null, monitores);
-                        bd1.close();
+                        //bd1.close();
 
                     }
                     Log.i("TAG", "Numero de monitores: "+ lista.size() );
@@ -143,39 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     void loginUser(String ide, String pw){
 
-        RestClient service = RestClient.retrofit.create(RestClient.class);
-        Call<ArrayList<Usuario>> requestUser = service.getUsuario(ide,pw);
-        requestUser.enqueue(new Callback<ArrayList<Usuario>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Usuario>>call, Response<ArrayList<Usuario>> response) {
-                if (response.isSuccessful()) {
-                    u = response.body();
-                    user=u.get(0);
-                    //getUsuarios(user.getPais_usu());
-                    //Log.i("TAG", "error " );
 
-
-                } else {
-                    int statusCode = response.code();
-                    Log.i("TAG", "error " + response.code());
-
-                    // handle request errors yourself
-                    //ResponseBody errorBody = response.errorBody();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
-                Log.e(TAG,"Error al iniciar sesión!!!!"+ t.getMessage());
-                Toast login = Toast.makeText(getApplicationContext(),
-                        "Error al iniciar sesión", Toast.LENGTH_SHORT);
-                login.show();
-                //et3.setText("xxxxxx");
-            }
-
-        });
 
 
     }
