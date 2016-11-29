@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
@@ -69,7 +70,10 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
         }*/
         switch (id) {
             case R.id.moni:
+                String monitor = "1086499415";
+
                 Intent intent = new Intent(Administrador.this, MonitorMenuActivity.class);
+                intent.putExtra("MONITOR",monitor);
                 startActivity(intent);
                 finish();
                 return true;

@@ -17,8 +17,7 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://192.168.56.1/webservice/";
-    //String BASE_URL="http://192.168.1.5/webservice/";
+    String BASE_URL="http://192.168.57.1/webservice/";
 
     @GET("login/{ide_usu}/{pw_usu}")
     Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,
