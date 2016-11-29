@@ -23,11 +23,11 @@
         <activity android:name=".MonitorMenuActivity" />
         <activity android:name=".MonitoringRegistrationForm1Activity" />
         <activity android:name=".MonitoringRegistrationForm2Activity" />
+        <activity android:name=".MonitoringRegistrationForm3Activity"></activity>
+
         <activity android:name=".Adiminstrador.Administrador" />
         <activity android:name=".Adiminstrador.UsuariosAdapter" />
         <activity android:name=".Adiminstrador.EditMonitor" />
-        >>>>>>> upstream/experimental
-        <activity android:name=".MonitoringRegistrationForm3Activity"></activity>
     </application>
 
 </manifest>

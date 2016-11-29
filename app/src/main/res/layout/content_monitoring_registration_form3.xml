@@ -190,7 +190,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="10dp">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -355,6 +354,8 @@
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+=======
+>>>>>>> origin/master
     </LinearLayout>
 
 </LinearLayout>
