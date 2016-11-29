@@ -13,7 +13,6 @@ public class AdminSQLite extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
     public static final String TABLENAME = "login";
-    public static final String TABLE_NAME = "personas";
     public static final String COD_USU_SQL = "cod_sql";
     public static final String COD_USU = "codigo";
     public static final String IDE_USU = "identificacion";
@@ -36,12 +35,6 @@ public class AdminSQLite extends SQLiteOpenHelper {
             + CLA_API + " text not null,"
             + PAI_USU + " text not null);";
 
-    private static final  String SQL_CREATE= "create table " + TABLE_NAME + " ("
-            + COD_USU_SQL + " integer primary key autoincrement,"
-            + COD_USU + " text  not null,"
-            + IDE_USU + " text not null,"
-            + NOM_USU + " text not null,"
-            + APE_USU + " text not null);";
 
 
     @Override

@@ -70,6 +70,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int current = getItem(0);
                 if(current == 0)launchHomeScreen();
+                else if (current ==1)respustaAdmnistrativa();
                 else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Funcionalidad en Construccion", Toast.LENGTH_LONG);
                     toast.show();
@@ -129,6 +130,10 @@ public class MonitorMenuActivity extends AppCompatActivity {
         intent.putExtra("MONITOR",monitor);
         startActivity(intent);
         finish();
+    }
+    private void respustaAdmnistrativa() {
+        startActivity(new Intent(MonitorMenuActivity.this, SeleccionArea.class));
+        //finish();
     }
 
     //  viewpager change listener
