@@ -26,11 +26,14 @@
         <activity android:name=".Adiminstrador.Administrador" />
         <activity android:name=".Adiminstrador.UsuariosAdapter" />
         <activity android:name=".Adiminstrador.EditMonitor" />
+        <activity android:name=".SeleccionArea" />
         >>>>>>> upstream/experimental
         <activity
             android:name=".MonitoringRegistrationForm3Activity"
             android:label="@string/title_activity_monitoring_registration_form3"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".MonitoreosActivity" />
+        <activity android:name=".FormRespuesta"></activity>
     </application>
 
 </manifest>

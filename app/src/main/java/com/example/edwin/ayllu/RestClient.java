@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu;
 
+import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.Usuario;
 
 import java.util.ArrayList;
@@ -45,6 +46,21 @@ public interface RestClient {
 
     @GET("delete/{ide}")
     Call<ArrayList<String>> deleteUsuario(@Path("ide") String ide);
+
+    @GET("monitoreos/{area}")
+    Call <ArrayList<Monitoreo>> monitoreos (@Path("area") String area);
+
+    @GET ("addRespuesta/{pa}/{fm}/{eva}/{per}/{tie}/{pre}/{rec}/{con}/{mon}")
+    Call<ArrayList<String>> addRespuesta (@Path("pa") String pa,
+                                          @Path("fm") String fm,
+                                          @Path("eva") String eva,
+                                          @Path("per") String per,
+                                          @Path("tie") String tie,
+                                          @Path("pre") String pre,
+                                          @Path("rec") String rec,
+                                          @Path("con") String con,
+                                          @Path("mon") String mon);
+
     public static final Retrofit retrofit = new Retrofit.Builder().baseUrl(RestClient.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build();
 }

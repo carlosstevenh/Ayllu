@@ -40,7 +40,7 @@ public class UsuariosAdapter  extends ArrayAdapter<Usuario> {
         }
 
         nombre = (TextView) convertView.findViewById(R.id.tv_name);
-        apellido = (TextView) convertView.findViewById(R.id.tv_title);
+        apellido = (TextView) convertView.findViewById(R.id.date);
         identificacion = (TextView) convertView.findViewById(R.id.tv_company);
 
         // Lead actual.
