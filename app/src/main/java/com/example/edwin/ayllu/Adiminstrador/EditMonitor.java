@@ -107,6 +107,7 @@ public class EditMonitor extends AppCompatActivity {
                         login.show();
                         Intent intent = new Intent(getApplicationContext(),Administrador.class);
                         startActivity(intent);
+                        finish();
 
                         Log.i("TAG", "error "+ res.get(0) );
                     }

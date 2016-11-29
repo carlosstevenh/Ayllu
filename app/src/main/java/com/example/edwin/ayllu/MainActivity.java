@@ -51,27 +51,27 @@ public class MainActivity extends AppCompatActivity {
                     u = response.body();
                     user=u.get(0);
 
+                    AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                    SQLiteDatabase bd = admin.getWritableDatabase();
+
+                    ContentValues registro = new ContentValues();
+
+                    registro.put(admin.COD_USU, user.getCodigo_usu());
+                    registro.put(admin.IDE_USU, user.getIdentificacion_usu());
+                    registro.put(admin.NOM_USU, user.getNombre_usu());
+                    registro.put(admin.APE_USU, user.getApellido_usu());
+                    registro.put(admin.TIP_USU, user.getTipo_usu());
+                    registro.put(admin.CON_USU, user.getContrasena_usu());
+                    registro.put(admin.CLA_API, user.getClave_api());
+                    registro.put(admin.PAI_USU, user.getPais_usu());
+
+                    bd.insert(admin.TABLENAME,null,registro);
+                    bd.close();
+
                     String tipo = user.getTipo_usu();
                     if(tipo.equals("A")){
 
                         Log.i("TAG", "Bienvenido administrador!! ");
-                        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-                        SQLiteDatabase bd = admin.getWritableDatabase();
-
-                        ContentValues registro = new ContentValues();
-
-                        registro.put(admin.COD_USU, user.getCodigo_usu());
-                        registro.put(admin.IDE_USU, user.getIdentificacion_usu());
-                        registro.put(admin.NOM_USU, user.getNombre_usu());
-                        registro.put(admin.APE_USU, user.getApellido_usu());
-                        registro.put(admin.TIP_USU, user.getTipo_usu());
-                        registro.put(admin.CON_USU, user.getContrasena_usu());
-                        registro.put(admin.CLA_API, user.getClave_api());
-                        registro.put(admin.PAI_USU, user.getPais_usu());
-
-                        bd.insert(admin.TABLENAME,null,registro);
-                        bd.close();
-
                         AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
                         getUsuarios(user.getPais_usu(),admin1);
 
@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i=new Intent(this, Administrador
                 .class);
         startActivity(i);
+        finish();
 
     }
 }

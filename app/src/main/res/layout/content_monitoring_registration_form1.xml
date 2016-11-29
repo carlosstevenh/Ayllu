@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_title"
+        android:id="@+id/date"
         android:text="ZONAS RECONOCIDAS POR EL QHAPAQ ÑAN"
         android:textSize="35sp"
         android:gravity="center"
@@ -28,7 +28,7 @@
         android:text="Seleccione la Zona donde se registrara el punto"
         android:textSize="20sp"
         android:gravity="center"
-        android:layout_below="@+id/tv_title"/>
+        android:layout_below="@+id/date"/>
 
     <GridLayout
         android:id="@+id/gl_menu"
