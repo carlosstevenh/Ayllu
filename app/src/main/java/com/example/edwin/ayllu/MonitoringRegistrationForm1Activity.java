@@ -26,6 +26,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
     ArrayList<Seccion> secciones = new ArrayList<>();
     ArrayList<Area> areas = new ArrayList<>();
     int[] opciones = {0,0,0,0};
+    String monitor = "";
 
     CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas;
     ArrayList<String> list_tramos, list_subtramos, list_secciones, list_areas;
@@ -128,6 +129,10 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_registration_form1);
+
+        Intent intent = getIntent();
+        monitor = intent.getStringExtra("MONITOR");
+
 
         imgBtn_tramos = (ImageButton) findViewById(R.id.btn_tramos);
         imgBtn_subtramos = (ImageButton) findViewById(R.id.btn_subtramos);
@@ -268,7 +273,6 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
                                 .show();
                     }
                 });
-
         return builder.create();
     }
 
@@ -284,6 +288,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
                                 switch (opci){
                                     case 1:
                                         Intent intent = new Intent(MonitoringRegistrationForm1Activity.this, MonitoringRegistrationForm2Activity.class);
+                                        intent.putExtra("MONITOR",monitor);
                                         intent.putExtra("AREA",""+opciones[3]);
                                         startActivity(intent);
                                         finish();

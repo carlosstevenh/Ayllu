@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Identificación"
-                android:inputType="text"
+                android:inputType="number"
                 android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
 

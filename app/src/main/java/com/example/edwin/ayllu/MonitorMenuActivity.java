@@ -28,6 +28,8 @@ public class MonitorMenuActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
 
+    String monitor = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,15 @@ public class MonitorMenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Intent intent = getIntent();
+        monitor = intent.getStringExtra("MONITOR");
+
+        Toast.makeText(
+                MonitorMenuActivity.this,
+                "MONITOR: " + monitor,
+                Toast.LENGTH_SHORT)
+                .show();
     }
 
     private void addBottomDots(int currentPage) {
@@ -114,7 +125,9 @@ public class MonitorMenuActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        startActivity(new Intent(MonitorMenuActivity.this, MonitoringRegistrationForm1Activity.class));
+        Intent intent = new Intent(MonitorMenuActivity.this, MonitoringRegistrationForm1Activity.class);
+        intent.putExtra("MONITOR",monitor);
+        startActivity(intent);
         finish();
     }
 

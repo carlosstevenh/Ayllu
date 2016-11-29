@@ -36,6 +36,7 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
     ArrayList<Variable> variables = new ArrayList<>();
     int[] opciones = {0,0};
     String codArea = "";
+    String monitor = "";
 
     CharSequence[] items_factores, items_variables;
     ArrayList<String> list_factores, list_variables;
@@ -157,7 +158,9 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
         setContentView(R.layout.activity_monitoring_registration_form2);
 
         Intent intent = getIntent();
+        monitor = intent.getStringExtra("MONITOR");
         codArea = intent.getStringExtra("AREA");
+
 
         btn_factores = (Button) findViewById(R.id.btn_factores);
         btn_variables = (Button) findViewById(R.id.btn_variables);
@@ -265,41 +268,14 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                                         int lat = Integer.parseInt(et_latitud.getText().toString());
                                         int longi = Integer.parseInt(et_longitud.getText().toString());
                                         String vrble = opciones[1]+"";
+                                        Intent intent = new Intent(MonitoringRegistrationForm2Activity.this, MonitoringRegistrationForm3Activity.class);
 
-                                        Task tk = new Task(vrble, codArea, lat, longi);
+                                        intent.putExtra("MONITOR",monitor);
+                                        intent.putExtra("AREA",codArea);
+                                        intent.putExtra("VARIABLE",vrble);
+                                        intent.putExtra("LONGITUD",""+longi);
+                                        intent.putExtra("LATITUD",""+lat);
 
-                                        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                                        // set your desired log level
-                                        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-                                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                                        // add your other interceptors …
-
-                                        // add logging as last interceptor
-                                        httpClient.addInterceptor(logging);  // <-- this is the important line!
-
-                                        Retrofit retrofit = new Retrofit.Builder()
-                                                .baseUrl(ApiConstants.URL_API_AYLLU)
-                                                .addConverterFactory(GsonConverterFactory.create())
-                                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                                                .client(httpClient.build())
-                                                .build();
-
-                                        ApiAylluService service = retrofit.create(ApiAylluService.class);
-                                        Call<Task> call = service.registrarPunto(tk);
-                                        call.enqueue(new Callback<Task>() {
-                                            @Override
-                                            public void onResponse(Call<Task> call, Response<Task> response) {
-
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<Task> call, Throwable t) {
-
-                                            }
-                                        });
-
-                                        Intent intent = new Intent(MonitoringRegistrationForm2Activity.this, MonitorMenuActivity.class);
                                         startActivity(intent);
                                         finish();
                                         break;
