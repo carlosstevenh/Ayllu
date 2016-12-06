@@ -44,7 +44,7 @@ public interface RestClient {
     @GET("update/{ide}")
     Call<ArrayList<Usuario>>update(@Path("ide") String ide);
 
-    @GET("delete/{ide}")
+    @GET("deshabilitar/{ide}")
     Call<ArrayList<String>> deleteUsuario(@Path("ide") String ide);
 
     @GET("monitoreos/{area}")

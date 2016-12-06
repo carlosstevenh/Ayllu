@@ -42,34 +42,15 @@
         android:layout_alignStart="@+id/textView10" />
 
 
-    <Spinner
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Registrar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_per"
-        android:layout_alignTop="@+id/textView11"
-        android:layout_alignLeft="@+id/spinner_ava"
-        android:layout_alignStart="@+id/spinner_ava" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_ava"
-        android:layout_alignTop="@+id/textView10"
-        android:layout_centerHorizontal="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView13"
+        android:layout_below="@+id/spinner_con"
         android:layout_centerHorizontal="true"
-        android:id="@+id/spinner_tie" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView14"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/spinner_pre" />
+        android:layout_marginTop="21dp"
+        android:id="@+id/button2"
+        android:onClick="registrar" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -82,58 +63,83 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/spinner_con"
         android:layout_alignBottom="@+id/textView15"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/spinner_con" />
+        android:layout_alignLeft="@+id/spinner_rec"
+        android:layout_alignStart="@+id/spinner_rec" />
 
-    <Button
-        android:text="Registrar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner_con"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
-        android:id="@+id/button2"
-        android:onClick="registrar" />
-
-    <TextView
-        android:text="@string/tiempo"
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:id="@+id/textView12"
-        android:layout_below="@+id/spinner_per"
-        android:layout_alignLeft="@+id/textView11"
-        android:layout_alignStart="@+id/textView11" />
+        android:id="@+id/spinner_pre"
+        android:layout_alignTop="@+id/textView13"
+        android:layout_alignLeft="@+id/spinner_tie"
+        android:layout_alignStart="@+id/spinner_tie" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_ava"
+        android:layout_alignTop="@+id/textView10"
+        android:layout_toRightOf="@+id/textView15"
+        android:layout_toEndOf="@+id/textView15"
+        android:layout_marginLeft="103dp"
+        android:layout_marginStart="103dp" />
 
     <TextView
         android:text="@string/conocimiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="23dp"
         android:id="@+id/textView15"
         android:layout_below="@+id/spinner_rec"
         android:layout_alignLeft="@+id/textView14"
         android:layout_alignStart="@+id/textView14" />
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_tie"
+        android:layout_below="@+id/spinner_per"
+        android:layout_alignLeft="@+id/spinner_per"
+        android:layout_alignStart="@+id/spinner_per"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:text="@string/tiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView12"
+        android:layout_alignBottom="@+id/spinner_tie"
+        android:layout_alignLeft="@+id/textView11"
+        android:layout_alignStart="@+id/textView11" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_per"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_alignLeft="@+id/spinner_ava"
+        android:layout_alignStart="@+id/spinner_ava" />
+
     <TextView
         android:text="@string/presupuesto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
         android:id="@+id/textView13"
         android:layout_below="@+id/textView12"
         android:layout_alignLeft="@+id/textView12"
-        android:layout_alignStart="@+id/textView12" />
+        android:layout_alignStart="@+id/textView12"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:text="@string/recursos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
         android:id="@+id/textView14"
-        android:layout_below="@+id/textView13"
+        android:layout_below="@+id/spinner_pre"
         android:layout_alignLeft="@+id/textView13"
-        android:layout_alignStart="@+id/textView13" />
+        android:layout_alignStart="@+id/textView13"
+        android:layout_marginTop="17dp" />
 
 </RelativeLayout>

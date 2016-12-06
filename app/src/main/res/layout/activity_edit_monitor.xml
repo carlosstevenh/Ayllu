@@ -111,18 +111,6 @@
         android:layout_marginTop="12dp"
         android:id="@+id/textView9" />
 
-    <Button
-        android:text="@string/drop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnReg"
-        android:layout_toRightOf="@+id/btnReg"
-        android:layout_toEndOf="@+id/btnReg"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
-        android:id="@+id/button"
-        android:onClick="eliminar" />
-
     <TextView
         android:text="@string/apellido"
         android:layout_width="wrap_content"
@@ -132,4 +120,15 @@
         android:layout_alignBottom="@+id/txtApe"
         android:layout_alignLeft="@+id/textView7"
         android:layout_alignStart="@+id/textView7" />
+
+    <Button
+        android:text="@string/deshabilitar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:onClick="eliminar"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/btnReg"
+        android:layout_alignLeft="@+id/btnReg"
+        android:layout_alignStart="@+id/btnReg" />
 </RelativeLayout>
