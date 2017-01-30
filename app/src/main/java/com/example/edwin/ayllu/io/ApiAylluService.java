@@ -8,6 +8,6 @@ import retrofit2.http.POST;
 
 
 public interface ApiAylluService {
-    @POST("puntos/registrar/")
+    @POST("monitoreos/registrar/")
     Call<Task> registrarPunto(@Body Task datos);
 }

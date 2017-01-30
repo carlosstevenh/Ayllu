@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -35,11 +36,12 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
     ArrayList<Variable> variables = new ArrayList<>();
     int[] opciones = {0,0};
     String codArea = "";
+    String monitor = "";
 
     CharSequence[] items_factores, items_variables;
     ArrayList<String> list_factores, list_variables;
 
-    ImageButton imgBtn_factores, imgBtn_variables;
+    Button btn_factores, btn_variables;
     EditText et_longitud, et_latitud;
     FloatingActionButton fab_reg;
 
@@ -156,21 +158,23 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
         setContentView(R.layout.activity_monitoring_registration_form2);
 
         Intent intent = getIntent();
+        monitor = intent.getStringExtra("MONITOR");
         codArea = intent.getStringExtra("AREA");
 
-        imgBtn_factores = (ImageButton) findViewById(R.id.btn_factores);
-        imgBtn_variables = (ImageButton) findViewById(R.id.btn_variables);
+
+        btn_factores = (Button) findViewById(R.id.btn_factores);
+        btn_variables = (Button) findViewById(R.id.btn_variables);
         et_longitud = (EditText) findViewById(R.id.et_longitud);
         et_latitud = (EditText) findViewById(R.id.et_latitud);
 
         fab_reg = (FloatingActionButton) findViewById(R.id.fab_reg);
 
-        imgBtn_factores.setOnClickListener(this);
-        imgBtn_variables.setOnClickListener(this);
+        btn_factores.setOnClickListener(this);
+        btn_variables.setOnClickListener(this);
 
         fab_reg.setOnClickListener(this);
 
-        imgBtn_variables.setEnabled(false);
+        btn_variables.setEnabled(false);
     }
 
     @Override
@@ -225,7 +229,7 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                         for (int i = 0; i < list_variables.size(); i++)
                             items_variables[i] = list_variables.get(i);
 
-                        imgBtn_variables.setEnabled(true);
+                        btn_variables.setEnabled(true);
                         break;
                     case 2:
                         for (int i=0; i<variables.size(); i++){
@@ -264,41 +268,15 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                                         int lat = Integer.parseInt(et_latitud.getText().toString());
                                         int longi = Integer.parseInt(et_longitud.getText().toString());
                                         String vrble = opciones[1]+"";
+                                        Intent intent = new Intent(MonitoringRegistrationForm2Activity.this, MonitoringRegistrationForm3Activity.class);
 
-                                        Task tk = new Task(vrble, codArea, lat, longi);
+                                        intent.putExtra("MONITOR",monitor);
+                                        intent.putExtra("AREA",codArea);
+                                        intent.putExtra("VARIABLE",vrble);
+                                        intent.putExtra("LONGITUD",""+longi);
+                                        intent.putExtra("LATITUD",""+lat);
 
-                                        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                                        // set your desired log level
-                                        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-                                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                                        // add your other interceptors …
-
-                                        // add logging as last interceptor
-                                        httpClient.addInterceptor(logging);  // <-- this is the important line!
-
-                                        Retrofit retrofit = new Retrofit.Builder()
-                                                .baseUrl(ApiConstants.URL_API_AYLLU)
-                                                .addConverterFactory(GsonConverterFactory.create())
-                                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                                                .client(httpClient.build())
-                                                .build();
-
-                                        ApiAylluService service = retrofit.create(ApiAylluService.class);
-                                        Call<Task> call = service.registrarPunto(tk);
-                                        call.enqueue(new Callback<Task>() {
-                                            @Override
-                                            public void onResponse(Call<Task> call, Response<Task> response) {
-
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<Task> call, Throwable t) {
-
-                                            }
-                                        });
-
-                                        startActivity(new Intent(MonitoringRegistrationForm2Activity.this, MonitoringRegistrationForm3Activity.class));
+                                        startActivity(intent);
                                         finish();
                                         break;
                                     case 2:

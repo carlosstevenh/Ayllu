@@ -33,28 +33,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
 
         <ImageView
-            android:id="@+id/img_cliente"
+            android:id="@+id/img_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_date" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_nombre"
+            android:id="@+id/til_fecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp">
 
             <EditText
-                android:id="@+id/campo_nombre"
+                android:id="@+id/et_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Fecha"
-                android:inputType="text"
+                android:inputType="datetime"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
@@ -62,7 +63,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -103,9 +105,10 @@
                 android:layout_alignParentEnd="true"/>
 
             <RadioGroup
+                android:id="@+id/rg_repercusiones1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checkedButton="@+id/rb_repercusiones"
+                android:checkedButton="@+id/rb_positive"
                 android:orientation="horizontal"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true">
@@ -156,9 +159,10 @@
                 android:layout_alignParentEnd="true"/>
 
             <RadioGroup
+                android:id="@+id/rg_repercusiones2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checkedButton="@+id/rb_repercusiones"
+                android:checkedButton="@+id/rb_potencial"
                 android:orientation="horizontal"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true">
@@ -184,8 +188,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -225,9 +229,10 @@
                 android:layout_alignParentEnd="true"/>
 
             <RadioGroup
+                android:id="@+id/rg_origen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checkedButton="@+id/rb_repercusiones"
+                android:checkedButton="@+id/rb_interno"
                 android:orientation="horizontal"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true">
@@ -253,7 +258,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -265,6 +271,91 @@
             android:textColor="@color/colorPrimaryText"
             android:layout_marginBottom="30dp"
             android:padding="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/area_porcentaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/img_porcentaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_date" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_porcentaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp">
+
+                <EditText
+                    android:id="@+id/et_porcentaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Porcentaje"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Frecuencia de Aparición:"
+            android:textSize="24sp"
+            android:layout_gravity="left"
+            android:background="@color/colorPrimaryLight"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/area_frecuencia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/img_frecuencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_date" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_frecuencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp">
+
+                <EditText
+                    android:id="@+id/et_frecuencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Frecuencia"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+=======
+>>>>>>> origin/master
     </LinearLayout>
 
 </LinearLayout>

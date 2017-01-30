@@ -24,9 +24,9 @@
     <include layout="@layout/content_monitoring_registration_form3"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_regis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/fab_regMon"
+        android:layout_width="74dp"
+        android:layout_height="74dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_registration"/>

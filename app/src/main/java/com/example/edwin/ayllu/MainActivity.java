@@ -80,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         Log.i("TAG", "Bienvenido monitor!! ");
+                        String monitor = "1086499415";
+
                         Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
+                        intent.putExtra("MONITOR",monitor);
                         startActivity(intent);
                         finish();
                     }
@@ -137,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     SQLiteDatabase bd1 = al.getWritableDatabase();
                     ContentValues monitores = new ContentValues();
                     for(int i = 0; i < lista.size(); i++){
-                        Log.i("TAG", "entra ciclo: "+ lista.size() );
+                        Log.i("TAG", "entra ciclo: "+ lista.size());
                         monitores.put(al.COD_USU, lista.get(i).getCodigo_usu());
                         monitores.put(al.IDE_USU, lista.get(i).getIdentificacion_usu());
                         monitores.put(al.NOM_USU, lista.get(i).getNombre_usu());
