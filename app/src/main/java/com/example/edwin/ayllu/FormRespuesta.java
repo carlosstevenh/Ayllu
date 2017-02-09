@@ -11,8 +11,6 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.edwin.ayllu.domain.Usuario;
-
 import java.util.ArrayList;
 import java.util.List;
 

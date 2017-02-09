@@ -12,8 +12,9 @@ public class Task {
     final String origen;
     final int porcentaje;
     final int frecuencia;
+    final String nombre;
 
-    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia) {
+    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -24,5 +25,6 @@ public class Task {
         this.origen = origen;
         this.porcentaje = porcentaje;
         this.frecuencia = frecuencia;
+        this.nombre = nombre;
     }
 }

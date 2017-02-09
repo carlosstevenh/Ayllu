@@ -51,37 +51,6 @@ public class EditMonitor extends AppCompatActivity {
         con.setText(bundle.getString("con"));
 
     }
-    public void eliminar(View view){
-        RestClient service = RestClient.retrofit.create(RestClient.class);
-        Call<ArrayList<String>> requestDelete = service.deleteUsuario(ide);
-        requestDelete.enqueue(new Callback<ArrayList<String>>() {
-            @Override
-            public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                res = response.body();
-                String aux = res.get(0);
-                if(aux.equals("1")){
-                    AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
-                    SQLiteDatabase bd1 = admin1.getWritableDatabase();
-                    bd1.delete(admin1.TABLENAME, admin1.IDE_USU +"='"+ ide +"'", null);
-                    bd1.close();
-                    Intent intent = new Intent(getApplicationContext(),Administrador.class);
-                    startActivity(intent);
-                    Toast login = Toast.makeText(getApplicationContext(),
-                            "Eliminación exitosa", Toast.LENGTH_SHORT);
-                }
-                else{
-                    Toast login = Toast.makeText(getApplicationContext(),
-                            "No se pudo eliminar", Toast.LENGTH_SHORT);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-                Toast login = Toast.makeText(getApplicationContext(),
-                        "No se pudo eliminar", Toast.LENGTH_SHORT);
-            }
-        });
-    }
     public void editar(View view){
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<String>> requestAdd = service.editUsuario(id.getText().toString(),nom.getText().toString()

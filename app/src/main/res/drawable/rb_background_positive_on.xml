@@ -9,9 +9,9 @@
         </shape>
     </item>
     <item
-        android:bottom="10dp"
+        android:bottom="5dp"
         android:drawable="@drawable/ic_positive"
         android:left="10dp"
         android:right="40dp"
-        android:top="10dp" />
+        android:top="5dp" />
 </layer-list>

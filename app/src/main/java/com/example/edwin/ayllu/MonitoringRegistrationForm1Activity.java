@@ -132,6 +132,11 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
 
         Intent intent = getIntent();
         monitor = intent.getStringExtra("MONITOR");
+        Toast.makeText(
+                MonitoringRegistrationForm1Activity.this,
+                ""+monitor,
+                Toast.LENGTH_SHORT)
+                .show();
 
 
         imgBtn_tramos = (ImageButton) findViewById(R.id.btn_tramos);
