@@ -11,13 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-/**
- * Created by steven on 5/11/16.
- */
-
 public interface RestClient {
 
-    String BASE_URL="http://192.168.57.1/webservice/";
+    String BASE_URL="http://138.68.40.165/webservice/";
 
     @GET("login/{ide_usu}/{pw_usu}")
     Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,

@@ -80,10 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         Log.i("TAG", "Bienvenido monitor!! ");
-                        String monitor = "1086499415";
-
                         Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
-                        intent.putExtra("MONITOR",monitor);
                         startActivity(intent);
                         finish();
                     }
@@ -179,8 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
     void menuAdministrador(){
 
-        Intent i=new Intent(this, Administrador
-                .class);
+        Intent i=new Intent(this, Administrador.class);
         startActivity(i);
         finish();
 

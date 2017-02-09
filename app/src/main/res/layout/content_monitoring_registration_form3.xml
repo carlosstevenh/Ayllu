@@ -10,23 +10,10 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.edwin.ayllu.MonitoringRegistrationForm3Activity"
     tools:showIn="@layout/activity_monitoring_registration_form3"
     android:gravity="center_horizontal">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Fecha:"
-        android:textSize="24sp"
-        android:layout_gravity="left"
-        android:background="@color/colorPrimaryLight"
-        android:textColor="@color/colorPrimaryText"
-        android:layout_marginBottom="5dp"
-        android:padding="10dp"/>
 
     <LinearLayout
         android:id="@+id/area_fecha"
@@ -34,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="5dp">
 
         <ImageView
             android:id="@+id/img_fecha"
@@ -47,14 +34,16 @@
             android:id="@+id/til_fecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp">
+            android:layout_marginLeft="5dp">
 
             <EditText
                 android:id="@+id/et_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:textSize="12sp"
                 android:hint="Fecha"
+                android:textStyle="bold"
                 android:inputType="datetime"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -64,18 +53,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Repercusiones:"
-            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textSize="12sp"
             android:layout_gravity="left"
             android:background="@color/colorPrimaryLight"
             android:textColor="@color/colorPrimaryText"
-            android:layout_marginBottom="30dp"
-            android:padding="10dp"/>
+
+            android:padding="5dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -90,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:text="Positivas"
                 android:layout_gravity="center_vertical"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorSecundaryText"/>
 
             <TextView
@@ -98,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Negativas"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorSecundaryText"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
@@ -144,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="Actuales"
                 android:layout_gravity="center_vertical"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorSecundaryText"/>
 
             <TextView
@@ -152,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Potenciales"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorSecundaryText"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
@@ -189,17 +179,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="5dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Origen:"
-            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textSize="12sp"
             android:layout_gravity="left"
             android:background="@color/colorPrimaryLight"
             android:textColor="@color/colorPrimaryText"
-            android:layout_marginBottom="30dp"
-            android:padding="10dp"/>
+
+            android:padding="5dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -214,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:text="Interno"
                 android:layout_gravity="center_vertical"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorSecundaryText"/>
 
             <TextView
@@ -222,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Externo"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorSecundaryText"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
@@ -265,20 +256,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Porcentaje de Aparición:"
-            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textSize="12sp"
             android:layout_gravity="left"
             android:background="@color/colorPrimaryLight"
             android:textColor="@color/colorPrimaryText"
-            android:layout_marginBottom="30dp"
-            android:padding="10dp"/>
+            android:padding="5dp"/>
 
         <LinearLayout
             android:id="@+id/area_porcentaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/img_porcentaje"
@@ -291,13 +281,14 @@
                 android:id="@+id/til_porcentaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp">
+                android:layout_marginLeft="5dp">
 
                 <EditText
                     android:id="@+id/et_porcentaje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textSize="12sp"
                     android:hint="Porcentaje"
                     android:inputType="number"
                     android:maxLines="1"
@@ -315,12 +306,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Frecuencia de Aparición:"
-            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textSize="12sp"
             android:layout_gravity="left"
             android:background="@color/colorPrimaryLight"
             android:textColor="@color/colorPrimaryText"
-            android:layout_marginBottom="10dp"
-            android:padding="10dp"/>
+            android:padding="5dp"/>
 
         <LinearLayout
             android:id="@+id/area_frecuencia"
@@ -341,21 +332,20 @@
                 android:id="@+id/til_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp">
+                android:layout_marginLeft="5dp">
 
                 <EditText
                     android:id="@+id/et_frecuencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textSize="12sp"
                     android:hint="Frecuencia"
                     android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
-=======
->>>>>>> origin/master
     </LinearLayout>
 
 </LinearLayout>
