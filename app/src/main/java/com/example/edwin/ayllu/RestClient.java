@@ -5,10 +5,14 @@ import com.example.edwin.ayllu.domain.Usuario;
 
 import java.util.ArrayList;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -17,8 +21,12 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://192.168.57.1/webservice/";
+    String BASE_URL="http://138.68.40.165/webservice/";
 
+    @GET("addPrueba/{nom}/{fec}/{codPaf}")
+    Call<ArrayList<String>> addPrueba (@Path("nom") String nom,
+                                       @Path("fec") String fec,
+                                       @Path("codPaf") String codPaf);
     @GET("login/{ide_usu}/{pw_usu}")
     Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,
                                         @Path("pw_usu") String contrasena_usu);

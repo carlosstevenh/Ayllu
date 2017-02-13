@@ -161,6 +161,13 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
         monitor = intent.getStringExtra("MONITOR");
         codArea = intent.getStringExtra("AREA");
 
+        monitor = intent.getStringExtra("MONITOR");
+        Toast.makeText(
+                MonitoringRegistrationForm2Activity.this,
+                ""+monitor,
+                Toast.LENGTH_SHORT)
+                .show();
+
 
         btn_factores = (Button) findViewById(R.id.btn_factores);
         btn_variables = (Button) findViewById(R.id.btn_variables);

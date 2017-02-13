@@ -74,16 +74,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("TAG", "Bienvenido administrador!! ");
                         AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
                         getUsuarios(user.getPais_usu(),admin1);
-
                         menuAdministrador();
 
                     }
                     else {
                         Log.i("TAG", "Bienvenido monitor!! ");
-                        String monitor = "1086499415";
-
                         Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
-                        intent.putExtra("MONITOR",monitor);
                         startActivity(intent);
                         finish();
                     }

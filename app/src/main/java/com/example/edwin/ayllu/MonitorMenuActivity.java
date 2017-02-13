@@ -2,6 +2,8 @@ package com.example.edwin.ayllu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -33,6 +35,13 @@ public class MonitorMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+        SQLiteDatabase bd = admin.getReadableDatabase();
+
+        Cursor cursor = bd.rawQuery("SELECT codigo FROM login LIMIT 1", null);
+        cursor.moveToFirst();
+        monitor = cursor.getString(0);
 
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -92,9 +101,6 @@ public class MonitorMenuActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        monitor = intent.getStringExtra("MONITOR");
-
         Toast.makeText(
                 MonitorMenuActivity.this,
                 "MONITOR: " + monitor,
@@ -132,7 +138,9 @@ public class MonitorMenuActivity extends AppCompatActivity {
         finish();
     }
     private void respustaAdmnistrativa() {
-        startActivity(new Intent(MonitorMenuActivity.this, SeleccionArea.class));
+        Intent intent = new Intent(MonitorMenuActivity.this, SeleccionArea.class);
+        intent.putExtra("MONITOR",monitor);
+        startActivity(intent);
         //finish();
     }
 

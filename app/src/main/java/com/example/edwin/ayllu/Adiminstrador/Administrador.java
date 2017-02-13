@@ -70,10 +70,7 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
         }*/
         switch (id) {
             case R.id.moni:
-                String monitor = "1086499415";
-
                 Intent intent = new Intent(Administrador.this, MonitorMenuActivity.class);
-                intent.putExtra("MONITOR",monitor);
                 startActivity(intent);
                 finish();
                 return true;
