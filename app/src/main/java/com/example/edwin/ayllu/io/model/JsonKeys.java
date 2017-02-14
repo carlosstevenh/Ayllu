@@ -27,4 +27,29 @@ public class JsonKeys {
     public static final String CODIGO_FACTOR_VARIABLE = "factor";
     public static final String CODIGO_VARIABLE = "codigo_variable";
     public static final String NOMBRE_VARIABLE = "nombre_variable";
+
+    //==============================================================================================
+    //CONSTANTES PARA EL REPORTE
+    public static final String REPORTE_RESULTS = "REPORTE";
+    public static final String REPORTE_ARRAY = "Monitoreos";
+
+    public static final String CODIGO_PAF = "codigo_paf";
+    public static final String VARIABLE = "variable";
+    public static final String AREA = "area";
+    public static final String LATITUD_COO = "latitud_coo";
+    public static final String LONGITUD_COO = "longitud_coo";
+    public static final String FECHA_MON = "fecha_mon";
+    public static final String NOMBRE_USU = "nombre_usu";
+    public static final String REPERCUSIONES = "repercusiones_mon";
+    public static final String ORIGEN = "origen_mon";
+    public static final String PORCENTAJE_APA = "porcentaje_aparicion_mon";
+    public static final String FRECUENCIA_APA = "frecuencia_aparicion_mon";
+    public static final String FECHA_RES = "fecha_res";
+    public static final String EVALUACION = "evaluacion_res";
+    public static final String PERSONAL = "personal_res";
+    public static final String TIEMPO = "tiempo_res";
+    public static final String PRESUPUESTO = "presupuesto_res";
+    public static final String RECURSOS = "recursos_res";
+    public static final String CONOCIMIENTO = "conocimiento_res";
+    public static final String MONITOR_RES = "monitor_res";
 }

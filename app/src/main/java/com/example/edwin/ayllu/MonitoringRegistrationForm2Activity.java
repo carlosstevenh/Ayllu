@@ -10,25 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Factor;
-import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.Variable;
-import com.example.edwin.ayllu.io.ApiAylluService;
-import com.example.edwin.ayllu.io.ApiConstants;
 
 import java.util.ArrayList;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MonitoringRegistrationForm2Activity extends AppCompatActivity implements View.OnClickListener {
 

@@ -1,17 +1,12 @@
 package com.example.edwin.ayllu.Adiminstrador;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
@@ -23,11 +18,8 @@ import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.MainActivity;
 import com.example.edwin.ayllu.MonitorMenuActivity;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.domain.Task;
-import com.example.edwin.ayllu.domain.TaskDbHelper;
 
 import android.content.Intent;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;

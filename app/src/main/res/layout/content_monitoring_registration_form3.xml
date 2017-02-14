@@ -62,37 +62,15 @@
             android:textStyle="bold"
             android:textSize="12sp"
             android:layout_gravity="left"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorTitleForm"
             android:textColor="@color/colorPrimaryText"
-
             android:padding="5dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Positivas"
-                android:layout_gravity="center_vertical"
-                android:textSize="12sp"
-                android:textColor="@color/colorSecundaryText"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Negativas"
-                android:textSize="12sp"
-                android:textColor="@color/colorSecundaryText"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+            android:layout_marginTop="5dp">
 
             <RadioGroup
                 android:id="@+id/rg_repercusiones1"
@@ -119,6 +97,34 @@
 
             </RadioGroup>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Positivas"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:textColor="@color/colorSecondaryText"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView19" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Negativas"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorSecondaryText"
+                android:id="@+id/textView18"
+                android:layout_alignBaseline="@+id/textView19"
+                android:layout_alignBottom="@+id/textView19"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -126,27 +132,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Actuales"
-                android:layout_gravity="center_vertical"
-                android:textSize="12sp"
-                android:textColor="@color/colorSecundaryText"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Potenciales"
-                android:textSize="12sp"
-                android:textColor="@color/colorSecundaryText"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+            android:gravity="center_vertical">
 
             <RadioGroup
                 android:id="@+id/rg_repercusiones2"
@@ -172,6 +158,34 @@
                     android:button="@drawable/rb_background_negative" />
 
             </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actuales"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:textColor="@color/colorSecondaryText"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Potenciales"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorSecondaryText"
+                android:id="@+id/textView17"
+                android:layout_alignBaseline="@+id/textView16"
+                android:layout_alignBottom="@+id/textView16"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -187,7 +201,7 @@
             android:textStyle="bold"
             android:textSize="12sp"
             android:layout_gravity="left"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorTitleForm"
             android:textColor="@color/colorPrimaryText"
 
             android:padding="5dp"/>
@@ -196,28 +210,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal|center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Interno"
-                android:layout_gravity="center_vertical"
-                android:textSize="12sp"
-                android:textColor="@color/colorSecundaryText"/>
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Externo"
+                android:textStyle="bold"
                 android:textSize="12sp"
-                android:textColor="@color/colorSecundaryText"
+                android:textColor="@color/colorSecondaryText"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
 
             <RadioGroup
                 android:id="@+id/rg_origen"
@@ -243,6 +249,19 @@
                     android:button="@drawable/rb_background_negative" />
 
             </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interno"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:textColor="@color/colorSecondaryText"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView20" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -259,7 +278,7 @@
             android:textStyle="bold"
             android:textSize="12sp"
             android:layout_gravity="left"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorTitleForm"
             android:textColor="@color/colorPrimaryText"
             android:padding="5dp"/>
 
@@ -288,6 +307,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textStyle="bold"
                     android:textSize="12sp"
                     android:hint="Porcentaje"
                     android:inputType="number"
@@ -309,7 +329,7 @@
             android:textStyle="bold"
             android:textSize="12sp"
             android:layout_gravity="left"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorTitleForm"
             android:textColor="@color/colorPrimaryText"
             android:padding="5dp"/>
 
@@ -339,6 +359,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textStyle="bold"
                     android:textSize="12sp"
                     android:hint="Frecuencia"
                     android:inputType="number"

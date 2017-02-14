@@ -5,21 +5,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.icu.text.IDNA;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
-import com.example.edwin.ayllu.io.ApiAylluService;
+import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.io.ApiConstants;
 
 import java.text.SimpleDateFormat;
@@ -62,7 +59,7 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
         fb_regMon = (FloatingActionButton) findViewById(R.id.fab_regMon);
         fb_regMon.setOnClickListener(this);
 
-        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         String format = s.format(new Date());
         et_fecha.setText(format);
         et_fecha.setEnabled(false);
@@ -167,7 +164,7 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
                                 .client(httpClient.build())
                                 .build();
 
-                        ApiAylluService service = retrofit.create(ApiAylluService.class);
+                        AylluApiService service = retrofit.create(AylluApiService.class);
                         Call<Task> call = service.registrarPunto(tk);
                         call.enqueue(new Callback<Task>() {
                             @Override

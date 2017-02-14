@@ -2,15 +2,18 @@
 <resources>
     <!--.........................................................................................-->
     <!--Colores del Temas-->
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorPrimaryLight">#C5CAE9</color>
-    <color name="colorTextIcons">#FFFFFF</color>
-
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#7C4DFF</color>
+    <color name="colorWindowBackground">#e6e6e6</color>
+    <color name="colorWindowBackgroundDark">#d5d3da</color>
     <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecundaryText">#757575</color>
-    <color name="colorDivider">#BDBDBD</color>
+    <color name="colorSecondaryText">#727272</color>
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorTitleForm">#c7e4df</color>
+
+    <color name="colorInformationText">#FFFFFF</color>
+    <color name="colorInformationBackground">#d8110c1e</color>
     <!--.........................................................................................-->
     <!--Colores de Seleción de los Radio Butons-->
     <color name="colorRadioButtonOn">#2980b9</color>
@@ -49,4 +52,11 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+    <!--.........................................................................................-->
+    <!--Colores de la CardView-->
+    <color name="colorElementFormBackground">#FFFFFF</color>
+    <color name="colorCardViewBackground">#00ffffff</color>
+    <color name="colorItemPrimaryCardView">#012d49</color>
+    <color name="colorItemSecondaryCardView">#e2e2e2</color>
+    <color name="colorTextCardView">#ffffff</color>
 </resources>

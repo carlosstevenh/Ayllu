@@ -8,15 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.edwin.ayllu.Adiminstrador.Administrador;
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
-import com.example.edwin.ayllu.domain.Usuario;
-import com.example.edwin.ayllu.io.ApiAylluService;
+import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.io.ApiConstants;
 
 import okhttp3.OkHttpClient;
@@ -134,7 +132,7 @@ public class SplashScreen extends Activity {
                                 .client(httpClient.build())
                                 .build();
 
-                        ApiAylluService service = retrofit.create(ApiAylluService.class);
+                        AylluApiService service = retrofit.create(AylluApiService.class);
                         Call<Task> call = service.registrarPunto(tk);
                         call.enqueue(new Callback<Task>() {
                             @Override
@@ -153,7 +151,5 @@ public class SplashScreen extends Activity {
 
             }
         }
-
-        Log.e("Paso por aqui","jajaja");
     }
 }
