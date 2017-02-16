@@ -14,6 +14,10 @@ public class Task {
     final String repercusiones;
     final String origen;
 
+    final int porcentaje;
+    final int frecuencia;
+    final String nombre;
+
     public String getMonitor() {
         return monitor;
     }
@@ -54,10 +58,7 @@ public class Task {
         return variable;
     }
 
-    final int porcentaje;
-    final int frecuencia;
-
-    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia) {
+    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -68,6 +69,7 @@ public class Task {
         this.origen = origen;
         this.porcentaje = porcentaje;
         this.frecuencia = frecuencia;
+        this.nombre = nombre;
     }
 
     public ContentValues toContentValues() {
@@ -82,6 +84,7 @@ public class Task {
         values.put(TaskEntry.ORIGEN, origen);
         values.put(TaskEntry.PORCENTAJE, porcentaje);
         values.put(TaskEntry.FRECUENCIA, frecuencia);
+        values.put(TaskEntry.NOMBRE, nombre);
 
         return values;
     }

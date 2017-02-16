@@ -157,7 +157,9 @@ public class MonitorMenuActivity extends AppCompatActivity {
     }
 
     private void respustaAdmnistrativa() {
-        startActivity(new Intent(MonitorMenuActivity.this, SeleccionArea.class));
+        Intent intent = new Intent(MonitorMenuActivity.this, SeleccionArea.class);
+        intent.putExtra("MONITOR",monitor);
+        startActivity(intent);
         //finish();
     }
 

@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("TAG", "Bienvenido administrador!! ");
                         AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
                         getUsuarios(user.getPais_usu(),admin1);
-
                         menuAdministrador();
 
                     }

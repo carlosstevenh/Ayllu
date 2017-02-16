@@ -70,7 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
             <RadioGroup
                 android:id="@+id/rg_repercusiones1"
@@ -203,7 +205,6 @@
             android:layout_gravity="left"
             android:background="@color/colorTitleForm"
             android:textColor="@color/colorPrimaryText"
-
             android:padding="5dp"/>
 
         <RelativeLayout
@@ -279,8 +280,7 @@
             android:textSize="12sp"
             android:layout_gravity="left"
             android:background="@color/colorTitleForm"
-            android:textColor="@color/colorPrimaryText"
-            android:padding="5dp"/>
+            android:textColor="@color/colorPrimaryText"/>
 
         <LinearLayout
             android:id="@+id/area_porcentaje"
@@ -330,8 +330,7 @@
             android:textSize="12sp"
             android:layout_gravity="left"
             android:background="@color/colorTitleForm"
-            android:textColor="@color/colorPrimaryText"
-            android:padding="5dp"/>
+            android:textColor="@color/colorPrimaryText"/>
 
         <LinearLayout
             android:id="@+id/area_frecuencia"

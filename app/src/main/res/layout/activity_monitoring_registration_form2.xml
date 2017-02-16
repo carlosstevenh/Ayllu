@@ -36,8 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Establece en que punto se origino la afectación."
-            android:textSize="18sp" />
-
+            android:textSize="18sp"/>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_monitoring_registration_form2" />

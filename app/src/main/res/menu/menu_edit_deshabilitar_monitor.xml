@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/edit"
+        android:title="Editar Monitor"></item>
+    <item android:id="@+id/desHabilitar"
+        android:title="Deshabilitar Monitor"></item>
+
+
+</menu>

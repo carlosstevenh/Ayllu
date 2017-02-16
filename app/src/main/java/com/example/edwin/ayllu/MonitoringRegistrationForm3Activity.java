@@ -7,12 +7,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
@@ -21,8 +26,14 @@ import com.example.edwin.ayllu.io.ApiConstants;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +54,11 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
     String origen = "10";
     String fecha = "", porcentaje = "", frecuencia = "";
 
+    //camara
+    private ImageButton upload;
+    private String foto;
+    private File file = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +77,14 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
 
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         String format = s.format(new Date());
+        fecha = format;
         et_fecha.setText(format);
         et_fecha.setEnabled(false);
         et_porcentaje.setFocusable(true);
 
         //------------------------------------------------------------------------------------------
         //Se obtiene los parametros enviados por el Formulario 3
+        upload = (ImageButton) findViewById(R.id.upload);
         Intent intent = getIntent();
 
         monitor = intent.getStringExtra("MONITOR");
@@ -79,8 +97,35 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
         Cursor cursor = taskDbHelper.generateQuery("SELECT * FROM ");
         int size = cursor.getCount();
 
-        if(cursor.moveToFirst())createSimpleDialog(""+cursor.getString(1)+cursor.getString(2),"INFORMACIÓN"+size).show();
+        monitor = intent.getStringExtra("MONITOR");
+        Toast.makeText(
+                MonitoringRegistrationForm3Activity.this,
+                ""+monitor,
+                Toast.LENGTH_SHORT)
+                .show();
 
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCamara();
+            }
+        });
+
+    }
+    public void getCamara(){
+
+        Intent cameraIntent = new Intent(
+                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        File imagesFolder = new File(
+                Environment.getExternalStorageDirectory(), "Ayllu");
+        imagesFolder.mkdirs();
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String format = s.format(new Date());
+        foto = format+".jpg";
+        file = new File(imagesFolder, foto);
+        Uri uriSavedImage = Uri.fromFile(file);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+        startActivityForResult(cameraIntent, 1);
     }
     //==============================================================================================
     //Metodo para validar la selección del Checkbox Repercusiones
@@ -125,12 +170,10 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
     //==============================================================================================
     //Metodo para validar las Cajas de Texto del Formulario
     public boolean comprobarCajasTexto(View view) {
-
-        fecha = et_fecha.getText().toString();
         porcentaje = et_porcentaje.getText().toString();
         frecuencia = et_frecuencia.getText().toString();
 
-        if (fecha.equals("") || porcentaje.equals("") || frecuencia.equals("")) return false;
+        if (porcentaje.equals("") || frecuencia.equals("")) return false;
         else return true;
     }
     //==============================================================================================
@@ -147,8 +190,9 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
                     int por = Integer.parseInt(porcentaje);
                     int fre = Integer.parseInt(frecuencia);
                     String rep = "";
+
                     for (int i = 0; i < 4; i++) rep += "" + repercusiones[i];
-                    Task tk = new Task(monitor, variable, area, latitud, longitud, fecha, rep, origen, por, fre);
+                    Task tk = new Task(monitor, variable, area, latitud, longitud, fecha, rep, origen, por, fre,file.getName());
 
                     if (wifiConected()) {
 
@@ -156,6 +200,26 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
                         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
                         httpClient.addInterceptor(logging);
+
+                        //upload image
+                        if(file != null){
+                            PostClient service1 = PostClient.retrofit.create(PostClient.class);
+                            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            Call<String> call1 = service1.uploadAttachment(filePart);
+                            call1.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Toast login = Toast.makeText(getApplicationContext(),
+                                            "Registro exitoso", Toast.LENGTH_SHORT);
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+
+                                }
+                            });
+                        }
 
                         Retrofit retrofit = new Retrofit.Builder()
                                 .baseUrl(ApiConstants.URL_API_AYLLU)
@@ -184,6 +248,11 @@ public class MonitoringRegistrationForm3Activity extends AppCompatActivity imple
                         createSimpleDialog("Dispositivo sin Internet", "ALERTA").show();
                         TaskDbHelper taskDbHelper = new TaskDbHelper(this);
                         taskDbHelper.saveTask(tk);
+
+                        Intent intent = new Intent(MonitoringRegistrationForm3Activity.this, MonitorMenuActivity.class);
+                        intent.putExtra("MONITOR", monitor + "");
+                        startActivity(intent);
+                        finish();
                     }
                 } else
                     createSimpleDialog("Existen campos sin llenar", "ERROR FORMULARIO INCOMPLETO").show();

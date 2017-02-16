@@ -16,5 +16,6 @@ public class TaskContract {
         public static final String ORIGEN = "origen";
         public static final String PORCENTAJE = "porcentaje";
         public static final String FRECUENCIA = "frecuencia";
+        public static final String NOMBRE = "nombre";
     }
 }

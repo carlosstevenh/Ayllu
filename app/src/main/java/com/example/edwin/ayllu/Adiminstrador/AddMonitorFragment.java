@@ -114,6 +114,12 @@ public class AddMonitorFragment extends Fragment {
 
                                     bd1.close();
 
+                                    etI.setText("");
+                                    etN.setText("");
+                                    etA.setText("");
+                                    etC.setText("");
+                                    bt.setText("");
+
                                 }
 
                                 @Override

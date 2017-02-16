@@ -29,7 +29,8 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 + TaskEntry.REPERCUSIONES + " TEXT NOT NULL, "
                 + TaskEntry.ORIGEN + " TEXT NOT NULL, "
                 + TaskEntry.PORCENTAJE + " TEXT NOT NULL, "
-                + TaskEntry.FRECUENCIA + " TEXT NOT NULL )");
+                + TaskEntry.FRECUENCIA + " TEXT NOT NULL, "
+                + TaskEntry.NOMBRE + " TEXT NOT NULL )");
     }
 
     @Override

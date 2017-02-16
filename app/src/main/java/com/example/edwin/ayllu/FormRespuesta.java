@@ -11,8 +11,6 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.edwin.ayllu.domain.Usuario;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +41,15 @@ public class FormRespuesta extends AppCompatActivity {
         rec = (Spinner) findViewById(R.id.spinner_rec);
 
         eval = new ArrayList<String>();
-        res = new ArrayList<String>();
+        eval.add("Insignificantes");
+        eval.add("Menores");
+        eval.add("Significativas");
 
-        for(int i = 1; i < 4; i++ )eval.add(""+i);
-        for(int i = 1; i < 5; i++ )res.add(""+i);
+        res = new ArrayList<String>();
+        res.add("Ninguna Capacidad");
+        res.add("Capacidad baja");
+        res.add("Capacidad media");
+        res.add("Capacidad alta");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item,  eval);
@@ -91,13 +94,17 @@ public class FormRespuesta extends AppCompatActivity {
         }
 
         bd.close();
+        String evaluacion = "";
+        String aux = String.valueOf(eva.getSelectedItem());
+        if (aux.equals("Insignificantes")) evaluacion="1";
+        else if (aux.equals("Menores")) evaluacion = "2";
+        else evaluacion = "3";
 
-        String evaluacion = String.valueOf(eva.getSelectedItem());
-        String personal = String.valueOf(per.getSelectedItem());
-        String tiempo = String.valueOf(tie.getSelectedItem());
-        String presupuesto = String.valueOf(pre.getSelectedItem());
-        String conocimiento = String.valueOf(con.getSelectedItem());
-        String recursos = String.valueOf(rec.getSelectedItem());
+        String personal = comparar(String.valueOf(per.getSelectedItem()));
+        String tiempo = comparar(String.valueOf(tie.getSelectedItem()));
+        String presupuesto = comparar(String.valueOf(pre.getSelectedItem()));
+        String conocimiento = comparar(String.valueOf(con.getSelectedItem()));
+        String recursos = comparar(String.valueOf(rec.getSelectedItem()));
 
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<String>> requestUser = service.addRespuesta(pa,fm, evaluacion,personal,tiempo,presupuesto,recursos,conocimiento,monitor);
@@ -121,5 +128,14 @@ public class FormRespuesta extends AppCompatActivity {
             }
         });
         Log.i("TAG", "punto aaa: " +monitor);
+    }
+    private String comparar(String cad){
+        String aux ="";
+        if(cad.equals("Ninguna Capacidad")) aux = "1";
+        else if (cad.equals("Capacidad baja")) aux = "2";
+        else if (cad.equals("Capacidad media")) aux = "3";
+        else if (cad.equals("Capacidad alta")) aux = "4";
+        return aux;
+
     }
 }
