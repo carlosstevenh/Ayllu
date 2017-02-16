@@ -175,8 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
     void menuAdministrador(){
 
-        Intent i=new Intent(this, Administrador
-                .class);
+        Intent i=new Intent(this, Administrador.class);
         startActivity(i);
         finish();
 

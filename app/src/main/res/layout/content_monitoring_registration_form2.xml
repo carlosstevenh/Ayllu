@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_form"
+    android:id="@+id/content_form2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,8 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.edwin.ayllu.MonitoringRegistrationForm2Activity"
-    tools:showIn="@layout/activity_monitoring_registration_form2"
-    android:gravity="center_vertical">
+    tools:showIn="@layout/activity_monitoring_registration_form2">
 
     <RelativeLayout
         android:gravity="center_vertical"
@@ -22,50 +21,36 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_longitud"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="157dp"
-            android:layout_marginStart="157dp"
-            android:layout_marginTop="67dp"
-            android:id="@+id/et_longitud" />
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/et_longitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Longitud"
+                android:inputType="number"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_latitud"
+            android:layout_below="@id/til_longitud"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:layout_below="@+id/et_longitud"
-            android:layout_alignRight="@+id/et_longitud"
-            android:layout_alignEnd="@+id/et_longitud"
-            android:layout_marginTop="57dp"
-            android:id="@+id/et_latitud"
-            android:layout_alignLeft="@+id/et_longitud"
-            android:layout_alignStart="@+id/et_longitud" />
+            android:layout_height="wrap_content">
 
-
-        <TextView
-            android:text="LONGITUD: "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/et_latitud"
-            android:id="@+id/textView" />
-
-        <TextView
-            android:text="LATITUD:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_alignBaseline="@+id/et_latitud"
-            android:layout_alignBottom="@+id/et_latitud"
-            android:layout_alignRight="@+id/textView"
-            android:layout_alignEnd="@+id/textView" />
-
+            <EditText
+                android:id="@+id/et_latitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Latitud"
+                android:inputType="number"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -73,28 +58,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/btn_factores"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/et_latitud"
             android:background="@color/colorPrimaryDark"
             android:text="FACTORES"
             android:textColor="#fff"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btn_variables"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/et_latitud"
             android:background="@color/colorPrimaryDark"
             android:text="VARIABLES"
             android:textColor="#fff"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:layout_margin="5dp"/>
     </LinearLayout>
 </RelativeLayout>

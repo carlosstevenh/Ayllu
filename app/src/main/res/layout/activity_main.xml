@@ -5,36 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.example.edwin.ayllu.MainActivity"
-    android:gravity="center_vertical|center_horizontal">
+    android:gravity="center_vertical|center_horizontal"
+    tools:context="com.example.edwin.ayllu.MainActivity">
+
+    <ImageView
+        android:id="@+id/logo_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_login" />
 
     <LinearLayout
         android:id="@+id/form_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical|center_horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_login"
-            android:layout_marginTop="78dp"
-            android:id="@+id/imageView3"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_below="@id/logo_login"
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/til_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
 
             <EditText
                 android:id="@+id/txtName"
@@ -43,15 +39,15 @@
                 android:ems="10"
                 android:hint="Identificación"
                 android:inputType="number"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/til_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
 
             <EditText
                 android:id="@+id/txtPsw"
@@ -62,21 +58,19 @@
                 android:inputType="textPassword"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
-
     </LinearLayout>
 
     <Button
-        android:text="@string/login"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:textSize="24dp"
-        android:textColor="@color/colorTextIcons"
         android:id="@+id/btnLogin"
-        android:onClick="login"
+        android:layout_below="@id/form_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#323251"
         android:clickable="true"
         android:elevation="2dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:visibility="visible"
-        android:background="#323251"/>
+        android:onClick="login"
+        android:text="@string/login"
+        android:textColor="@color/colorTextIcons"
+        android:textSize="24sp"
+        android:visibility="visible" />
 </RelativeLayout>

@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="185dp"
+        android:layout_height="193dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
 
@@ -24,19 +24,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REGISTRO DE COORDENADA"
-            android:textSize="24sp"
-            android:textColor="#fff"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"/>
+            android:text="REGISTRO DE COORDENADA"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="Establece en que punto se origino la afectación."
-            android:textSize="18sp"
-            android:layout_marginLeft="20dp"/>
-
+            android:textSize="18sp"/>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_monitoring_registration_form2" />
@@ -48,6 +48,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_next"
         app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

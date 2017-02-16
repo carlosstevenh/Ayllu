@@ -1,16 +1,17 @@
 package com.example.edwin.ayllu;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
+
 public class MonitorMenuActivity extends AppCompatActivity {
 
+    private static final String NOMBRE_DOCUMENTO = "reporte.xls";
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
+
+    FileOutputStream out = null;
 
     String monitor = "";
 
@@ -78,8 +95,9 @@ public class MonitorMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int current = getItem(0);
-                if(current == 0)launchHomeScreen();
-                else if (current ==1)respustaAdmnistrativa();
+                if (current == 0) launchHomeScreen();
+                else if (current == 1) respustaAdmnistrativa();
+                else if (current == 2) launchMotorBusqueda();
                 else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Funcionalidad en Construccion", Toast.LENGTH_LONG);
                     toast.show();
@@ -90,17 +108,17 @@ public class MonitorMenuActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current = getItem(+1);
+                /*int current = getItem(+1);
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
                     current = 0;
                     viewPager.setCurrentItem(current);
-                }
+                }*/
+
             }
         });
-
         Toast.makeText(
                 MonitorMenuActivity.this,
                 "MONITOR: " + monitor,
@@ -133,10 +151,11 @@ public class MonitorMenuActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         Intent intent = new Intent(MonitorMenuActivity.this, MonitoringRegistrationForm1Activity.class);
-        intent.putExtra("MONITOR",monitor);
+        intent.putExtra("MONITOR", monitor);
         startActivity(intent);
         finish();
     }
+
     private void respustaAdmnistrativa() {
         Intent intent = new Intent(MonitorMenuActivity.this, SeleccionArea.class);
         intent.putExtra("MONITOR",monitor);
@@ -144,11 +163,20 @@ public class MonitorMenuActivity extends AppCompatActivity {
         //finish();
     }
 
+    private void launchMotorBusqueda(){
+        Intent intent = new Intent(MonitorMenuActivity.this, MonitorActivity.class);
+        intent.putExtra("MONITOR", monitor);
+        startActivity(intent);
+        finish();
+    }
+
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
-        public void onPageSelected(int position) {addBottomDots(position);}
+        public void onPageSelected(int position) {
+            addBottomDots(position);
+        }
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {

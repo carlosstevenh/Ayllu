@@ -1,102 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/content_form3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:gravity="center"
-    tools:context="com.example.edwin.ayllu.MonitoringRegistrationForm1Activity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date"
-        android:text="ZONAS RECONOCIDAS POR EL QHAPAQ ÑAN"
-        android:textSize="35sp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:layout_marginBottom="20dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_subtitle"
-        android:text="Seleccione la Zona donde se registrara el punto"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:layout_below="@+id/date"/>
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.edwin.ayllu.MonitoringRegistrationForm1Activity"
+    tools:showIn="@layout/activity_monitoring_registration_form1">
 
     <GridLayout
         android:id="@+id/gl_menu"
-        android:columnCount="2"
-        android:rowCount="8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="30dp"
         android:layout_below="@+id/tv_subtitle"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:columnCount="2"
+        android:padding="5dp"
+        android:rowCount="8">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_tramos"
-            android:text="TRAMOS"
-            android:layout_gravity="center"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TRAMOS"
+            android:textStyle="" />
+
+        <TextView
             android:id="@+id/tv_subtramos"
-            android:text="SUBTRAMOS"
-            android:layout_gravity="center"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SUBTRAMOS" />
 
         <ImageButton
             android:id="@+id/btn_tramos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_tramo"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_tramo" />
 
         <ImageButton
             android:id="@+id/btn_subtramos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_subtramos"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_subtramos" />
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_secciones"
-            android:text="SECCIONES"
-            android:layout_gravity="center"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SECCIONES" />
+
+        <TextView
             android:id="@+id/tv_areas"
-            android:text="AREAS"
-            android:layout_gravity="center"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="AREAS" />
 
         <ImageButton
             android:id="@+id/btn_secciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_secciones"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_secciones" />
 
         <ImageButton
             android:id="@+id/btn_areas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_area"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_area" />
 
     </GridLayout>
-
-</RelativeLayout>
+</LinearLayout>

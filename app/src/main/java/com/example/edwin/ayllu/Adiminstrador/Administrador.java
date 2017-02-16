@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
@@ -19,17 +18,19 @@ import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.MainActivity;
 import com.example.edwin.ayllu.MonitorMenuActivity;
 import com.example.edwin.ayllu.R;
+
 import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Administrador extends AppCompatActivity implements AddMonitorFragment.OnFragmentInteractionListener,
-EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragmentInteractionListener{
+        EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragmentInteractionListener {
     private Toolbar toolbar;//Declaramos el Toolbar
     private FrameLayout fl;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
     //private static final String TAG = "ERRORES";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
         tabLayout.setupWithViewPager(viewPager);
 
     }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AddMonitorFragment(), "Registrar monitor");
@@ -57,17 +59,13 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_administrador_,menu);
+        getMenuInflater().inflate(R.menu.menu_administrador_, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        /*if (id == R.id.admin) {
-            fragmentAdministrador();
-            return true;
-        }*/
         switch (id) {
             case R.id.moni:
                 Intent intent = new Intent(Administrador.this, MonitorMenuActivity.class);
@@ -75,12 +73,11 @@ EditMonitorFragment.OnFragmentInteractionListener, DeleteMonitorFragment.OnFragm
                 finish();
                 return true;
             case R.id.salir:
-                Intent i	=	new	Intent(this, MainActivity.class);
+                Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
-                AdminSQLite admin = new AdminSQLite(getApplicationContext(),"login", null, 1);
+                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                 SQLiteDatabase bd = admin.getWritableDatabase();
-                bd.delete(admin.TABLENAME,null,null);
-                //bd.execSQL("TRUNCATE TABLE "+admin.TABLENAME, null);
+                bd.delete(admin.TABLENAME, null, null);
                 bd.close();
                 return true;
         }

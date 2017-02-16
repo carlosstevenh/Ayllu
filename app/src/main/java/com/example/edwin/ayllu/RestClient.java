@@ -15,10 +15,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-/**
- * Created by steven on 5/11/16.
- */
-
 public interface RestClient {
 
     String BASE_URL="http://138.68.40.165/webservice/";
