@@ -33,7 +33,9 @@
         <activity android:name=".SeleccionArea" />
         <activity android:name=".MonitoreosActivity" />
         <activity android:name=".FormRespuesta" />
-        <activity android:name=".MonitorActivity"></activity>
+        <activity android:name=".MonitorActivity" />
+        <activity android:name=".MontoreosPuntosCriticos" />
+        <activity android:name=".InformacionPuntoCritico"></activity>
     </application>
 
 </manifest>
