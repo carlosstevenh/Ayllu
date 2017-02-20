@@ -157,7 +157,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
         finish();
     }
     private void puntosCriticos(){
-        Intent intent = new Intent(MonitorMenuActivity.this,MontoreosPuntosCriticos.class);
+        Intent intent = new Intent(MonitorMenuActivity.this,FiltrarActividad.class);
         intent.putExtra("Monitor",monitor);
         startActivity(intent);
     }

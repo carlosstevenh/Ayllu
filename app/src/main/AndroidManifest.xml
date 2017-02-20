@@ -35,7 +35,8 @@
         <activity android:name=".FormRespuesta" />
         <activity android:name=".MonitorActivity" />
         <activity android:name=".MontoreosPuntosCriticos" />
-        <activity android:name=".InformacionPuntoCritico"></activity>
+        <activity android:name=".InformacionPuntoCritico" />
+        <activity android:name=".FiltrarActividad"></activity>
     </application>
 
 </manifest>

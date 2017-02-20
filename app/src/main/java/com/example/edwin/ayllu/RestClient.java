@@ -2,6 +2,7 @@ package com.example.edwin.ayllu;
 
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
+import com.example.edwin.ayllu.domain.Pais;
 import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.example.edwin.ayllu.domain.Usuario;
 
@@ -19,7 +20,10 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://192.168.1.5/webservice/";
+    String BASE_URL="http://10.42.0.206/webservice/";
+
+    @GET("getPais")
+    Call<ArrayList<Pais>> getPais();
 
     @GET ("descripcionPC/{paf}/{fecha}")
     Call<ArrayList<MonitoreoGeneral>> informacion (@Path("paf") String paf,

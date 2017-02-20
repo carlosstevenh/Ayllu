@@ -59,7 +59,7 @@
     <string name="subtramo">Subtramo</string>
     <string name="area">Area</string>
     <string name="factor">Factor</string>
-    <string name="seccion">Seccion</string>
+    <string name="seccion">Sección</string>
     <string name="tramo">Tramo</string>
     <string name="puntos_criticos">PUNTOS CRITICOS</string>
     <string name="user">Monitor</string>
@@ -67,4 +67,6 @@
     <string name="latitud">Latitud</string>
     <string name="longitud">Longitud</string>
     <string name="getPruebas">Obtener Pruebas</string>
+    <string name="title_activity_filtrar">FiltrarActivity</string>
+    <string name="FILTRAR">FILTRAR</string>
 </resources>
