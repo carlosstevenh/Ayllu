@@ -5,16 +5,17 @@
     tools:context="com.example.edwin.ayllu.Adiminstrador.AddMonitorFragment">
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="25dp"
-        android:id="@+id/txtide"
-        android:hint="@string/identificacion"
-        android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_marginTop="25dp"
+            android:id="@+id/txtide"
+            android:hint="@string/identificacion"
+            android:layout_below="@+id/textView6"
+            android:layout_centerHorizontal="true"
+            android:singleLine="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,16 +27,8 @@
         android:hint="@string/name"
         android:layout_below="@+id/txtide"
         android:layout_alignLeft="@+id/txtide"
-        android:layout_alignStart="@+id/txtide" />
-
-    <Button
-        android:text="Registrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="105dp"
-        android:id="@+id/btnReg"
-        android:layout_below="@+id/txtApe"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/txtide"
+        android:singleLine="true" />
 
     <TextView
         android:text="@string/addMonitor"
@@ -59,17 +52,42 @@
         android:layout_below="@+id/txtname"
         android:layout_alignLeft="@+id/txtname"
         android:layout_alignStart="@+id/txtname"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:singleLine="true" />
+
+    <Button
+        android:text="Registrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:id="@+id/btnReg"
+        android:layout_below="@+id/contraseña2"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/txtCon"
         android:hint="@string/contrasena"
+        android:layout_marginTop="13dp"
+        android:singleLine="true"
         android:layout_below="@+id/txtApe"
         android:layout_alignLeft="@+id/txtApe"
         android:layout_alignStart="@+id/txtApe"
-        android:layout_marginTop="16dp" />
+        android:visibility="visible" />
+
+    <EditText
+        android:hint="@string/contrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contraseña2"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:ems="10"
+        android:layout_below="@+id/txtCon"
+        android:layout_alignLeft="@+id/txtCon"
+        android:layout_alignStart="@+id/txtCon"
+        android:layout_marginTop="9dp" />
 </RelativeLayout>

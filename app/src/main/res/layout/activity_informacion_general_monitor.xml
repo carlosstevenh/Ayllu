@@ -25,7 +25,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/editMonitor"
+                    android:text="@string/iformacionMonitor"
                     android:textSize="18sp"
                     android:textColor="#fff"
                     android:layout_marginLeft="20dp"
@@ -46,7 +46,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="@string/editMonitor"
+                    android:text="@string/iformacionMonitor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView5"
@@ -82,13 +82,13 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:textStyle="normal|bold" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName|number"
-                                android:ems="10"
                                 android:id="@+id/txtide"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:textSize="18sp" />
+
                         </LinearLayout>
                     </TableRow>
 
@@ -111,13 +111,13 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:textStyle="normal|bold" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:ems="10"
                                 android:id="@+id/txtname"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:textSize="18sp" />
+
                         </LinearLayout>
                     </TableRow>
 
@@ -131,7 +131,7 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:text="@string/apellido"
+                                android:text="@string/ultimoMonitoreo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/textView24"
@@ -140,13 +140,12 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:textStyle="normal|bold" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:ems="10"
-                                android:id="@+id/txtApe"
-                                android:layout_weight="1" />
+                                android:id="@+id/ultMon"
+                                android:layout_weight="1"
+                                android:textSize="18sp" />
 
                         </LinearLayout>
                     </TableRow>
@@ -161,7 +160,7 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:text="@string/contrasena"
+                                android:text="@string/monitoreos"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/textView25"
@@ -170,13 +169,13 @@
                                 android:textSize="18sp"
                                 android:textStyle="normal|bold" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPassword"
-                                android:ems="10"
-                                android:id="@+id/txtCon"
-                                android:layout_weight="1" />
+                                android:id="@+id/mon"
+                                android:layout_weight="1"
+                                android:textSize="18sp" />
+
                         </LinearLayout>
                     </TableRow>
 
@@ -190,33 +189,25 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="220dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/textView26"
-                                android:text="@string/contrasena"
+                                android:text="@string/ResAdm"
                                 android:textSize="18sp"
                                 android:textStyle="normal|bold"
-                                android:textColor="@color/colorPrimaryText"
-                                android:layout_weight="1.09" />
+                                android:textColor="@color/colorPrimaryText" />
 
-                            <EditText
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPassword"
-                                android:ems="10"
-                                android:id="@+id/txtCon2"
-                                android:layout_weight="1" />
+                                android:id="@+id/resAdm"
+                                android:layout_weight="1.09"
+                                android:textSize="18sp" />
 
                         </LinearLayout>
                     </TableRow>
                 </TableLayout>
 
-                <Button
-                    android:text="@string/edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnReg"
-                    android:textSize="18sp" />
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
