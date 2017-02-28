@@ -39,7 +39,7 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -51,9 +51,9 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new DeleteMonitorFragment(), "Inicio");
         adapter.addFragment(new AddMonitorFragment(), "Registrar monitor");
         adapter.addFragment(new EditMonitorFragment(), "Editar/eliminar Monitor");
-        adapter.addFragment(new DeleteMonitorFragment(), "Editar información");
         viewPager.setAdapter(adapter);
     }
 
@@ -89,38 +89,7 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
     public void onFragmentInteraction(Uri uri) {
 
     }
-    /*
-    private void fragmentAdministrador(){
-        //if(mf!=null) mf.onDestroyView();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        //ft.add(R.id.layoutFragment, new AdministradorFragment(),
-          //      "administrador");
-        af = new AdministradorFragment();
-        ft.add(R.id.layoutFragment,af);
 
-        ft.commit();
-        //af.onStop();
-
-
-    }
-
-    private void fragmentMonitor(){
-        //f(af!=null)Log.i("TAG", "nnn "+af.isRemoving());
-        //af.i
-        //Log.i("TAG", "tag:  "+af.getTag());
-        //Log.i("TAG", "id: "+af.getId());
-        //if(!af.isRemoving()) af.onStop();
-        fl.destroyDrawingCache();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        //ft.add(R.id.layoutFragment, new MonitorFragment(),
-        //        "monitor");
-        mf = new MonitorFragment();
-        ft.add(R.id.layoutFragment,mf);
-
-        ft.commit();
-    }*/
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

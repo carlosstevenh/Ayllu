@@ -1,6 +1,11 @@
 package com.example.edwin.ayllu;
 
+import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
+import com.example.edwin.ayllu.domain.MonitoreoGeneral;
+import com.example.edwin.ayllu.domain.Pais;
+import com.example.edwin.ayllu.domain.PuntoCritico;
+import com.example.edwin.ayllu.domain.ResumenMonitor;
 import com.example.edwin.ayllu.domain.Usuario;
 
 import java.util.ArrayList;
@@ -17,12 +22,26 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://138.68.40.165/webservice/";
+    String BASE_URL="http://192.168.56.1/webservice/";
 
-    @GET("addPrueba/{nom}/{fec}/{codPaf}")
-    Call<ArrayList<String>> addPrueba (@Path("nom") String nom,
-                                       @Path("fec") String fec,
-                                       @Path("codPaf") String codPaf);
+    @GET("resumenMonitor/{ide}")
+    Call<ArrayList<ResumenMonitor>> resumenMonitor(@Path("ide") String ide);
+
+    @GET("filtrarMonitoreosConFecha/{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{fi}/{ff}/{fac}/{var}")
+    Call<ArrayList<PuntoCritico>> getFiltro(@Path("p1") String p1,
+                                            @Path("p2") String p2,
+                                            @Path("p3") String p3,
+                                            @Path("p4") String p4,
+                                            @Path("p5") String p5,
+                                            @Path("p6") String p6,
+                                            @Path("fi") String fi,
+                                            @Path("ff") String ff,
+                                            @Path("fac") String fac,
+                                            @Path("var") String var);
+    @GET ("descripcionPC/{paf}/{fecha}")
+    Call<ArrayList<MonitoreoGeneral>> informacion (@Path("paf") String paf,
+                                                   @Path("fecha") String fec);
+
     @GET("login/{ide_usu}/{pw_usu}")
     Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,
                                         @Path("pw_usu") String contrasena_usu);
@@ -63,6 +82,7 @@ public interface RestClient {
                                           @Path("rec") String rec,
                                           @Path("con") String con,
                                           @Path("mon") String mon);
+
 
     public static final Retrofit retrofit = new Retrofit.Builder().baseUrl(RestClient.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build();

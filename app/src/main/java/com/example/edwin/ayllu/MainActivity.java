@@ -1,8 +1,10 @@
 package com.example.edwin.ayllu;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         et1=(EditText)findViewById(R.id.txtName);
         et2=(EditText)findViewById(R.id.txtPsw);
 
@@ -42,12 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View v) {
 
+        final ProgressDialog loading = ProgressDialog.show(this,"Iniciando sesión","Por favor espere...",false,false);
+
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Usuario>> requestUser = service.getUsuario(et1.getText().toString(),et2.getText().toString());
         requestUser.enqueue(new Callback<ArrayList<Usuario>>() {
+
             @Override
             public void onResponse(Call<ArrayList<Usuario>>call, Response<ArrayList<Usuario>> response) {
+                loading.dismiss();
                 if (response.isSuccessful()) {
+
                     u = response.body();
                     user=u.get(0);
 
@@ -98,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
+
+                loading.dismiss();
                 Log.e(TAG,"Error al iniciar sesión!!!!"+ t.getMessage());
                 Toast login = Toast.makeText(getApplicationContext(),
                         "Error al iniciar sesión", Toast.LENGTH_SHORT);
@@ -106,23 +114,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-        /*try {
-            loginUserSin(et1.getText().toString(),et2.getText().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
-    void loginUserSin(String ide,String pw) throws IOException {
-        RestClient service = RestClient.retrofit.create(RestClient.class);
-        Call<ArrayList<Usuario>> request = service.getUsuario(ide,pw);
-        Response<ArrayList<Usuario>> aux = request.execute();
-        if(aux.isSuccessful())u = aux.body();
-        //u = request.execute();
-        //u = request.execute().body();
-        user = u.get(0);
 
-    }
     void getUsuarios(String pais, final AdminSQLite al){
         Log.i("TAG", "AA:> " +pais);
         RestClient service = RestClient.retrofit.create(RestClient.class);
@@ -167,12 +160,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void loginUser(String ide, String pw){
-
-
-
-
-    }
     void menuAdministrador(){
 
         Intent i=new Intent(this, Administrador.class);
@@ -181,3 +168,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
