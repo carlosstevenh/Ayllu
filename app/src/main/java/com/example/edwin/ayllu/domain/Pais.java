@@ -1,35 +1,56 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+
+import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by steven on 19/02/17.
- */
+import static com.example.edwin.ayllu.domain.PaisContract.PaisEntry;
 
 public class Pais {
-    @SerializedName("codigo_pais")
-    private String codigo;
-    @SerializedName("nombre_pais")
-    private String nombre;
+    //----------------------------------------------------------------------------------------------
+    //Atributos de la clase Pais
+    @SerializedName(JsonKeys.CODIGO_PAIS)
+    String codigo_p;
+    @SerializedName(JsonKeys.NOMBRE_PAIS)
+    String nombre_p;
 
-    public Pais(String codigo, String nombre) {
-        this.codigo = codigo;
-        this.nombre = nombre;
+    //----------------------------------------------------------------------------------------------
+    //Constructor de la clase Pais
+    public Pais(String codigo_p, String nombre_p) {
+        this.codigo_p = codigo_p;
+        this.nombre_p = nombre_p;
     }
 
-    public String getCodigo() {
-        return codigo;
+    //----------------------------------------------------------------------------------------------
+    //Constructor Vacio
+    public Pais() {
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    //----------------------------------------------------------------------------------------------
+    //METODO: Procesar datos para la tabla Paises
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(PaisEntry.CODIGO, codigo_p);
+        values.put(PaisEntry.NOMBRE, nombre_p);
+        return values;
     }
 
-    public String getNombre() {
-        return nombre;
+    //----------------------------------------------------------------------------------------------
+    //Getter y Setter de la clase Tramo
+    public String getCodigo_p() {
+        return codigo_p;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCodigo_p(String codigo_p) {
+        this.codigo_p = codigo_p;
+    }
+
+    public String getNombre_p() {
+        return nombre_p;
+    }
+
+    public void setNombre_p(String nombre_p) {
+        this.nombre_p = nombre_p;
     }
 }

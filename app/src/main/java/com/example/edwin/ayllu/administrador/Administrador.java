@@ -1,4 +1,4 @@
-package com.example.edwin.ayllu.Adiminstrador;
+package com.example.edwin.ayllu.administrador;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;

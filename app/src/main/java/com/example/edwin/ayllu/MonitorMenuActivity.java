@@ -1,4 +1,5 @@
 package com.example.edwin.ayllu;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -47,7 +48,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
 
     FileOutputStream out = null;
 
-    String monitor = "";
+    String monitor = "", pais = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,10 @@ public class MonitorMenuActivity extends AppCompatActivity {
         AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
         SQLiteDatabase bd = admin.getReadableDatabase();
 
-        Cursor cursor = bd.rawQuery("SELECT codigo FROM login LIMIT 1", null);
+        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
         cursor.moveToFirst();
         monitor = cursor.getString(0);
+        pais = cursor.getString(1);
 
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -95,7 +97,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int current = getItem(0);
-                if (current == 0) launchHomeScreen();
+                if (current == 0) launchPrueba();
                 else if (current == 1) respustaAdmnistrativa();
                 else if (current == 2) launchMotorBusqueda();
                 else if (current == 3) puntosCriticos();
@@ -163,14 +165,22 @@ public class MonitorMenuActivity extends AppCompatActivity {
     }
     private void respustaAdmnistrativa() {
         Intent intent = new Intent(MonitorMenuActivity.this, SeleccionArea.class);
-        intent.putExtra("MONITOR",monitor);
+        intent.putExtra("MONITOR", monitor);
         startActivity(intent);
         //finish();
     }
 
-    private void launchMotorBusqueda(){
+    private void launchMotorBusqueda() {
         Intent intent = new Intent(MonitorMenuActivity.this, MonitorActivity.class);
         intent.putExtra("MONITOR", monitor);
+        startActivity(intent);
+        finish();
+    }
+
+    private void launchPrueba() {
+        Intent intent = new Intent(MonitorMenuActivity.this, RecordActivity.class);
+        intent.putExtra("MONITOR", monitor);
+        intent.putExtra("PAIS", pais);
         startActivity(intent);
         finish();
     }

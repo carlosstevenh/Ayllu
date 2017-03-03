@@ -1,44 +1,56 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
-
-/**
- * Created by edwin on 17/11/16.
- */
+import static com.example.edwin.ayllu.domain.VariableContract.VariableEntry;
 
 public class Variable {
-    @SerializedName(JsonKeys.CODIGO_FACTOR_VARIABLE) String factor;
-    @SerializedName(JsonKeys.NOMBRE_VARIABLE) String nombre_variable;
-    @SerializedName(JsonKeys.CODIGO_VARIABLE) String codigo_variable;
+    //----------------------------------------------------------------------------------------------
+    //Atributos de la clase Variable
+    @SerializedName(JsonKeys.NOMBRE_VARIABLE)
+    String nombre_var;
+    @SerializedName(JsonKeys.FACTOR)
+    String factor_var;
 
-    public String getFactor() {
-        return factor;
+    //----------------------------------------------------------------------------------------------
+    //Constructor de la clase Variable
+    public Variable(String nombre_var, String factor_var) {
+        this.nombre_var = nombre_var;
+        this.factor_var = factor_var;
     }
 
-    public void setFactor(String factor) {
-        this.factor = factor;
+    //----------------------------------------------------------------------------------------------
+    //Constructor vacio
+    public Variable() {
+
     }
 
-    public String getCodigo_variable() {
-        return codigo_variable;
+    //----------------------------------------------------------------------------------------------
+    //METODO: Procesar datos para la tabla Variables
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(VariableEntry.NOMBRE, nombre_var);
+        values.put(VariableEntry.FACTOR, factor_var);
+        return values;
     }
 
-    public void setCodigo_variable(String codigo_variable) {
-        this.codigo_variable = codigo_variable;
+    //----------------------------------------------------------------------------------------------
+    //Getter y Setter de la clase Variable
+    public String getNombre_var() {
+        return nombre_var;
     }
 
-    public String getNombre_variable() {
-        return nombre_variable;
+    public void setNombre_var(String nombre_var) {
+        this.nombre_var = nombre_var;
     }
 
-    public void setNombre_variable(String nombre_variable) {
-        this.nombre_variable = nombre_variable;
+    public String getFactor_var() {
+        return factor_var;
     }
 
-    public Variable(String codigo, String nombre, String cod_factor){
-        this.codigo_variable = codigo;
-        this.nombre_variable = nombre;
-        this.factor = cod_factor;
+    public void setFactor_var(String factor_var) {
+        this.factor_var = factor_var;
     }
 }

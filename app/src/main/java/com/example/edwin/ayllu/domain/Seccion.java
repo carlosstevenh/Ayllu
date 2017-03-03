@@ -1,42 +1,67 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
+import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
 
 public class Seccion {
-    @SerializedName(JsonKeys.CODIGO_SECCION) String codigo_seccion;
-    @SerializedName(JsonKeys.DESCRIPCION_SECCION) String descripcion_seccion;
-    @SerializedName(JsonKeys.CODIGO_SUBTRAMO_SECCION) String subtramo;
+    //----------------------------------------------------------------------------------------------
+    //Atributos de la clase Seccion
+    @SerializedName(JsonKeys.CODIGO_SECCION)
+    int codigo_sec;
+    @SerializedName(JsonKeys.DESCRIPCION_SECCION)
+    String descripcion_sec;
+    @SerializedName(JsonKeys.SUBTRAMO)
+    int subtramo_sec;
 
-    public Seccion(String codigo, String descripcion, String subtramo){
-        this.codigo_seccion = codigo;
-        this.descripcion_seccion = descripcion;
-        this.subtramo = subtramo;
+    //----------------------------------------------------------------------------------------------
+    //Constructor de la clase Seccion
+    public Seccion(int codigo, String descripcion, int subtramo) {
+        this.codigo_sec = codigo;
+        this.descripcion_sec = descripcion;
+        this.subtramo_sec = subtramo;
     }
 
-    public String getCodigo_seccion() {
-        return codigo_seccion;
+    //----------------------------------------------------------------------------------------------
+    //Constructor vacio
+    public Seccion() {
     }
 
-    public void setCodigo_seccion(String codigo_seccion) {
-        this.codigo_seccion = codigo_seccion;
+    //----------------------------------------------------------------------------------------------
+    //METODO: Procesar datos para la tabla Secciones
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(SeccionEntry.CODIGO, codigo_sec);
+        values.put(SeccionEntry.DESCRIPCION, descripcion_sec);
+        values.put(SeccionEntry.SUBTRAMO, subtramo_sec);
+        return values;
     }
 
-    public String getDescripcion_seccion() {
-        return descripcion_seccion;
+    //----------------------------------------------------------------------------------------------
+    //Getter y Setter de la clase Seccion
+    public int getCodigo_sec() {
+        return codigo_sec;
     }
 
-    public void setDescripcion_seccion(String descripcion_seccion) {
-        this.descripcion_seccion = descripcion_seccion;
+    public void setCodigo_sec(int codigo_sec) {
+        this.codigo_sec = codigo_sec;
     }
 
-    public String getSubtramo() {
-        return subtramo;
+    public String getDescripcion_sec() {
+        return descripcion_sec;
     }
 
-    public void setSubtramo(String subtramo) {
-        this.subtramo = subtramo;
+    public void setDescripcion_sec(String descripcion_sec) {
+        this.descripcion_sec = descripcion_sec;
     }
 
-    public  Seccion(){}
+    public int getSubtramo_sec() {
+        return subtramo_sec;
+    }
+
+    public void setSubtramo_sec(int subtramo_sec) {
+        this.subtramo_sec = subtramo_sec;
+    }
 }

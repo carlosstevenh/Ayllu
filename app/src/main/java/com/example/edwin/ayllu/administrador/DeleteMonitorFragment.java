@@ -1,4 +1,4 @@
-package com.example.edwin.ayllu.Adiminstrador;
+package com.example.edwin.ayllu.administrador;
 
 import android.content.Context;
 import android.net.Uri;

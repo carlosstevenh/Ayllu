@@ -36,7 +36,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        /*
         //------------------------------------------------------------------------------------------
         //ARGENTINA
         tramos.add(new Tramo(1, "Otros-Tramos-Argentina", "01"));
@@ -122,7 +122,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
         areas.add(new Area("24", "C", "Rosal de Chapal", "24"));
         areas.add(new Area("25", "C", "Guapuscal Bajo", "25"));
         areas.add(new Area("26", "C", "Inantaz", "26"));
-        areas.add(new Area("27", "C", "Los Ajos", "27"));
+        areas.add(new Area("27", "C", "Los Ajos", "27"));*/
 
         items_tramos = new CharSequence[tramos.size()];
         for (int i=0; i<tramos.size(); i++) items_tramos[i] = tramos.get(i).getDescripcion_t();
@@ -132,12 +132,6 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
 
         Intent intent = getIntent();
         monitor = intent.getStringExtra("MONITOR");
-        Toast.makeText(
-                MonitoringRegistrationForm1Activity.this,
-                ""+monitor,
-                Toast.LENGTH_SHORT)
-                .show();
-
 
         imgBtn_tramos = (ImageButton) findViewById(R.id.btn_tramos);
         imgBtn_subtramos = (ImageButton) findViewById(R.id.btn_subtramos);
@@ -194,7 +188,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
                         int op = which+1;
                         int con = 0;
                         String opc = "";
-
+                        /*
                         switch (zn){
                             case 1:
                                 list_subtramos = new ArrayList<String>();
@@ -269,7 +263,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
                                 break;
                             default:
                                 break;
-                        }
+                        }*/
 
                         Toast.makeText(
                                 MonitoringRegistrationForm1Activity.this,
@@ -321,7 +315,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
         for (int i=0; i<opciones.length; i++)if(opciones[i] == 0) return "";
 
         String resp = "";
-        for (int i=0; i<opciones.length; i++){
+        /*for (int i=0; i<opciones.length; i++){
             switch (i){
                 case 0:
                     for (int j=0; j<tramos.size(); j++){
@@ -350,7 +344,7 @@ public class MonitoringRegistrationForm1Activity extends AppCompatActivity imple
                 default:
                     break;
             }
-        }
+        }*/
         return resp;
     }
 }

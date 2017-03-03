@@ -1,8 +1,7 @@
-package com.example.edwin.ayllu.Adiminstrador;
+package com.example.edwin.ayllu.administrador;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,8 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -30,8 +27,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
-import com.example.edwin.ayllu.MonitoringRegistrationForm1Activity;
-import com.example.edwin.ayllu.MonitoringRegistrationForm2Activity;
 import com.example.edwin.ayllu.RestClient;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;

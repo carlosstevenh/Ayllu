@@ -1,21 +1,46 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
+import static com.example.edwin.ayllu.domain.TramoContract.TramoEntry;
+
 public class Tramo {
+    //----------------------------------------------------------------------------------------------
+    //Atributos de la clase Tramo
+    @SerializedName(JsonKeys.CODIGO_TRAMO)
+    int codigo_t;
+    @SerializedName(JsonKeys.DESCRIPCION_TRAMO)
+    String descripcion_t;
+    @SerializedName(JsonKeys.PAIS)
+    String pais_t;
 
-    @SerializedName(JsonKeys.CODIGO_TRAMO) int codigo_t;
-    @SerializedName(JsonKeys.DESCRIPCION_TRAMO) String descripcion_t;
-    @SerializedName(JsonKeys.PAIS_TRAMO) String pais_t;
-
-    public Tramo(int codigo, String descripcion, String pais){
+    //----------------------------------------------------------------------------------------------
+    //Constructor de la clase Tramo
+    public Tramo(int codigo, String descripcion, String pais) {
         this.codigo_t = codigo;
         this.descripcion_t = descripcion;
         this.pais_t = pais;
     }
 
-    public  Tramo(){}
+    //----------------------------------------------------------------------------------------------
+    //Constructor Vacio
+    public Tramo() {
+    }
+    //----------------------------------------------------------------------------------------------
+    //METODO: Procesar datos para la tabla Tramos
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(TramoEntry.CODIGO, codigo_t);
+        values.put(TramoEntry.DESCRIPCION, descripcion_t);
+        values.put(TramoEntry.PAIS, pais_t);
+        return values;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //Getter y Setter de la clase Tramo
     public int getCodigo_t() {
         return codigo_t;
     }
