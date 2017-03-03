@@ -97,10 +97,10 @@ public class MonitorMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int current = getItem(0);
-                if (current == 0) launchHomeScreen();
+                if (current == 0) launchPrueba();
                 else if (current == 1) respustaAdmnistrativa();
                 else if (current == 2) launchMotorBusqueda();
-                else if (current == 3) launchPrueba();
+                else if (current == 3) puntosCriticos();
                 else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Funcionalidad en Construccion", Toast.LENGTH_LONG);
                     toast.show();
@@ -158,7 +158,11 @@ public class MonitorMenuActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
+    private void puntosCriticos(){
+        Intent intent = new Intent(MonitorMenuActivity.this,FiltrarActividad.class);
+        intent.putExtra("Monitor",monitor);
+        startActivity(intent);
+    }
     private void respustaAdmnistrativa() {
         Intent intent = new Intent(MonitorMenuActivity.this, SeleccionArea.class);
         intent.putExtra("MONITOR", monitor);

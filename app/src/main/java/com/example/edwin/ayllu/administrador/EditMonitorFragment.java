@@ -1,7 +1,10 @@
-package com.example.edwin.ayllu.Adiminstrador;
+package com.example.edwin.ayllu.administrador;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,11 +56,6 @@ public class EditMonitorFragment extends Fragment  {
     private View view;
     private ArrayList<String> res;
 
-    public EditMonitorFragment() {
-        //getUsuarios("01");
-        // Required empty public constructor
-    }
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info =
@@ -83,42 +81,11 @@ public class EditMonitorFragment extends Fragment  {
                 startActivity(intent);
                 return true;
             case R.id.desHabilitar:
-
-                RestClient service = RestClient.retrofit.create(RestClient.class);
-                Call<ArrayList<String>> requestDelete = service.deleteUsuario(aux.getIdentificacion_usu());
-                requestDelete.enqueue(new Callback<ArrayList<String>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                        res = response.body();
-                        //String ide = aux.getIdentificacion_usu();
-                        String aux1 = res.get(0);
-                        if(aux1.equals("1")){
-                            AdminSQLite admin1 = new AdminSQLite( getContext(), "login", null, 1);
-                            SQLiteDatabase bd1 = admin1.getWritableDatabase();
-                            bd1.delete(admin1.TABLENAME, admin1.IDE_USU +"='"+ aux.getIdentificacion_usu() +"'", null);
-                            bd1.close();
-                            Intent intent = new Intent(getContext(),Administrador.class);
-                            startActivity(intent);
-                            Toast login = Toast.makeText(getContext(),
-                                    "Eliminación exitosa", Toast.LENGTH_SHORT);
-                        }
-                        else{
-                            Toast login = Toast.makeText(getContext(),
-                                    "No se pudo eliminar", Toast.LENGTH_SHORT);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-
-                    }
-                });
-
+                createSimpleDialog("Esta seguro que desea deshabilitar el monitor?","Advertencia!!",aux.getIdentificacion_usu()).show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
-        //return super.onContextItemSelected(item);
     }
 
     @Override
@@ -152,10 +119,6 @@ public class EditMonitorFragment extends Fragment  {
 
         UsuariosAdapter ua = cargarLista();
 
-        /*items = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_list_item_1,
-                nombres);*/
         usuarios = (ListView)view.findViewById(R.id.listUser);
         usuarios.setFastScrollEnabled(true);
         usuarios.setAdapter(ua);
@@ -177,7 +140,7 @@ public class EditMonitorFragment extends Fragment  {
                 parametro.putString("cla" , aux.getClave_api());
                 parametro.putString("pais", aux.getPais_usu());
 
-                Intent intent = new Intent(getActivity(),EditMonitor.class);
+                Intent intent = new Intent(getActivity(),InformacionGeneralMonitor.class);
                 intent.putExtras(parametro);
                 startActivity(intent);
 
@@ -295,5 +258,59 @@ public class EditMonitorFragment extends Fragment  {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    public AlertDialog createSimpleDialog(String mensaje, String titulo,String usuario) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final String dh = usuario;
+        builder.setTitle(titulo)
+                .setMessage(mensaje)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog loading = ProgressDialog.show(getContext(),"Deshabilitando monitor","Por favor espere...",false,false);
+                                RestClient service = RestClient.retrofit.create(RestClient.class);
+                                Call<ArrayList<String>> requestDelete = service.deleteUsuario(dh);
+                                requestDelete.enqueue(new Callback<ArrayList<String>>() {
+                                    @Override
+                                    public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                                        loading.dismiss();
+                                        res = response.body();
+                                        //String ide = aux.getIdentificacion_usu();
+                                        String aux1 = res.get(0);
+                                        if(aux1.equals("1")){
+                                            AdminSQLite admin1 = new AdminSQLite( getContext(), "login", null, 1);
+                                            SQLiteDatabase bd1 = admin1.getWritableDatabase();
+                                            bd1.delete(admin1.TABLENAME, admin1.IDE_USU +"='"+ dh +"'", null);
+                                            bd1.close();
+                                            Intent intent = new Intent(getContext(),Administrador.class);
+                                            startActivity(intent);
+                                            Toast login = Toast.makeText(getContext(),
+                                                    "Acción completada", Toast.LENGTH_LONG);
+                                        }
+                                        else{
+                                            Toast login = Toast.makeText(getContext(),
+                                                    "No se pudo Deshabilitar", Toast.LENGTH_LONG);
+                                        }
+                                    }
 
+                                    @Override
+                                    public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                                        Toast login = Toast.makeText(getContext(),
+                                                "No se pudo Deshabilitar", Toast.LENGTH_LONG);
+                                        loading.dismiss();
+                                    }
+                                });
+                                builder.create().dismiss();
+                            }
+                        })
+                .setNegativeButton("CANCELAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
+        return builder.create();
+    }
 }

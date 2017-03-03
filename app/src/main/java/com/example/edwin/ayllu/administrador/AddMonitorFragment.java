@@ -1,6 +1,7 @@
-package com.example.edwin.ayllu.Adiminstrador;
+package com.example.edwin.ayllu.administrador;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +36,7 @@ import retrofit2.Response;
  * to handle interaction events.
  */
 public class AddMonitorFragment extends Fragment {
-    private EditText etI, etN, etA, etC;
+    private EditText etI, etN, etA, etC,etC2;
     private Button bt;
     private ArrayList<String> res;
     private Activity activity;
@@ -57,6 +58,7 @@ public class AddMonitorFragment extends Fragment {
         etN = (EditText)view.findViewById(R.id.txtname);
         etA = (EditText)view.findViewById(R.id.txtApe);
         etC = (EditText)view.findViewById(R.id.txtCon);
+        etC2 = (EditText)view.findViewById(R.id.contraseña2);
         bt = (Button)view.findViewById(R.id.btnReg);
 
         bt.setOnClickListener(new View.OnClickListener() {
@@ -76,80 +78,82 @@ public class AddMonitorFragment extends Fragment {
 
                     } while(datos.moveToNext());
                 }
-
-                //String pais = "01";
                 bd.close();
+                if(etC.getText().toString().equals(etC2.getText().toString())){
+                    final ProgressDialog loading = ProgressDialog.show(getContext(),"Registrando monitor","Por favor espere...",false,false);
+                    RestClient service = RestClient.retrofit.create(RestClient.class);
+                    Call<ArrayList<String>> requestAdd = service.addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),pais);
+                    requestAdd.enqueue(new Callback<ArrayList<String>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                            loading.dismiss();
+                            if (response.isSuccessful()) {
+                                res = response.body();
+                                Toast login = Toast.makeText(getContext(),
+                                        "Registro adicionado", Toast.LENGTH_LONG);
+                                login.show();
 
-                RestClient service = RestClient.retrofit.create(RestClient.class);
-                Call<ArrayList<String>> requestAdd = service.addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),pais);
-                requestAdd.enqueue(new Callback<ArrayList<String>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                        if (response.isSuccessful()) {
-                            res = response.body();
-                            Toast login = Toast.makeText(getContext(),
-                                    "Registro adicionado", Toast.LENGTH_SHORT);
-                            login.show();
+                                RestClient service = RestClient.retrofit.create(RestClient.class);
+                                Call<ArrayList<Usuario>> requestAdd = service.update(etI.getText().toString());
+                                requestAdd.enqueue(new Callback<ArrayList<Usuario>>() {
+                                    @Override
+                                    public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
+                                        ArrayList<Usuario> up = response.body();
+                                        activity = getActivity();
+                                        AdminSQLite al = new AdminSQLite(activity, "login", null, 1);
+                                        SQLiteDatabase bd1 = al.getWritableDatabase();
+                                        ContentValues monitores = new ContentValues();
 
-                            RestClient service = RestClient.retrofit.create(RestClient.class);
-                            Call<ArrayList<Usuario>> requestAdd = service.update(etI.getText().toString());
-                            requestAdd.enqueue(new Callback<ArrayList<Usuario>>() {
-                                @Override
-                                public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
-                                    ArrayList<Usuario> up = response.body();
-                                    activity = getActivity();
-                                    AdminSQLite al = new AdminSQLite(activity, "login", null, 1);
-                                    SQLiteDatabase bd1 = al.getWritableDatabase();
-                                    ContentValues monitores = new ContentValues();
+                                        monitores.put(al.COD_USU, up.get(0).getCodigo_usu());
+                                        monitores.put(al.IDE_USU, etI.getText().toString());
+                                        monitores.put(al.NOM_USU, etN.getText().toString());
+                                        monitores.put(al.APE_USU, etA.getText().toString());
+                                        monitores.put(al.TIP_USU, "M");
+                                        monitores.put(al.CON_USU, etC.getText().toString());
+                                        monitores.put(al.CLA_API, up.get(0).getClave_api());
+                                        monitores.put(al.PAI_USU, pais);
+                                        bd1.insert(al.TABLENAME, null, monitores);
 
-                                    monitores.put(al.COD_USU, up.get(0).getCodigo_usu());
-                                    monitores.put(al.IDE_USU, etI.getText().toString());
-                                    monitores.put(al.NOM_USU, etN.getText().toString());
-                                    monitores.put(al.APE_USU, etA.getText().toString());
-                                    monitores.put(al.TIP_USU, "M");
-                                    monitores.put(al.CON_USU, etC.getText().toString());
-                                    monitores.put(al.CLA_API, up.get(0).getClave_api());
-                                    monitores.put(al.PAI_USU, pais);
-                                    bd1.insert(al.TABLENAME, null, monitores);
+                                        bd1.close();
 
-                                    bd1.close();
+                                        etI.setText("");
+                                        etN.setText("");
+                                        etA.setText("");
+                                        etC.setText("");
+                                        etC2.setText("");
 
-                                    etI.setText("");
-                                    etN.setText("");
-                                    etA.setText("");
-                                    etC.setText("");
-                                    bt.setText("");
+                                    }
 
-                                }
+                                    @Override
+                                    public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
 
-                                @Override
-                                public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
+                                    }
+                                });
+                                Log.i("TAG", "error "+ res.get(0) );
 
-                                }
-                            });
-                            Log.i("TAG", "error "+ res.get(0) );
+                            } else {
+                                Toast login = Toast.makeText(getContext(),
+                                        "No se pudo registrar usuario", Toast.LENGTH_SHORT);
+                                login.show();
+                                int statusCode = response.code();
+                                Log.i("TAG", "error " + response.code());
 
-                        } else {
-                            Toast login = Toast.makeText(getContext(),
-                                    "NO se pudo registrar usuario", Toast.LENGTH_SHORT);
-                            login.show();
-                            int statusCode = response.code();
-                            Log.i("TAG", "error " + response.code());
-
-                            // handle request errors yourself
-                            //ResponseBody errorBody = response.errorBody();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                            loading.dismiss();
+                            Toast prueba = Toast.makeText(getContext(), "Error al registrar el monitor", Toast.LENGTH_LONG);
+                            prueba.show();
+                        }
+                    });
 
-                    }
-                });
-
-                //Toast prueba = Toast.makeText(activity, "Registro adicionado", Toast.LENGTH_SHORT);
-                //prueba.show();
-
+                }
+                else{
+                    Toast prueba = Toast.makeText(getContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG);
+                    prueba.show();
+                }
             }
         });
         return view;

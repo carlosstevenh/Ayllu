@@ -12,6 +12,7 @@ public class AdminSQLite extends SQLiteOpenHelper {
     public AdminSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
+    //tabla usuarios
     public static final String TABLENAME = "login";
     public static final String COD_USU_SQL = "cod_sql";
     public static final String COD_USU = "codigo";
@@ -22,6 +23,11 @@ public class AdminSQLite extends SQLiteOpenHelper {
     public static final String CON_USU = "contrasena";
     public static final String CLA_API = "clave";
     public static final String PAI_USU = "pais";
+
+    //tabla paises
+    public static final String TABLENAMEPAIS = "paises";
+    public static final String CODIGO_PAIS = "codigo_pais";
+    public static final String NOMBRE_PAIS = "nombre_pais";
 
 
     private static final  String SQL = "create table " + TABLENAME + " ("
@@ -35,7 +41,17 @@ public class AdminSQLite extends SQLiteOpenHelper {
             + CLA_API + " text not null,"
             + PAI_USU + " text not null);";
 
+    private static final String SQLPAIS = "create table "+TABLENAMEPAIS +"(" +
+            CODIGO_PAIS + " text not null primary key"
+            + NOMBRE_PAIS+ " text not null";
 
+    private static final String SQLPAISINSERT =
+            "insert into "+TABLENAMEPAIS + "("+CODIGO_PAIS +","+NOMBRE_PAIS+") values ('01','ARGENTINA');"
+            +"insert into "+TABLENAMEPAIS + "("+CODIGO_PAIS +","+NOMBRE_PAIS+") values ('02','BOLIVIA');"
+            +"insert into "+TABLENAMEPAIS + "("+CODIGO_PAIS +","+NOMBRE_PAIS+") values ('03','CHILE');"
+            +"insert into "+TABLENAMEPAIS + "("+CODIGO_PAIS +","+NOMBRE_PAIS+") values ('04','COLOMBIA');"
+            +"insert into "+TABLENAMEPAIS + "("+CODIGO_PAIS +","+NOMBRE_PAIS+") values ('05','ECUADOR');"
+            +"insert into "+TABLENAMEPAIS + "("+CODIGO_PAIS +","+NOMBRE_PAIS+") values ('06','PERÚ');" ;
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

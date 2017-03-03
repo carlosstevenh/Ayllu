@@ -55,4 +55,24 @@
     <string name="recursos">Recursos</string>
     <string name="conocimiento">Conocimiento</string>
     <string name="deshabilitar">Deshabilitar</string>
+    <string name="pais">Pais</string>
+    <string name="subtramo">Subtramo</string>
+    <string name="area">Area</string>
+    <string name="factor">Factor</string>
+    <string name="seccion">Sección</string>
+    <string name="tramo">Tramo</string>
+    <string name="puntos_criticos">PUNTOS CRITICOS</string>
+    <string name="user">Monitor</string>
+    <string name="coordenada">Coordenadas</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
+    <string name="getPruebas">Obtener Pruebas</string>
+    <string name="title_activity_filtrar">FiltrarActivity</string>
+    <string name="FILTRAR">FILTRAR</string>
+    <string name="desde">Desde</string>
+    <string name="hasta">Hasta</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="iformacionMonitor">Información Monitor</string>
+    <string name="ultimoMonitoreo">Ultimo monitoreo</string>
+    <string name="monitoreos">Monitoreos</string>
 </resources>

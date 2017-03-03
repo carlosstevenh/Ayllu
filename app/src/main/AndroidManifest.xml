@@ -31,11 +31,11 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".MonitoringRegistrationForm3Activity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Adiminstrador.Administrador"
+        <activity android:name=".administrador.Administrador"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Adiminstrador.UsuariosAdapter"
+        <activity android:name=".administrador.UsuariosAdapter"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Adiminstrador.EditMonitor"
+        <activity android:name=".administrador.EditMonitor"
             android:screenOrientation="portrait"/>
         <activity android:name=".SeleccionArea"
             android:screenOrientation="portrait"/>
@@ -45,8 +45,17 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".MonitorActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RecordActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".RecordActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MontoreosPuntosCriticos"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".InformacionPuntoCritico"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".FiltrarActividad"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".administrador.InformacionGeneralMonitor"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
