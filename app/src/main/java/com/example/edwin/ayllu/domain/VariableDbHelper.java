@@ -24,6 +24,7 @@ public class VariableDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + VariableEntry.TABLE_NAME + " ("
                 + VariableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + VariableEntry.CODIGO + " TEXT NOT NULL, "
                 + VariableEntry.NOMBRE + " TEXT NOT NULL, "
                 + VariableEntry.FACTOR + " TEXT NOT NULL )");
     }
@@ -68,6 +69,15 @@ public class VariableDbHelper extends SQLiteOpenHelper {
     public Cursor generateQuery(String query) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery(query + VariableEntry.TABLE_NAME, null);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //METODO: Procesa una consulta con un condicional WHERE
+    public Cursor generateConditionalQuery(String[] condition, String atributo) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String query = "SELECT * FROM " + VariableEntry.TABLE_NAME + " WHERE " + atributo + "=?";
+
+        return sqLiteDatabase.rawQuery(query,condition);
     }
 
     //----------------------------------------------------------------------------------------------

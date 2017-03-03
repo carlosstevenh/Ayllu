@@ -2,7 +2,7 @@ package com.example.edwin.ayllu.domain;
 
 import android.provider.BaseColumns;
 
-class FactorContract {
+public class FactorContract {
     public static abstract class FactorEntry implements BaseColumns {
         public static final String TABLE_NAME = "factores";
         public static final String CODIGO = "codigo_fac";

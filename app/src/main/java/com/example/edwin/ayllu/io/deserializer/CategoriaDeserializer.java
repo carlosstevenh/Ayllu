@@ -55,6 +55,7 @@ public class CategoriaDeserializer implements JsonDeserializer<CategoriaResponse
             for (int j = 0; j < variableArray.size(); j++) {
                 JsonObject variableData = variableArray.get(j).getAsJsonObject();
                 Variable currentVariable = new Variable(
+                        variableData.get(JsonKeys.CODIGO_VARIABLE).getAsString(),
                         variableData.get(JsonKeys.NOMBRE_VARIABLE).getAsString(),
                         variableData.get(JsonKeys.FACTOR).getAsString());
 

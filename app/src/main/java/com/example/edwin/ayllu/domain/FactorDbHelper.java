@@ -71,6 +71,15 @@ public class FactorDbHelper extends SQLiteOpenHelper {
     }
 
     //----------------------------------------------------------------------------------------------
+    //METODO: Procesa una consulta con un condicional WHERE
+    public Cursor generateConditionalQuery(String[] condition, String atributo) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String query = "SELECT * FROM " + FactorEntry.TABLE_NAME + " WHERE " + atributo + "=?";
+
+        return sqLiteDatabase.rawQuery(query,condition);
+    }
+
+    //----------------------------------------------------------------------------------------------
     //METODO: Elimina la base de datos Factores
     public void deleteDataBase() {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
