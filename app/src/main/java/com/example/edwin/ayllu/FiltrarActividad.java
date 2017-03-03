@@ -21,7 +21,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.example.edwin.ayllu.Adiminstrador.EditMonitor;
 import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Variable;
 

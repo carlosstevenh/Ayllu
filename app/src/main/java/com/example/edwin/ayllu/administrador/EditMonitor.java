@@ -1,4 +1,4 @@
-package com.example.edwin.ayllu.Adiminstrador;
+package com.example.edwin.ayllu.administrador;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

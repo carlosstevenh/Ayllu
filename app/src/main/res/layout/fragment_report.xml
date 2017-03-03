@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,8 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FORMULARIO MONITOREO"
-                android:textSize="18sp"
+                android:text="Listado de Monitoreos"
                 android:textColor="#fff"
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold"
@@ -40,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_registration"/>
+        android:src="@drawable/ic_registration" />
 
 </android.support.design.widget.CoordinatorLayout>

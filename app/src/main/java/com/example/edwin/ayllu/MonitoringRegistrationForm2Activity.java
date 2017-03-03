@@ -34,7 +34,7 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        factores.add( new Factor("01","edificios y desarrollo"));
+        /*factores.add( new Factor("01","edificios y desarrollo"));
         factores.add( new Factor("02","infraestructura de transportes"));
         factores.add( new Factor("03","infraestructura de servicos"));
         factores.add( new Factor("04","contaminacion"));
@@ -136,10 +136,10 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
         variables.add(new Variable("132","actividades de investigacion/supervision con importantes repercusiones","13"));
         variables.add(new Variable("133","actividades de gestion","13"));
 
-        variables.add(new Variable("141"," otros factores","14"));
+        variables.add(new Variable("141"," otros factores","14"));*/
 
         items_factores = new CharSequence[factores.size()];
-        for (int i=0; i<factores.size(); i++) items_factores[i] = factores.get(i).getNombre_factor();
+        for (int i=0; i<factores.size(); i++) items_factores[i] = factores.get(i).getNombre_fac();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_registration_form2);
@@ -201,21 +201,21 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                 int op = which+1;
                 int con = 0;
                 String opc = "";
-
+                /*
                 switch (zn){
                     case 1:
                         list_variables = new ArrayList<String>();
                         for (int i=0; i<factores.size(); i++){
-                            if(factores.get(i).getNombre_factor().equals(items[which]))
-                                opc = factores.get(i).getCodigo_factor()+"";
+                            if(factores.get(i).getNombre_fac().equals(items[which]))
+                                opc = factores.get(i).getCodigo_fac()+"";
                         }
 
                         opciones[0]=Integer.parseInt(opc);
                         opciones[1] = 0;
 
                         for (int i = 0; i<variables.size(); i++) {
-                            if(variables.get(i).getFactor().equals(opc))
-                                list_variables.add(variables.get(i).getNombre_variable());
+                            if(variables.get(i).getFactor_var().equals(opc))
+                                list_variables.add(variables.get(i).getNombre_var());
                         }
 
                         items_variables = new CharSequence[list_variables.size()];
@@ -227,15 +227,15 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
                         break;
                     case 2:
                         for (int i=0; i<variables.size(); i++){
-                            if(variables.get(i).getNombre_variable().equals(items[which]))
-                                opciones[1]=Integer.parseInt(variables.get(i).getCodigo_variable());
+                            if(variables.get(i).getNombre_var().equals(items[which]))
+                                opciones[1]=Integer.parseInt(variables.get(i).getCodigo_var());
                         }
 
                         for (int i=0; i<opciones.length; i++) Log.e("OPCION:",""+opciones[i]);
                         break;
                     default:
                         break;
-                }
+                }*/
 
                 Toast.makeText(
                         MonitoringRegistrationForm2Activity.this,
@@ -296,24 +296,24 @@ public class MonitoringRegistrationForm2Activity extends AppCompatActivity imple
         for (int i=0; i<opciones.length; i++)if(opciones[i] == 0) return "";
 
         String resp = "";
-        for (int i=0; i<opciones.length; i++){
+        /*for (int i=0; i<opciones.length; i++){
             switch (i){
                 case 0:
                     for (int j=0; j<factores.size(); j++){
-                        if(factores.get(j).getCodigo_factor().equals(""+opciones[i]))
-                            resp += "FACTORES: "+factores.get(j).getNombre_factor()+"\n";
+                        if(factores.get(j).getCodigo_fac().equals(""+opciones[i]))
+                            resp += "FACTORES: "+factores.get(j).getNombre_fac()+"\n";
                     }
                     break;
                 case 1:
                     for (int j=0; j<variables.size(); j++){
-                        if(variables.get(j).getCodigo_variable().equals(""+opciones[i]))
-                            resp += "VARIABLES: "+variables.get(j).getNombre_variable()+"\n";
+                        if(variables.get(j).getCodigo_var().equals(""+opciones[i]))
+                            resp += "VARIABLES: "+variables.get(j).getNombre_var()+"\n";
                     }
                     break;
                 default:
                     break;
             }
-        }
+        }*/
         return resp;
     }
 }

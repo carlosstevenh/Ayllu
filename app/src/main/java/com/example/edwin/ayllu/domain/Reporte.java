@@ -3,28 +3,53 @@ package com.example.edwin.ayllu.domain;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
-public class Reporte {
-    @SerializedName(JsonKeys.CODIGO_PAF) int cod_paf;
-    @SerializedName(JsonKeys.VARIABLE) String variable;
-    @SerializedName(JsonKeys.AREA) int area;
-    @SerializedName(JsonKeys.LATITUD_COO) String latitud;
-    @SerializedName(JsonKeys.LONGITUD_COO) String longitud;
-    @SerializedName(JsonKeys.FECHA_MON) String fecha_mon;
-    @SerializedName(JsonKeys.NOMBRE_USU) String usuario;
-    @SerializedName(JsonKeys.REPERCUSIONES) String repercusiones;
-    @SerializedName(JsonKeys.ORIGEN) String origen;
-    @SerializedName(JsonKeys.PORCENTAJE_APA) int porcentaje;
-    @SerializedName(JsonKeys.FRECUENCIA_APA) int frecuencia;
-    @SerializedName(JsonKeys.FECHA_RES) String fecha_res;
-    @SerializedName(JsonKeys.EVALUACION) String evaluacion;
-    @SerializedName(JsonKeys.PERSONAL) String personal;
-    @SerializedName(JsonKeys.TIEMPO) String tiempo;
-    @SerializedName(JsonKeys.PRESUPUESTO) String presupuesto;
-    @SerializedName(JsonKeys.RECURSOS) String recursos;
-    @SerializedName(JsonKeys.CONOCIMIENTO) String conocimiento;
-    @SerializedName(JsonKeys.MONITOR_RES) int monitor_res;
+import java.util.ArrayList;
 
-    public Reporte(int cod_paf, int monitor_res, String conocimiento, String recursos, String variable, String latitud, int area, String fecha_mon, String repercusiones, String presupuesto, String tiempo, String personal, String evaluacion, String fecha_res, int frecuencia, int porcentaje, String origen, String usuario, String longitud) {
+public class Reporte {
+    //==============================================================================================
+    //ATRIBUTOS DE LA CLASE REPORTE
+    @SerializedName(JsonKeys.CODIGO_PAF)
+    int cod_paf;
+    @SerializedName(JsonKeys.FECHA_MON)
+    String fecha_mon;
+    @SerializedName(JsonKeys.NOMBRE_USU)
+    String usuario;
+    @SerializedName(JsonKeys.PROPIEDAD_NOMINADA)
+    String area;
+    @SerializedName(JsonKeys.NOMBRE_VARIABLE)
+    String variable;
+    @SerializedName(JsonKeys.LATITUD_COO)
+    String latitud;
+    @SerializedName(JsonKeys.LONGITUD_COO)
+    String longitud;
+    @SerializedName(JsonKeys.REPERCUSIONES)
+    String repercusiones;
+    @SerializedName(JsonKeys.ORIGEN)
+    String origen;
+    @SerializedName(JsonKeys.PORCENTAJE_APA)
+    int porcentaje;
+    @SerializedName(JsonKeys.FRECUENCIA_APA)
+    int frecuencia;
+    @SerializedName(JsonKeys.FECHA_RES)
+    String fecha_res;
+    @SerializedName(JsonKeys.EVALUACION)
+    String evaluacion;
+    @SerializedName(JsonKeys.PERSONAL)
+    String personal;
+    @SerializedName(JsonKeys.TIEMPO)
+    String tiempo;
+    @SerializedName(JsonKeys.PRESUPUESTO)
+    String presupuesto;
+    @SerializedName(JsonKeys.RECURSOS)
+    String recursos;
+    @SerializedName(JsonKeys.CONOCIMIENTO)
+    String conocimiento;
+    @SerializedName(JsonKeys.MONITOR_RES)
+    int monitor_res;
+
+    //==============================================================================================
+    //CONSTRUCTOR DE LA CLASE REPORTE
+    public Reporte(int cod_paf, int monitor_res, String conocimiento, String recursos, String variable, String latitud, String area, String fecha_mon, String repercusiones, String presupuesto, String tiempo, String personal, String evaluacion, String fecha_res, int frecuencia, int porcentaje, String origen, String usuario, String longitud) {
         this.cod_paf = cod_paf;
         this.monitor_res = monitor_res;
         this.conocimiento = conocimiento;
@@ -46,9 +71,56 @@ public class Reporte {
         this.longitud = longitud;
     }
 
+    //==============================================================================================
+    //CONSTRUCTOR VACIO
     public Reporte() {
     }
 
+    //==============================================================================================
+    //METODO: GENERA INFORMACIÓN PARA LAS TRES PLANTILLAS DEL REPORTE
+    public ArrayList<String> generarInfoPlantilla(int cod_plantilla) {
+        ArrayList<String> info = new ArrayList<>();
+        info.add(this.cod_paf + "");
+
+        switch (cod_plantilla) {
+            case 1:
+                //Datos de la primera plantilla
+                info.add(this.fecha_mon);
+                info.add(this.usuario);
+                info.add(this.area);
+                info.add(this.variable);
+                info.add(this.latitud);
+                info.add(this.longitud);
+
+                info.add(this.repercusiones.charAt(0) + "");
+                info.add(this.repercusiones.charAt(1) + "");
+                info.add(this.repercusiones.charAt(2) + "");
+                info.add(this.repercusiones.charAt(3) + "");
+
+                info.add(this.origen.charAt(0) + "");
+                info.add(this.origen.charAt(1) + "");
+                break;
+            case 2:
+                //Datos de la segunda plantilla
+                info.add(this.porcentaje + "");
+                info.add(this.frecuencia + "");
+                break;
+            case 3:
+                //Datos de la tercera plantilla
+                info.add(this.fecha_res);
+                info.add(this.monitor_res + "");
+                info.add(this.evaluacion);
+                info.add(this.personal);
+                info.add(this.tiempo);
+                info.add(this.presupuesto);
+                info.add(this.recursos);
+                info.add(this.conocimiento);
+        }
+
+        return info;
+    }
+    //==============================================================================================
+    //GETTER Y SETTER DE LOS ATRIBUTOS DE LA CLASE REPORTE
     public int getMonitor_res() {
         return monitor_res;
     }
@@ -177,11 +249,11 @@ public class Reporte {
         this.latitud = latitud;
     }
 
-    public int getArea() {
+    public String getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(String area) {
         this.area = area;
     }
 

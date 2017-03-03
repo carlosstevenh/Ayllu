@@ -17,16 +17,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.jar.JarEntry;
 
-public class ReporteDeserializer implements JsonDeserializer<ReporteResponse> {
+public class ReporteDeserializer implements JsonDeserializer<ReporteResponse>{
     @Override
     public ReporteResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         Gson gson = new Gson();
         ReporteResponse response = gson.fromJson(json, ReporteResponse.class);
 
-        //obtener el objeto horario
+        //obtener el objeto reporte
         JsonObject reporteResponseData = json.getAsJsonObject().getAsJsonObject(JsonKeys.REPORTE_RESULTS);
 
-        //obtener el array horario
+        //obtener el array reporte
         JsonArray reporteArray = reporteResponseData.getAsJsonArray(JsonKeys.REPORTE_ARRAY);
 
         //convertir el json array a objetos de la clase sintoma
@@ -41,8 +41,8 @@ public class ReporteDeserializer implements JsonDeserializer<ReporteResponse> {
             Reporte currentReporte = new Reporte();
 
             int codigo_paf = reporteData.get(JsonKeys.CODIGO_PAF).getAsInt();
-            String variable = reporteData.get(JsonKeys.VARIABLE).getAsString();
-            int area = reporteData.get(JsonKeys.AREA).getAsInt();
+            String variable = reporteData.get(JsonKeys.NOMBRE_VARIABLE).getAsString();
+            String area = reporteData.get(JsonKeys.PROPIEDAD_NOMINADA).getAsString();
             String latitud = reporteData.get(JsonKeys.LATITUD_COO).getAsString();
             String longitud = reporteData.get(JsonKeys.LONGITUD_COO).getAsString();
             String fecha_mon = reporteData.get(JsonKeys.FECHA_MON).getAsString();

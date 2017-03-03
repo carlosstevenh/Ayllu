@@ -35,7 +35,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        /*
         //------------------------------------------------------------------------------------------
         //ARGENTINA
         tramos.add(new Tramo(1, "Otros-Tramos-Argentina", "01"));
@@ -121,7 +121,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
         areas.add(new Area("24", "C", "Rosal de Chapal", "24"));
         areas.add(new Area("25", "C", "Guapuscal Bajo", "25"));
         areas.add(new Area("26", "C", "Inantaz", "26"));
-        areas.add(new Area("27", "C", "Los Ajos", "27"));
+        areas.add(new Area("27", "C", "Los Ajos", "27"));*/
 
         items_tramos = new CharSequence[tramos.size()];
         for (int i=0; i<tramos.size(); i++) items_tramos[i] = tramos.get(i).getDescripcion_t();
@@ -184,7 +184,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
                 int op = which+1;
                 int con = 0;
                 String opc = "";
-
+                /*
                 switch (zn){
                     case 1:
                         list_subtramos = new ArrayList<String>();
@@ -265,7 +265,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
                         SeleccionArea.this,
                         "Seleccionaste: " + items[which],
                         Toast.LENGTH_SHORT)
-                        .show();
+                        .show();*/
             }
         });
 
@@ -311,7 +311,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
         for (int i=0; i<opciones.length; i++)if(opciones[i] == 0) return "";
 
         String resp = "";
-        for (int i=0; i<opciones.length; i++){
+        /*for (int i=0; i<opciones.length; i++){
             switch (i){
                 case 0:
                     for (int j=0; j<tramos.size(); j++){
@@ -340,7 +340,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
                 default:
                     break;
             }
-        }
+        }*/
         return resp;
     }
 }
