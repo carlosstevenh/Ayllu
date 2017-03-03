@@ -1,32 +1,62 @@
 package com.example.edwin.ayllu.io.model;
 
 public class JsonKeys {
-    public static final String TRAMO_RESULTS = "tramos";
-    public static final String TRAMO_ARRAY = "TRAMOS";
-
+    //==============================================================================================
+    //CONSTANTES PARA LA CONSULTA DE ZONAS (PAISES,TRAMOS,SUBTRAMOS,SECCIONES,AREAS)
+    //----------------------------------------------------------------------------------------------
+    //Llave general para la consulta de zonas
+    public static final String ZONAS_RESULTS = "ZONAS";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para paises
+    public static final String PAIS_ARRAY = "Paises";
+    public static final String CODIGO_PAIS = "codigo_pais";
+    public static final String NOMBRE_PAIS = "nombre_pais";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para Tramos
+    public static final String TRAMOS_ARRAY = "Tramos";
     public static final String CODIGO_TRAMO = "codigo_tramo";
     public static final String DESCRIPCION_TRAMO = "descripcion_tramo";
-    public static final String PAIS_TRAMO = "pais";
-
+    public static final String PAIS = "pais";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para Subtramos
+    public static final String SUBTRAMOS_ARRAY = "Subtramos";
     public static final String CODIGO_SUBTRAMO = "codigo_subtramo";
     public static final String DESCRIPCION_SUBTRAMO = "descripcion_subtramo";
-    public static final String CODIGO_TRAMO_SUBTRAMO = "tramo";
-
+    public static final String TRAMO = "tramo";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para Secciones
+    public static final String SECCIONES_ARRAY = "Secciones";
     public static final String CODIGO_SECCION = "codigo_seccion";
     public static final String DESCRIPCION_SECCION = "descripcion_seccion";
-    public static final String CODIGO_SUBTRAMO_SECCION = "subtramo";
-
+    public static final String SUBTRAMO = "subtramo";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para Areas
+    public static final String AREAS_ARRAY = "Areas";
     public static final String CODIGO_AREA = "codigo_area";
     public static final String TIPO_AREA = "tipo_area";
+    public static final String AREA_ZONA_AMORTIGUAMIENTO ="area_zona_amortiguamiento";
+    public static final String PROPIEDAD_AREA_NOMINADA = "propiedad_area_nominada";
     public static final String PROPIEDAD_NOMINADA = "propiedad_nominada";
-    public static final String CODIGO_SECCION_AREA = "seccion";
+    public static final String ANCHO_PROM_CAMINO = "ancho_prom_camino";
+    public static final String LONGITUD_CAMINO = "longitud_camino";
+    public static final String SECCION = "seccion";
 
-    public static final String CODIGO_FACTOR = "codigo_factor";
-    public static final String NOMBRE_FACTOR = "nombre_factor";
-
-    public static final String CODIGO_FACTOR_VARIABLE = "factor";
-    public static final String CODIGO_VARIABLE = "codigo_variable";
-    public static final String NOMBRE_VARIABLE = "nombre_variable";
+    //==============================================================================================
+    //CONSTANTES PARA LA CONSULTA DE CATEGORIAS (FACTORES Y VARIABLES)
+    //----------------------------------------------------------------------------------------------
+    //Llave general para la consulta de categorias
+    public static final String CATEGORIAS_RESULTS = "CATEGORIAS";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para factores
+    public static final String FACTORES_ARRAY = "Factores";
+    public static final String CODIGO_FACTOR = "codigo_fac";
+    public static final String NOMBRE_FACTOR = "nombre_fac";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para variables
+    public static final String VARIABLES_ARRAY = "Variables";
+    public static final String CODIGO_VARIABLE = "codigo_var";
+    public static final String NOMBRE_VARIABLE = "nombre_var";
+    public static final String FACTOR = "factor";
 
     //==============================================================================================
     //CONSTANTES PARA EL REPORTE

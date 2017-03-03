@@ -54,9 +54,13 @@
     </array>
     <!--.........................................................................................-->
     <!--Colores de la CardView-->
-    <color name="colorElementFormBackground">#FFFFFF</color>
-    <color name="colorCardViewBackground">#00ffffff</color>
-    <color name="colorItemPrimaryCardView">#012d49</color>
-    <color name="colorItemSecondaryCardView">#e2e2e2</color>
+    <color name="colorElementFormBackground">#d7d7d7</color>
+    <color name="colorCardViewBackground">#faf4f5</color>
+    <color name="colorItemPrimaryCardView">#d24c6b</color>
+    <color name="colorItemSecondaryCardView">#c9c8c8</color>
     <color name="colorTextCardView">#ffffff</color>
+    <color name="colorIconCardView">#01211e</color>
+
+    <color name="colorBottomNavigationStateEnabled">#1f1c26</color>
+    <color name="colorBottomNavigationStateDisabled">#ffffff</color>
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_paises"
+        android:title="Pais"
+        android:icon="@drawable/ic_pais"/>
+
+    <item
+        android:id="@+id/menu_tramos"
+        android:title="Tramo"
+        android:icon="@drawable/ic_tramo"/>
+
+    <item
+        android:id="@+id/menu_subtramos"
+        android:title="Subtramo"
+        android:icon="@drawable/ic_subtramos"/>
+
+    <item
+        android:id="@+id/menu_secciones"
+        android:title="Seccion"
+        android:icon="@drawable/ic_secciones" />
+
+    <item
+        android:id="@+id/menu_areas"
+        android:title="Area"
+        android:icon="@drawable/ic_area" />
+</menu>

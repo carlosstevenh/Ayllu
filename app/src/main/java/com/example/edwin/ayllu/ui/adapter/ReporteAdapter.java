@@ -38,7 +38,7 @@ public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteV
         Reporte currentReporte = reportes.get(position);
 
         holder.setReporteVariable(currentReporte.getVariable());
-        holder.setReporteArea(currentReporte.getArea()+"");
+        holder.setReporteArea(currentReporte.getArea());
         holder.setReporteLatitud(currentReporte.getLatitud());
         holder.setReporteLongitud(currentReporte.getLongitud());
         holder.setReporteFecha(currentReporte.getFecha_mon());
@@ -56,6 +56,11 @@ public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteV
             throw new NullPointerException("Los items no pueden ser nulos");
         this.reportes.addAll(reportes);
         notifyItemRangeInserted(getItemCount()-1, reportes.size());
+    }
+    //----------------------------------------------------------------------------------------------
+    public void clear(){
+        this.reportes.clear();
+        notifyDataSetChanged();
     }
     //----------------------------------------------------------------------------------------------
     public void setOnClickListener(View.OnClickListener listener) {

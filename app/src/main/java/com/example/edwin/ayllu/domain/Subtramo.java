@@ -1,46 +1,67 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
-
-/**
- * Created by edwin on 1/11/16.
- */
+import static com.example.edwin.ayllu.domain.SubtramoContract.SubtramoEntry;
 
 public class Subtramo {
-    @SerializedName(JsonKeys.CODIGO_SUBTRAMO) String codigo_subtramo;
-    @SerializedName(JsonKeys.DESCRIPCION_SUBTRAMO) String descripcion_subtramo;
-    @SerializedName(JsonKeys.CODIGO_TRAMO_SUBTRAMO) String tramo;
+    //----------------------------------------------------------------------------------------------
+    //Atributos de la clase Subtramo
+    @SerializedName(JsonKeys.CODIGO_SUBTRAMO)
+    int codigo_sub;
+    @SerializedName(JsonKeys.DESCRIPCION_SUBTRAMO)
+    String descripcion_sub;
+    @SerializedName(JsonKeys.TRAMO)
+    int tramo_sub;
 
-    public Subtramo(String codigo, String descripcion, String tramo){
-        this.codigo_subtramo = codigo;
-        this.descripcion_subtramo = descripcion;
-        this.tramo = tramo;
+    //----------------------------------------------------------------------------------------------
+    //Constructor de la clase Subtramo
+    public Subtramo(int codigo, String descripcion, int tramo) {
+        this.codigo_sub = codigo;
+        this.descripcion_sub = descripcion;
+        this.tramo_sub = tramo;
     }
 
-    public  Subtramo(){}
-
-    public String getCodigo_subtramo() {
-        return codigo_subtramo;
+    //----------------------------------------------------------------------------------------------
+    //Constructor vacio
+    public Subtramo() {
     }
 
-    public void setCodigo_subtramo(String codigo_subtramo) {
-        this.codigo_subtramo = codigo_subtramo;
+    //----------------------------------------------------------------------------------------------
+    //METODO: Procesar datos para la tabla Subtramos
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(SubtramoEntry.CODIGO, codigo_sub);
+        values.put(SubtramoEntry.DESCRIPCION, descripcion_sub);
+        values.put(SubtramoEntry.TRAMO, tramo_sub);
+        return values;
     }
 
-    public String getDescripcion_subtramo() {
-        return descripcion_subtramo;
+    //----------------------------------------------------------------------------------------------
+    //Getter y Setter de la clase Subtramo
+    public int getCodigo_sub() {
+        return codigo_sub;
     }
 
-    public void setDescripcion_subtramo(String descripcion_subtramo) {
-        this.descripcion_subtramo = descripcion_subtramo;
+    public void setCodigo_sub(int codigo_sub) {
+        this.codigo_sub = codigo_sub;
     }
 
-    public String getTramo() {
-        return tramo;
+    public String getDescripcion_sub() {
+        return descripcion_sub;
     }
 
-    public void setTramo(String tramo) {
-        this.tramo = tramo;
+    public void setDescripcion_sub(String descripcion_sub) {
+        this.descripcion_sub = descripcion_sub;
+    }
+
+    public int getTramo_sub() {
+        return tramo_sub;
+    }
+
+    public void setTramo_sub(int tramo_sub) {
+        this.tramo_sub = tramo_sub;
     }
 }
