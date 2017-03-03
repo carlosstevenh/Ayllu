@@ -22,7 +22,7 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://192.168.56.1/webservice/";
+    String BASE_URL="http://138.68.40.165/webservice/";
 
     @GET("resumenMonitor/{ide}")
     Call<ArrayList<ResumenMonitor>> resumenMonitor(@Path("ide") String ide);

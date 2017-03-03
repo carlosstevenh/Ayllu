@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -22,7 +23,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.example.edwin.ayllu.domain.Factor;
+import com.example.edwin.ayllu.domain.FactorDbHelper;
 import com.example.edwin.ayllu.domain.Variable;
+import com.example.edwin.ayllu.domain.VariableDbHelper;
+
+import static com.example.edwin.ayllu.domain.FactorContract.FactorEntry;
+import static com.example.edwin.ayllu.domain.VariableContract.VariableEntry;
 
 public class FiltrarActividad extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,118 +54,31 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
     private String[] paisesOpciones = {"null","null","null","null","null","null"};
     private String[] opciones = {"0","0"};
 
+    private FactorDbHelper factorDbHelper;
+    private VariableDbHelper variableDbHelper;
+
+    String item = "";
+    Cursor cursor;
+    int i = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        factores.add( new Factor("01","edificios y desarrollo"));
-        factores.add( new Factor("02","infraestructura de transportes"));
-        factores.add( new Factor("03","infraestructura de servicos"));
-        factores.add( new Factor("04","contaminacion"));
-        factores.add( new Factor("05","utilizacion/modificacion recursos biologicos"));
-        factores.add( new Factor("06","extraccion de recursos naturales"));
-        factores.add( new Factor("07","condiciones locales que afectan la estructura fisica"));
-        factores.add( new Factor("08","usos sociales/culturales del patrimonio"));
-        factores.add( new Factor("09","otras actividades humanas"));
-        factores.add( new Factor("10","cambio climatico y fenomenos metereologicos externos"));
-        factores.add( new Factor("11","fenomenos ecologicos o geologicos repentinos"));
-        factores.add( new Factor("12","especies invasoras o superabundantes"));
-        factores.add( new Factor("13"," factores de gestion e institucional"));
-        factores.add( new Factor("14","otros factores"));
-
-        variables.add(new Variable("11","vivienda","01"));
-        variables.add(new Variable("12","desarrollo comercial","01"));
-        variables.add(new Variable("13","zonas industriales","01"));
-        variables.add(new Variable("14","infraestructuras  hoteleras y conexas","01"));
-        variables.add(new Variable("15","servicios de informacion visitantes","01"));
-
-        variables.add(new Variable("201","infraestructura transporte terrestre","02"));
-        variables.add(new Variable("202","infraestructura transporte aereo","02"));
-
-        variables.add(new Variable("301","infraestructura recursos hidricos","03"));
-        variables.add(new Variable("302","instalacion de energia renovable","03"));
-        variables.add(new Variable("303","instalacion de energia no renovable","03"));
-        variables.add(new Variable("304","servicios localizados","03"));
-        variables.add(new Variable("305","principales redes transporte de energia","03"));
-
-        variables.add(new Variable("401","contaminacion de aguas marinas","04"));
-        variables.add(new Variable("402","contaminacion de aguas subterraneas","04"));
-        variables.add(new Variable("403","contaminacion de aguas superficiales","04"));
-        variables.add(new Variable("404","contaminacion del aire","04"));
-        variables.add(new Variable("405","residuos solidos","04"));
-        variables.add(new Variable("406","aportes de energia en exceso","04"));
-
-        variables.add(new Variable("501","pesca/recoleccion de recursos acuaticos","05"));
-        variables.add(new Variable("502","acuicultura","05"));
-        variables.add(new Variable("503","cambios en la explotacion de la tierra","05"));
-        variables.add(new Variable("504","ganaderia/pastoreo animales domesticados","05"));
-        variables.add(new Variable("505","produccion de cultivos","05"));
-        variables.add(new Variable("506","recoleccion comercial de plantas silvestres","05"));
-        variables.add(new Variable("507","recoleccion plantas silvestre para subsistencia","05"));
-        variables.add(new Variable("508","caza comercial","05"));
-        variables.add(new Variable("509","caza de subsistencia","05"));
-        variables.add(new Variable("510","silvicultura/produccion de madera","05"));
-
-        variables.add(new Variable("601","mineria","06"));
-        variables.add(new Variable("602","explotacion de canteras","06"));
-        variables.add(new Variable("603","petroleo y gas","06"));
-        variables.add(new Variable("604","agua","06"));
-
-        variables.add(new Variable("701","viento","07"));
-        variables.add(new Variable("702","humedad relativa","07"));
-        variables.add(new Variable("703","temperatura","07"));
-        variables.add(new Variable("704","radiacion/luz","07"));
-        variables.add(new Variable("705","polvo","07"));
-        variables.add(new Variable("706","agua","07"));
-        variables.add(new Variable("707","plagas","07"));
-        variables.add(new Variable("708","microorganismos","07"));
-
-        variables.add(new Variable("801","usos rituales/espirituales/religiosos y asociados","08"));
-        variables.add(new Variable("802","valoracion del patrimonio por la sociedad","08"));
-        variables.add(new Variable("803","actividades autoctonas de caza y recoleccion","08"));
-        variables.add(new Variable("804","cambios en los sistemas tradicionales de vida y sistemas de conocimiento","08"));
-        variables.add(new Variable("805","identidad, cohesion social, cambios en la poblacion y comunidades locales","08"));
-        variables.add(new Variable("806","repercusiones del turismo/visitantes/actividades recreativas","08"));
-
-        variables.add(new Variable("901","actividades ilicitas","09"));
-        variables.add(new Variable("902","destruccion deliberada del patrimonio","09"));
-        variables.add(new Variable("903","entrenamiento militar","09"));
-        variables.add(new Variable("904","guerra","09"));
-        variables.add(new Variable("905","terrorismo","09"));
-        variables.add(new Variable("906","disturbios civiles","09"));
-
-        variables.add(new Variable("101","tormentas","10"));
-        variables.add(new Variable("102","inundaciones","10"));
-        variables.add(new Variable("103","sequia","10"));
-        variables.add(new Variable("104","desertificacion","10"));
-        variables.add(new Variable("105","cambios en las aguas oceanicas","10"));
-        variables.add(new Variable("106","cambios en la temperatura","10"));
-        variables.add(new Variable("107","otras repercusiones a consecuencia del cambio climatico","10"));
-
-        variables.add(new Variable("111","erupciones volcanicas","11"));
-        variables.add(new Variable("112","terremotos","11"));
-        variables.add(new Variable("113","tsunami/marejada","11"));
-        variables.add(new Variable("114","avalanchas/desprendimiento de tierra","11"));
-        variables.add(new Variable("115","erosion y sedimentacion","11"));
-        variables.add(new Variable("116","fuego","11"));
-
-        variables.add(new Variable("121","traslado de especies","12"));
-        variables.add(new Variable("122","especies alienigenas/invasoras terrestres","12"));
-        variables.add(new Variable("123","especies alienigenas/invasoras de agua dulce","12"));
-        variables.add(new Variable("124","especies invasoras/alienigenas marinas","12"));
-        variables.add(new Variable("125","especies superabundantes","12"));
-        variables.add(new Variable("126","material modificado geneticamente","12"));
-
-        variables.add(new Variable("131","actividades de investigacion/supervision con escasas repercusiones","13"));
-        variables.add(new Variable("132","actividades de investigacion/supervision con importantes repercusiones","13"));
-        variables.add(new Variable("133","actividades de gestion","13"));
-
-        variables.add(new Variable("141"," otros factores","14"));
-
-        items_factores = new CharSequence[factores.size()];
-        for (int i=0; i<factores.size(); i++) items_factores[i] = factores.get(i).getNombre_factor();
-
         super.onCreate(savedInstanceState);
+
+        factorDbHelper = new FactorDbHelper(this);
+        variableDbHelper = new VariableDbHelper(this);
+        i = 0;
+
+        cursor = factorDbHelper.generateQuery("SELECT * FROM ");
+        if(cursor.moveToFirst()){
+            items_factores = new CharSequence[cursor.getCount()];
+            do {
+                factores.add(new Factor(cursor.getString(1), cursor.getString(2)));
+                items_factores[i] = cursor.getString(2);
+                i++;
+            }while (cursor.moveToNext());
+        }
 
         setContentView(R.layout.activity_filtrar_actividad);
         inicio = (TextView)findViewById(R.id.inicio);
@@ -404,40 +323,33 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                int op = which+1;
-                int con = 0;
-                String opc = "";
-
                 switch (zn){
                     case 1:
-                        list_variables = new ArrayList<String>();
-                        for (int i=0; i<factores.size(); i++){
-                            if(factores.get(i).getNombre_factor().equals(items[which]))
-                                opc = factores.get(i).getCodigo_factor()+"";
-                        }
+                        item = items_factores[which].toString();
+                        cursor = factorDbHelper.generateConditionalQuery(new String[]{item}, FactorEntry.NOMBRE);
+                        cursor.moveToFirst();
 
-                        opciones[0]=opc;
+                        opciones[0] = cursor.getString(1);
                         opciones[1] = "0";
+                        items_variables = null;
 
-                        for (int i = 0; i<variables.size(); i++) {
-                            if(variables.get(i).getFactor().equals(opc))
-                                list_variables.add(variables.get(i).getNombre_variable());
+                        i = 0;
+                        cursor = variableDbHelper.generateConditionalQuery(new String[]{opciones[0]}, VariableEntry.FACTOR);
+                        if (cursor.moveToFirst()) {
+                            items_variables = new CharSequence[cursor.getCount()];
+                            do {
+                                variables.add(new Variable(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+                                items_variables[i] = cursor.getString(2);
+                                i++;
+                            } while (cursor.moveToNext());
                         }
-
-                        items_variables = new CharSequence[list_variables.size()];
-
-                        for (int i = 0; i < list_variables.size(); i++)
-                            items_variables[i] = list_variables.get(i);
-
                         break;
                     case 2:
-                        for (int i=0; i<variables.size(); i++){
-                            if(variables.get(i).getNombre_variable().equals(items[which]))
-                                opciones[1]=variables.get(i).getCodigo_variable();
-                        }
+                        item = items_variables[which].toString();
+                        cursor = variableDbHelper.generateConditionalQuery(new String[]{item}, VariableEntry.NOMBRE);
+                        cursor.moveToFirst();
 
-                        for (int i=0; i<opciones.length; i++) Log.e("OPCION:",""+opciones[i]);
+                        opciones[1] = cursor.getString(1);
                         break;
                     default:
                         break;
