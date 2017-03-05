@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu;
 
+import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
 import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
@@ -22,7 +23,11 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://138.68.40.165/webservice/";
+    //String BASE_URL="http://138.68.40.165/webservice/";
+    String BASE_URL="http://192.168.56.1/webservice/";
+
+    @GET("puntosAfectacion/{paf}")
+    Call<ArrayList<AnalisisPorcentajeFrecuencia>> proFre (@Path("paf") String paf);
 
     @GET("resumenMonitor/{ide}")
     Call<ArrayList<ResumenMonitor>> resumenMonitor(@Path("ide") String ide);

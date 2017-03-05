@@ -13,49 +13,67 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MonitorMenuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitoringRegistrationForm1Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitoringRegistrationForm2Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitoringRegistrationForm3Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.Administrador"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.UsuariosAdapter"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.EditMonitor"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SeleccionArea"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitoreosActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FormRespuesta"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitorActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MonitorMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitoringRegistrationForm1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitoringRegistrationForm2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitoringRegistrationForm3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.Administrador"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.UsuariosAdapter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.EditMonitor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SeleccionArea"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitoreosActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FormRespuesta"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RecordActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MontoreosPuntosCriticos"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".InformacionPuntoCritico"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FiltrarActividad"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.InformacionGeneralMonitor"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MontoreosPuntosCriticos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InformacionPuntoCritico"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FiltrarActividad"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.InformacionGeneralMonitor"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ActividadEstadisticaPuntoAfactacion"></activity>
     </application>
 
 </manifest>

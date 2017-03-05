@@ -44,9 +44,13 @@ public class PuntoCriticoAdapter extends RecyclerView.Adapter<PuntoCriticoAdapte
         int por = Integer.parseInt(puntosCriticos.get(position).getPorcentaje());
         int fre = Integer.parseInt(puntosCriticos.get(position).getFrecuencia());
 
-        if(por == 4 && fre == 4)holder.color.setBackgroundColor(Color.parseColor("#FF0000"));
-        else if((por == 3 && fre == 3)||(por == 4 && fre == 3)||(por == 3 && fre == 4))holder.color.setBackgroundColor(Color.parseColor("#FFC300"));
-        else holder.color.setBackgroundColor(Color.parseColor("#DAF7A6"));
+        int aux = Math.round((por+fre)/2);
+
+        if(aux == 4)holder.color.setBackgroundColor(Color.parseColor("#FF0000"));
+        else if(aux == 3)holder.color.setBackgroundColor(Color.parseColor("#FFC300"));
+        else if(aux == 2) holder.color.setBackgroundColor(Color.parseColor("#52BE80"));
+        else holder.color.setBackgroundColor(Color.parseColor("#54EB40"));
+
     }
 
     @Override

@@ -389,6 +389,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/button3"
             android:textSize="14sp" />
+
+        <Button
+            android:text="@string/analisis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGraficas" />
     </LinearLayout>
 
 </RelativeLayout>

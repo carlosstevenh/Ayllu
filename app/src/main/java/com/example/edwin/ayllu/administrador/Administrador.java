@@ -37,6 +37,7 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrador);
 
+        //se intancian los elementos de la vista
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,11 +50,12 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
 
     }
 
+    //metodo que se enscarga de crear las opciones del menu
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DeleteMonitorFragment(), "Inicio");
-        adapter.addFragment(new AddMonitorFragment(), "Registrar monitor");
-        adapter.addFragment(new EditMonitorFragment(), "Editar/eliminar Monitor");
+        adapter.addFragment(new DeleteMonitorFragment(), getResources().getString(R.string.inicio));
+        adapter.addFragment(new AddMonitorFragment(), getResources().getString(R.string.addMonitor));
+        adapter.addFragment(new EditMonitorFragment(), getResources().getString(R.string.monitores));
         viewPager.setAdapter(adapter);
     }
 
@@ -63,15 +65,19 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
         return true;
     }
 
+    //medoto encargada de crear el submenu de la actividad
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+            //si eligio la opcion e monitorear lo dirige a la actividad de monitorear
             case R.id.moni:
                 Intent intent = new Intent(Administrador.this, MonitorMenuActivity.class);
                 startActivity(intent);
                 finish();
                 return true;
+
+            //opcion de cerrar sesion
             case R.id.salir:
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
