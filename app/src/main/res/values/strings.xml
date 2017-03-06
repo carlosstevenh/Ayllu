@@ -47,7 +47,7 @@
     <string name="fecha">Fecha monitoreo</string>
     <string name="variable">Variable</string>
     <string name="ResAdm">Respuesta Administrativa</string>
-    <string name="evaluacion">Evaluacón</string>
+    <string name="evaluacion">Evaluación</string>
     <string name="personal">Personal</string>
     <string name="tiempo">Tiempo</string>
     <string name="presupuesto">Presupuesto</string>
@@ -96,4 +96,14 @@
     <string name="monitorActualizado">Monitor actualizado</string>
     <string name="inicio">Inicio</string>
     <string name="monitores">Monitores</string>
+    <string name="registrar">Registrar</string>
+
+    <string name="insignificantes">Insignificantes</string>
+    <string name="menores">Menores</string>
+    <string name="significativas">Significativas</string>
+    <string name="ninuguna">Ninguna capacidad</string>
+    <string name="alta">Capaciad alta</string>
+    <string name="media">Capacidad media</string>
+    <string name="baja">Capacidad baja</string>
+    <string name="iniciandoSesion">Iniciando Sesión</string>
 </resources>
