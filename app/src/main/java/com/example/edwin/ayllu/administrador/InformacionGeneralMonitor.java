@@ -23,18 +23,22 @@ public class InformacionGeneralMonitor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacion_general_monitor);
 
+        //se reciben los parametros enviados por la actividad anterior
         Bundle bundle = getIntent().getExtras();
 
+        //se instacion os elementos de la vista
         ide = (TextView) findViewById(R.id.txtide);
         nom = (TextView) findViewById(R.id.txtname);
         ult = (TextView) findViewById(R.id.ultMon);
         mon = (TextView) findViewById(R.id.mon);
         res = (TextView) findViewById(R.id.resAdm);
 
+        //se llenan los algunso elementos de la vista con los parametros recividos
         ide.setText(bundle.getString("iden"));
         nom.setText(bundle.getString("nombre")+" "+bundle.getString("apellido"));
 
-        final ProgressDialog loading = ProgressDialog.show(InformacionGeneralMonitor.this,"Recuperando datos","Por favor espere...",false,false);
+        //se realiza la peticion al servidor para obtener la informacion faltante del monitor
+        final ProgressDialog loading = ProgressDialog.show(InformacionGeneralMonitor.this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<ResumenMonitor>> requestAdd = service.resumenMonitor(bundle.getString("iden"));
         requestAdd.enqueue(new Callback<ArrayList<ResumenMonitor>>() {
@@ -59,7 +63,7 @@ public class InformacionGeneralMonitor extends AppCompatActivity {
                 }
                 else{
                     Toast login = Toast.makeText(getApplicationContext(),
-                            "Ha ocurrido un error", Toast.LENGTH_LONG);
+                            getResources().getString(R.string.noSeEncontraronDatos), Toast.LENGTH_LONG);
                     login.show();
                 }
             }
@@ -68,7 +72,7 @@ public class InformacionGeneralMonitor extends AppCompatActivity {
             public void onFailure(Call<ArrayList<ResumenMonitor>> call, Throwable t) {
                 loading.dismiss();
                 Toast login = Toast.makeText(getApplicationContext(),
-                        "Ha ocurrido un error", Toast.LENGTH_LONG);
+                        getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
                 login.show();
             }
         });
