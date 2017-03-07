@@ -33,15 +33,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //se instancian los elementos de la vista
         et1=(EditText)findViewById(R.id.txtName);
         et2=(EditText)findViewById(R.id.txtPsw);
 
 
     }
 
+    //metodo que se encarga de iniciar sesión
     public void login(View v) {
 
-        final ProgressDialog loading = ProgressDialog.show(this,"Iniciando sesión","Por favor espere...",false,false);
+        //peticcion que se le realiza al servidor para el inicio de sesión
+        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.iniciandoSesion),getResources().getString(R.string.esperar),false,false);
 
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Usuario>> requestUser = service.getUsuario(et1.getText().toString(),et2.getText().toString());
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     u = response.body();
                     user=u.get(0);
 
+                    //se inserta el usuario que inicio sesion a la base de datos del dispositivo
                     AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                     SQLiteDatabase bd = admin.getWritableDatabase();
 
@@ -73,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
                     bd.close();
 
                     String tipo = user.getTipo_usu();
+                    //si el usuario es administrador lo redirecciona al menu de administrador
                     if(tipo.equals("A")){
 
                         Log.i("TAG", "Bienvenido administrador!! ");
                         AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                        //obtiene todos los monitores del pais del administrador
                         getUsuarios(user.getPais_usu(),admin1);
                         menuAdministrador();
 
                     }
+                    //si el usuario es monitor lo redirecciona al menu de monitor
                     else {
                         Log.i("TAG", "Bienvenido monitor!! ");
                         Intent intent = new Intent(MainActivity.this, MonitorMenuActivity.class);
@@ -106,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 loading.dismiss();
                 Log.e(TAG,"Error al iniciar sesión!!!!"+ t.getMessage());
                 Toast login = Toast.makeText(getApplicationContext(),
-                        "Error al iniciar sesión", Toast.LENGTH_SHORT);
+                        getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_SHORT);
                 login.show();
                 //et3.setText("xxxxxx");
             }
@@ -114,8 +121,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //metodo que se encarga de obtener los monitores del pais del administrador
     void getUsuarios(String pais, final AdminSQLite al){
         Log.i("TAG", "AA:> " +pais);
+        //se realiza la peticion al servidor para obtener los monitores
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Usuario>> requestUsers = service.getUsuarios(pais);
         requestUsers.enqueue(new Callback<ArrayList<Usuario>>() {
@@ -124,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     lista = response.body();
 
+                    //se ingresa los monitores a la base datos del dispositivo
                     SQLiteDatabase bd1 = al.getWritableDatabase();
                     ContentValues monitores = new ContentValues();
                     for(int i = 0; i < lista.size(); i++){
@@ -157,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    //metodo que se encarga de redireccionar al menu del administrador 
     void menuAdministrador(){
 
         Intent i=new Intent(this, Administrador.class);

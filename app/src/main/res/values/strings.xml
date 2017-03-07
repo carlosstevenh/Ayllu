@@ -36,7 +36,6 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="newMonitor">Agregar monitor</string>
     <string name="name">Nombre</string>
     <string name="apellido">Apellido</string>
@@ -48,7 +47,7 @@
     <string name="fecha">Fecha monitoreo</string>
     <string name="variable">Variable</string>
     <string name="ResAdm">Respuesta Administrativa</string>
-    <string name="evaluacion">Evaluacón</string>
+    <string name="evaluacion">Evaluación</string>
     <string name="personal">Personal</string>
     <string name="tiempo">Tiempo</string>
     <string name="presupuesto">Presupuesto</string>
@@ -75,4 +74,36 @@
     <string name="iformacionMonitor">Información Monitor</string>
     <string name="ultimoMonitoreo">Ultimo monitoreo</string>
     <string name="monitoreos">Monitoreos</string>
+    <string name="analisis">Análisis</string>
+    <string name="puntaje">Puntaje</string>
+    <string name="informacionMonitoreo">Informacion Monitoreo</string>
+
+    <string name="procesando">Procesando</string>
+    <string name="esperar">Por favor espere ...</string>
+    <string name="noSeEncontraronDatos">No se encontraron datos</string>
+    <string name="noSePudoConectarServidor">No se pudo conectar al servidor</string>
+    <string name="registrandoMonitor">Registrando monitor</string>
+    <string name="registroAdicionado">Registro adicionado</string>
+    <string name="seProdujoUnError">Se produjo un errror</string>
+    <string name="confirmarAccion">Esta seguro de deshabilitar el usuario?</string>
+    <string name="advertencia">Advertencia</string>
+    <string name="accionCompletada">Acción completada</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="confirmacionAccionEditar">Esta seguro de actualizar la información del monitor?</string>
+    <string name="contraseñasDiferentes">Las contraseñas no son iguales</string>
+    <string name="actualizadoMonitor">Actualizando monitor</string>
+    <string name="monitorActualizado">Monitor actualizado</string>
+    <string name="inicio">Inicio</string>
+    <string name="monitores">Monitores</string>
+    <string name="registrar">Registrar</string>
+
+    <string name="insignificantes">Insignificantes</string>
+    <string name="menores">Menores</string>
+    <string name="significativas">Significativas</string>
+    <string name="ninuguna">Ninguna capacidad</string>
+    <string name="alta">Capaciad alta</string>
+    <string name="media">Capacidad media</string>
+    <string name="baja">Capacidad baja</string>
+    <string name="iniciandoSesion">Iniciando Sesión</string>
 </resources>

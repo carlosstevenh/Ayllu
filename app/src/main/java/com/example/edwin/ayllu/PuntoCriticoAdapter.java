@@ -40,13 +40,19 @@ public class PuntoCriticoAdapter extends RecyclerView.Adapter<PuntoCriticoAdapte
         holder.factor.setText("  "+puntosCriticos.get(position).getFactor());
         holder.variable.setText("  "+puntosCriticos.get(position).getVariable());
         holder.date.setText("  "+puntosCriticos.get(position).getFecha());
+        holder.longitud.setText(" "+puntosCriticos.get(position).getLongitud());
+        holder.latitud.setText(" "+puntosCriticos.get(position).getLatitud());
 
         int por = Integer.parseInt(puntosCriticos.get(position).getPorcentaje());
         int fre = Integer.parseInt(puntosCriticos.get(position).getFrecuencia());
 
-        if(por == 4 && fre == 4)holder.color.setBackgroundColor(Color.parseColor("#FF0000"));
-        else if((por == 3 && fre == 3)||(por == 4 && fre == 3)||(por == 3 && fre == 4))holder.color.setBackgroundColor(Color.parseColor("#FFC300"));
-        else holder.color.setBackgroundColor(Color.parseColor("#DAF7A6"));
+        int aux = Math.round((por+fre)/2);
+
+        if(aux == 4)holder.color.setBackgroundColor(Color.parseColor("#FF0000"));
+        else if(aux == 3)holder.color.setBackgroundColor(Color.parseColor("#FFC300"));
+        else if(aux == 2) holder.color.setBackgroundColor(Color.parseColor("#52BE80"));
+        else holder.color.setBackgroundColor(Color.parseColor("#54EB40"));
+
     }
 
     @Override
@@ -67,6 +73,8 @@ public class PuntoCriticoAdapter extends RecyclerView.Adapter<PuntoCriticoAdapte
         TextView factor;
         TextView variable;
         TextView date;
+        TextView longitud;
+        TextView latitud;
         TextView color;
         private String mItem;
 
@@ -77,6 +85,8 @@ public class PuntoCriticoAdapter extends RecyclerView.Adapter<PuntoCriticoAdapte
             area = (TextView) itemView.findViewById(R.id.area);
             factor = (TextView) itemView.findViewById(R.id.factor);
             variable = (TextView) itemView.findViewById(R.id.variable);
+            longitud = (TextView) itemView.findViewById(R.id.longi);
+            latitud = (TextView) itemView.findViewById(R.id.lati);
             color = (TextView) itemView.findViewById(R.id.color);
         }
 

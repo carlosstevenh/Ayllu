@@ -63,9 +63,11 @@ public class EditMonitorFragment extends Fragment  {
 
         final Usuario aux = (Usuario) usuarios.getAdapter().getItem(info.position);
 
+        //opciones del submenu
         switch (item.getItemId()) {
+            //opcion editar usuario
             case R.id.edit:
-
+                //parametro que se envia con la informacion del monitor
                 Bundle parametro = new Bundle();
                 parametro.putInt("codigo", aux.getCodigo_usu());
                 parametro.putString("iden", aux.getIdentificacion_usu());
@@ -76,23 +78,28 @@ public class EditMonitorFragment extends Fragment  {
                 parametro.putString("cla" , aux.getClave_api());
                 parametro.putString("pais", aux.getPais_usu());
 
+                //se llama a la actividad de editar el monitor
                 Intent intent = new Intent(getActivity(),EditMonitor.class);
                 intent.putExtras(parametro);
                 startActivity(intent);
                 return true;
+            //opcion que se encarga d deshabilitar un monitor
             case R.id.desHabilitar:
-                createSimpleDialog("Esta seguro que desea deshabilitar el monitor?","Advertencia!!",aux.getIdentificacion_usu()).show();
+                //se crea el dialogo de confirmacion
+                createSimpleDialog(getResources().getString(R.string.confirmarAccion),getResources().getString(R.string.advertencia),aux.getIdentificacion_usu()).show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    //se crea el submenu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -104,18 +111,17 @@ public class EditMonitorFragment extends Fragment  {
         Usuario aux = (Usuario) usuarios.getAdapter().getItem(info.position);
 
         menu.setHeaderTitle(
-                "Monitor: "+aux.getNombre_usu() + " "+aux.getApellido_usu());
+                getResources().getString(R.string.user)+": " +aux.getNombre_usu() + " "+aux.getApellido_usu());
         inflater.inflate(R.menu.menu_edit_deshabilitar_monitor, menu);
     }
 
+    //se crea la vista del fragmento
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_edit_monitor, container, false);
         activity = getActivity();
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.srlContainer);
-
-
 
         UsuariosAdapter ua = cargarLista();
 
@@ -129,6 +135,7 @@ public class EditMonitorFragment extends Fragment  {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                //se crean los parametros para posteriormente ser enviados a la actividad encargada de monstrar informacion del monitor
                 Bundle parametro = new Bundle();
                 Usuario aux = (Usuario) usuarios.getItemAtPosition(i);
                 parametro.putInt("codigo", aux.getCodigo_usu());
@@ -144,11 +151,10 @@ public class EditMonitorFragment extends Fragment  {
                 intent.putExtras(parametro);
                 startActivity(intent);
 
-                /*Toast.makeText(getActivity(),
-                        "Iniciar screen de detalle para: \n" + usuarios.getItemAtPosition(i).toString(),
-                        Toast.LENGTH_SHORT).show();*/
             }
         });
+
+        //metodo encargado de recargar la informacion de la lista
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -168,7 +174,11 @@ public class EditMonitorFragment extends Fragment  {
         });
         return view;
     }
+
+    //metodo encargado de reacargar la lista de los monitores
     public UsuariosAdapter cargarLista(){
+
+        //se realiza la consulta a la base de datos del movil de los monitores
         AdminSQLite admin = new AdminSQLite(activity,"login", null, 1);
         SQLiteDatabase bd = admin.getWritableDatabase();
         Cursor datos = bd.rawQuery(
@@ -258,16 +268,18 @@ public class EditMonitorFragment extends Fragment  {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    //metodo encargado de crear los dialogos informativos dependiendo de lo que suceda durante la ejecuion de la actividad
     public AlertDialog createSimpleDialog(String mensaje, String titulo,String usuario) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String dh = usuario;
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton("OK",
+                .setPositiveButton(getResources().getString(R.string.confirmar),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                final ProgressDialog loading = ProgressDialog.show(getContext(),"Deshabilitando monitor","Por favor espere...",false,false);
+                                //se realiza la peticion al servidor para deshabilitar a un monitor
+                                final ProgressDialog loading = ProgressDialog.show(getContext(),getResources().getString(R.string.deshabilitar)+" "+getResources().getString(R.string.user),getResources().getString(R.string.esperar),false,false);
                                 RestClient service = RestClient.retrofit.create(RestClient.class);
                                 Call<ArrayList<String>> requestDelete = service.deleteUsuario(dh);
                                 requestDelete.enqueue(new Callback<ArrayList<String>>() {
@@ -278,6 +290,7 @@ public class EditMonitorFragment extends Fragment  {
                                         //String ide = aux.getIdentificacion_usu();
                                         String aux1 = res.get(0);
                                         if(aux1.equals("1")){
+                                            //se eliminar el monitor de la base de datos del movil
                                             AdminSQLite admin1 = new AdminSQLite( getContext(), "login", null, 1);
                                             SQLiteDatabase bd1 = admin1.getWritableDatabase();
                                             bd1.delete(admin1.TABLENAME, admin1.IDE_USU +"='"+ dh +"'", null);
@@ -285,25 +298,25 @@ public class EditMonitorFragment extends Fragment  {
                                             Intent intent = new Intent(getContext(),Administrador.class);
                                             startActivity(intent);
                                             Toast login = Toast.makeText(getContext(),
-                                                    "Acción completada", Toast.LENGTH_LONG);
+                                                    getResources().getString(R.string.accionCompletada), Toast.LENGTH_LONG);
                                         }
                                         else{
                                             Toast login = Toast.makeText(getContext(),
-                                                    "No se pudo Deshabilitar", Toast.LENGTH_LONG);
+                                                    getResources().getString(R.string.noSeEncontraronDatos), Toast.LENGTH_LONG);
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                                         Toast login = Toast.makeText(getContext(),
-                                                "No se pudo Deshabilitar", Toast.LENGTH_LONG);
+                                                getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
                                         loading.dismiss();
                                     }
                                 });
                                 builder.create().dismiss();
                             }
                         })
-                .setNegativeButton("CANCELAR",
+                .setNegativeButton(getResources().getString(R.string.cancelar),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

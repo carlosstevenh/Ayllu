@@ -53,6 +53,8 @@ public class AddMonitorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        //se instancian los elemento de la vista
         View view = inflater.inflate(R.layout.fragment_add_monitor, container, false);
         etI = (EditText)view.findViewById(R.id.txtide);
         etN = (EditText)view.findViewById(R.id.txtname);
@@ -61,10 +63,12 @@ public class AddMonitorFragment extends Fragment {
         etC2 = (EditText)view.findViewById(R.id.contraseña2);
         bt = (Button)view.findViewById(R.id.btnReg);
 
+        //se realiza la invocacion del metodo setOnclickListener que es el encargado de registrar un nuevo monitor
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //se realiza una consulta a la base de datos del movil para obtener el pais del administrador
                 AdminSQLite admin = new AdminSQLite(getContext(),"login", null, 1);
                 SQLiteDatabase bd = admin.getReadableDatabase();
                 Cursor datos = bd.rawQuery(
@@ -79,8 +83,12 @@ public class AddMonitorFragment extends Fragment {
                     } while(datos.moveToNext());
                 }
                 bd.close();
+
+                //se valida si las 2 contraseñas ingresa son iguales
                 if(etC.getText().toString().equals(etC2.getText().toString())){
-                    final ProgressDialog loading = ProgressDialog.show(getContext(),"Registrando monitor","Por favor espere...",false,false);
+
+                    //se realiza la peticion al servidor para el registro del monitor
+                    final ProgressDialog loading = ProgressDialog.show(getContext(),getResources().getString(R.string.registrandoMonitor),getResources().getString(R.string.esperar),false,false);
                     RestClient service = RestClient.retrofit.create(RestClient.class);
                     Call<ArrayList<String>> requestAdd = service.addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),pais);
                     requestAdd.enqueue(new Callback<ArrayList<String>>() {
@@ -90,9 +98,10 @@ public class AddMonitorFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 res = response.body();
                                 Toast login = Toast.makeText(getContext(),
-                                        "Registro adicionado", Toast.LENGTH_LONG);
+                                        getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
                                 login.show();
 
+                                //peticion al servidor que se encarga de obtener el monitor registrado para actualizar la base de datos del movil
                                 RestClient service = RestClient.retrofit.create(RestClient.class);
                                 Call<ArrayList<Usuario>> requestAdd = service.update(etI.getText().toString());
                                 requestAdd.enqueue(new Callback<ArrayList<Usuario>>() {
@@ -133,7 +142,7 @@ public class AddMonitorFragment extends Fragment {
 
                             } else {
                                 Toast login = Toast.makeText(getContext(),
-                                        "No se pudo registrar usuario", Toast.LENGTH_SHORT);
+                                        getResources().getString(R.string.seProdujoUnError), Toast.LENGTH_SHORT);
                                 login.show();
                                 int statusCode = response.code();
                                 Log.i("TAG", "error " + response.code());
@@ -144,14 +153,14 @@ public class AddMonitorFragment extends Fragment {
                         @Override
                         public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                             loading.dismiss();
-                            Toast prueba = Toast.makeText(getContext(), "Error al registrar el monitor", Toast.LENGTH_LONG);
+                            Toast prueba = Toast.makeText(getContext(), getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
                             prueba.show();
                         }
                     });
 
                 }
                 else{
-                    Toast prueba = Toast.makeText(getContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG);
+                    Toast prueba = Toast.makeText(getContext(), getResources().getString(R.string.contraseñasDiferentes), Toast.LENGTH_LONG);
                     prueba.show();
                 }
             }

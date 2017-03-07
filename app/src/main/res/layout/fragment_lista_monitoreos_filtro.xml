@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/puntos_criticos"
+                android:text="@string/monitoreos"
                 android:textSize="18sp"
                 android:textColor="#fff"
                 android:layout_marginLeft="20dp"

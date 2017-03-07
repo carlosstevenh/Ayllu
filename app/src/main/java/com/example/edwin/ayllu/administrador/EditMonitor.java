@@ -35,6 +35,7 @@ public class EditMonitor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_monitor);
+        //Se reciben los parametros suminstrados por la actividad anterior
         Bundle bundle = getIntent().getExtras();
 
         codigo = bundle.getInt("codigo");
@@ -43,12 +44,14 @@ public class EditMonitor extends AppCompatActivity {
         clave = bundle.getString("cla");
         ide = bundle.getString("iden");
 
+        //se instacian los elementos de la vista
         id = (TextView)findViewById(R.id.txtide);
         nom = (TextView)findViewById(R.id.txtname);
         ape = (TextView)findViewById(R.id.txtApe);
         con = (TextView)findViewById(R.id.txtCon);
         con2 = (TextView)findViewById(R.id.txtCon2);
 
+        //se llena los elementos de la vista con los paramentros recividos
         id.setText(bundle.getString("iden"));
         nom.setText(bundle.getString("nombre"));
         ape.setText(bundle.getString("apellido"));
@@ -56,6 +59,7 @@ public class EditMonitor extends AppCompatActivity {
         con2.setText(bundle.getString("con"));
 
         edit = (Button) findViewById(R.id.btnReg);
+        //se invoca al metodo click del boton para luego llamar al metodo encargado de editar el monitor
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,26 +68,28 @@ public class EditMonitor extends AppCompatActivity {
         });
 
     }
+    //metodo encargado de mostrar los mensajes de confirmacion de edicion del metodo
     public void editar(){
         if(con.getText().toString().equals(con2.getText().toString())){
-            createSimpleDialog("Esta seguro que desea actualizar el monitor?","Atención.").show();
+            createSimpleDialog(getResources().getString(R.string.confirmacionAccionEditar),getResources().getString(R.string.advertencia)).show();
         }
         else{
             Toast login = Toast.makeText(getApplicationContext(),
-                    "Las contraseñas no coinciden", Toast.LENGTH_LONG);
+                    getResources().getString(R.string.contraseñasDiferentes), Toast.LENGTH_LONG);
             login.show();
         }
     }
-
+    //metodo encargado de crear los dialogos informativos y confirmacion de la edicion del monitor
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(EditMonitor.this);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton("OK",
+                .setPositiveButton(getResources().getString(R.string.confirmar),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                final ProgressDialog loading = ProgressDialog.show(EditMonitor.this,"Actualizando monitor","Por favor espere...",false,false);
+                                //Se realiza la peticion al servidor para actualizar la informacion del monitor
+                                final ProgressDialog loading = ProgressDialog.show(EditMonitor.this,getResources().getString(R.string.actualizadoMonitor),getResources().getString(R.string.esperar),false,false);
                                 RestClient service = RestClient.retrofit.create(RestClient.class);
                                 Call<ArrayList<String>> requestAdd = service.editUsuario(id.getText().toString(),nom.getText().toString()
                                         ,ape.getText().toString(),con.getText().toString(),""+clave);
@@ -95,6 +101,7 @@ public class EditMonitor extends AppCompatActivity {
                                             res = response.body();
                                             String aux = res.get(0);
                                             if(aux.equals("1")){
+                                                //se actaliza el monitor tambien en la base de datos del movil
                                                 AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                                                 SQLiteDatabase bd = admin.getWritableDatabase();
                                                 String update = "UPDATE " +admin.TABLENAME+" SET "+ admin.IDE_USU + "='" +id.getText().toString() +"', "
@@ -105,7 +112,7 @@ public class EditMonitor extends AppCompatActivity {
                                                 bd.execSQL(update);
                                                 bd.close();
                                                 Toast login = Toast.makeText(getApplicationContext(),
-                                                        "Monitor actualizado", Toast.LENGTH_LONG);
+                                                        getResources().getString(R.string.monitorActualizado), Toast.LENGTH_LONG);
                                                 login.show();
                                                 Intent intent = new Intent(getApplicationContext(),Administrador.class);
                                                 startActivity(intent);
@@ -114,7 +121,7 @@ public class EditMonitor extends AppCompatActivity {
                                             }
                                             else{
                                                 Toast login = Toast.makeText(getApplicationContext(),
-                                                        "Error al actualizar", Toast.LENGTH_LONG);
+                                                        getResources().getString(R.string.seProdujoUnError), Toast.LENGTH_LONG);
                                                 login.show();
                                             }
 
@@ -123,7 +130,7 @@ public class EditMonitor extends AppCompatActivity {
                                             int statusCode = response.code();
                                             Log.i("TAG", "error " + response.code());
                                             Toast login = Toast.makeText(getApplicationContext(),
-                                                    "Error al actualizar", Toast.LENGTH_LONG);
+                                                    getResources().getString(R.string.seProdujoUnError), Toast.LENGTH_LONG);
                                             login.show();
 
                                         }
@@ -133,13 +140,13 @@ public class EditMonitor extends AppCompatActivity {
                                     public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                                         loading.dismiss();
                                         Toast login = Toast.makeText(getApplicationContext(),
-                                                "Error al actualizar el monitor", Toast.LENGTH_LONG);
+                                                getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
                                         login.show();
                                     }
                                 });
                             }
                         })
-                .setNegativeButton("CANCELAR",
+                .setNegativeButton(getResources().getString(R.string.cancelar),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

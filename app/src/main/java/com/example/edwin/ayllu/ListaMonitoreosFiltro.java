@@ -1,6 +1,7 @@
 package com.example.edwin.ayllu;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,18 +40,13 @@ public class ListaMonitoreosFiltro extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lista_monitoreos_filtro, container, false);
         mReporteList = (RecyclerView) root.findViewById(R.id.rvpc);
 
+        //parametros que se obtienene cuando se llama a esta clase
         Bundle bundle = getActivity().getIntent().getExtras();
 
+        //peticion al servidor para obtener los ultimos monitoreos de cada punto de afactacion
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+
         RestClient service = RestClient.retrofit.create(RestClient.class);
-
-        Toast.makeText(
-                getActivity(),
-                ""+bundle.getString("p1")+"__"+bundle.getString("p2")+"__"+bundle.getString("p3")+"__"+
-                        bundle.getString("p4")+"__"+bundle.getString("p5")+"__"+bundle.getString("p6")+"__"+bundle.getString("fi")+"__"+bundle.getString("ff")+"__"+
-                        bundle.getString("fac")+"__"+bundle.getString("var"),
-                Toast.LENGTH_LONG)
-                .show();
-
         Call<ArrayList<PuntoCritico>> pc = service.getFiltro(bundle.getString("p1"),bundle.getString("p2"),bundle.getString("p3"),
                 bundle.getString("p4"),bundle.getString("p5"),bundle.getString("p6"),bundle.getString("fi"),bundle.getString("ff"),
                 bundle.getString("fac"),bundle.getString("var"));
@@ -58,14 +54,10 @@ public class ListaMonitoreosFiltro extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<PuntoCritico>> call, Response<ArrayList<PuntoCritico>> response) {
                 if (response.isSuccessful()) {
+                    loading.dismiss();
                     monitoreos = response.body();
 
-                    Toast.makeText(
-                            getActivity(),
-                            "Fecha => "+monitoreos.size(),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                    //final RecyclerView rv = (RecyclerView) View.findViewById(R.id.reciclerPuntosCriticos);
+                    //invocacion al metodo setOnclickListener cuando el usuario clickea un elementod de la lista
                     PuntoCriticoAdapter ma = new PuntoCriticoAdapter(monitoreos);
                     ma.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -77,7 +69,6 @@ public class ListaMonitoreosFiltro extends Fragment {
 
                             Intent intent = new Intent(getActivity(), InformacionPuntoCritico.class);
                             intent.putExtras(parametro);
-                            //intent.putExtra("pa",m.getCodigo());
                             startActivity(intent);
                             Log.i("DemoRecView", "Pulsado el elemento " + m.getCodigo_paf());
                         }
@@ -89,7 +80,7 @@ public class ListaMonitoreosFiltro extends Fragment {
                 else{
                     Toast.makeText(
                             getActivity(),
-                            "por el no => "+monitoreos.size(),
+                            getResources().getString(R.string.noSeEncontraronDatos),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -97,9 +88,10 @@ public class ListaMonitoreosFiltro extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<PuntoCritico>> call, Throwable t) {
+                loading.dismiss();
                 Toast.makeText(
                         getActivity(),
-                        "nada de nada => "+monitoreos.size(),
+                        getResources().getString(R.string.noSePudoConectarServidor),
                         Toast.LENGTH_SHORT)
                         .show();
             }

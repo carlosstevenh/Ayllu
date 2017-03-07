@@ -23,8 +23,12 @@ public class PuntoCritico {
     private String porcentaje;
     @SerializedName("frecuencia")
     private String frecuencia;
+    @SerializedName("longitud_coo")
+    private String longitud;
+    @SerializedName("latitud_coo")
+    private String latitud;
 
-    public PuntoCritico(String codigo_paf, String fecha, String pais, String area, String factor, String variable, String porcentaje, String frecuencia) {
+    public PuntoCritico(String codigo_paf, String fecha, String pais, String area, String factor, String variable, String porcentaje, String frecuencia, String longitud, String latitud) {
         this.codigo_paf = codigo_paf;
         this.fecha = fecha;
         this.pais = pais;
@@ -33,6 +37,24 @@ public class PuntoCritico {
         this.variable = variable;
         this.porcentaje = porcentaje;
         this.frecuencia = frecuencia;
+        this.longitud = longitud;
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
     }
 
     public String getPorcentaje() {

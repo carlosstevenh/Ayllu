@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu;
 
+import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
 import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
@@ -23,10 +24,17 @@ import retrofit2.http.Path;
 public interface RestClient {
 
     String BASE_URL="http://138.68.40.165/webservice/";
+    //String BASE_URL="http://192.168.56.1/webservice/";
 
+    //peticion que trae todos los monitores de un punto de afectacion
+    @GET("puntosAfectacion/{paf}")
+    Call<ArrayList<AnalisisPorcentajeFrecuencia>> proFre (@Path("paf") String paf);
+
+    //peticion que trae el resumen de un monitor
     @GET("resumenMonitor/{ide}")
     Call<ArrayList<ResumenMonitor>> resumenMonitor(@Path("ide") String ide);
 
+    //peticion que consulta los ultimos monitores de cada punto de afectacion de acuerdo al filtro que el usuario realice
     @GET("filtrarMonitoreosConFecha/{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{fi}/{ff}/{fac}/{var}")
     Call<ArrayList<PuntoCritico>> getFiltro(@Path("p1") String p1,
                                             @Path("p2") String p2,
@@ -38,14 +46,18 @@ public interface RestClient {
                                             @Path("ff") String ff,
                                             @Path("fac") String fac,
                                             @Path("var") String var);
+
+    //peticion que trae la informacion completa de un monitoreo
     @GET ("descripcionPC/{paf}/{fecha}")
     Call<ArrayList<MonitoreoGeneral>> informacion (@Path("paf") String paf,
                                                    @Path("fecha") String fec);
 
+    //peticion que realiza el inicio de sesion de la app
     @GET("login/{ide_usu}/{pw_usu}")
     Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,
                                         @Path("pw_usu") String contrasena_usu);
 
+    //peticion que agreaga un nuevo monitor al servidor
     @GET("add/{ide}/{nom}/{ape}/{tipo}/{con}/{pais}")
     Call<ArrayList<String>> addUsuario(@Path("ide") String ide,
                                        @Path("nom") String nom,
@@ -54,24 +66,31 @@ public interface RestClient {
                                        @Path("con") String con,
                                        @Path("pais") String pais);
 
+    //peticion que actualiza la informacion de un monitor
     @GET("edit/{ide}/{nom}/{ape}/{con}/{clave}")
     Call<ArrayList<String>> editUsuario(@Path("ide") String ide,
                                        @Path("nom") String nom,
                                        @Path("ape") String ape,
                                        @Path("con") String con,
                                        @Path("clave") String pais);
+
+    //peticion que trae todos los monitores del pais del administrador
     @GET("getMonitores/{pais}")
     Call<ArrayList<Usuario>> getUsuarios(@Path("pais") String pais);
 
+    //
     @GET("update/{ide}")
     Call<ArrayList<Usuario>>update(@Path("ide") String ide);
 
+    //peticion que deshabilita un usuario
     @GET("deshabilitar/{ide}")
     Call<ArrayList<String>> deleteUsuario(@Path("ide") String ide);
 
+    //peticion que trae todos los monitoreos de un area especifica
     @GET("monitoreos/{area}")
     Call <ArrayList<Monitoreo>> monitoreos (@Path("area") String area);
 
+    //peticion que registra una respuesta institucional
     @GET ("addRespuesta/{pa}/{fm}/{eva}/{per}/{tie}/{pre}/{rec}/{con}/{mon}")
     Call<ArrayList<String>> addRespuesta (@Path("pa") String pa,
                                           @Path("fm") String fm,
