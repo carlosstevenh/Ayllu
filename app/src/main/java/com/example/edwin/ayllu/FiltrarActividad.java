@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.example.edwin.ayllu.domain.Factor;
+import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
 import com.example.edwin.ayllu.domain.Variable;
+import com.example.edwin.ayllu.domain.VariableContract;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
 
 import static com.example.edwin.ayllu.domain.FactorContract.FactorEntry;
@@ -38,21 +40,16 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
     private ImageView desde,hasta;
     private CardView cvf;
     private TextView inicio,fin;
-    int año;
-    int mes;
-    int dia;
+    int año, mes, dia;
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
     private long fcDesde = 0,fcHasta = 0,fcActual = 0;
 
-    private ArrayList<Factor> factores = new ArrayList<>();
-    private ArrayList<Variable> variables = new ArrayList<>();
-
     private CharSequence[] items_factores,items_variables;
-    private ArrayList<String> list_variables;
+    private String[] opciones = {"0","0"};
+    private int[] pos = {-1, -1};
 
     private String[] paisesOpciones = {"null","null","null","null","null","null"};
-    private String[] opciones = {"0","0"};
 
     private FactorDbHelper factorDbHelper;
     private VariableDbHelper variableDbHelper;
@@ -74,7 +71,6 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         if(cursor.moveToFirst()){
             items_factores = new CharSequence[cursor.getCount()];
             do {
-                factores.add(new Factor(cursor.getString(1), cursor.getString(2)));
                 items_factores[i] = cursor.getString(2);
                 i++;
             }while (cursor.moveToNext());
@@ -316,52 +312,65 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         }
         return null;
     }
+    /**
+     * =============================================================================================
+     * METODO: Genera un Dialogo con las opciones de las categorias (FACTOR/VARIABLE)
+     **/
     public AlertDialog createRadioListDialog(final CharSequence[] items, String title, final int zn) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(title);
-        builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(items, pos[zn - 1], new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (zn){
+                switch (zn) {
+                    //------------------------------------------------------------------------------
+                    //DIALOGO: Se crea una lista de RadioButtons de los Factores
                     case 1:
                         item = items_factores[which].toString();
-                        cursor = factorDbHelper.generateConditionalQuery(new String[]{item}, FactorEntry.NOMBRE);
+                        cursor = factorDbHelper.generateConditionalQuery(new String[]{item}, FactorContract.FactorEntry.NOMBRE);
                         cursor.moveToFirst();
 
                         opciones[0] = cursor.getString(1);
+                        pos[0] = which;
                         opciones[1] = "0";
+                        pos[1] = -1;
+
                         items_variables = null;
 
                         i = 0;
-                        cursor = variableDbHelper.generateConditionalQuery(new String[]{opciones[0]}, VariableEntry.FACTOR);
+                        cursor = variableDbHelper.generateConditionalQuery(new String[]{opciones[0]}, VariableContract.VariableEntry.FACTOR);
                         if (cursor.moveToFirst()) {
                             items_variables = new CharSequence[cursor.getCount()];
                             do {
-                                variables.add(new Variable(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
                                 items_variables[i] = cursor.getString(2);
                                 i++;
                             } while (cursor.moveToNext());
                         }
                         break;
+                    //------------------------------------------------------------------------------
+                    //DIALOGO: Se crea una lista de RadioButtons de las Variables
                     case 2:
                         item = items_variables[which].toString();
-                        cursor = variableDbHelper.generateConditionalQuery(new String[]{item}, VariableEntry.NOMBRE);
+                        cursor = variableDbHelper.generateConditionalQuery(new String[]{item}, VariableContract.VariableEntry.NOMBRE);
                         cursor.moveToFirst();
 
                         opciones[1] = cursor.getString(1);
+                        pos[1] = which;
                         break;
                     default:
                         break;
                 }
-
-                Toast.makeText(
-                        FiltrarActividad.this,
-                        "Seleccionaste: " + items[which],
-                        Toast.LENGTH_SHORT)
-                        .show();
             }
-        });
+        })
+                .setNegativeButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
 
         return builder.create();
     }

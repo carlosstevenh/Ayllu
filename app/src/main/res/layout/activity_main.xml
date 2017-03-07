@@ -4,6 +4,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/colorPrimary"
     android:gravity="center_horizontal"
     tools:context="com.example.edwin.ayllu.MainActivity">
@@ -20,8 +23,6 @@
         android:id="@+id/form_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_below="@id/logo_login"
         android:orientation="vertical">
 
@@ -69,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="#323251"
+        android:background="@color/colorAccent"
         android:clickable="true"
         android:elevation="2dp"
         android:onClick="login"

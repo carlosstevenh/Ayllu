@@ -152,12 +152,6 @@ public class MonitorMenuActivity extends AppCompatActivity {
         return viewPager.getCurrentItem() + i;
     }
 
-    private void launchHomeScreen() {
-        Intent intent = new Intent(MonitorMenuActivity.this, MonitoringRegistrationForm1Activity.class);
-        intent.putExtra("MONITOR", monitor);
-        startActivity(intent);
-        finish();
-    }
     private void puntosCriticos(){
         Intent intent = new Intent(MonitorMenuActivity.this,FiltrarActividad.class);
         intent.putExtra("Monitor",monitor);
