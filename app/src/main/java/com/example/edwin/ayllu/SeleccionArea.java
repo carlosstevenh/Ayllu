@@ -127,14 +127,14 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
         for (int i=0; i<tramos.size(); i++) items_tramos[i] = tramos.get(i).getDescripcion_t();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monitoring_registration_form1);
+        /*setContentView(R.layout.activity_monitoring_registration_form1);
 
         imgBtn_tramos = (ImageButton) findViewById(R.id.btn_tramos);
         imgBtn_subtramos = (ImageButton) findViewById(R.id.btn_subtramos);
         imgBtn_secciones = (ImageButton) findViewById(R.id.btn_secciones);
         imgBtn_areas = (ImageButton) findViewById(R.id.btn_areas);
 
-        fab_next = (FloatingActionButton) findViewById(R.id.fab_next);
+        fab_next = (FloatingActionButton) findViewById(R.id.fab_next);*/
 
         imgBtn_tramos.setOnClickListener(this);
         imgBtn_subtramos.setOnClickListener(this);
@@ -150,7 +150,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        /*switch (view.getId()){
             case R.id.btn_tramos:
                 createRadioListDialog(items_tramos, "Seleccione un Tramo", 1).show();
                 break;
@@ -170,7 +170,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     public AlertDialog createRadioListDialog(final CharSequence[] items, String title, final int zn) {

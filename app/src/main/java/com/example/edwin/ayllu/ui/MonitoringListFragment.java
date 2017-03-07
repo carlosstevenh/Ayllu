@@ -9,24 +9,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.ImageButton;
 
+import com.example.edwin.ayllu.MonitoringRegistrationFormActivity;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.domain.Area;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.Reporte;
-import com.example.edwin.ayllu.domain.Seccion;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
-import com.example.edwin.ayllu.domain.Subtramo;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
-import com.example.edwin.ayllu.domain.Tramo;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
@@ -40,55 +35,48 @@ import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
 import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MonitoringListFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
+    //VARIABLES DE VISTA
     private ReporteAdapter adapter;
     private RecyclerView mReporteList;
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search, fab_new;
     private FloatingActionsMenu menu;
 
-    View root;
-
-    Interpolator interpolador;
-
+    //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
-    ArrayList<Tramo> tramos = new ArrayList<>();
-    ArrayList<Subtramo> subtramos = new ArrayList<>();
-    ArrayList<Seccion> secciones = new ArrayList<>();
-    ArrayList<Area> areas = new ArrayList<>();
-
     CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas;
-
     int[] op = {0, 0, 0, 0};
     int[] pos = {-1, -1, -1, -1};
 
+    Interpolator interpolador;
     String item = "";
-    Cursor cursor;
+    String cod_mon = "", pais_mon = "";
     int i = 0;
 
+    //VARIABLES CONTROL DE DATOS FIJOS
     PaisDbHelper paisDbHelper;
     TramoDbHelper tramoDbHelper;
     SubtramoDbHelper subtramoDbHelper;
     SeccionDbHelper seccionDbHelper;
     AreaDbHelper areaDbHelper;
+    Cursor cursor;
 
-    private String cod_mon = "", pais_mon = "";
-
+    /**
+     * =============================================================================================
+     * METODO: Encargado de activarse cuando el fragmento se Infle
+     **/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //------------------------------------------------------------------------------------------
+        //Relacionamos variables con la actividad actual
         adapter = new ReporteAdapter(getActivity());
-
-        Intent intent = getActivity().getIntent();
-        cod_mon = intent.getStringExtra("MONITOR");
-        pais_mon = intent.getStringExtra("PAIS");
 
         paisDbHelper = new PaisDbHelper(getActivity());
         tramoDbHelper = new TramoDbHelper(getActivity());
@@ -96,38 +84,70 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         seccionDbHelper = new SeccionDbHelper(getActivity());
         areaDbHelper = new AreaDbHelper(getActivity());
         int i = 0;
-
+        //------------------------------------------------------------------------------------------
+        //Obtenemos el codigo del monitor y el pais del usuario en sesión
+        Intent intent = getActivity().getIntent();
+        cod_mon = intent.getStringExtra("MONITOR");
+        pais_mon = intent.getStringExtra("PAIS");
+        //------------------------------------------------------------------------------------------
+        //Obtenemos los tramos correspondientes al pais del usuario actual
         cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais_mon}, TramoEntry.PAIS);
         if (cursor.moveToFirst()) {
             items_tramos = new CharSequence[cursor.getCount()];
             do {
-                tramos.add(new Tramo(cursor.getInt(1), cursor.getString(2), cursor.getString(3)));
                 items_tramos[i] = cursor.getString(2);
                 i++;
             } while (cursor.moveToNext());
         }
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO: Encargado de activarse cuando se cree la vista y cargar con datos el RecyclerView
+     **/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
         mReporteList = (RecyclerView) root.findViewById(R.id.monitoring_list);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (reportes.size() > 0) {
+                    Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
+                    createMonitoringDialog(reporte).show();
+                }
+            }
+        });
+
         setupReporteList();
         return root;
     }
 
+    /**=============================================================================================
+     * METODO: Encargado de de redirigir al usuario al Formulario de Registro con la información del
+     * punto seleccionado
+     **/
+
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     @Override
     public void onResume() {
         super.onResume();
 
         fab_new = (FloatingActionButton) getActivity().findViewById(R.id.fab_new);
         fab_search = (FloatingActionButton) getActivity().findViewById(R.id.fab_search);
+        fab_tramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_tramo);
+        fab_subtramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_subtramo);
+        fab_seccion = (FloatingActionButton) getActivity().findViewById(R.id.fab_seccion);
+        fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
+        menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
 
         fab_new.setScaleX(0);
         fab_search.setScaleX(0);
-
         fab_new.setScaleY(0);
         fab_search.setScaleY(0);
 
@@ -136,11 +156,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     android.R.interpolator.fast_out_slow_in);
         }
 
-        fab_tramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_tramo);
-        fab_subtramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_subtramo);
-        fab_seccion = (FloatingActionButton) getActivity().findViewById(R.id.fab_seccion);
-        fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
-        menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
 
         fab_subtramo.setEnabled(false);
         fab_seccion.setEnabled(false);
@@ -152,8 +167,45 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_area.setOnClickListener(this);
         menu.setOnFloatingActionsMenuUpdateListener(this);
         fab_search.setOnClickListener(this);
+        fab_new.setOnClickListener(this);
     }
 
+    /**
+     * =============================================================================================
+     * METODO: Presenta en Interfaz un dialogo para Monitorear un Punto de Afectación
+     **/
+    public AlertDialog createMonitoringDialog(final Reporte currentReport) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("MONITOREAR UN PUNTO")
+                .setMessage("¿Quiere monitorear el punto de afectación seleccionado?")
+                .setPositiveButton("ACEPTAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
+                                intent.putExtra("MONITOR", cod_mon + "");
+                                intent.putExtra("PUNTO", currentReport.getCod_paf() + "");
+                                intent.putExtra("OPCION", "M");
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                        })
+                .setNegativeButton("CANCELAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
+
+        return builder.create();
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Presenta en Interfaz un mensaje Tipo Dialog
+     **/
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(titulo)
@@ -169,6 +221,11 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         return builder.create();
     }
 
+    /**
+     * =============================================================================================
+     * METODO: Presenta en Interfaz un mensaje tipo dialog con los datos correspondientes a las
+     * Zonas y asi aplicar los filtros correspondientes para la consulta de monitoreos
+     **/
     public AlertDialog createRadioListDialog(final CharSequence[] items, final String title, final int zn) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -177,104 +234,57 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (zn) {
+                            //----------------------------------------------------------------------
                             case 1:
                                 item = items_tramos[which].toString();
                                 cursor = tramoDbHelper.generateConditionalQuery(new String[]{item}, TramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
-
                                 op[0] = cursor.getInt(1);
                                 pos[0] = which;
-                                for (i = 1; i < op.length; i++) {
-                                    pos[i] = -1;
-                                    op[i] = 0;
-                                }
 
-                                items_subtramos = null;
-                                items_secciones = null;
-                                items_areas = null;
+                                cleanVectors(1);
+                                inhabilitarFiltros(1);
 
-                                i = 0;
                                 cursor = subtramoDbHelper.generateConditionalQuery(new String[]{op[0] + ""}, SubtramoEntry.TRAMO);
-                                if (cursor.moveToFirst()) {
-                                    items_subtramos = new CharSequence[cursor.getCount()];
-                                    do {
-                                        subtramos.add(new Subtramo(cursor.getInt(1), cursor.getString(2), cursor.getInt(3)));
-                                        items_subtramos[i] = cursor.getString(2);
-                                        i++;
-                                    } while (cursor.moveToNext());
-                                }
-
-                                fab_subtramo.setEnabled(true);
-                                fab_seccion.setEnabled(false);
-                                fab_area.setEnabled(false);
-
+                                items_subtramos = dataFilter(cursor, 2);
                                 break;
+                            //----------------------------------------------------------------------
                             case 2:
                                 item = items_subtramos[which].toString();
                                 cursor = subtramoDbHelper.generateConditionalQuery(new String[]{item}, SubtramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
-
                                 op[1] = cursor.getInt(1);
                                 pos[1] = which;
-                                for (i = 2; i < op.length; i++) {
-                                    op[i] = 0;
-                                    pos[i] = -1;
-                                }
 
-                                items_secciones = null;
-                                items_areas = null;
+                                cleanVectors(2);
+                                inhabilitarFiltros(2);
 
-                                i = 0;
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{op[1] + ""}, SeccionEntry.SUBTRAMO);
-                                if (cursor.moveToFirst()) {
-                                    items_secciones = new CharSequence[cursor.getCount()];
-                                    do {
-                                        secciones.add(new Seccion(cursor.getInt(1), cursor.getString(2), cursor.getInt(3)));
-                                        items_secciones[i] = cursor.getString(2);
-                                        i++;
-                                    } while (cursor.moveToNext());
-                                }
-
-                                fab_seccion.setEnabled(true);
-                                fab_area.setEnabled(false);
-
+                                items_secciones = dataFilter(cursor, 2);
                                 break;
+                            //----------------------------------------------------------------------
                             case 3:
                                 item = items_secciones[which].toString();
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{item}, SeccionEntry.DESCRIPCION);
                                 cursor.moveToFirst();
-
                                 op[2] = cursor.getInt(1);
                                 pos[2] = which;
-                                for (i = 3; i < op.length; i++) {
-                                    op[i] = 0;
-                                    pos[i] = -1;
-                                }
 
-                                items_areas = null;
+                                cleanVectors(3);
+                                inhabilitarFiltros(3);
 
-                                i = 0;
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaEntry.SECCION);
-                                if (cursor.moveToFirst()) {
-                                    items_areas = new CharSequence[cursor.getCount()];
-                                    do {
-                                        areas.add(new Area(cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4)));
-                                        items_areas[i] = cursor.getString(3);
-                                        i++;
-                                    } while (cursor.moveToNext());
-                                }
-
-                                fab_area.setEnabled(true);
-
+                                items_areas = dataFilter(cursor, 3);
                                 break;
+                            //----------------------------------------------------------------------
                             case 4:
                                 item = items_areas[which].toString();
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{item}, AreaEntry.PROPIEDAD_NOMINADA);
                                 cursor.moveToFirst();
-
                                 op[3] = cursor.getInt(1);
                                 pos[3] = which;
                                 break;
+                            //----------------------------------------------------------------------
                             default:
                                 break;
                         }
@@ -291,7 +301,10 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         return builder.create();
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO: Procesa todos los eventos de tipo onClick de cada uno de los botones de la Interfaz
+     **/
     @Override
     public void onClick(final View view) {
         switch (view.getId()) {
@@ -306,6 +319,17 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.fab_area:
                 createRadioListDialog(items_areas, "AREAS", 4).show();
+                break;
+            case R.id.fab_new:
+                if (op[3] != 0) {
+                    Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
+                    intent.putExtra("MONITOR", cod_mon + "");
+                    intent.putExtra("AREA", op[3] + "");
+                    intent.putExtra("OPCION", "N");
+                    startActivity(intent);
+                    getActivity().finish();
+                } else
+                    createSimpleDialog("Seleciona un área para registrar un Monitoreos", "INFORMACIÓN").show();
                 break;
             case R.id.fab_search:
                 menu.collapse();
@@ -331,27 +355,39 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         }
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     private void setupReporteList() {
         mReporteList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mReporteList.setAdapter(adapter);
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     @Override
     public void onMenuExpanded() {
         animationButton(fab_new, 1, 1);
         animationButton(fab_search, 1, 1);
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     @Override
     public void onMenuCollapsed() {
         animationButton(fab_new, 0, 0);
         animationButton(fab_search, 0, 0);
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     public void animationButton(FloatingActionButton fb, float x, float y) {
         fb.animate()
                 .scaleX(x)
@@ -361,7 +397,10 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 .setStartDelay(500);
     }
 
-    //==============================================================================================
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     private class HackingBackgroundTask extends AsyncTask<Void, Void, ArrayList<Reporte>> {
 
         static final int DURACION = 2 * 1000; // 3 segundos de carga
@@ -390,5 +429,63 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             adapter.addAll(result);
         }
 
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public void cleanVectors(int initial) {
+        for (i = initial; i < 4; i++) {
+            pos[i] = -1;
+            op[i] = 0;
+        }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public CharSequence[] dataFilter(Cursor cur, int position) {
+        i = 0;
+        CharSequence[] items = new CharSequence[0];
+
+        if (cur.moveToFirst()) {
+            items = new CharSequence[cursor.getCount()];
+            do {
+                items[i] = cursor.getString(position);
+                i++;
+            } while (cursor.moveToNext());
+        }
+        return items;
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public void inhabilitarFiltros(int num_zn) {
+        switch (num_zn) {
+            case 1:
+                items_subtramos = null;
+                items_secciones = null;
+                items_areas = null;
+                fab_subtramo.setEnabled(true);
+                fab_seccion.setEnabled(false);
+                fab_area.setEnabled(false);
+                break;
+            case 2:
+                items_secciones = null;
+                items_areas = null;
+                fab_seccion.setEnabled(true);
+                fab_area.setEnabled(false);
+                break;
+            case 3:
+                items_areas = null;
+                fab_area.setEnabled(true);
+                break;
+            default:
+                break;
+        }
     }
 }

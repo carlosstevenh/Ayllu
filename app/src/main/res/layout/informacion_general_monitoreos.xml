@@ -17,7 +17,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorTitleForm"
+            app:cardBackgroundColor="@color/colorRadioButtonOff"
             app:contentPadding="@dimen/appbar_padding_top">
 
             <TableLayout
@@ -117,8 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/pais"
-                            android:layout_weight="1"
-                            android:textAlignment="textStart" />
+                            android:layout_weight="1" />
                     </LinearLayout>
                 </TableRow>
 
@@ -311,7 +310,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentPadding="@dimen/appbar_padding_top"
-            app:cardBackgroundColor="?attr/colorAccent">
+            app:cardBackgroundColor="@color/dot_dark_screen3">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -323,7 +322,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView54"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorTextIcons"
                     android:textAlignment="center"
                     android:textStyle="normal|bold" />
 
@@ -341,7 +340,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/textView56"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/colorTextIcons" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -365,7 +364,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/textView58"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/colorTextIcons" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -377,24 +376,28 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView59"
-            android:textSize="56sp" />
-
         <Button
             android:text="@string/getPruebas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
             android:id="@+id/button3"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/colorTextIcons"
+            android:background="@color/colorAccent"/>
 
         <Button
-            android:text="@string/analisis"
+            android:id="@+id/btnGraficas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnGraficas" />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorAccent"
+            android:text="@string/analisis"
+            android:textColor="@color/colorTextIcons" />
     </LinearLayout>
 
 </RelativeLayout>

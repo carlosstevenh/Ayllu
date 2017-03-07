@@ -13,23 +13,39 @@ import retrofit2.http.Path;
 
 
 public interface AylluApiService {
-    //----------------------------------------------------------------------------------------------
-    //METODO: REGISTRAR UN MONITOREO
+    /**
+     * =============================================================================================
+     * METODO: Registrar un nuevo punto de afectación con monitoreo
+     **/
     @POST("monitoreos/registrar/")
     Call<Task> registrarPunto(@Body Task datos);
-    //----------------------------------------------------------------------------------------------
-    //METODO: CONSULTAR MONITOREOS
+    /**
+     * =============================================================================================
+     * METODO: Registra un monitoreo sobre un punto de afectación existente
+     **/
+    @POST("monitoreos/monitorear/")
+    Call<Task> monitorearPunto(@Body Task datos);
+    /**
+     * =============================================================================================
+     * METODO: Consultar Monitoreos
+     **/
     @GET("monitoreos/consultar/{tramo}/{subtramo}/{seccion}/{area}")
     Call<ReporteResponse> getReporte(@Path("tramo") int tramo,
                                      @Path("subtramo") int subtramo,
                                      @Path("seccion") int seccion,
-                                     @Path("area") int area );
-    //----------------------------------------------------------------------------------------------
-    //METODO: CONSULTAR ZONAS
+                                     @Path("area") int area);
+
+    /**
+     * =============================================================================================
+     * METODO: Consultar Zonas
+     **/
     @GET("zonas/consultar/")
     Call<ZonaResponse> getZona();
-    //----------------------------------------------------------------------------------------------
-    //METODO: CONSULTAR CATEGORIAS
+
+    /**
+     * =============================================================================================
+     * METODO: Consultar Categorias
+     **/
     @GET("categorias/consultar/")
     Call<CategoriaResponse> getCategoria();
 }
