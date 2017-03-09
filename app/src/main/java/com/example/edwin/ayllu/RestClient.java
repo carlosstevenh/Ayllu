@@ -5,6 +5,7 @@ import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.Pais;
+import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.example.edwin.ayllu.domain.ResumenMonitor;
 import com.example.edwin.ayllu.domain.Usuario;
@@ -23,8 +24,13 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    String BASE_URL="http://138.68.40.165/webservice/";
-    //String BASE_URL="http://192.168.56.1/webservice/";
+    //String BASE_URL="http://138.68.40.165/webservice/";
+    String BASE_URL="http://192.168.1.8/webservice/";
+
+    //peticion que trae el nombre de la prueba de un monitoreo
+    @GET("nombrePrueba/{paf}/{fec}")
+    Call<ArrayList<Prueba>> getPrueba(@Path("paf") String paf,
+                                      @Path("fec") String fec);
 
     //peticion que trae todos los monitores de un punto de afectacion
     @GET("puntosAfectacion/{paf}")
