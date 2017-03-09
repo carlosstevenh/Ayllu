@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -20,7 +21,6 @@ public class ActivityPruebasMonitoreo extends AppCompatActivity {
     private String pa,fm;
     private ImageView imageView;
     private String URL = "http://138.68.40.165/camara/imagenes/";
-    private String image = "http://138.68.40.165/camara/imagenes/13022017044329.jpg";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +41,11 @@ public class ActivityPruebasMonitoreo extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Prueba>> call, Response<ArrayList<Prueba>> response) {
                 if(response.isSuccessful()){
                     ArrayList<Prueba> aux = response.body();
-                    URL += aux.get(0).getNombre();
+                    if(response.body().size() != 0){
+                        URL += aux.get(0).getNombre();
+                    }
+
+                    Log.e("URL:",URL);
                     Picasso.with(ActivityPruebasMonitoreo.this).
                             load(URL).into(imageView, new Callback() {
 
@@ -55,7 +59,7 @@ public class ActivityPruebasMonitoreo extends AppCompatActivity {
                                     loading.dismiss();
                                     Toast.makeText(
                                             ActivityPruebasMonitoreo.this,
-                                            getResources().getString(R.string.seProdujoUnError),
+                                            getResources().getString(R.string.noEcontroPrueba),
                                             Toast.LENGTH_SHORT)
                                             .show();
                                     finish();
@@ -63,6 +67,7 @@ public class ActivityPruebasMonitoreo extends AppCompatActivity {
                             });
                 }
                 else{
+                    Log.e("URL:",URL);
                     loading.dismiss();
                     Toast.makeText(
                             ActivityPruebasMonitoreo.this,

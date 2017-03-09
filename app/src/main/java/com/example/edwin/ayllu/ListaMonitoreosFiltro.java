@@ -94,6 +94,8 @@ public class ListaMonitoreosFiltro extends Fragment {
                         getResources().getString(R.string.noSePudoConectarServidor),
                         Toast.LENGTH_SHORT)
                         .show();
+                getActivity().finish();
+
             }
         });
 

@@ -107,4 +107,5 @@
     <string name="baja">Capacidad baja</string>
     <string name="iniciandoSesion">Iniciando Sesión</string>
     <string name="dowloading">Descargando</string>
+    <string name="noEcontroPrueba">No existe pruebas para este monitoreo</string>
 </resources>
