@@ -1,6 +1,8 @@
 package com.example.edwin.ayllu;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -111,14 +113,14 @@ public class MonitorMenuActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*int current = getItem(+1);
+                int current = getItem(+1);
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
                     current = 0;
                     viewPager.setCurrentItem(current);
-                }*/
+                }
 
             }
         });
@@ -158,17 +160,18 @@ public class MonitorMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void respustaAdmnistrativa() {
-        Intent intent = new Intent(MonitorMenuActivity.this, SeleccionArea.class);
+        Intent intent = new Intent(MonitorMenuActivity.this, MonitoreosActivity.class);
         intent.putExtra("MONITOR", monitor);
+        intent.putExtra("PAIS", pais);
         startActivity(intent);
-        //finish();
+        finish();
     }
 
     private void launchMotorBusqueda() {
         Intent intent = new Intent(MonitorMenuActivity.this, MonitorActivity.class);
         intent.putExtra("MONITOR", monitor);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     private void launchPrueba() {
@@ -177,6 +180,11 @@ public class MonitorMenuActivity extends AppCompatActivity {
         intent.putExtra("PAIS", pais);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        createActivityDialog().show();
     }
 
     //  viewpager change listener
@@ -244,5 +252,31 @@ public class MonitorMenuActivity extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Presenta en Interfaz un dialogo antes de Salir de la aplicación
+     **/
+    public AlertDialog createActivityDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("¿Quiere Salir?")
+                .setPositiveButton("ACEPTAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.exit(0);
+                            }
+                        })
+                .setNegativeButton("CANCELAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
+
+        return builder.create();
     }
 }

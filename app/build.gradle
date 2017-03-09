@@ -48,3 +48,6 @@ repositories {
 dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }
+dependencies {
+    compile 'com.android.support:support-v4:25.+'
+}

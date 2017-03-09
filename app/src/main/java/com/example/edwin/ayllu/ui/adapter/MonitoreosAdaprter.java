@@ -1,12 +1,14 @@
-package com.example.edwin.ayllu;
+package com.example.edwin.ayllu.ui.adapter;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.Monitoreo;
 
 import java.util.ArrayList;
@@ -18,6 +20,12 @@ import java.util.ArrayList;
 public class MonitoreosAdaprter extends RecyclerView.Adapter<MonitoreosAdaprter.MonitoreoHolder> implements View.OnClickListener {
     private ArrayList<Monitoreo> monitoreos;
     private View.OnClickListener listener;
+    Context context;
+
+    public MonitoreosAdaprter(Context context) {
+        this.context = context;
+        this.monitoreos = new ArrayList<>();
+    }
 
     public MonitoreosAdaprter(ArrayList<Monitoreo> monitoreos) {
         this.monitoreos = monitoreos;
@@ -63,5 +71,18 @@ public class MonitoreosAdaprter extends RecyclerView.Adapter<MonitoreosAdaprter.
             variable = (TextView) itemView.findViewById(R.id.variable);
         }
 
+    }
+
+    //----------------------------------------------------------------------------------------------
+    public void clear(){
+        this.monitoreos.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(@NonNull ArrayList<Monitoreo> monitoreos){
+        if(monitoreos == null)
+            throw new NullPointerException("Los items no pueden ser nulos");
+        this.monitoreos.addAll(monitoreos);
+        notifyItemRangeInserted(getItemCount()-1, monitoreos.size());
     }
 }
