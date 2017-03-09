@@ -252,9 +252,9 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
             parametro.putString("fi","null");
             parametro.putString("ff","null");
         }
-        if(factor.isChecked())parametro.putString("fac",""+opciones[0]);
+        if(factor.isChecked() && !opciones[0].equals("0"))parametro.putString("fac",""+opciones[0]);
         else parametro.putString("fac","null");
-        if(variable.isChecked())parametro.putString("var",""+opciones[1]);
+        if(variable.isChecked() && !opciones[1].equals("0"))parametro.putString("var",""+opciones[1]);
         else parametro.putString("var","null");
 
         if(apro){

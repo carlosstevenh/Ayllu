@@ -24,6 +24,7 @@ public class InformacionPuntoCritico extends AppCompatActivity {
     private TextView paf,fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
     private ArrayList<MonitoreoGeneral> mg;
     private Button graficas;
+    private Button pruebas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +103,21 @@ public class InformacionPuntoCritico extends AppCompatActivity {
                 Bundle parametro = new Bundle();
                 parametro.putString("pa",pa);
                 Intent intent = new Intent(InformacionPuntoCritico.this,ActividadEstadisticaPuntoAfactacion.class);
+                intent.putExtras(parametro);
+                startActivity(intent);
+            }
+        });
+
+        //instacia el boton que llamara a la actividad de pruebas el monitoreo
+        pruebas = (Button) findViewById(R.id.btnGetPruebas);
+        pruebas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle parametro = getIntent().getExtras();
+                parametro.putString("pa",pa);
+                parametro.putString("fm",fm);
+
+                Intent intent = new Intent(InformacionPuntoCritico.this,ActivityPruebasMonitoreo.class);
                 intent.putExtras(parametro);
                 startActivity(intent);
             }
