@@ -25,24 +25,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MonitorMenuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitoringRegistrationFormActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.Administrador"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.UsuariosAdapter"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".administrador.EditMonitor"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SeleccionArea"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitoreosActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".FormRespuesta"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MonitorActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MonitorMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitoringRegistrationFormActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.Administrador"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.UsuariosAdapter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".administrador.EditMonitor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SeleccionArea"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitoreosActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FormRespuesta"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MonitorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RecordActivity"
             android:screenOrientation="portrait" />
@@ -58,7 +67,8 @@
         <activity
             android:name=".administrador.InformacionGeneralMonitor"
             android:screenOrientation="portrait" />
-        <activity android:name=".ActividadEstadisticaPuntoAfactacion"></activity>
+        <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
+        <activity android:name=".ActivityPruebasMonitoreo"></activity>
     </application>
 
 </manifest>

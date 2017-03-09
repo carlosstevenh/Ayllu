@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +30,15 @@ import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -216,6 +223,31 @@ public class SplashScreen extends Activity {
                     logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                     OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
                     httpClient.addInterceptor(logging);
+
+                    //Variable para almacenar la foto
+                    File file = null;
+                    String foto = cursor.getString(11);
+                    File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
+                    imagesFolder.mkdirs();
+                    //se carga la foto al la variable
+                    file = new File(imagesFolder,foto);
+
+                    //peticion que se realiza al servidor para subir la foto
+                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
+                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                    Call<String> call1 = service1.uploadAttachment(filePart);
+                    call1.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
+                            Log.e("ok","subio");
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("nada","no subio nada");
+                        }
+                    });
 
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(ApiConstants.URL_API_AYLLU)
