@@ -108,4 +108,5 @@
     <string name="iniciandoSesion">Iniciando Sesión</string>
     <string name="dowloading">Descargando</string>
     <string name="noEcontroPrueba">No existe pruebas para este monitoreo</string>
+    <string name="mostrarContrasena">Mostrar contraseña</string>
 </resources>

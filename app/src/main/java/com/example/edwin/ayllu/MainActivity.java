@@ -6,8 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static Usuario user;
     private EditText et1,et2;
     private static final String TAG = "ERRORES";
+    private CheckBox contrasena;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,19 @@ public class MainActivity extends AppCompatActivity {
         //se instancian los elementos de la vista
         et1=(EditText)findViewById(R.id.txtName);
         et2=(EditText)findViewById(R.id.txtPsw);
+        contrasena = (CheckBox) findViewById(R.id.cbCon);
 
+        contrasena.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!b){
+                    et2.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                else{
+                    et2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
 
     }
 
