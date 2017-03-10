@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ayllu</string>
     <string name="title_activity_welcome">Home Screen</string>
-    <string name="next">MENU</string>
+    <string name="next">SALIR</string>
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
 

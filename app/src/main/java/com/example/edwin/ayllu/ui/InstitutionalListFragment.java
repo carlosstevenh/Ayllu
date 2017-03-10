@@ -125,7 +125,10 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
 
                     Intent intent = new Intent(getActivity(), FormRespuesta.class);
                     intent.putExtras(parametro);
+                    intent.putExtra("MONITOR", cod_mon);
+                    intent.putExtra("PAIS", pais_mon);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

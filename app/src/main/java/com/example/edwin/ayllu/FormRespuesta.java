@@ -22,8 +22,20 @@ import retrofit2.Response;
 
 public class FormRespuesta extends AppCompatActivity {
     private Spinner eva, per, tie, pre, con,rec;
+    String cod_mon = "", pais_mon = "";
     List<String> eval, res;
     String pa,fm;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MonitorMenuActivity.class);
+        intent.putExtra("MONITOR", cod_mon);
+        intent.putExtra("PAIS", pais_mon);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +84,12 @@ public class FormRespuesta extends AppCompatActivity {
         pre.setAdapter(dataAdapter1);
         con.setAdapter(dataAdapter1);
         rec.setAdapter(dataAdapter1);
+
+        //------------------------------------------------------------------------------------------
+        //Obtenemos el codigo del monitor y el pais del usuario en sesión
+        Intent intent = getIntent();
+        cod_mon = intent.getStringExtra("MONITOR");
+        pais_mon = intent.getStringExtra("PAIS");
     }
 
     //metodo que se encarga de registrar una respuesta institucional

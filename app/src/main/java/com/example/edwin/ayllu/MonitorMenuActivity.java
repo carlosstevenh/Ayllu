@@ -190,7 +190,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()){
             case R.id.btn_menu:
                 //Cerrar Sesión
-                /*
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -198,14 +197,14 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                 AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                 SQLiteDatabase bd = admin.getWritableDatabase();
                 bd.delete(admin.TABLENAME, null, null);
-                bd.close(); */
+                bd.close();
 
                 //Administrar
-                if(tipo_usu.equals("A")){
+                /*if(tipo_usu.equals("A")){
                     Intent i = new Intent(this, Administrador.class);
                     startActivity(i);
                     finish();
-                }
+                }*/
                 break;
             case R.id.btn_skip:
                 int current = getItem(0);
