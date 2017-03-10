@@ -33,7 +33,7 @@ public class FormRespuesta extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         pa = bundle.getString("pa");
         fm = bundle.getString("fm");
-        Log.i("TAG", "punto afecation: " + pa);
+        Log.i("TAG", "punto afecation: " + fm);
 
         //se instancian los elementos de la vista
         eva = (Spinner) findViewById(R.id.spinner_eva);
@@ -54,7 +54,7 @@ public class FormRespuesta extends AppCompatActivity {
         res.add(getResources().getString(R.string.ninuguna));
         res.add(getResources().getString(R.string.baja));
         res.add(getResources().getString(R.string.media));
-        res.add(getResources().getString(R.string.baja));
+        res.add(getResources().getString(R.string.alta));
 
         //se crean los adapters para los spinners
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -113,12 +113,19 @@ public class FormRespuesta extends AppCompatActivity {
         else evaluacion = "3";
 
         //se obtiene el valor dependiendo de lo que el monitor selecciono y se la convierte a numeros para poder inserta en la base de datos
-        String personal = comparar(String.valueOf(per.getSelectedItem()));
-        String tiempo = comparar(String.valueOf(tie.getSelectedItem()));
-        String presupuesto = comparar(String.valueOf(pre.getSelectedItem()));
-        String conocimiento = comparar(String.valueOf(con.getSelectedItem()));
-        String recursos = comparar(String.valueOf(rec.getSelectedItem()));
+        String personal = (String.valueOf(per.getSelectedItem()));
+        String tiempo = (String.valueOf(tie.getSelectedItem()));
+        String presupuesto = (String.valueOf(pre.getSelectedItem()));
+        String conocimiento = (String.valueOf(con.getSelectedItem()));
+        String recursos = (String.valueOf(rec.getSelectedItem()));
 
+        if(!per.getSelectedItem().equals(""))personal = comparar(personal);
+        if(!tie.getSelectedItem().equals(""))tiempo = comparar(tiempo);
+        if(!pre.getSelectedItem().equals(""))presupuesto = comparar(presupuesto);
+        if(!con.getSelectedItem().equals(""))conocimiento = comparar(conocimiento);
+        if(!rec.getSelectedItem().equals(""))recursos = comparar(recursos);
+
+        Log.i("TAG", "punto afecation: " + pa+"-"+fm+"-"+ evaluacion+"-"+personal+"-"+tiempo+"-"+presupuesto+"-"+recursos+"-"+conocimiento+"-"+monitor);
         //se realiza la peticion del registro de la respuesta institucional al servidor
         final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
@@ -128,7 +135,7 @@ public class FormRespuesta extends AppCompatActivity {
             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
                 loading.dismiss();
                 Toast login = Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.registroAdicionado), Toast.LENGTH_SHORT);
+                        getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
                 login.show();
 
                 Intent intent = new Intent(FormRespuesta.this, MonitorMenuActivity.class);
@@ -140,7 +147,7 @@ public class FormRespuesta extends AppCompatActivity {
             public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                 loading.dismiss();
                 Toast login = Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_SHORT);
+                        getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
                 login.show();
             }
         });
@@ -150,10 +157,11 @@ public class FormRespuesta extends AppCompatActivity {
     //metodo encargador de convertir el resultado del spiner a un valir numerico
     private String comparar(String cad){
         String aux ="";
-        if(cad.equals("Ninguna Capacidad")) aux = "1";
-        else if (cad.equals("Capacidad baja")) aux = "2";
-        else if (cad.equals("Capacidad media")) aux = "3";
-        else if (cad.equals("Capacidad alta")) aux = "4";
+        if(cad.equals(getResources().getString(R.string.ninuguna))) aux = "1";
+        else if (cad.equals(getResources().getString(R.string.baja))) aux = "2";
+        else if (cad.equals(getResources().getString(R.string.media))) aux = "3";
+        else if (cad.equals(getResources().getString(R.string.alta))) aux = "4";
+        else aux ="1";
         return aux;
 
     }

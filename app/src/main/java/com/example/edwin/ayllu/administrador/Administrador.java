@@ -53,7 +53,7 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
     //metodo que se enscarga de crear las opciones del menu
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DeleteMonitorFragment(), getResources().getString(R.string.inicio));
+        //adapter.addFragment(new DeleteMonitorFragment(), getResources().getString(R.string.inicio));
         adapter.addFragment(new AddMonitorFragment(), getResources().getString(R.string.addMonitor));
         adapter.addFragment(new EditMonitorFragment(), getResources().getString(R.string.monitores));
         viewPager.setAdapter(adapter);

@@ -2,6 +2,7 @@ package com.example.edwin.ayllu;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -53,6 +55,14 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 setContentView(R.layout.activity_actividad_estadistica_punto_afactacion);
 
                 mChart = (LineChart) findViewById(R.id.linechart);
+                mChart.setDoubleTapToZoomEnabled(false);
+                mChart.setPinchZoom(false);
+                mChart.setScaleEnabled(false);
+
+                mChart.animateX(2000);
+                mChart.animateY(2000);
+                mChart.animateXY(2000, 2000);
+                
                 fecha = (TextView) findViewById(R.id.txtFec);
                 puntaje = (TextView) findViewById(R.id.txtPun);
 
@@ -69,7 +79,6 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                     // modify the legend ...
                     // l.setPosition(LegendPosition.LEFT_OF_CHART);
                     l.setForm(Legend.LegendForm.LINE);
-
 
                     mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                         //metodo encargado de obtener los datos del punto seleccionado
@@ -88,6 +97,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
 
                         }
                     });
+
 
                 }
                 else {
@@ -140,7 +150,6 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         ArrayList<Entry> yVals = valoresY(datos);
 
         LineDataSet set1;
-
         // create a dataset and give it a type
         set1 = new LineDataSet(yVals, "Frecuencia y Porcentaje de Aparición");
         set1.setFillAlpha(110);
