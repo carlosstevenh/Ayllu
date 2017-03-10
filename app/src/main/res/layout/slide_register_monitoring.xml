@@ -33,6 +33,7 @@
             android:paddingRight="@dimen/desc_padding"
             android:text="@string/slide_1_desc"
             android:textAlignment="center"
+            android:gravity="center_horizontal"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc" />
 

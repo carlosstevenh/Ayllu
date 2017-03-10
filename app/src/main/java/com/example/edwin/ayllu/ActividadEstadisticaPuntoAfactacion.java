@@ -151,7 +151,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
 
         LineDataSet set1;
         // create a dataset and give it a type
-        set1 = new LineDataSet(yVals, "DataSet 1");
+        set1 = new LineDataSet(yVals, "Frecuencia y Porcentaje de Aparición");
         set1.setFillAlpha(110);
         set1.setCircleColor(Color.BLACK);
         set1.setLineWidth(1f);

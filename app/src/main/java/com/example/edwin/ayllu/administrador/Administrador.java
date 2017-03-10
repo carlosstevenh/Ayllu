@@ -81,6 +81,8 @@ public class Administrador extends AppCompatActivity implements AddMonitorFragme
             case R.id.salir:
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
+                finish();
+
                 AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                 SQLiteDatabase bd = admin.getWritableDatabase();
                 bd.delete(admin.TABLENAME, null, null);

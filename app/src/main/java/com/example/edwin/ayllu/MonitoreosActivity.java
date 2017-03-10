@@ -8,6 +8,16 @@ import com.example.edwin.ayllu.ui.InstitutionalListFragment;
 
 public class MonitoreosActivity extends AppCompatActivity{
     String cod_mon = "", pais_mon = "";
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, MonitorMenuActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

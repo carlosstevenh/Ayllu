@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">Ayllu</string>
     <string name="title_activity_welcome">Home Screen</string>
-    <string name="next">SIGUIENTE</string>
+    <string name="next">SALIR</string>
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
 
     <string name="slide_1_title">REGISTRA UN MONITOREO</string>
-    <string name="slide_1_desc">Recorre y Monitorea el estado de Conservación del Qhapaq Ñan</string>
+    <string name="slide_1_desc">Recorre, Monitorea y Obten Reportes el estado de Conservación del Qhapaq Ñan</string>
 
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
-    <string name="slide_2_desc">Reporta nuevos datos de la respuesta Administrativa de un Monitoreo</string>
+    <string name="slide_2_desc">Reporta nuevos datos de la respuesta Institucional de un Monitoreo</string>
 
     <string name="slide_3_title">MAPAS ESTADISTICOS</string>
     <string name="slide_3_desc">Toma decisiones de alto impacto en beneficio de este extenso y remoto bien seriado</string>
@@ -68,8 +68,8 @@
     <string name="getPruebas">Obtener Pruebas</string>
     <string name="title_activity_filtrar">FiltrarActivity</string>
     <string name="FILTRAR">FILTRAR</string>
-    <string name="desde">Desde</string>
-    <string name="hasta">Hasta</string>
+    <string name="desde">Desde:</string>
+    <string name="hasta">Hasta:</string>
     <string name="welcome">Bienvenido</string>
     <string name="iformacionMonitor">Información Monitor</string>
     <string name="ultimoMonitoreo">Ultimo monitoreo</string>

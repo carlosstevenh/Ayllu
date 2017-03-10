@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.PuntoCritico;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -23,8 +24,7 @@ public class InformacionPuntoCritico extends AppCompatActivity {
     private String pa,fm;
     private TextView paf,fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
     private ArrayList<MonitoreoGeneral> mg;
-    private Button graficas;
-    private Button pruebas;
+    FloatingActionButton fab_pruebas, fab_graficas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,10 +94,10 @@ public class InformacionPuntoCritico extends AppCompatActivity {
         });
 
         //se define un variable de tipo button el cual sera la encargada de manejar los eventos del boton analisis
-        graficas = (Button) findViewById(R.id.btnGraficas);
+        fab_graficas = (FloatingActionButton) findViewById(R.id.fab_graficas);
 
         //metodo encargado de llamar a la actividad encargada de realizar la grafica estadistica
-        graficas.setOnClickListener(new View.OnClickListener() {
+        fab_graficas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle parametro = new Bundle();
@@ -109,8 +109,8 @@ public class InformacionPuntoCritico extends AppCompatActivity {
         });
 
         //instacia el boton que llamara a la actividad de pruebas el monitoreo
-        pruebas = (Button) findViewById(R.id.btnGetPruebas);
-        pruebas.setOnClickListener(new View.OnClickListener() {
+        fab_pruebas = (FloatingActionButton) findViewById(R.id.fab_pruebas);
+        fab_pruebas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle parametro = getIntent().getExtras();
