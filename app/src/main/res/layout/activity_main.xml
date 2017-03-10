@@ -78,4 +78,16 @@
         android:textColor="@color/colorTextIcons"
         android:textSize="24sp"
         android:visibility="visible" />
+
+    <CheckBox
+        android:text="@string/mostrarContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbCon"
+        android:textSize="12sp"
+        android:layout_above="@+id/btnLogin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="104dp"
+        android:textColor="@color/colorPrimaryText" />
 </RelativeLayout>
