@@ -60,7 +60,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
 
     //VARIABLES: Control y Procesamiento de datos del formulario
-    String punto_afectacion = "", area = "", monitor = "", op_reg;
+    String punto_afectacion = "", area = "", monitor = "", op_reg, pais = "";
     String origen = "10";
     String fecha = "";
     int longitud = 0, latitud = 0;
@@ -90,6 +90,16 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     private CharSequence[] items_frecuencia = new CharSequence[]{"UNA ÚNICA VEZ", "APARICIÓN INTERMITENTE", "PRESENCIA FRECUENTE"};
     private int[] seleccion_items = {1, 1};
     private int[] pos_seleccion = {-1, -1};
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.putExtra("MONITOR", monitor);
+        intent.putExtra("PAIS", pais);
+        startActivity(intent);
+        finish();
+    }
 
     /**
      * =============================================================================================
@@ -159,6 +169,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
         Intent intent = getIntent();
         monitor = intent.getStringExtra("MONITOR");
+        pais = intent.getStringExtra("PAIS");
         op_reg = intent.getStringExtra("OPCION");
 
         if (op_reg.equals("M")) {
@@ -379,7 +390,6 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                     @Override
                     public void onResponse(Call<Task> call, Response<Task> response) {
                         Intent intent = new Intent(MonitoringRegistrationFormActivity.this, MonitorMenuActivity.class);
-                        intent.putExtra("MONITOR", monitor + "");
                         startActivity(intent);
                         finish();
                     }
@@ -397,7 +407,6 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                     @Override
                     public void onResponse(Call<Task> call, Response<Task> response) {
                         Intent intent = new Intent(MonitoringRegistrationFormActivity.this, MonitorMenuActivity.class);
-                        intent.putExtra("MONITOR", monitor + "");
                         startActivity(intent);
                         finish();
                     }

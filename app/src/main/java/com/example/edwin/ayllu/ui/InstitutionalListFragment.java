@@ -1,38 +1,39 @@
 package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
-import com.example.edwin.ayllu.MonitoringRegistrationFormActivity;
+import com.example.edwin.ayllu.FormRespuesta;
 import com.example.edwin.ayllu.R;
+import com.example.edwin.ayllu.RestClient;
+import com.example.edwin.ayllu.domain.AreaContract;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
+import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
-import com.example.edwin.ayllu.domain.Reporte;
+import com.example.edwin.ayllu.domain.SeccionContract;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
+import com.example.edwin.ayllu.domain.SubtramoContract;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
+import com.example.edwin.ayllu.domain.TramoContract;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
-import com.example.edwin.ayllu.io.AylluApiAdapter;
-import com.example.edwin.ayllu.io.model.ReporteResponse;
-import com.example.edwin.ayllu.ui.adapter.ReporteAdapter;
+import com.example.edwin.ayllu.ui.adapter.MonitoreosAdaprter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-
-import static com.example.edwin.ayllu.domain.TramoContract.TramoEntry;
-import static com.example.edwin.ayllu.domain.SubtramoContract.SubtramoEntry;
-import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
-import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
 
 import java.util.ArrayList;
 
@@ -40,16 +41,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MonitoringListFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
+public class InstitutionalListFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
     //VARIABLES DE VISTA
-    private ReporteAdapter adapter;
+    private MonitoreosAdaprter adapter;
     private RecyclerView mReporteList;
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
-    private FloatingActionButton fab_search, fab_new;
+    private FloatingActionButton fab_search;
     private FloatingActionsMenu menu;
 
     //VARIABLES DATOS TEMPORALES
-    ArrayList<Reporte> reportes = new ArrayList<>();
+    ArrayList<Monitoreo> monitoreos = new ArrayList<>();
     CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas;
     int[] op = {0, 0, 0, 0};
     int[] pos = {-1, -1, -1, -1};
@@ -76,7 +77,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         //------------------------------------------------------------------------------------------
         //Relacionamos variables con la actividad actual
-        adapter = new ReporteAdapter(getActivity());
+        adapter = new MonitoreosAdaprter(getActivity());
 
         paisDbHelper = new PaisDbHelper(getActivity());
         tramoDbHelper = new TramoDbHelper(getActivity());
@@ -91,7 +92,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         pais_mon = intent.getStringExtra("PAIS");
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual
-        cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais_mon}, TramoEntry.PAIS);
+        cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais_mon}, TramoContract.TramoEntry.PAIS);
         if (cursor.moveToFirst()) {
             items_tramos = new CharSequence[cursor.getCount()];
             do {
@@ -108,14 +109,21 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
-        mReporteList = (RecyclerView) root.findViewById(R.id.monitoring_list);
+        View root = inflater.inflate(R.layout.fragment_institutional_list, container, false);
+        mReporteList = (RecyclerView) root.findViewById(R.id.institutional_list);
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (reportes.size() > 0) {
-                    Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
-                    createMonitoringDialog(reporte).show();
+                if (monitoreos.size() > 0) {
+                    Monitoreo m = monitoreos.get(mReporteList.getChildAdapterPosition(view));
+
+                    Bundle parametro = new Bundle();
+                    parametro.putString("pa", m.getCodigo());
+                    parametro.putString("fm", m.getDate());
+
+                    Intent intent = new Intent(getActivity(), FormRespuesta.class);
+                    intent.putExtras(parametro);
+                    startActivity(intent);
                 }
             }
         });
@@ -138,7 +146,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     public void onResume() {
         super.onResume();
 
-        fab_new = (FloatingActionButton) getActivity().findViewById(R.id.fab_new);
         fab_search = (FloatingActionButton) getActivity().findViewById(R.id.fab_search);
         fab_tramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_tramo);
         fab_subtramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_subtramo);
@@ -146,9 +153,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
         menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
 
-        fab_new.setScaleX(0);
         fab_search.setScaleX(0);
-        fab_new.setScaleY(0);
         fab_search.setScaleY(0);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -160,6 +165,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_subtramo.setEnabled(false);
         fab_seccion.setEnabled(false);
         fab_area.setEnabled(false);
+        fab_search.setEnabled(false);
 
         fab_tramo.setOnClickListener(this);
         fab_subtramo.setOnClickListener(this);
@@ -167,40 +173,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_area.setOnClickListener(this);
         menu.setOnFloatingActionsMenuUpdateListener(this);
         fab_search.setOnClickListener(this);
-        fab_new.setOnClickListener(this);
-    }
-
-    /**
-     * =============================================================================================
-     * METODO: Presenta en Interfaz un dialogo para Monitorear un Punto de Afectación
-     **/
-    public AlertDialog createMonitoringDialog(final Reporte currentReport) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("MONITOREAR UN PUNTO")
-                .setMessage("¿Quiere monitorear el punto de afectación seleccionado?")
-                .setPositiveButton("ACEPTAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
-                                intent.putExtra("MONITOR", cod_mon + "");
-                                intent.putExtra("PAIS", pais_mon);
-                                intent.putExtra("PUNTO", currentReport.getCod_paf() + "");
-                                intent.putExtra("OPCION", "M");
-                                startActivity(intent);
-                                getActivity().finish();
-                            }
-                        })
-                .setNegativeButton("CANCELAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                builder.create().dismiss();
-                            }
-                        });
-
-
-        return builder.create();
     }
 
     /**
@@ -238,7 +210,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                             //----------------------------------------------------------------------
                             case 1:
                                 item = items_tramos[which].toString();
-                                cursor = tramoDbHelper.generateConditionalQuery(new String[]{item}, TramoEntry.DESCRIPCION);
+                                cursor = tramoDbHelper.generateConditionalQuery(new String[]{item}, TramoContract.TramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[0] = cursor.getInt(1);
                                 pos[0] = which;
@@ -246,13 +218,13 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                                 cleanVectors(1);
                                 inhabilitarFiltros(1);
 
-                                cursor = subtramoDbHelper.generateConditionalQuery(new String[]{op[0] + ""}, SubtramoEntry.TRAMO);
+                                cursor = subtramoDbHelper.generateConditionalQuery(new String[]{op[0] + ""}, SubtramoContract.SubtramoEntry.TRAMO);
                                 items_subtramos = dataFilter(cursor, 2);
                                 break;
                             //----------------------------------------------------------------------
                             case 2:
                                 item = items_subtramos[which].toString();
-                                cursor = subtramoDbHelper.generateConditionalQuery(new String[]{item}, SubtramoEntry.DESCRIPCION);
+                                cursor = subtramoDbHelper.generateConditionalQuery(new String[]{item}, SubtramoContract.SubtramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[1] = cursor.getInt(1);
                                 pos[1] = which;
@@ -260,13 +232,13 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                                 cleanVectors(2);
                                 inhabilitarFiltros(2);
 
-                                cursor = seccionDbHelper.generateConditionalQuery(new String[]{op[1] + ""}, SeccionEntry.SUBTRAMO);
+                                cursor = seccionDbHelper.generateConditionalQuery(new String[]{op[1] + ""}, SeccionContract.SeccionEntry.SUBTRAMO);
                                 items_secciones = dataFilter(cursor, 2);
                                 break;
                             //----------------------------------------------------------------------
                             case 3:
                                 item = items_secciones[which].toString();
-                                cursor = seccionDbHelper.generateConditionalQuery(new String[]{item}, SeccionEntry.DESCRIPCION);
+                                cursor = seccionDbHelper.generateConditionalQuery(new String[]{item}, SeccionContract.SeccionEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[2] = cursor.getInt(1);
                                 pos[2] = which;
@@ -274,13 +246,13 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                                 cleanVectors(3);
                                 inhabilitarFiltros(3);
 
-                                cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaEntry.SECCION);
+                                cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaContract.AreaEntry.SECCION);
                                 items_areas = dataFilter(cursor, 3);
                                 break;
                             //----------------------------------------------------------------------
                             case 4:
                                 item = items_areas[which].toString();
-                                cursor = areaDbHelper.generateConditionalQuery(new String[]{item}, AreaEntry.PROPIEDAD_NOMINADA);
+                                cursor = areaDbHelper.generateConditionalQuery(new String[]{item}, AreaContract.AreaEntry.PROPIEDAD_NOMINADA);
                                 cursor.moveToFirst();
                                 op[3] = cursor.getInt(1);
                                 pos[3] = which;
@@ -321,36 +293,11 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             case R.id.fab_area:
                 createRadioListDialog(items_areas, "AREAS", 4).show();
                 break;
-            case R.id.fab_new:
-                if (op[3] != 0) {
-                    Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
-                    intent.putExtra("MONITOR", cod_mon + "");
-                    intent.putExtra("PAIS", pais_mon);
-                    intent.putExtra("AREA", op[3] + "");
-                    intent.putExtra("OPCION", "N");
-                    startActivity(intent);
-                    getActivity().finish();
-                } else
-                    createSimpleDialog("Seleciona un área para registrar un Monitoreos", "INFORMACIÓN").show();
-                break;
             case R.id.fab_search:
                 menu.collapse();
-
-                Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
-                call.enqueue(new Callback<ReporteResponse>() {
-                    @Override
-                    public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
-                        if (response.isSuccessful()) {
-                            reportes = response.body().getReportes();
-                            //adapter.addAll(reportes);
-                            new HackingBackgroundTask().execute();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ReporteResponse> call, Throwable t) {
-                    }
-                });
+                if (op[3] != 0) getListReports(op[3]+"");
+                else
+                    createSimpleDialog("Seleciona un área para buscar los Monitoreos", "INFORMACIÓN").show();
                 break;
             default:
                 break;
@@ -372,8 +319,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
      **/
     @Override
     public void onMenuExpanded() {
-        animationButton(fab_new, 1, 1);
         animationButton(fab_search, 1, 1);
+        fab_search.setEnabled(true);
     }
 
     /**
@@ -382,7 +329,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
      **/
     @Override
     public void onMenuCollapsed() {
-        animationButton(fab_new, 0, 0);
+        fab_search.setEnabled(false);
         animationButton(fab_search, 0, 0);
     }
 
@@ -395,20 +342,20 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 .scaleX(x)
                 .scaleY(y)
                 .setInterpolator(interpolador)
-                .setDuration(50)
-                .setStartDelay(500);
+                .setDuration(10)
+                .setStartDelay(100);
     }
 
     /**
      * =============================================================================================
      * METODO:
      **/
-    private class HackingBackgroundTask extends AsyncTask<Void, Void, ArrayList<Reporte>> {
+    private class HackingBackgroundTask extends AsyncTask<Void, Void, ArrayList<Monitoreo>> {
 
         static final int DURACION = 2 * 1000; // 3 segundos de carga
 
         @Override
-        protected ArrayList<Reporte> doInBackground(Void... params) {
+        protected ArrayList<Monitoreo> doInBackground(Void... params) {
             // Simulación de la carga de items
             try {
                 Thread.sleep(DURACION);
@@ -417,7 +364,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             }
 
             // Retornar en nuevos elementos para el adaptador
-            return reportes;
+            return monitoreos;
         }
 
         @Override
@@ -489,5 +436,29 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public void getListReports(String area){
+        RestClient service = RestClient.retrofit.create(RestClient.class);
+        Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(area);
+        requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Monitoreo>> call, Response<ArrayList<Monitoreo>> response) {
+                if (response.isSuccessful()) {
+                    monitoreos = response.body();
+                    new HackingBackgroundTask().execute();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Monitoreo>> call, Throwable t) {
+                Log.e("INFO-INSTITUCIONAL",t.getMessage());
+            }
+        });
     }
 }
