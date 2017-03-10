@@ -1,403 +1,458 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_informacion_punto_critico">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="10sp" />
+            android:layout_gravity="left"
+            android:background="@color/colorTitleForm"
+            android:padding="5dp"
+            android:text="@string/informacionMonitoreo"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-        <android.support.v7.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorRadioButtonOff"
-            app:contentPadding="@dimen/appbar_padding_top">
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/fecha"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView27"
-                            android:textColor="@android:color/black"
-                            android:textAlignment="center"
-                            android:textStyle="normal|bold"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/fec"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView31"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/user"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
-
-            </TableLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10sp" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="?android:attr/textColorSecondaryInverseNoDisable"
-            app:contentPadding="@dimen/appbar_padding_top">
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/pais"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView36"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/pais"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/tramo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView39"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tramo"
-                            android:layout_weight="1"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/subtramo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView41"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/subtramo"
-                            android:textSize="12sp"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/seccion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView43"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/seccion"
-                            android:textSize="12sp"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView45"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/area"
-                            android:textSize="12sp"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
-            </TableLayout>
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView47" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="@dimen/appbar_padding_top"
-            app:cardBackgroundColor="?attr/colorPrimary">
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/factor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView48"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/factor"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/variable"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView51"
-                            android:textColor="@android:color/black"
-                            android:textStyle="normal|bold"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/variable"
-                            android:textSize="12sp"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                </TableRow>
-
-            </TableLayout>
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView53" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="@dimen/appbar_padding_top"
-            app:cardBackgroundColor="@color/dot_dark_screen3">
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="2dp"
+            android:paddingTop="5dp">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/area_fecha"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_date" />
 
                 <TextView
-                    android:text="@string/coordenada"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_title1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView54"
-                    android:textColor="@color/colorTextIcons"
-                    android:textAlignment="center"
-                    android:textStyle="normal|bold" />
+                    android:gravity="left"
+                    android:text="FECHA:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <TableRow
+                <TextView
+                    android:id="@+id/fec"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/longitud"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView56"
-                            android:textColor="@color/colorTextIcons" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/longitud"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/latitud"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView58"
-                            android:textColor="@color/colorTextIcons" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/latitud"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </TableRow>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
-        <Button
-            android:text="@string/getPruebas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:id="@+id/btnGetPruebas"
-            android:textSize="14sp"
-            android:textColor="@color/colorTextIcons"
-            android:background="@color/colorAccent"/>
+            <LinearLayout
+                android:id="@+id/area_monitor"
+                android:layout_below="@id/area_fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnGraficas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorAccent"
-            android:text="@string/analisis"
-            android:textColor="@color/colorTextIcons" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_monitor" />
+
+                <TextView
+                    android:id="@+id/tv_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="MONITOR:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor1"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/area_monitor"
+                android:alpha=".5"
+                android:elevation="5dp"
+                android:layout_above="@id/layoutDots"
+                android:background="@color/colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/area_pais"
+                android:layout_below="@id/divisor1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_pais" />
+
+                <TextView
+                    android:id="@+id/tv_title3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="PAIS:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/pais"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_tramo"
+                android:layout_below="@id/area_pais"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_tramo" />
+
+                <TextView
+                    android:id="@+id/tv_title4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="TRAMO:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tramo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_subtramo"
+                android:layout_below="@id/area_tramo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_subtramos" />
+
+                <TextView
+                    android:id="@+id/tv_title5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="SUBTRAMO:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/subtramo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_seccion"
+                android:layout_below="@id/area_subtramo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_secciones" />
+
+                <TextView
+                    android:id="@+id/tv_title6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="SECCIÓN:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/seccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_area"
+                android:layout_below="@id/area_seccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_area" />
+
+                <TextView
+                    android:id="@+id/tv_title7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="AREA:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor2"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/area_area"
+                android:alpha=".5"
+                android:elevation="5dp"
+                android:layout_above="@id/layoutDots"
+                android:background="@color/colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/area_factor"
+                android:layout_below="@id/divisor2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_variable" />
+
+                <TextView
+                    android:id="@+id/tv_title8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="FACTOR:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/factor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_variable"
+                android:layout_below="@id/area_factor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_variable" />
+
+                <TextView
+                    android:id="@+id/tv_title9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="VARIABLE:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/variable"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor3"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/area_variable"
+                android:alpha=".5"
+                android:elevation="5dp"
+                android:layout_above="@id/layoutDots"
+                android:background="@color/colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/area_latitud"
+                android:layout_below="@id/divisor3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_latitud" />
+
+                <TextView
+                    android:id="@+id/tv_title10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="LATITUD:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/latitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_longitud"
+                android:layout_below="@id/area_latitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorPrimaryText"
+                    android:src="@drawable/ic_longitud" />
+
+                <TextView
+                    android:id="@+id/tv_title11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="LONGITUD:"
+                    android:textColor="@color/colorIconCardView"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/longitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

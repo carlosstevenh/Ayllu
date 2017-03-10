@@ -1,202 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                android:background="?attr/colorPrimary"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center_horizontal"
-                >
+                android:background="?attr/colorPrimary">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/FILTRAR"
-                    android:textSize="18sp"
-                    android:textColor="#fff"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="10dp"/>
+                    android:text="@string/FILTRAR"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="@dimen/appbar_padding_top">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="@string/pais"
+                    android:id="@+id/textView30"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView30"
-                    android:textSize="18sp"
-                    android:textStyle="normal|bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimaryText" />
+                    android:layout_gravity="left"
+                    android:background="@color/colorTitleForm"
+                    android:padding="5dp"
+                    android:text="@string/pais"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/appbar_padding_top">
 
                     <CheckBox
-                        android:text="Argentina"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/argentina"
-                        android:layout_weight="1" />
-
-                    <CheckBox
-                        android:text="Bolivia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Argentina" />
+
+                    <CheckBox
                         android:id="@+id/bolivia"
-                        android:layout_weight="1" />
-
-                    <CheckBox
-                        android:text="Chile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bolivia" />
+
+                    <CheckBox
                         android:id="@+id/chile"
-                        android:layout_weight="1" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chile" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingRight="@dimen/appbar_padding_top">
 
                     <CheckBox
-                        android:text="Colombia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/colombia"
-                        android:layout_weight="1" />
-
-                    <CheckBox
-                        android:text="Ecuador"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Colombia" />
+
+                    <CheckBox
                         android:id="@+id/ecuador"
-                        android:layout_weight="1" />
-
-                    <CheckBox
-                        android:text="Perú"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.65"
+                        android:text="Ecuador" />
+
+                    <CheckBox
                         android:id="@+id/peru"
-                        android:layout_weight="1" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Perú" />
                 </LinearLayout>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView21" />
 
         <android.support.v7.widget.CardView
+            android:id="@+id/CardViewFecha"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="@dimen/appbar_padding_top"
-            android:id="@+id/CardViewFecha">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <CheckBox
-                    android:text="@string/fecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
                     android:id="@+id/fechaMonitoreo"
-                    android:textSize="18sp"
-                    android:textStyle="normal|bold" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:background="@color/colorTitleForm"
+                    android:padding="5dp"
+                    android:text="@string/fecha"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/appbar_padding_top">
 
                     <TextView
-                        android:text="@string/desde"
+                        android:id="@+id/desde1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/desde1"
+                        android:layout_weight="0.01"
                         android:gravity="center_vertical"
-                        android:layout_weight="0.05"
+                        android:text="@string/desde"
+                        android:paddingLeft="10dp"
                         android:textColor="@color/colorPrimaryText"
-                        android:textStyle="normal|bold"
-                        android:textAlignment="center" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_date"
-                        android:tint="@color/colorPrimaryText"
-                        android:id="@+id/imgViewDesde"
-                        android:layout_weight="0.05" />
+                        android:textStyle="normal|bold" />
 
                     <TextView
+                        android:id="@+id/inicio"
+
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.03" />
+
+                    <ImageView
+                        android:id="@+id/imgViewDesde"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/inicio"
-                        android:layout_weight="0.05" />
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.02"
+                        android:background="@color/colorAccent"
+                        android:src="@drawable/ic_date"
+                        android:tint="@color/colorTextIcons" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/appbar_padding_top">
 
                     <TextView
-                        android:text="@string/hasta"
+                        android:id="@+id/textView28"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.19"
                         android:gravity="center_vertical"
-                        android:id="@+id/textView28"
-                        android:layout_weight="1.05"
+                        android:text="@string/hasta"
+                        android:paddingLeft="10dp"
                         android:textColor="@color/colorPrimaryText"
-                        android:textStyle="normal|bold"
-                        android:textAlignment="center" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_date"
-                        android:tint="@color/colorPrimaryText"
-                        android:id="@+id/hasta"
-                        android:layout_weight="0.98" />
+                        android:textStyle="normal|bold" />
 
                     <TextView
+                        android:id="@+id/fin"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.53" />
+
+                    <ImageView
+                        android:id="@+id/hasta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/fin"
-                        android:layout_weight="1" />
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.36"
+                        android:background="@color/colorAccent"
+                        android:src="@drawable/ic_date"
+                        android:tint="@color/colorTextIcons" />
 
                 </LinearLayout>
 
@@ -204,48 +218,51 @@
 
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView22" />
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="5dp">
 
                 <CheckBox
+                    android:id="@+id/factor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:background="@color/colorTitleForm"
+                    android:padding="5dp"
                     android:text="@string/factor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/factor" />
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <CheckBox
-                    android:text="@string/variable"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/variable"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/factor"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginStart="26dp"
-                    android:id="@+id/variable" />
+                    android:layout_below="@+id/factor"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/variable" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
-
-        <Button
-            android:text="@string/FILTRAR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@color/colorAccent"
-            android:textColor="@color/colorTextIcons"
-            android:id="@+id/button" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@color/colorAccent"
+        android:elevation="2dp"
+        android:text="@string/FILTRAR"
+        android:textColor="@color/colorTextIcons" />
 
 </android.support.design.widget.CoordinatorLayout>

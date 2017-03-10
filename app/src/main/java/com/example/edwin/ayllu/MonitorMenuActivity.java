@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.edwin.ayllu.administrador.Administrador;
+
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -38,7 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-public class MonitorMenuActivity extends AppCompatActivity {
+public class MonitorMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String NOMBRE_DOCUMENTO = "reporte.xls";
     private ViewPager viewPager;
@@ -46,11 +48,9 @@ public class MonitorMenuActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnSkip, btnMenu;
 
-    FileOutputStream out = null;
-
-    String monitor = "", pais = "";
+    String monitor = "", pais = "", tipo_usu = "A";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
-        btnNext = (Button) findViewById(R.id.btn_next);
+        btnMenu = (Button) findViewById(R.id.btn_menu);
 
 
         // layouts of all welcome sliders
@@ -95,40 +95,8 @@ public class MonitorMenuActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int current = getItem(0);
-                if (current == 0) launchPrueba();
-                else if (current == 1) respustaAdmnistrativa();
-                else if (current == 2) launchMotorBusqueda();
-                else if (current == 3) puntosCriticos();
-                else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Funcionalidad en Construccion", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        });
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int current = getItem(+1);
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                } else {
-                    current = 0;
-                    viewPager.setCurrentItem(current);
-                }
-
-            }
-        });
-        Toast.makeText(
-                MonitorMenuActivity.this,
-                "MONITOR: " + monitor,
-                Toast.LENGTH_SHORT)
-                .show();
+        btnSkip.setOnClickListener(this);
+        btnMenu.setOnClickListener(this);
     }
 
     private void addBottomDots(int currentPage) {
@@ -154,12 +122,12 @@ public class MonitorMenuActivity extends AppCompatActivity {
         return viewPager.getCurrentItem() + i;
     }
 
-    private void puntosCriticos(){
+    private void launchEstadisticas(){
         Intent intent = new Intent(MonitorMenuActivity.this,FiltrarActividad.class);
         intent.putExtra("Monitor",monitor);
         startActivity(intent);
     }
-    private void respustaAdmnistrativa() {
+    private void launchRespuestaInstitucional() {
         Intent intent = new Intent(MonitorMenuActivity.this, MonitoreosActivity.class);
         intent.putExtra("MONITOR", monitor);
         intent.putExtra("PAIS", pais);
@@ -174,7 +142,7 @@ public class MonitorMenuActivity extends AppCompatActivity {
         //finish();
     }
 
-    private void launchPrueba() {
+    private void launchRegistroMonitoreo() {
         Intent intent = new Intent(MonitorMenuActivity.this, RecordActivity.class);
         intent.putExtra("MONITOR", monitor);
         intent.putExtra("PAIS", pais);
@@ -214,6 +182,43 @@ public class MonitorMenuActivity extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_menu:
+                //Cerrar Sesión
+                /*
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                finish();
+
+                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                SQLiteDatabase bd = admin.getWritableDatabase();
+                bd.delete(admin.TABLENAME, null, null);
+                bd.close(); */
+
+                //Administrar
+                if(tipo_usu.equals("A")){
+                    Intent i = new Intent(this, Administrador.class);
+                    startActivity(i);
+                    finish();
+                }
+                break;
+            case R.id.btn_skip:
+                int current = getItem(0);
+                if (current == 0) launchRegistroMonitoreo();
+                else if (current == 1) launchRespuestaInstitucional();
+                else if (current == 2) launchEstadisticas();
+                else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Funcionalidad en Construccion", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                break;
+            default:
+                break;
         }
     }
 
