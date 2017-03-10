@@ -1,6 +1,7 @@
 package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.Toast;
 
 import com.example.edwin.ayllu.FormRespuesta;
 import com.example.edwin.ayllu.R;
@@ -443,14 +445,24 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      * METODO:
      **/
     public void getListReports(String area){
+        final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(area);
         requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
             @Override
             public void onResponse(Call<ArrayList<Monitoreo>> call, Response<ArrayList<Monitoreo>> response) {
+                loading.dismiss();
                 if (response.isSuccessful()) {
                     monitoreos = response.body();
                     new HackingBackgroundTask().execute();
+                }
+                else{
+                    Toast.makeText(
+                            getActivity(),
+                            getResources().getString(R.string.noSeEncontraronDatos),
+                            Toast.LENGTH_LONG).show();
+                    getActivity().finish();
+
                 }
 
             }
@@ -458,6 +470,12 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
             @Override
             public void onFailure(Call<ArrayList<Monitoreo>> call, Throwable t) {
                 Log.e("INFO-INSTITUCIONAL",t.getMessage());
+                loading.dismiss();
+                Toast.makeText(
+                        getActivity(),
+                        getResources().getString(R.string.noSePudoConectarServidor),
+                        Toast.LENGTH_LONG).show();
+                getActivity().finish();
             }
         });
     }
