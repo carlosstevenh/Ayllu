@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:text="@string/informacionMonitoreo" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView22"
+        android:textSize="5sp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/foto1"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/foto2"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/foto3"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="8dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

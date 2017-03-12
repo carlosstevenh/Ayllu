@@ -291,22 +291,6 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
     }
 
-    public void getCamara() {
-
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
-
-        imagesFolder.mkdirs();
-        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
-        String format = s.format(new Date());
-
-        foto = format + ".jpg";
-        file = new File(imagesFolder, foto);
-        Uri uriSavedImage = Uri.fromFile(file);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-        startActivityForResult(cameraIntent, 1);
-    }
-
     /**
      * =============================================================================================
      * METODO: Valida la selección del Checbox Repercusiones (Positivas/Negativas)

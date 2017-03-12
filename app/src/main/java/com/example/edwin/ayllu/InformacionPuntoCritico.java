@@ -1,19 +1,26 @@
 package com.example.edwin.ayllu;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
+import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -24,7 +31,12 @@ public class InformacionPuntoCritico extends AppCompatActivity {
     private String pa,fm;
     private TextView paf,fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
     private ArrayList<MonitoreoGeneral> mg;
+    private ImageView foto1,foto2,foto3;
     FloatingActionButton fab_pruebas, fab_graficas;
+    private String URL = "http://138.68.40.165/camara/imagenes/";
+    private int tamamo = 0;
+    private ArrayList<Prueba> pruebas = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +60,111 @@ public class InformacionPuntoCritico extends AppCompatActivity {
         lon = (TextView) findViewById(R.id.longitud);
         lat = (TextView) findViewById(R.id.latitud);
 
+        foto1 = (ImageView) findViewById(R.id.foto1);
+        foto2 = (ImageView) findViewById(R.id.foto2);
+        foto3 = (ImageView) findViewById(R.id.foto3);
+
+
+            foto1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String foto = URL;
+                    if(tamamo > 0){
+                        foto += pruebas.get(0).getNombre();
+                        createDialogImage(foto).show();
+                    }
+
+                }
+            });
+
+
+            foto2.setOnClickListener(new View.OnClickListener() {
+                String foto = URL;
+                @Override
+                public void onClick(View view) {
+                    String foto = URL;
+                    if(tamamo > 1){
+                        foto += pruebas.get(0).getNombre();
+                        createDialogImage(foto).show();
+                    }
+
+                }
+            });
+
+            foto3.setOnClickListener(new View.OnClickListener() {
+                String foto = URL;
+                @Override
+                public void onClick(View view) {
+                    String foto = URL;
+                    if(tamamo > 2){
+                        foto += pruebas.get(0).getNombre();
+                        createDialogImage(foto).show();
+                    }
+
+                }
+            });
+
+
+        //se realiza la peticion al servidor del nombre de las pruebas del monitoreo
+        RestClient service1 = RestClient.retrofit.create(RestClient.class);
+        Call<ArrayList<Prueba>> getPrueba = service1.getPrueba(pa,fm);
+        getPrueba.enqueue(new retrofit2.Callback<ArrayList<Prueba>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Prueba>> call, Response<ArrayList<Prueba>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<Prueba> aux = response.body();
+                    if(response.body().size() != 0){
+                        pruebas = aux;
+                        tamamo = aux.size();
+                        if(tamamo<=3){
+                            for (int i = 0; i < tamamo; i++){
+                                String ruta = URL + aux.get(i).getNombre();
+                                if(i+1 == 1) cargarImg(ruta,foto1);
+                                if(i+1 == 2) cargarImg(ruta,foto2);
+                                if(i+1 == 3) cargarImg(ruta,foto3);
+
+                            }
+                        }
+                        else {
+                            for (int i = 0; i < 3; i++){
+                                String ruta = URL + aux.get(i).getNombre();
+                                if(i+1 == 1) cargarImg(ruta,foto1);
+                                if(i+1 == 2) cargarImg(ruta,foto2);
+                                if(i+1 == 3) cargarImg(ruta,foto3);
+                            }
+                        }
+
+                    }
+
+                }
+                else{
+                    Log.e("URL:",URL);
+                    Toast.makeText(
+                            InformacionPuntoCritico.this,
+                            getResources().getString(R.string.noSeEncontraronDatos),
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Prueba>> call, Throwable t) {
+                Toast.makeText(
+                        InformacionPuntoCritico.this,
+                        getResources().getString(R.string.noSePudoConectarServidor),
+                        Toast.LENGTH_SHORT)
+                        .show();
+                finish();
+            }
+        });
+
         //se hace la peticion al servidor de la informacion general de un monitoreo
-        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<MonitoreoGeneral>> mon = service.informacion(pa,fm);
         mon.enqueue(new Callback<ArrayList<MonitoreoGeneral>>() {
             @Override
             public void onResponse(Call<ArrayList<MonitoreoGeneral>> call, Response<ArrayList<MonitoreoGeneral>> response) {
                 if (response.isSuccessful()) {
-                    loading.dismiss();
                     mg = response.body();
 
                     MonitoreoGeneral aux = mg.get(0);
@@ -84,7 +192,6 @@ public class InformacionPuntoCritico extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<MonitoreoGeneral>> call, Throwable t) {
-                loading.dismiss();
                 Toast.makeText(
                         InformacionPuntoCritico.this,
                         getResources().getString(R.string.noSePudoConectarServidor),
@@ -108,19 +215,58 @@ public class InformacionPuntoCritico extends AppCompatActivity {
             }
         });
 
-        //instacia el boton que llamara a la actividad de pruebas el monitoreo
-        fab_pruebas = (FloatingActionButton) findViewById(R.id.fab_pruebas);
-        fab_pruebas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle parametro = getIntent().getExtras();
-                parametro.putString("pa",pa);
-                parametro.putString("fm",fm);
+    }
+    //METODO: Encargado de obtener las imagenes en miniatura del servidor
+    void cargarImg(String foto, ImageView img){
 
-                Intent intent = new Intent(InformacionPuntoCritico.this,ActivityPruebasMonitoreo.class);
-                intent.putExtras(parametro);
-                startActivity(intent);
+        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        Picasso.with(InformacionPuntoCritico.this).
+                load(foto).into(img, new com.squareup.picasso.Callback() {
+
+            @Override
+            public void onSuccess() {
+                loading.dismiss();
+            }
+
+            @Override
+            public void onError() {
+                loading.dismiss();
+                Toast.makeText(
+                        InformacionPuntoCritico.this,
+                        getResources().getString(R.string.noEcontroPrueba),
+                        Toast.LENGTH_LONG)
+                        .show();
             }
         });
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Mostrar imagenes ampliadas
+     **/
+    public AlertDialog createDialogImage(String file) {
+        Log.e("Entro","aqui");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(InformacionPuntoCritico.this);
+        LayoutInflater inflater = InformacionPuntoCritico.this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_image, null);
+        builder.setView(v);
+
+        ImageView img = (ImageView) v.findViewById(R.id.dialogImage);
+
+        Picasso.with(InformacionPuntoCritico.this).
+                load(file).into(img, new com.squareup.picasso.Callback() {
+
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+
+        return builder.create();
     }
 }

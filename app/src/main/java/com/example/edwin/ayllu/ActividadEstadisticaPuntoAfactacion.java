@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +26,9 @@ import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +47,6 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         //Parametro que llega cuando se inicia esta actividad
         Bundle bundle = getIntent().getExtras();
         pa = bundle.getString("pa");
-
         final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
 
         //peticion al servidor de los datos necesarios para realizar la grafica estadistica.
@@ -119,7 +122,6 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                         .show();
             }
         });
-
     }
 
     //metodo encargado de obtener las etiquetas de la grafica
