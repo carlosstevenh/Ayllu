@@ -88,7 +88,9 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     private File file = null;
     private ArrayList<String> fotos = new ArrayList<String>();
     private ArrayList<File> files = new ArrayList<File>();
-    private int contador = 0;
+    private boolean f1 = false;
+    private boolean f2 = false;
+    private boolean f3 = false;
     //VARIABLES: Animaciones de los botones
     Interpolator interpolador;
 
@@ -143,6 +145,10 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         foto1 = (ImageView) findViewById(R.id.foto1);
         foto2 = (ImageView) findViewById(R.id.foto2);
         foto3 = (ImageView) findViewById(R.id.foto3);
+
+        foto1.setOnClickListener(this);
+        foto2.setOnClickListener(this);
+        foto3.setOnClickListener(this);
         //------------------------------------------------------------------------------------------
         //Minimizamos los botones del menu
         fab_regMon.setScaleX(0);
@@ -236,45 +242,53 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         imagesFolder.mkdirs();
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-        String aux = format + ".jpg";
-        File fileAux = new File(imagesFolder, aux);
-        fotos.add(aux);
-        files.add(fileAux);
-        Uri uriSavedImage = Uri.fromFile(fileAux);
+        foto = format + ".jpg";
+        file = new File(imagesFolder, foto);
+
+        Uri uriSavedImage = Uri.fromFile(file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
         startActivityForResult(cameraIntent, 1);
-
-        Log.d("nombre foto",aux);
-        Log.i("Tamaño fotos=>",""+fotos.size());
-        Log.i("Tamaño archivos=>",""+files.size());
+    }
+    //metodo que muestra imagenes en pantalla
+    protected void bitMapImg(File file, ImageView img){
+        Bitmap bMap = null;
+        bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/Ayllu/"+file.getName());
+        img.setImageBitmap(bMap);
+        bMap = null;
     }
     //metodo que verifica si una foto fue tomada
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Comprovamos que la foto se a realizado
+        Bitmap bMap = null;
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            contador++;
-            Log.e("Contador",""+contador);
-            if(contador==1){
-                BitmapFactory.Options bfo = new BitmapFactory.Options();
-                bfo.inSampleSize = 4;
-                Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"Ayllu/"+fotos.get(0).toString(),bfo);
-                foto1.setImageBitmap(bMap);
+            if(f1){
+                fotos.set(0,foto);
+                files.set(0,file);
+                f1 = false;
+                bitMapImg(files.get(0),foto1);
             }
-            else if (contador == 2){
-                Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"Ayllu/"+fotos.get(1).toString());
-                foto2.setImageBitmap(bMap);
+            else if (f2){
+                fotos.set(1,foto);
+                files.set(1,file);
+                f2 = false;
+                bitMapImg(files.get(1),foto2);
             }
-            else if (contador == 3){
-                Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"Ayllu/"+fotos.get(2).toString());
-                foto3.setImageBitmap(bMap);
+            else if (f3){
+                fotos.set(2,foto);
+                files.set(2,file);
+                f3 = false;
+                bitMapImg(files.get(2),foto2);
             }
+            else{
+                fotos.add(foto);
+                files.add(file);
+            }
+
+            if(files.size() == 1) bitMapImg(files.get(0),foto1);
+            else if (files.size() == 3) bitMapImg(files.get(2),foto3);
+            else if (files.size() == 2) bitMapImg(files.get(1),foto2);
         }
-        else{
-            fotos.remove(contador);
-            files.remove(contador);
-        }
-        Log.i("Tamaño fotos=>",""+fotos.size());
-        Log.i("Tamaño archivos=>",""+files.size());
+
     }
 
     public void getCamara() {
@@ -359,7 +373,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 comprobarOrigen();
 
                 //Comprobamos que se creo la imagen
-                if (contador>0) {
+                if (files.size()>0) {
                     if (op_reg.equals("N")) {
                         if (!opciones[1].equals("0")) uploadMonitoring("NEW");
                         else
@@ -373,7 +387,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             //EVENTO: Tomar fotografia
             case R.id.fab_camera:
                 fab_menu.collapse();
-                if(contador<3) getCamara1();
+                if(files.size()<3) getCamara1();
                 else{
                     Toast.makeText(MonitoringRegistrationFormActivity.this,
                             "No se puede tomar mas fotos",
@@ -406,6 +420,21 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             case R.id.btn_frecuencia:
                 createSelectorDialog(items_frecuencia, "FRECUENCIA DE APARICIÓN", 2).show();
                 break;
+            //--------------------------------------------------------------------------------------
+            //EVENTO: Seleccionar la primera foto
+            case  R.id.foto1:
+                Log.e("numero",""+files.size());
+                if(files.size()>0) createDialogImage(files.get(0),1).show();
+
+                break;
+            case  R.id.foto2:
+                Log.e("numero",""+files.size());
+                if(files.size()>1) createDialogImage(files.get(1),2).show();
+                break;
+            case  R.id.foto3:
+                Log.e("numero",""+files.size());
+                if(files.size()>2) createDialogImage(files.get(2),3).show();
+                break;
             default:
                 break;
         }
@@ -424,7 +453,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(logging);
             PostClient service1 = PostClient.retrofit.create(PostClient.class);
-            if(contador==2){
+            if(files.size()==2){
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
                 MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", files.get(1).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(1)));
 
@@ -441,7 +470,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                     }
                 });
             }
-            else if(contador == 3){
+            else if(files.size() == 3){
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
                 MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", files.get(1).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(1)));
                 MultipartBody.Part filePart3 = MultipartBody.Part.createFormData("fotoUp3", files.get(2).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(2)));
@@ -719,6 +748,37 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         return builder.create();
     }
 
+    /**
+     * =============================================================================================
+     * METODO: Mostrar imagenes ampliadas
+     **/
+    public AlertDialog createDialogImage(File file, int pos) {
+        final int aux = pos;
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MonitoringRegistrationFormActivity.this);
+
+        LayoutInflater inflater = MonitoringRegistrationFormActivity.this.getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_image, null);
+
+        builder.setView(v);
+
+        ImageView img = (ImageView) v.findViewById(R.id.dialogImage);
+
+        bitMapImg(file,img);
+
+        builder.setPositiveButton("CAMBIAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(aux == 1)f1 = true;
+                        else if (aux == 2) f2 = true;
+                        else if (aux == 3) f3 = true;
+                        getCamara1();
+                    }
+                });
+
+        return builder.create();
+    }
     /**
      * =============================================================================================
      * METODO: Verifica la Conexión a internet
