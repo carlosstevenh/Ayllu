@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.RestClient;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,11 +28,13 @@ import retrofit2.Response;
 public class EditMonitor extends AppCompatActivity {
     private TextView id, nom, ape, con,con2;
     private Button edit;
-    int codigo ;
+    private int codigo ;
     private String pais;
     private String tipo,ide;
     private String clave;
     private ArrayList<String> res;
+    private TextInputLayout tilNombre,tilApellido,tilIdentificacion,tilCon1,tilCon2;
+    private String contrasena;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +53,20 @@ public class EditMonitor extends AppCompatActivity {
         nom = (TextView)findViewById(R.id.txtname);
         ape = (TextView)findViewById(R.id.txtApe);
         con = (TextView)findViewById(R.id.txtCon);
-        con2 = (TextView)findViewById(R.id.txtCon2);
+        con2 = (TextView)findViewById(R.id.contraseña2);
+
+        tilIdentificacion = (TextInputLayout) findViewById(R.id.til_ide);
+        tilNombre = (TextInputLayout) findViewById(R.id.til_nom);
+        tilApellido = (TextInputLayout) findViewById(R.id.til_ape);
+        tilCon1 = (TextInputLayout) findViewById(R.id.til_con);
+        tilCon2 = (TextInputLayout) findViewById(R.id.til_con1);
 
         //se llena los elementos de la vista con los paramentros recividos
         id.setText(bundle.getString("iden"));
         nom.setText(bundle.getString("nombre"));
         ape.setText(bundle.getString("apellido"));
-        con.setText(bundle.getString("con"));
-        con2.setText(bundle.getString("con"));
+        //con.setText(bundle.getString("con"));
+        contrasena = bundle.getString("con");
 
         edit = (Button) findViewById(R.id.btnReg);
         //se invoca al metodo click del boton para luego llamar al metodo encargado de editar el monitor
@@ -70,13 +80,17 @@ public class EditMonitor extends AppCompatActivity {
     }
     //metodo encargado de mostrar los mensajes de confirmacion de edicion del metodo
     public void editar(){
-        if(con.getText().toString().equals(con2.getText().toString())){
-            createSimpleDialog(getResources().getString(R.string.confirmacionAccionEditar),getResources().getString(R.string.advertencia)).show();
-        }
-        else{
-            Toast login = Toast.makeText(getApplicationContext(),
-                    getResources().getString(R.string.contraseñasDiferentes), Toast.LENGTH_LONG);
-            login.show();
+        boolean c1 = true;
+        boolean ci = true;
+        boolean c = true;
+        boolean i = esIdentificacionValido(tilIdentificacion.getEditText().getText().toString(),tilIdentificacion);
+        boolean n = esNombreValido(tilNombre.getEditText().getText().toString(),tilNombre);
+        boolean a = esNombreValido(tilApellido.getEditText().getText().toString(),tilApellido);
+        if(con.getText().toString().length() > 1) c = esContrasenaValido(tilCon1.getEditText().getText().toString(),tilCon1);
+        if(con2.getText().toString().length() > 1) c1 = esContrasenaValido(tilCon2.getEditText().getText().toString(),tilCon2);
+        if(con2.getText().toString().length()> 1) ci = esContrasenaIguales();
+        if(i && n && a && c && c1 && ci) {
+            createSimpleDialog(getResources().getString(R.string.confirmacionAccionEditar), getResources().getString(R.string.advertencia)).show();
         }
     }
     //metodo encargado de crear los dialogos informativos y confirmacion de la edicion del monitor
@@ -89,10 +103,13 @@ public class EditMonitor extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Se realiza la peticion al servidor para actualizar la informacion del monitor
+                                if(!con.getText().toString().equals("") && !con2.getText().toString().equals("")){
+                                    contrasena = con.getText().toString();
+                                }
                                 final ProgressDialog loading = ProgressDialog.show(EditMonitor.this,getResources().getString(R.string.actualizadoMonitor),getResources().getString(R.string.esperar),false,false);
                                 RestClient service = RestClient.retrofit.create(RestClient.class);
                                 Call<ArrayList<String>> requestAdd = service.editUsuario(id.getText().toString(),nom.getText().toString()
-                                        ,ape.getText().toString(),con.getText().toString(),""+clave);
+                                        ,ape.getText().toString(),contrasena,""+clave);
                                 requestAdd.enqueue(new Callback<ArrayList<String>>() {
                                     @Override
                                     public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
@@ -155,5 +172,55 @@ public class EditMonitor extends AppCompatActivity {
                         });
 
         return builder.create();
+    }
+
+    //METODOS: validan los datos que se introducen en las cajas de texto (nombre, apellido,contraseñas)
+
+    private boolean esNombreValido(String nombre,TextInputLayout til) {
+        Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
+        if (!patron.matcher(nombre).matches() || nombre.length() > 30) {
+            til.setError(getResources().getString(R.string.campoInvalido));
+            return false;
+        } else {
+            til.setError(null);
+        }
+
+        return true;
+    }
+
+    private boolean esIdentificacionValido(String nombre,TextInputLayout til) {
+        Pattern patron = Pattern.compile("^.{1,}");
+        if (!patron.matcher(nombre).matches()) {
+            til.setError(getResources().getString(R.string.campoVacio));
+            return false;
+        } else {
+            til.setError(null);
+        }
+
+        return true;
+    }
+
+    private boolean esContrasenaValido(String nombre, TextInputLayout til) {
+        Pattern patron = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
+        if (!patron.matcher(nombre).matches() || nombre.length() > 30) {
+            til.setError(getResources().getString(R.string.contrasenaError));
+            return false;
+        } else {
+            til.setError(null);
+        }
+
+        return true;
+    }
+    private boolean esContrasenaIguales() {
+        if (!con.getText().toString().equals(con2.getText().toString())) {
+            tilCon1.setError(getResources().getString(R.string.contraseñasDiferentes));
+            tilCon2.setError(getResources().getString(R.string.contraseñasDiferentes));
+            return false;
+        } else {
+            tilCon1.setError(null);
+            tilCon2.setError(null);
+        }
+
+        return true;
     }
 }
