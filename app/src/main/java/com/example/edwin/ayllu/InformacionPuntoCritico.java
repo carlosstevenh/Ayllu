@@ -219,18 +219,18 @@ public class InformacionPuntoCritico extends AppCompatActivity {
     //METODO: Encargado de obtener las imagenes en miniatura del servidor
     void cargarImg(String foto, ImageView img){
 
-        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        //final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         Picasso.with(InformacionPuntoCritico.this).
                 load(foto).into(img, new com.squareup.picasso.Callback() {
 
             @Override
             public void onSuccess() {
-                loading.dismiss();
+                //loading.dismiss();
             }
 
             @Override
             public void onError() {
-                loading.dismiss();
+                //loading.dismiss();
                 Toast.makeText(
                         InformacionPuntoCritico.this,
                         getResources().getString(R.string.noEcontroPrueba),

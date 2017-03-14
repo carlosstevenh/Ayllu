@@ -184,6 +184,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         fecha = s.format(new Date());
+        //fecha = "2019-03-15";
 
         //------------------------------------------------------------------------------------------
         //Se obtiene los parametros enviados por el Motor de busqueda basico
@@ -503,7 +504,10 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
             if (tip_upload.equals("NEW")) {
                 //Creamos un Objeto tipo task con los datos del formulario
-                Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName());
+                Task tk = null;
+                if(files.size() == 1) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),"null","null");
+                else if(files.size() == 2) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),"null");
+                else if(files.size() >= 3) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),files.get(2).getName());
                 Call<Task> call = service.registrarPunto(tk);
                 call.enqueue(new Callback<Task>() {
                     @Override
@@ -520,7 +524,11 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 });
             } else if (tip_upload.equals("MONITORING")){
                 //Creamos un Objeto tipo task con los datos del formulario
-                Task tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
+                Task tk = null;
+                if(files.size() == 1) tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),"null","null");
+                else if(files.size() == 2) tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),"null");
+                else if(files.size() >= 3) tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),files.get(2).getName());
+                //Task tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
                 Call<Task> call = service.monitorearPunto(tk);
                 call.enqueue(new Callback<Task>() {
                     @Override
@@ -538,7 +546,11 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             }
         } else {
             if (tip_upload.equals("NEW")) {
-                Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
+                Task tk = null;
+                if(files.size() == 1) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),"null","null");
+                else if(files.size() == 2) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),"null");
+                else if(files.size() >= 3) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),files.get(2).getName());
+                //Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
                 //Registramos el Monitoreo en el dispositivo en caso de Desconección
                 TaskDbHelper taskDbHelper = new TaskDbHelper(this);
                 taskDbHelper.saveTask(tk);
