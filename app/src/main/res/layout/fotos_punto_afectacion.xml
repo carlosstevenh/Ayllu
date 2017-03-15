@@ -35,34 +35,42 @@
         android:id="@+id/textView22"
         android:textSize="5sp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/foto1"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/foto2"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/foto1"
+                android:scaleType="fitXY"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/foto3"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="8dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/foto2"
+                android:scaleType="fitXY"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/foto3"
+                android:scaleType="fitXY"
+                android:layout_marginLeft="8dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+
 
 </LinearLayout>

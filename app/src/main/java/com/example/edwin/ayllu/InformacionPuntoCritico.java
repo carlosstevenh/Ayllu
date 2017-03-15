@@ -84,7 +84,7 @@ public class InformacionPuntoCritico extends AppCompatActivity {
                 public void onClick(View view) {
                     String foto = URL;
                     if(tamamo > 1){
-                        foto += pruebas.get(0).getNombre();
+                        foto += pruebas.get(1).getNombre();
                         createDialogImage(foto).show();
                     }
 
@@ -97,7 +97,7 @@ public class InformacionPuntoCritico extends AppCompatActivity {
                 public void onClick(View view) {
                     String foto = URL;
                     if(tamamo > 2){
-                        foto += pruebas.get(0).getNombre();
+                        foto += pruebas.get(2).getNombre();
                         createDialogImage(foto).show();
                     }
 

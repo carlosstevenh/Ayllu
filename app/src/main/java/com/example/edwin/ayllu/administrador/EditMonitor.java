@@ -80,15 +80,23 @@ public class EditMonitor extends AppCompatActivity {
     }
     //metodo encargado de mostrar los mensajes de confirmacion de edicion del metodo
     public void editar(){
+
         boolean c1 = true;
         boolean ci = true;
         boolean c = true;
         boolean i = esIdentificacionValido(tilIdentificacion.getEditText().getText().toString(),tilIdentificacion);
         boolean n = esNombreValido(tilNombre.getEditText().getText().toString(),tilNombre);
         boolean a = esNombreValido(tilApellido.getEditText().getText().toString(),tilApellido);
-        if(con.getText().toString().length() > 1) c = esContrasenaValido(tilCon1.getEditText().getText().toString(),tilCon1);
-        if(con2.getText().toString().length() > 1) c1 = esContrasenaValido(tilCon2.getEditText().getText().toString(),tilCon2);
-        if(con2.getText().toString().length()> 1) ci = esContrasenaIguales();
+
+        if(!con.getText().toString().equals("")){
+            c = esContrasenaValido(tilCon1.getEditText().getText().toString(),tilCon1);
+            c1 = esContrasenaValido(tilCon2.getEditText().getText().toString(),tilCon2);
+        }
+        if(!con2.getText().toString().equals("")) {
+            c = esContrasenaValido(tilCon1.getEditText().getText().toString(),tilCon1);
+            c1 = esContrasenaValido(tilCon2.getEditText().getText().toString(),tilCon2);
+        }
+        if(!con2.getText().toString().equals("") && !con.getText().toString().equals("") && c && c1) ci = esContrasenaIguales();
         if(i && n && a && c && c1 && ci) {
             createSimpleDialog(getResources().getString(R.string.confirmacionAccionEditar), getResources().getString(R.string.advertencia)).show();
         }

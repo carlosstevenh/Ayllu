@@ -186,19 +186,19 @@
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btnReg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/colorAccent"
-                        android:text="@string/registrar"
-                        android:textColor="@android:color/white"
-                        android:layout_marginTop="30dp"/>
-
                 </LinearLayout>
             </ScrollView>
 
         </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/btnReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/registrar"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="30dp"/>
 
     </LinearLayout>
 

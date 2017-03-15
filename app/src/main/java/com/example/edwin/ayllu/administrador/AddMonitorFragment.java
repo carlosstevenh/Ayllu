@@ -77,16 +77,18 @@ public class AddMonitorFragment extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                boolean ci = false;
                 boolean i = esIdentificacionValido(tilIdentificacion.getEditText().getText().toString(),tilIdentificacion);
                 Log.e("tamaño",""+tilIdentificacion.getEditText().getText().toString().length());
                 boolean n = esNombreValido(tilNombre.getEditText().getText().toString(),tilNombre);
                 boolean a = esNombreValido(tilApellido.getEditText().getText().toString(),tilApellido);
                 boolean c = esContrasenaValido(tilCon1.getEditText().getText().toString(),tilCon1);
                 boolean c1 = esContrasenaValido(tilCon2.getEditText().getText().toString(),tilCon2);
-                boolean ci = esContrasenaIguales();
 
-                if(i && n && a && c && c1 && ci){
+                if(c && c1) ci = esContrasenaIguales();
+
+                if(i && n && a && ci ){
+
                     //se realiza una consulta a la base de datos del movil para obtener el pais del administrador
                     AdminSQLite admin = new AdminSQLite(getContext(),"login", null, 1);
                     SQLiteDatabase bd = admin.getReadableDatabase();
