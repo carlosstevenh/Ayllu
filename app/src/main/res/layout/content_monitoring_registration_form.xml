@@ -294,4 +294,30 @@
                 android:textColor="@color/colorTextIcons" />
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/foto1"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="15dp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/foto2"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="8dp"/>
+        <ImageView
+            android:id="@+id/foto3"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="8dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>
 </LinearLayout>

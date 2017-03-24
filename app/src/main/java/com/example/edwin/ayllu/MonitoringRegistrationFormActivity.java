@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -21,7 +24,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
@@ -34,9 +39,13 @@ import com.example.edwin.ayllu.io.ApiConstants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import org.apache.poi.ss.formula.functions.T;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
+import java.util.StringTokenizer;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -57,6 +66,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     FloatingActionButton fab_regMon, fab_point, fab_camera;
     FloatingActionButton fab_factor, fab_variable;
     FloatingActionsMenu fab_menu, fab_menu2;
+    private ImageView foto1,foto2,foto3;
 
 
     //VARIABLES: Control y Procesamiento de datos del formulario
@@ -74,9 +84,13 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     int i = 0;
 
     //VARIABLES: Control y Procesamiento de datos de la camara
-    String foto;
-    File file = null;
-
+    private String foto ;
+    private File file = null;
+    private ArrayList<String> fotos = new ArrayList<String>();
+    private ArrayList<File> files = new ArrayList<File>();
+    private boolean f1 = false;
+    private boolean f2 = false;
+    private boolean f3 = false;
     //VARIABLES: Animaciones de los botones
     Interpolator interpolador;
 
@@ -128,6 +142,13 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         fab_menu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
         fab_menu2 = (FloatingActionsMenu) findViewById(R.id.fab_menu2);
 
+        foto1 = (ImageView) findViewById(R.id.foto1);
+        foto2 = (ImageView) findViewById(R.id.foto2);
+        foto3 = (ImageView) findViewById(R.id.foto3);
+
+        foto1.setOnClickListener(this);
+        foto2.setOnClickListener(this);
+        foto3.setOnClickListener(this);
         //------------------------------------------------------------------------------------------
         //Minimizamos los botones del menu
         fab_regMon.setScaleX(0);
@@ -163,6 +184,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         fecha = s.format(new Date());
+        //fecha = "2019-03-15";
 
         //------------------------------------------------------------------------------------------
         //Se obtiene los parametros enviados por el Motor de busqueda basico
@@ -214,20 +236,60 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
      * =============================================================================================
      * METODO: Recolecta la prueba (Fotografia) del monitoreo y la almacena en un archivo
      **/
-    public void getCamara() {
-
+    public  void getCamara1(){
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
 
         imagesFolder.mkdirs();
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-
         foto = format + ".jpg";
         file = new File(imagesFolder, foto);
+
         Uri uriSavedImage = Uri.fromFile(file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
         startActivityForResult(cameraIntent, 1);
+    }
+    //metodo que muestra imagenes en pantalla
+    protected void bitMapImg(File file, ImageView img){
+        Bitmap bMap = null;
+        bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/Ayllu/"+file.getName());
+        img.setImageBitmap(bMap);
+        bMap = null;
+    }
+    //metodo que verifica si una foto fue tomada
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Comprovamos que la foto se a realizado
+        Bitmap bMap = null;
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if(f1){
+                fotos.set(0,foto);
+                files.set(0,file);
+                f1 = false;
+                bitMapImg(files.get(0),foto1);
+            }
+            else if (f2){
+                fotos.set(1,foto);
+                files.set(1,file);
+                f2 = false;
+                bitMapImg(files.get(1),foto2);
+            }
+            else if (f3){
+                fotos.set(2,foto);
+                files.set(2,file);
+                f3 = false;
+                bitMapImg(files.get(2),foto2);
+            }
+            else{
+                fotos.add(foto);
+                files.add(file);
+            }
+
+            if(files.size() == 1) bitMapImg(files.get(0),foto1);
+            else if (files.size() == 3) bitMapImg(files.get(2),foto3);
+            else if (files.size() == 2) bitMapImg(files.get(1),foto2);
+        }
+
     }
 
     /**
@@ -296,7 +358,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 comprobarOrigen();
 
                 //Comprobamos que se creo la imagen
-                if (file != null) {
+                if (files.size()>0) {
                     if (op_reg.equals("N")) {
                         if (!opciones[1].equals("0")) uploadMonitoring("NEW");
                         else
@@ -310,7 +372,12 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             //EVENTO: Tomar fotografia
             case R.id.fab_camera:
                 fab_menu.collapse();
-                getCamara();
+                if(files.size()<3) getCamara1();
+                else{
+                    Toast.makeText(MonitoringRegistrationFormActivity.this,
+                            "No se puede tomar mas fotos",
+                            Toast.LENGTH_LONG).show();
+                }
                 break;
             //--------------------------------------------------------------------------------------
             //EVENTO: Establecer las coordenadas geograficas
@@ -338,6 +405,21 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             case R.id.btn_frecuencia:
                 createSelectorDialog(items_frecuencia, "FRECUENCIA DE APARICIÓN", 2).show();
                 break;
+            //--------------------------------------------------------------------------------------
+            //EVENTO: Seleccionar la primera foto
+            case  R.id.foto1:
+                Log.e("numero",""+files.size());
+                if(files.size()>0) createDialogImage(files.get(0),1).show();
+
+                break;
+            case  R.id.foto2:
+                Log.e("numero",""+files.size());
+                if(files.size()>1) createDialogImage(files.get(1),2).show();
+                break;
+            case  R.id.foto3:
+                Log.e("numero",""+files.size());
+                if(files.size()>2) createDialogImage(files.get(2),3).show();
+                break;
             default:
                 break;
         }
@@ -355,22 +437,60 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(logging);
-
             PostClient service1 = PostClient.retrofit.create(PostClient.class);
-            //MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-            Call<String> call1 = service1.uploadAttachment(filePart);
-            call1.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
-                }
+            if(files.size()==2){
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
+                MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", files.get(1).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(1)));
 
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                Call<String>call1 = service1.upLoad2(filePart,filePart2);
+                call1.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.e("Fotos2 ","registro exitoso");
+                    }
 
-                }
-            });
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+            }
+            else if(files.size() == 3){
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
+                MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", files.get(1).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(1)));
+                MultipartBody.Part filePart3 = MultipartBody.Part.createFormData("fotoUp3", files.get(2).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(2)));
+
+                Call<String>call1 = service1.upLoad3(filePart,filePart2,filePart3);
+                call1.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.e("Fotos3 ","registro exitoso");
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+            }
+            else{
+
+                //MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
+                Call<String> call1 = service1.uploadAttachment(filePart);
+                call1.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.e("Fotos1 ","registro exitoso");
+                        //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+            }
             //----------------------------------------------------------------------
             //Subimos el monitoreo al Servidor
             Retrofit retrofit = new Retrofit.Builder()
@@ -384,7 +504,10 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
             if (tip_upload.equals("NEW")) {
                 //Creamos un Objeto tipo task con los datos del formulario
-                Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
+                Task tk = null;
+                if(files.size() == 1) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),"null","null");
+                else if(files.size() == 2) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),"null");
+                else if(files.size() >= 3) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),files.get(2).getName());
                 Call<Task> call = service.registrarPunto(tk);
                 call.enqueue(new Callback<Task>() {
                     @Override
@@ -401,7 +524,11 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 });
             } else if (tip_upload.equals("MONITORING")){
                 //Creamos un Objeto tipo task con los datos del formulario
-                Task tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
+                Task tk = null;
+                if(files.size() == 1) tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),"null","null");
+                else if(files.size() == 2) tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),"null");
+                else if(files.size() >= 3) tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),files.get(2).getName());
+                //Task tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
                 Call<Task> call = service.monitorearPunto(tk);
                 call.enqueue(new Callback<Task>() {
                     @Override
@@ -419,7 +546,11 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             }
         } else {
             if (tip_upload.equals("NEW")) {
-                Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
+                Task tk = null;
+                if(files.size() == 1) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),"null","null");
+                else if(files.size() == 2) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),"null");
+                else if(files.size() >= 3) tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], files.get(0).getName(),files.get(1).getName(),files.get(2).getName());
+                //Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
                 //Registramos el Monitoreo en el dispositivo en caso de Desconección
                 TaskDbHelper taskDbHelper = new TaskDbHelper(this);
                 taskDbHelper.saveTask(tk);
@@ -613,6 +744,37 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         return builder.create();
     }
 
+    /**
+     * =============================================================================================
+     * METODO: Mostrar imagenes ampliadas
+     **/
+    public AlertDialog createDialogImage(File file, int pos) {
+        final int aux = pos;
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MonitoringRegistrationFormActivity.this);
+
+        LayoutInflater inflater = MonitoringRegistrationFormActivity.this.getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_image, null);
+
+        builder.setView(v);
+
+        ImageView img = (ImageView) v.findViewById(R.id.dialogImage);
+
+        bitMapImg(file,img);
+
+        builder.setPositiveButton("CAMBIAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(aux == 1)f1 = true;
+                        else if (aux == 2) f2 = true;
+                        else if (aux == 3) f3 = true;
+                        getCamara1();
+                    }
+                });
+
+        return builder.create();
+    }
     /**
      * =============================================================================================
      * METODO: Verifica la Conexión a internet

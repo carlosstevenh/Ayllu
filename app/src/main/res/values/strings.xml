@@ -1,12 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es" >
     <string name="app_name">Ayllu</string>
     <string name="title_activity_welcome">Home Screen</string>
-    <string name="next">SALIR</string>
-    <string name="skip">ELEGIR</string>
+    <string name="next">Salir</string>
+    <string name="skip">Elegir</string>
     <string name="start">INICIO</string>
 
-    <string name="slide_1_title">REGISTRA UN MONITOREO</string>
-    <string name="slide_1_desc">Recorre, Monitorea y Obten Reportes el estado de Conservación del Qhapaq Ñan</string>
+    <string name="slide_1_title">REGISTRAR UN MONITOREO</string>
+    <string name="slide_1_desc">Recorre, monitorea y obtén reportes del estado de conservación del Qhapaq Ñan</string>
 
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
     <string name="slide_2_desc">Reporta nuevos datos de la respuesta Institucional de un Monitoreo</string>
@@ -23,7 +23,7 @@
     <string name="spinner_title_area">Seleccione una Área</string>
     <string name="title_activity_form">FormActivity</string>
 
-    <string name="login">Login</string>
+    <string name="login">Iniciar</string>
     <string name="identificacion">Identificación</string>
     <string name="contrasena">Contraseña</string>
     <string name="title_activity_administrador_">Bienvenido administrador</string>
@@ -33,7 +33,7 @@
     <string name="editMonitor">Editar monitor</string>
     <string name="deleteMonitor">Eliminar monitor</string>
     <string name="salir">Salir</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="section_format" translatable="false">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="newMonitor">Agregar monitor</string>
@@ -46,7 +46,7 @@
     </string>
     <string name="fecha">Fecha monitoreo</string>
     <string name="variable">Variable</string>
-    <string name="ResAdm">Respuesta Administrativa</string>
+    <string name="ResAdm">Respuesta institucional</string>
     <string name="evaluacion">Evaluación</string>
     <string name="personal">Personal</string>
     <string name="tiempo">Tiempo</string>
@@ -54,20 +54,20 @@
     <string name="recursos">Recursos</string>
     <string name="conocimiento">Conocimiento</string>
     <string name="deshabilitar">Deshabilitar</string>
-    <string name="pais">Pais</string>
+    <string name="pais">País</string>
     <string name="subtramo">Subtramo</string>
-    <string name="area">Area</string>
+    <string name="area">Área</string>
     <string name="factor">Factor</string>
     <string name="seccion">Sección</string>
     <string name="tramo">Tramo</string>
-    <string name="puntos_criticos">PUNTOS CRITICOS</string>
+    <string name="puntos_criticos">Puntos críticos</string>
     <string name="user">Monitor</string>
     <string name="coordenada">Coordenadas</string>
     <string name="latitud">Latitud</string>
     <string name="longitud">Longitud</string>
     <string name="getPruebas">Obtener Pruebas</string>
     <string name="title_activity_filtrar">FiltrarActivity</string>
-    <string name="FILTRAR">FILTRAR</string>
+    <string name="FILTRAR">Filtrar</string>
     <string name="desde">Desde:</string>
     <string name="hasta">Hasta:</string>
     <string name="welcome">Bienvenido</string>
@@ -76,7 +76,7 @@
     <string name="monitoreos">Monitoreos</string>
     <string name="analisis">Análisis</string>
     <string name="puntaje">Puntaje</string>
-    <string name="informacionMonitoreo">Informacion Monitoreo</string>
+    <string name="informacionMonitoreo">Información Monitoreo</string>
 
     <string name="procesando">Procesando</string>
     <string name="esperar">Por favor espere ...</string>
@@ -85,13 +85,13 @@
     <string name="registrandoMonitor">Registrando monitor</string>
     <string name="registroAdicionado">Registro adicionado</string>
     <string name="seProdujoUnError">Se produjo un errror</string>
-    <string name="confirmarAccion">Esta seguro de deshabilitar el usuario?</string>
+    <string name="confirmarAccion">Esta seguro de deshabilitar el monitor?</string>
     <string name="advertencia">Advertencia</string>
     <string name="accionCompletada">Acción completada</string>
     <string name="confirmar">Confirmar</string>
     <string name="cancelar">Cancelar</string>
     <string name="confirmacionAccionEditar">Esta seguro de actualizar la información del monitor?</string>
-    <string name="contraseñasDiferentes">Las contraseñas no son iguales</string>
+    <string name="contraseñasDiferentes">Las contraseñas no coinciden</string>
     <string name="actualizadoMonitor">Actualizando monitor</string>
     <string name="monitorActualizado">Monitor actualizado</string>
     <string name="inicio">Inicio</string>
@@ -107,6 +107,11 @@
     <string name="baja">Capacidad baja</string>
     <string name="iniciandoSesion">Iniciando Sesión</string>
     <string name="dowloading">Descargando</string>
-    <string name="noEcontroPrueba">No existe pruebas para este monitoreo</string>
+    <string name="noEcontroPrueba">No existen pruebas para este monitoreo</string>
     <string name="mostrarContrasena">Mostrar contraseña</string>
+    <string name="campoInvalido">Campo inválido</string>
+    <string name="campoVacio">Campo vacio</string>
+    <string name="contrasenaError">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="freYpor">Frecuencia y porcentaje de Aparición</string>
+    <string name="nuevaContrasena">Nueva contraseña</string>
 </resources>
