@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contenido_principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -95,7 +96,7 @@
         android:layout_gravity="top|right"
         android:layout_margin="@dimen/fab_margin"
         app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_icon="@drawable/ic_registration"
+        app:fab_icon="@drawable/ic_next"
         app:fab_size="normal"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center_horizontal" />

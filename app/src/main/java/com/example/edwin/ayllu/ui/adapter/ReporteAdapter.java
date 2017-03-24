@@ -1,17 +1,21 @@
 package com.example.edwin.ayllu.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.Reporte;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder> implements View.OnClickListener{
     private View.OnClickListener listener;
@@ -43,6 +47,11 @@ public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteV
         holder.setReporteLongitud(currentReporte.getLongitud());
         holder.setReporteFecha(currentReporte.getFecha_mon());
         holder.setReporteMonitor(currentReporte.getUsuario());
+
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = s.format(new Date());
+
+        if(currentReporte.getFecha_mon().equals(fecha)) holder.setDisabledCardView();
     }
     //----------------------------------------------------------------------------------------------
     //RETORNA EL TAMAÑO DE CUANTOS ELEMENTOS HAY EN LA LISTA
@@ -80,6 +89,7 @@ public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteV
         TextView longitud;
         TextView fecha;
         TextView monitor;
+        RelativeLayout principal;
 
         public ReporteViewHolder(View itemView) {
             super(itemView);
@@ -90,6 +100,7 @@ public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteV
             longitud = (TextView) itemView.findViewById(R.id.tv_longitud);
             fecha = (TextView) itemView.findViewById(R.id.tv_fecha);
             monitor = (TextView) itemView.findViewById(R.id.tv_monitor);
+            principal = (RelativeLayout) itemView.findViewById(R.id.area_principal);
         }
 
         public void setReporteVariable (String cad){
@@ -100,5 +111,6 @@ public class ReporteAdapter extends RecyclerView.Adapter<ReporteAdapter.ReporteV
         public void setReporteLongitud (String cad) { longitud.setText(cad);}
         public void setReporteFecha (String cad) { fecha.setText(cad);}
         public void setReporteMonitor (String cad) { monitor.setText(cad);}
+        public void setDisabledCardView () { principal.setBackgroundColor(principal.getResources().getColor(R.color.colorItemSecondaryCardView));}
     }
 }

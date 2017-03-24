@@ -12,8 +12,8 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
+            android:layout_width="@dimen/img_width_height_high"
+            android:layout_height="@dimen/img_width_height_high"
             android:src="@drawable/ic_stadistic" />
 
         <TextView

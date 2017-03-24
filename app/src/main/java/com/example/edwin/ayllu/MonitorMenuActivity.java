@@ -147,7 +147,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("MONITOR", monitor);
         intent.putExtra("PAIS", pais);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -269,7 +268,9 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                System.exit(0);
+                                Intent intent = getIntent();
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                finish();
                             }
                         })
                 .setNegativeButton("CANCELAR",

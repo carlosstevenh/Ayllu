@@ -1,62 +1,23 @@
 package com.example.edwin.ayllu.domain;
 
 import android.content.ContentValues;
+
 import static com.example.edwin.ayllu.domain.TaskContract.TaskEntry;
 
 public class Task {
-    final String monitor;
-    final String area;
-    final String variable;
-    final int latitud;
-    final int longitud;
+    String monitor;
+    String area;
+    String variable;
+    int latitud;
+    int longitud;
 
-    final String fecha;
-    final String repercusiones;
-    final String origen;
+    String fecha;
+    String repercusiones;
+    String origen;
 
-    final int porcentaje;
-    final int frecuencia;
-    final String nombre;
-
-    public String getMonitor() {
-        return monitor;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public int getFrecuencia() {
-        return frecuencia;
-    }
-
-    public int getPorcentaje() {
-        return porcentaje;
-    }
-
-    public String getOrigen() {
-        return origen;
-    }
-
-    public String getRepercusiones() {
-        return repercusiones;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public int getLongitud() {
-        return longitud;
-    }
-
-    public int getLatitud() {
-        return latitud;
-    }
-
-    public String getVariable() {
-        return variable;
-    }
+    int porcentaje;
+    int frecuencia;
+    String nombre;
 
     public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre) {
         this.monitor = monitor;
@@ -70,6 +31,20 @@ public class Task {
         this.porcentaje = porcentaje;
         this.frecuencia = frecuencia;
         this.nombre = nombre;
+    }
+
+    public Task() {
+        this.monitor = "";
+        this.variable = "";
+        this.area = "";
+        this.latitud = 0;
+        this.longitud = 0;
+        this.fecha = "";
+        this.repercusiones = "1001";
+        this.origen = "10";
+        this.porcentaje = 1;
+        this.frecuencia  = 1;
+        this.nombre = "";
     }
 
     public ContentValues toContentValues() {
@@ -87,5 +62,93 @@ public class Task {
         values.put(TaskEntry.NOMBRE, nombre);
 
         return values;
+    }
+
+    public String getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(String monitor) {
+        this.monitor = monitor;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getVariable() {
+        return variable;
+    }
+
+    public void setVariable(String variable) {
+        this.variable = variable;
+    }
+
+    public int getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(int latitud) {
+        this.latitud = latitud;
+    }
+
+    public int getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(int longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getRepercusiones() {
+        return repercusiones;
+    }
+
+    public void setRepercusiones(String repercusiones) {
+        this.repercusiones = repercusiones;
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(String origen) {
+        this.origen = origen;
+    }
+
+    public int getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    public int getFrecuencia() {
+        return frecuencia;
+    }
+
+    public void setFrecuencia(int frecuencia) {
+        this.frecuencia = frecuencia;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

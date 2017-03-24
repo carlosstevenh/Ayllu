@@ -64,7 +64,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     String origen = "10";
     String fecha = "";
     int longitud = 0, latitud = 0;
-    int[] repercusiones = {1, 0, 1, 0};
+    int[] repercusiones = {1, 0, 0, 1};
 
     //VARIABLES: Control de la selección de opciones
     CharSequence[] items_factores, items_variables;
@@ -89,7 +89,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     private CharSequence[] items_presencia = new CharSequence[]{"[1%-10%] RESTRINGIDA", "[11%-50%] LOCALIZADA", "[51%-90%] EXTENSIVA", "[91%-100%] EXTENDIDA"};
     private CharSequence[] items_frecuencia = new CharSequence[]{"UNA ÚNICA VEZ", "APARICIÓN INTERMITENTE", "PRESENCIA FRECUENTE"};
     private int[] seleccion_items = {1, 1};
-    private int[] pos_seleccion = {-1, -1};
+    private int[] pos_seleccion = {0, 0};
 
     @Override
     public void onBackPressed() {
@@ -297,11 +297,41 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
                 //Comprobamos que se creo la imagen
                 if (file != null) {
+                    Intent intent = new Intent(this, PrestentationActivity.class);
+
+                    String rep = "";
+                    for (int i = 0; i < 4; i++) rep += "" + repercusiones[i];
+
+                    intent.putExtra("MONITOR", monitor);
+                    intent.putExtra("FECHA",fecha);
+                    intent.putExtra("REPERCUSIONES", rep);
+                    intent.putExtra("ORIGEN",origen);
+                    intent.putExtra("POR_NAME",items_presencia[pos_seleccion[0]]);
+                    intent.putExtra("POR_NUMBER",seleccion_items[0]+"");
+                    intent.putExtra("FRE_NAME",items_frecuencia[pos_seleccion[1]]);
+                    intent.putExtra("FRE_NUMBER",seleccion_items[1]+"");
+                    intent.putExtra("PRUEBA",file.getName());
+
                     if (op_reg.equals("N")) {
-                        if (!opciones[1].equals("0")) uploadMonitoring("NEW");
+                        if (!opciones[1].equals("0")) {
+
+
+                            intent.putExtra("VAR_COD",opciones[1]);
+                            intent.putExtra("VAR_NAME",items_variables[pos[1]]);
+                            intent.putExtra("AREA",area);
+                            intent.putExtra("LATITUD",latitud+"");
+                            intent.putExtra("LONGITUD",longitud+"");
+                            intent.putExtra("TYPE_UPLOAD","NEW");
+
+                            startActivity(intent);
+                        }
                         else
                             createSimpleDialog("Por favor Seleciona una Variable", "ALERTA").show();
-                    } else uploadMonitoring("MONITORING");
+                    } else {
+                        intent.putExtra("PUNTO_AFECTACION",punto_afectacion);
+                        intent.putExtra("TYPE_UPLOAD","MONITORING");
+                        startActivity(intent);
+                    }
                 } else
                     createSimpleDialog("Debes de Tomar una Foto del punto de afectación", "ALERTA").show();
 
@@ -340,95 +370,6 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 break;
             default:
                 break;
-        }
-    }
-
-    public void uploadMonitoring(String tip_upload) {
-        //Construimos el dato repercusiones con la seleccion de los dos Checbox
-        String rep = "";
-        for (int i = 0; i < 4; i++) rep += "" + repercusiones[i];
-        //Comprobamos la conexión a internet
-        if (wifiConected()) {
-            //----------------------------------------------------------------------
-            //Subimos la Imagen al Servidor
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.addInterceptor(logging);
-
-            PostClient service1 = PostClient.retrofit.create(PostClient.class);
-            //MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-            Call<String> call1 = service1.uploadAttachment(filePart);
-            call1.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
-            //----------------------------------------------------------------------
-            //Subimos el monitoreo al Servidor
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ApiConstants.URL_API_AYLLU)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .client(httpClient.build())
-                    .build();
-
-            AylluApiService service = retrofit.create(AylluApiService.class);
-
-            if (tip_upload.equals("NEW")) {
-                //Creamos un Objeto tipo task con los datos del formulario
-                Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
-                Call<Task> call = service.registrarPunto(tk);
-                call.enqueue(new Callback<Task>() {
-                    @Override
-                    public void onResponse(Call<Task> call, Response<Task> response) {
-                        Intent intent = new Intent(MonitoringRegistrationFormActivity.this, MonitorMenuActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Task> call, Throwable t) {
-
-                    }
-                });
-            } else if (tip_upload.equals("MONITORING")){
-                //Creamos un Objeto tipo task con los datos del formulario
-                Task tk = new Task(monitor, punto_afectacion, "", 0, 0, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
-                Call<Task> call = service.monitorearPunto(tk);
-                call.enqueue(new Callback<Task>() {
-                    @Override
-                    public void onResponse(Call<Task> call, Response<Task> response) {
-                        Intent intent = new Intent(MonitoringRegistrationFormActivity.this, MonitorMenuActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Task> call, Throwable t) {
-
-                    }
-                });
-            }
-        } else {
-            if (tip_upload.equals("NEW")) {
-                Task tk = new Task(monitor, opciones[1], area, latitud, longitud, fecha, rep, origen, seleccion_items[0], seleccion_items[1], file.getName());
-                //Registramos el Monitoreo en el dispositivo en caso de Desconección
-                TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-                taskDbHelper.saveTask(tk);
-            }
-            //Regresamos al Menu del monitor
-            Intent intent = new Intent(MonitoringRegistrationFormActivity.this, MonitorMenuActivity.class);
-            intent.putExtra("MONITOR", monitor + "");
-            startActivity(intent);
-            finish();
         }
     }
 
@@ -602,7 +543,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!et_latitud.getText().equals("") && !et_longitud.getText().equals("")) {
+                        if (!et_latitud.getText().toString().equals("") && !et_longitud.getText().toString().equals("")) {
                             latitud = Integer.parseInt(et_latitud.getText().toString());
                             longitud = Integer.parseInt(et_longitud.getText().toString());
                             builder.create().dismiss();
@@ -611,17 +552,6 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 });
 
         return builder.create();
-    }
-
-    /**
-     * =============================================================================================
-     * METODO: Verifica la Conexión a internet
-     **/
-    protected Boolean wifiConected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        return wifi.isConnected() || mobile.isConnected();
     }
 
     /**

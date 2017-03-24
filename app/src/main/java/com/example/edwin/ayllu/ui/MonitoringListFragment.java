@@ -9,12 +9,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.edwin.ayllu.ActividadEstadisticaPuntoAfactacion;
 import com.example.edwin.ayllu.MonitoringRegistrationFormActivity;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
@@ -62,6 +67,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search, fab_new, fab_report;
     private FloatingActionsMenu menu;
+    private LinearLayout areaInfo;
+    private TextView tvInfo;
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
@@ -161,6 +168,9 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_seccion = (FloatingActionButton) getActivity().findViewById(R.id.fab_seccion);
         fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
         menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
+
+        areaInfo = (LinearLayout) getActivity().findViewById(R.id.area_info);
+        tvInfo = (TextView) getActivity().findViewById(R.id.tv_info);
 
         fab_new.setScaleX(0);
         fab_search.setScaleX(0);
@@ -364,13 +374,22 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
                         if (response.isSuccessful()) {
                             reportes = response.body().getReportes();
-                            //adapter.addAll(reportes);
+                            if (reportes.size() > 0) areaInfo.setVisibility(View.INVISIBLE);
                             new HackingBackgroundTask().execute();
+                            if(reportes.size() == 0){
+                                tvInfo.setText("No hay monitoreos para la seleción actual.");
+                                areaInfo.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ReporteResponse> call, Throwable t) {
+                        Toast.makeText(
+                                getActivity(),
+                                getResources().getString(R.string.noSePudoConectarServidor),
+                                Toast.LENGTH_SHORT)
+                                .show();
                     }
                 });
                 break;
@@ -430,8 +449,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 .scaleX(x)
                 .scaleY(y)
                 .setInterpolator(interpolador)
-                .setDuration(50)
-                .setStartDelay(500);
+                .setDuration(10)
+                .setStartDelay(100);
     }
 
     /**
@@ -537,7 +556,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         //Escribiendo en el archivo Excel
         try {
             InputStream editor = getResources().openRawResource(R.raw.plantilla);
-            FileOutputStream result = new FileOutputStream("/storage/sdcard0/documents/Qhapaq-Ñan" + format + ".xls");
+            FileOutputStream result = new FileOutputStream("/storage/sdcard0/Qhapaq-Ñan" + format + ".xls");
 
             //Crear el objeto que tendra el libro de Excel
             HSSFWorkbook workbook = new HSSFWorkbook(editor);
@@ -571,7 +590,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     }
 
     //==============================================================================================
-    private void escribirExcel(int cod_plan , int pf, HSSFSheet sheet) {
+    private void escribirExcel(int cod_plan, int pf, HSSFSheet sheet) {
         //Estilo de celda basico
         CellStyle style = sheet.getWorkbook().createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
@@ -615,12 +634,10 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 if (cod_plan == 1 && j > 6 && j < 11) {
                     if (info.get(j).equals("1")) celda.setCellStyle(style2);
                     else celda.setCellStyle(style);
-                }
-                else if (cod_plan == 1 && j > 10){
+                } else if (cod_plan == 1 && j > 10) {
                     if (info.get(j).equals("1")) celda.setCellStyle(style3);
                     else celda.setCellStyle(style);
-                }
-                else {
+                } else {
                     celda.setCellValue(info.get(j));
                     celda.setCellStyle(style);
                 }

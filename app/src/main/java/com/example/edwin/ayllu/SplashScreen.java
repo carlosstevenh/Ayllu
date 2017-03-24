@@ -81,7 +81,7 @@ public class SplashScreen extends Activity {
                         startActivity(intent);
                         finish();
                     }
-                },4000);
+                },2000);
             }
             else {
                 new Handler().postDelayed(new Runnable() {
@@ -91,7 +91,7 @@ public class SplashScreen extends Activity {
                         startActivity(intent);
                         finish();
                     }
-                },4000);
+                },2000);
             }
 
         }
@@ -112,7 +112,7 @@ public class SplashScreen extends Activity {
                     startActivity(intent);
                     finish();
                 }
-            }, 4000);
+            }, 2000);
 
 
         }

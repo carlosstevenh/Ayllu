@@ -1,21 +1,32 @@
 <resources>
     <string name="app_name">Ayllu</string>
     <string name="title_activity_welcome">Home Screen</string>
+    <!--=========================================================================================-->
+    <!--STRINGS: LOGIN DEL USUARIO-->
+    <string name="login">Login</string>
+    <string name="identificacion">Identificación</string>
+    <string name="contrasena">Contraseña</string>
+    <!--=========================================================================================-->
+    <!--STRINGS: MENU DEL MONITOR-->
     <string name="next">SALIR</string>
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
-
+    <!--.........................................................................................-->
+    <!--SLIDE REGISTRAR MONITOREO-->
     <string name="slide_1_title">REGISTRA UN MONITOREO</string>
     <string name="slide_1_desc">Recorre, Monitorea y Obten Reportes el estado de Conservación del Qhapaq Ñan</string>
-
+    <!--.........................................................................................-->
+    <!--SLIDE RESPUESTA INSTITUCIONAL-->
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
     <string name="slide_2_desc">Reporta nuevos datos de la respuesta Institucional de un Monitoreo</string>
-
+    <!--.........................................................................................-->
+    <!--SLIDE MAPAS ESTADISTICOS-->
     <string name="slide_3_title">MAPAS ESTADISTICOS</string>
     <string name="slide_3_desc">Toma decisiones de alto impacto en beneficio de este extenso y remoto bien seriado</string>
-
-    <string name="slide_4_title">VISUALIZA EL QHAPAQ ÑAN</string>
-    <string name="slide_4_desc">Observa el Qhapaq Ñan a través de mapas geográficos.</string>
+    <!--.........................................................................................-->
+    <!--SLIDE CONFIGURACIÓN DEL SISTEMA-->
+    <string name="slide_4_title">CONFIGURA TU APLICACIÓN</string>
+    <string name="slide_4_desc">Elige una configuración personalizada para tu trabajo</string>
 
     <string name="spinner_title_tramos">Seleccione un Tramo</string>
     <string name="spinner_title_subtramos">Seleccione un Subtramo</string>
@@ -23,9 +34,6 @@
     <string name="spinner_title_area">Seleccione una Área</string>
     <string name="title_activity_form">FormActivity</string>
 
-    <string name="login">Login</string>
-    <string name="identificacion">Identificación</string>
-    <string name="contrasena">Contraseña</string>
     <string name="title_activity_administrador_">Bienvenido administrador</string>
     <string name="administrador">Administrador</string>
     <string name="monitor">Monitorear</string>
@@ -109,4 +117,23 @@
     <string name="dowloading">Descargando</string>
     <string name="noEcontroPrueba">No existe pruebas para este monitoreo</string>
     <string name="mostrarContrasena">Mostrar contraseña</string>
+
+    <!--=========================================================================================-->
+    <!--STRINGS: INFORMACIÓN DEL REGISTRO DE DATOS-->
+    <string name="successfulRecordTitle">REGISTRO EXITOSO</string>
+    <string name="successfulRecordImageDescription">OK</string>
+    <string name="successfulRecordMonitoringDescription">El monitoreo se ha registrado sin ningun inconveniente</string>
+    <string name="successfulRecordResponseDescription">La respuesta institucional se ha registrado sin ningun inconveniente</string>
+
+    <string name="offlineRecordTitle">REGISTRO SIN CONEXIÓN A INTERNET</string>
+    <string name="offlineRecordImageDescription">OFFLINE</string>
+    <string name="offlineRecordMonitoringDescription">El monitoreo se ha registrado parcialmente en el dispositivo, una vez se conecte a internet el monitoreo se subira automaticamente</string>
+
+    <string name="failedRecordTitle">REGISTRO FALLIDO</string>
+    <string name="failedRecordImageDescription">ERROR</string>
+    <string name="failedRecordMonitoringDescription">El monitoreo no se ha podido registrar, porfavor intentelo de nuevo</string>
+    <string name="failedRecordResponseDescription">La respuesta institucional no se ha podido registrar, porfavor intentelo de nuevo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

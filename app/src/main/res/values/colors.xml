@@ -17,7 +17,7 @@
     <!--.........................................................................................-->
     <!--Colores de Seleción de los Radio Butons-->
     <color name="colorRadioButtonOn">#333366</color>
-    <color name="colorRadioButtonOff">#5d5d96</color>
+    <color name="colorRadioButtonOff">#c2c2d4</color>
     <!--.........................................................................................-->
     <!-- Colores de los Sliders-->
     <color name="bg_screen1">#5537c1</color>
@@ -57,10 +57,15 @@
     <color name="colorElementFormBackground">#d7d7d7</color>
     <color name="colorCardViewBackground">#faf4f5</color>
     <color name="colorItemPrimaryCardView">#3c3c68</color>
-    <color name="colorItemSecondaryCardView">#c9c8c8</color>
+    <color name="colorItemSecondaryCardView">#6b6b79</color>
+    <color name="colorListBackground">#c9c8c8</color>
     <color name="colorTextCardView">#ffffff</color>
     <color name="colorIconCardView">#01211e</color>
     <!--.........................................................................................-->
     <!--Colores para el dialogo de coordenadasw-->
     <color name="colorTitleBackground">#0e2a3d</color>
+    <!--.........................................................................................-->
+    <!--COLORS: SplashScreen de información del registro-->
+    <color name="colorSplashBackground">#143a48</color>
+    <color name="colorSplashBackgroundFailed">#541616</color>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Prueba;
+import com.example.edwin.ayllu.io.ApiConstants;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import retrofit2.Response;
 public class ActivityPruebasMonitoreo extends AppCompatActivity {
     private String pa,fm;
     private ImageView imageView;
-    private String URL = "http://138.68.40.165/camara/imagenes/";
+    private String URL = ApiConstants.URL_IMG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

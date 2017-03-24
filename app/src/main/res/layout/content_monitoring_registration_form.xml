@@ -260,8 +260,9 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:drawableRight="@drawable/ic_arrow"
             android:layout_marginTop="5dp"
-            android:background="@color/colorRadioButtonOff"
+            android:background="@color/colorRadioButtonOn"
             android:text="[1%-10%] RESTRINGIDA"
             android:textColor="@color/colorTextIcons" />
 
@@ -288,8 +289,9 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/ic_arrow"
                 android:layout_marginTop="5dp"
-                android:background="@color/colorRadioButtonOff"
+                android:background="@color/colorRadioButtonOn"
                 android:text="UNA ÚNICA VEZ"
                 android:textColor="@color/colorTextIcons" />
         </LinearLayout>
