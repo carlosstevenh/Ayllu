@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.edwin.ayllu.MonitoringRegistrationFormActivity">
+    tools:context="com.example.edwin.ayllu.MonitoringActivity">
 
     <include layout="@layout/content_monitoring_registration_form"
         android:id="@+id/include" />

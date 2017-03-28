@@ -1,18 +1,18 @@
 package com.example.edwin.ayllu;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,43 +21,37 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
-import com.example.edwin.ayllu.domain.Task;
-import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.domain.VariableContract;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
-import com.example.edwin.ayllu.io.AylluApiService;
-import com.example.edwin.ayllu.io.ApiConstants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import static android.app.Activity.RESULT_OK;
 
-public class MonitoringRegistrationFormActivity extends AppCompatActivity implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
+public class MonitoringRegistrationFormFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
+
     //VARIABLES: Componetes del Formulario de Registro
     Button btn_presencia, btn_frecuencia;
     RadioGroup rg_reper1, rg_reper2, rg_origen;
     FloatingActionButton fab_regMon, fab_point, fab_camera;
     FloatingActionButton fab_factor, fab_variable;
     FloatingActionsMenu fab_menu, fab_menu2;
+    private ImageView foto1, foto2, foto3;
 
+    MonitoringDetailFragment fragment;
 
     //VARIABLES: Control y Procesamiento de datos del formulario
     String punto_afectacion = "", area = "", monitor = "", op_reg, pais = "";
@@ -74,9 +68,13 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     int i = 0;
 
     //VARIABLES: Control y Procesamiento de datos de la camara
-    String foto;
-    File file = null;
-
+    private String foto;
+    private File file = null;
+    private ArrayList<String> fotos = new ArrayList<>();
+    private ArrayList<File> files = new ArrayList<>();
+    private boolean f1 = false;
+    private boolean f2 = false;
+    private boolean f3 = false;
     //VARIABLES: Animaciones de los botones
     Interpolator interpolador;
 
@@ -92,41 +90,40 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
     private int[] pos_seleccion = {0, 0};
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(this, RecordActivity.class);
-        intent.putExtra("MONITOR", monitor);
-        intent.putExtra("PAIS", pais);
-        startActivity(intent);
-        finish();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
-    /**
-     * =============================================================================================
-     * METODO:
-     **/
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_monitoring_registration_form);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_monitoring_registration_form, container, false);
 
         //------------------------------------------------------------------------------------------
         //Vincula los elementos de la interfaz del formulario con las variables
-        btn_presencia = (Button) findViewById(R.id.btn_presencia);
-        btn_frecuencia = (Button) findViewById(R.id.btn_frecuencia);
+        btn_presencia = (Button) view.findViewById(R.id.btn_presencia);
+        btn_frecuencia = (Button) view.findViewById(R.id.btn_frecuencia);
 
-        rg_reper1 = (RadioGroup) findViewById(R.id.rg_repercusiones1);
-        rg_reper2 = (RadioGroup) findViewById(R.id.rg_repercusiones2);
-        rg_origen = (RadioGroup) findViewById(R.id.rg_origen);
+        rg_reper1 = (RadioGroup) view.findViewById(R.id.rg_repercusiones1);
+        rg_reper2 = (RadioGroup) view.findViewById(R.id.rg_repercusiones2);
+        rg_origen = (RadioGroup) view.findViewById(R.id.rg_origen);
 
-        fab_regMon = (FloatingActionButton) findViewById(R.id.fab_regMon);
-        fab_point = (FloatingActionButton) findViewById(R.id.fab_point);
-        fab_camera = (FloatingActionButton) findViewById(R.id.fab_camera);
-        fab_factor = (FloatingActionButton) findViewById(R.id.fab_factor);
-        fab_variable = (FloatingActionButton) findViewById(R.id.fab_variable);
-        fab_menu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
-        fab_menu2 = (FloatingActionsMenu) findViewById(R.id.fab_menu2);
+        fab_regMon = (FloatingActionButton) view.findViewById(R.id.fab_regMon);
+        fab_point = (FloatingActionButton) view.findViewById(R.id.fab_point);
+        fab_camera = (FloatingActionButton) view.findViewById(R.id.fab_camera);
+        fab_factor = (FloatingActionButton) view.findViewById(R.id.fab_factor);
+        fab_variable = (FloatingActionButton) view.findViewById(R.id.fab_variable);
+        fab_menu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
+        fab_menu2 = (FloatingActionsMenu) view.findViewById(R.id.fab_menu2);
+
+        foto1 = (ImageView) view.findViewById(R.id.foto1);
+        foto2 = (ImageView) view.findViewById(R.id.foto2);
+        foto3 = (ImageView) view.findViewById(R.id.foto3);
+
+        foto1.setOnClickListener(this);
+        foto2.setOnClickListener(this);
+        foto3.setOnClickListener(this);
 
         //------------------------------------------------------------------------------------------
         //Minimizamos los botones del menu
@@ -142,7 +139,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         fab_camera.setEnabled(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            interpolador = AnimationUtils.loadInterpolator(getBaseContext(),
+            interpolador = AnimationUtils.loadInterpolator(getActivity().getBaseContext(),
                     android.R.interpolator.fast_out_slow_in);
         }
 
@@ -165,15 +162,24 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         fecha = s.format(new Date());
 
         //------------------------------------------------------------------------------------------
+        //Obtenemos el codigo del monitor y el pais del usuario en sesión
+        AdminSQLite admin = new AdminSQLite(getActivity().getApplicationContext(), "login", null, 1);
+        SQLiteDatabase bd = admin.getReadableDatabase();
+        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
+        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
+        cursor.moveToFirst();
+        monitor = cursor.getString(0);
+        pais = cursor.getString(1);
+        cursor.close();
+
+        //------------------------------------------------------------------------------------------
         //Se obtiene los parametros enviados por el Motor de busqueda basico
 
-        Intent intent = getIntent();
-        monitor = intent.getStringExtra("MONITOR");
-        pais = intent.getStringExtra("PAIS");
-        op_reg = intent.getStringExtra("OPCION");
+        op_reg = getArguments().getString("OPCION");
 
+        assert op_reg != null;
         if (op_reg.equals("M")) {
-            punto_afectacion = intent.getStringExtra("PUNTO");
+            punto_afectacion = getArguments().getString("PUNTO");
 
             fab_factor.setScaleX(0);
             fab_factor.setScaleY(0);
@@ -191,13 +197,13 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
 
             fab_menu2.setVisibility(View.GONE);
 
-            area = intent.getStringExtra("AREA");
+            area = getArguments().getString("AREA");
         }
 
         //------------------------------------------------------------------------------------------
         //Se obtiene todos los factores
-        factorDbHelper = new FactorDbHelper(this);
-        variableDbHelper = new VariableDbHelper(this);
+        factorDbHelper = new FactorDbHelper(getActivity());
+        variableDbHelper = new VariableDbHelper(getActivity());
         i = 0;
 
         cursor = factorDbHelper.generateQuery("SELECT * FROM ");
@@ -208,26 +214,92 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                 i++;
             } while (cursor.moveToNext());
         }
+        cursor.close();
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        fab_menu.expand();
+
+        if (files.size() >= 1)
+            Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(foto1);
+        if (files.size() >= 2)
+            Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(foto2);
+        if (files.size() == 3)
+            Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(foto3);
+
     }
 
     /**
      * =============================================================================================
      * METODO: Recolecta la prueba (Fotografia) del monitoreo y la almacena en un archivo
      **/
-    public void getCamara() {
-
+    public void getCamara1() {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
 
         imagesFolder.mkdirs();
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-
         foto = format + ".jpg";
         file = new File(imagesFolder, foto);
+
         Uri uriSavedImage = Uri.fromFile(file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
         startActivityForResult(cameraIntent, 1);
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Muestra la Imagen en pantalla
+     **/
+    protected void bitMapImg(File file, ImageView img) {
+        Bitmap bMap;
+        bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/Ayllu/" + file.getName());
+        img.setImageBitmap(bMap);
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Comprovamos que la foto se a realizado
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if (f1) {
+                fotos.set(0, foto);
+                files.set(0, file);
+                f1 = false;
+                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(foto1);
+            } else if (f2) {
+                fotos.set(1, foto);
+                files.set(1, file);
+                f2 = false;
+                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(foto2);
+            } else if (f3) {
+                fotos.set(2, foto);
+                files.set(2, file);
+                f3 = false;
+                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(foto3);
+            } else {
+                fotos.add(foto);
+                files.add(file);
+            }
+
+            if (files.size() == 1)
+                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(foto1);
+            else if (files.size() == 2)
+                Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(foto2);
+            else if (files.size() == 3)
+                Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(foto3);
+        }
     }
 
     /**
@@ -289,48 +361,62 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             //--------------------------------------------------------------------------------------
             //EVENTO: Registrar un Monitoreo
             case R.id.fab_regMon:
-                fab_menu.collapse();
                 //Comprobar la selección de los Checbox
                 comprobarRepercusiones1();
                 comprobarRepercusiones2();
                 comprobarOrigen();
 
                 //Comprobamos que se creo la imagen
-                if (file != null) {
-                    Intent intent = new Intent(this, PrestentationActivity.class);
+                if (files.size() > 0) {
+                    fragment = new MonitoringDetailFragment();
+                    Bundle params = new Bundle();
 
                     String rep = "";
                     for (int i = 0; i < 4; i++) rep += "" + repercusiones[i];
 
-                    intent.putExtra("MONITOR", monitor);
-                    intent.putExtra("FECHA",fecha);
-                    intent.putExtra("REPERCUSIONES", rep);
-                    intent.putExtra("ORIGEN",origen);
-                    intent.putExtra("POR_NAME",items_presencia[pos_seleccion[0]]);
-                    intent.putExtra("POR_NUMBER",seleccion_items[0]+"");
-                    intent.putExtra("FRE_NAME",items_frecuencia[pos_seleccion[1]]);
-                    intent.putExtra("FRE_NUMBER",seleccion_items[1]+"");
-                    intent.putExtra("PRUEBA",file.getName());
+                    params.putString("MONITOR", monitor);
+                    params.putString("FECHA", fecha);
+                    params.putString("REPERCUSIONES", rep);
+                    params.putString("ORIGEN", origen);
+                    params.putString("POR_NAME", items_presencia[pos_seleccion[0]].toString());
+                    params.putString("POR_NUMBER", seleccion_items[0] + "");
+                    params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]].toString());
+                    params.putString("FRE_NUMBER", seleccion_items[1] + "");
+                    params.putString("FILES_NUMBER", files.size() + "");
+
+                    if (files.size() >= 1) params.putString("PRUEBA1", files.get(0).getName());
+                    if (files.size() >= 2) params.putString("PRUEBA2", files.get(1).getName());
+                    if (files.size() == 3) params.putString("PRUEBA3", files.get(2).getName());
 
                     if (op_reg.equals("N")) {
                         if (!opciones[1].equals("0")) {
+                            params.putString("VAR_COD", opciones[1]);
+                            params.putString("VAR_NAME", items_variables[pos[1]].toString());
+                            params.putString("AREA", area);
+                            params.putString("LATITUD", latitud + "");
+                            params.putString("LONGITUD", longitud + "");
+                            params.putString("TYPE_UPLOAD", "NEW");
 
+                            fragment.setArguments(params);
 
-                            intent.putExtra("VAR_COD",opciones[1]);
-                            intent.putExtra("VAR_NAME",items_variables[pos[1]]);
-                            intent.putExtra("AREA",area);
-                            intent.putExtra("LATITUD",latitud+"");
-                            intent.putExtra("LONGITUD",longitud+"");
-                            intent.putExtra("TYPE_UPLOAD","NEW");
-
-                            startActivity(intent);
-                        }
-                        else
+                            //Inflamos el layout para el Fragmento MonitoringListFragment
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .addToBackStack(null)
+                                    .replace(R.id.monitoring_principal_context, fragment)
+                                    .commit();
+                        } else
                             createSimpleDialog("Por favor Seleciona una Variable", "ALERTA").show();
                     } else {
-                        intent.putExtra("PUNTO_AFECTACION",punto_afectacion);
-                        intent.putExtra("TYPE_UPLOAD","MONITORING");
-                        startActivity(intent);
+                        params.putString("PUNTO_AFECTACION", punto_afectacion);
+                        params.putString("TYPE_UPLOAD", "MONITORING");
+
+                        fragment.setArguments(params);
+
+                        //Inflamos el layout para el Fragmento MonitoringListFragment
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.monitoring_principal_context, fragment)
+                                .commit();
                     }
                 } else
                     createSimpleDialog("Debes de Tomar una Foto del punto de afectación", "ALERTA").show();
@@ -339,13 +425,16 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             //--------------------------------------------------------------------------------------
             //EVENTO: Tomar fotografia
             case R.id.fab_camera:
-                fab_menu.collapse();
-                getCamara();
+                if (files.size() < 3) getCamara1();
+                else {
+                    Toast.makeText(getActivity(),
+                            "No se puede tomar mas fotos",
+                            Toast.LENGTH_LONG).show();
+                }
                 break;
             //--------------------------------------------------------------------------------------
             //EVENTO: Establecer las coordenadas geograficas
             case R.id.fab_point:
-                fab_menu.collapse();
                 createPointDialog(latitud, longitud).show();
                 break;
             //--------------------------------------------------------------------------------------
@@ -368,6 +457,21 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
             case R.id.btn_frecuencia:
                 createSelectorDialog(items_frecuencia, "FRECUENCIA DE APARICIÓN", 2).show();
                 break;
+            //--------------------------------------------------------------------------------------
+            //EVENTO: Seleccionar la primera foto
+            case R.id.foto1:
+                Log.e("numero", "" + files.size());
+                if (files.size() > 0) createDialogImage(files.get(0), 1).show();
+
+                break;
+            case R.id.foto2:
+                Log.e("numero", "" + files.size());
+                if (files.size() > 1) createDialogImage(files.get(1), 2).show();
+                break;
+            case R.id.foto3:
+                Log.e("numero", "" + files.size());
+                if (files.size() > 2) createDialogImage(files.get(2), 3).show();
+                break;
             default:
                 break;
         }
@@ -378,7 +482,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
      * METODO: Genera un Dialogo basico en pantalla
      **/
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(titulo)
                 .setMessage(mensaje)
                 .setPositiveButton("OK",
@@ -397,7 +501,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
      * METODO: Genera un Dialogo con las opciones de las categorias (FACTOR/VARIABLE)
      **/
     public AlertDialog createRadioListDialog(final CharSequence[] items, String title, final int zn) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(title);
         builder.setSingleChoiceItems(items, pos[zn - 1], new DialogInterface.OnClickListener() {
@@ -461,7 +565,7 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
      * METODO: Genera un Dialogo con las opciones de la Presencia y Frecuencia de aparición
      **/
     public AlertDialog createSelectorDialog(final CharSequence[] items, String title, final int opn) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(title);
         builder.setSingleChoiceItems(items, pos_seleccion[opn - 1], new DialogInterface.OnClickListener() {
@@ -504,9 +608,9 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
      * METODO: Genera un Dialogo personalizado para obtener las Coordenadas geograficas del punto
      **/
     public AlertDialog createPointDialog(int l1, int l2) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MonitoringRegistrationFormActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = MonitoringRegistrationFormActivity.this.getLayoutInflater();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View v = inflater.inflate(R.layout.dialog_point, null);
 
@@ -518,8 +622,8 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
         final EditText et_latitud = (EditText) v.findViewById(R.id.et_latitud);
         final EditText et_longitud = (EditText) v.findViewById(R.id.et_longitud);
 
-        et_latitud.setText(l1 + "");
-        et_longitud.setText(l2 + "");
+        et_latitud.setText(String.format(Locale.getDefault(), "%d", l1));
+        et_longitud.setText(String.format(Locale.getDefault(), "%d", l2));
 
         et_latitud.setEnabled(false);
         et_longitud.setEnabled(false);
@@ -548,6 +652,39 @@ public class MonitoringRegistrationFormActivity extends AppCompatActivity implem
                             longitud = Integer.parseInt(et_longitud.getText().toString());
                             builder.create().dismiss();
                         }
+                    }
+                });
+
+        return builder.create();
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Mostrar imagenes ampliadas
+     **/
+    public AlertDialog createDialogImage(File file, int pos) {
+        final int aux = pos;
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_image, null);
+
+        builder.setView(v);
+
+        ImageView img = (ImageView) v.findViewById(R.id.dialogImage);
+
+        bitMapImg(file, img);
+
+        builder.setPositiveButton("CAMBIAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (aux == 1) f1 = true;
+                        else if (aux == 2) f2 = true;
+                        else if (aux == 3) f3 = true;
+                        getCamara1();
+                        builder.create().dismiss();
                     }
                 });
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.edwin.ayllu.PrestentationActivity">
+    tools:context="com.example.edwin.ayllu.MonitoringActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -22,12 +22,12 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <!-- Imagen del detalle -->
-            <ImageView
-                android:id="@+id/iv_monitoring"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_monitoring"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -51,7 +51,7 @@
 
     <include
         android:id="@+id/include2"
-        layout="@layout/content_detail_report" />
+        layout="@layout/content_monitoring_detail" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_reg"

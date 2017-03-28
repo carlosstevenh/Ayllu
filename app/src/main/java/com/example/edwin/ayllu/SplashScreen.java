@@ -215,7 +215,7 @@ public class SplashScreen extends Activity {
                             cursor.getString(6), cursor.getString(7), cursor.getString(8),
                             Integer.parseInt(cursor.getString(9)),
                             Integer.parseInt(cursor.getString(10)),
-                            cursor.getString(11));
+                            cursor.getString(11),cursor.getString(12),cursor.getString(13));
                     con ++;
 
                     //Subo el monitoreo al servidor
@@ -225,29 +225,76 @@ public class SplashScreen extends Activity {
                     httpClient.addInterceptor(logging);
 
                     //Variable para almacenar la foto
+                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
                     File file = null;
+                    File file2 = null;
+                    File file3 = null;
                     String foto = cursor.getString(11);
+                    String foto2 = cursor.getString(12);
+                    String foto3 = cursor.getString(13);
                     File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
                     imagesFolder.mkdirs();
                     //se carga la foto al la variable
-                    file = new File(imagesFolder,foto);
 
-                    //peticion que se realiza al servidor para subir la foto
-                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
-                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                    Call<String> call1 = service1.uploadAttachment(filePart);
-                    call1.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
-                            Log.e("ok","subio");
-                        }
+                    if(foto2.equals("null")){
+                        file = new File(imagesFolder,foto);
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        Call<String> call1 = service1.uploadAttachment(filePart);
+                        call1.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                Log.e("Fotos1 ","registro exitoso");
+                                //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
+                            }
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Log.d("nada","no subio nada");
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                    else if (foto3.equals("null")){
+                        file = new File(imagesFolder,foto);
+                        file2 = new File(imagesFolder,foto2);
+
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", file2.getName(), RequestBody.create(MediaType.parse("image/*"), file2));
+
+                        Call<String>call1 = service1.upLoad2(filePart,filePart2);
+                        call1.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                Log.e("Fotos2 ","registro exitoso");
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                    else if (!foto.equals("null") && !foto2.equals("null") && !foto3.equals("null")){
+                        file = new File(imagesFolder,foto);
+                        file2 = new File(imagesFolder,foto2);
+                        file3 = new File(imagesFolder,foto3);
+
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", file2.getName(), RequestBody.create(MediaType.parse("image/*"), file2));
+                        MultipartBody.Part filePart3 = MultipartBody.Part.createFormData("fotoUp3", file3.getName(), RequestBody.create(MediaType.parse("image/*"), file3));
+
+                        Call<String>call1 = service1.upLoad3(filePart,filePart2,filePart3);
+                        call1.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                Log.e("Fotos3 ","registro exitoso");
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+                    }
 
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(ApiConstants.URL_API_AYLLU)

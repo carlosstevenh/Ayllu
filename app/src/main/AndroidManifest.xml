@@ -12,7 +12,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
@@ -30,10 +31,6 @@
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
         <activity
-            android:name=".MonitoringRegistrationFormActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
-        <activity
             android:name=".administrador.Administrador"
             android:screenOrientation="portrait" />
         <activity
@@ -46,16 +43,13 @@
             android:name=".SeleccionArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MonitoreosActivity"
+            android:name=".InstitutionalActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".FormRespuesta"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MonitorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RecordActivity"
+            android:name=".MonitoringActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MontoreosPuntosCriticos"

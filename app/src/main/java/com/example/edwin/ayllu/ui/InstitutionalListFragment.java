@@ -472,7 +472,6 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
 
             @Override
             public void onFailure(Call<ArrayList<Monitoreo>> call, Throwable t) {
-                Log.e("INFO-INSTITUCIONAL",t.getMessage());
                 loading.dismiss();
                 Toast.makeText(
                         getActivity(),

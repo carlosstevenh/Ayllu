@@ -24,8 +24,8 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
-    //String BASE_URL="http://138.68.40.165/webservice/";
-    String BASE_URL="http://192.168.1.140/webservice/";
+    String BASE_URL="http://138.68.40.165/webservice/";
+    //String BASE_URL="http://192.168.1.140/webservice/";
 
     //peticion que trae el nombre de la prueba de un monitoreo
     @GET("nombrePrueba/{paf}/{fec}")

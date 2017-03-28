@@ -5,21 +5,24 @@ import android.content.ContentValues;
 import static com.example.edwin.ayllu.domain.TaskContract.TaskEntry;
 
 public class Task {
-    String monitor;
-    String area;
-    String variable;
-    int latitud;
-    int longitud;
+    private String monitor;
+    private String area;
+    private String variable;
+    private int latitud;
+    private int longitud;
 
-    String fecha;
-    String repercusiones;
-    String origen;
+    private String fecha;
+    private String repercusiones;
+    private String origen;
 
-    int porcentaje;
-    int frecuencia;
-    String nombre;
+    private int porcentaje;
+    private int frecuencia;
 
-    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre) {
+    private String nombre;
+    private String nombre2;
+    private String nombre3;
+
+    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre, String nombre2, String nombre3) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -31,6 +34,8 @@ public class Task {
         this.porcentaje = porcentaje;
         this.frecuencia = frecuencia;
         this.nombre = nombre;
+        this.nombre2 = nombre2;
+        this.nombre3 = nombre3;
     }
 
     public Task() {
@@ -44,7 +49,9 @@ public class Task {
         this.origen = "10";
         this.porcentaje = 1;
         this.frecuencia  = 1;
-        this.nombre = "";
+        this.nombre = "null";
+        this.nombre2 = "null";
+        this.nombre3 = "null";
     }
 
     public ContentValues toContentValues() {
@@ -60,6 +67,8 @@ public class Task {
         values.put(TaskEntry.PORCENTAJE, porcentaje);
         values.put(TaskEntry.FRECUENCIA, frecuencia);
         values.put(TaskEntry.NOMBRE, nombre);
+        values.put(TaskEntry.NOMBRE2, nombre2);
+        values.put(TaskEntry.NOMBRE3, nombre3);
 
         return values;
     }
@@ -150,5 +159,21 @@ public class Task {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNombre2() {
+        return nombre2;
+    }
+
+    public void setNombre2(String nombre2) {
+        this.nombre2 = nombre2;
+    }
+
+    public String getNombre3() {
+        return nombre3;
+    }
+
+    public void setNombre3(String nombre3) {
+        this.nombre3 = nombre3;
     }
 }

@@ -1,8 +1,6 @@
 package com.example.edwin.ayllu;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class RecordInfoFragment extends Fragment {
+public class MonitoringInfoFragment extends Fragment {
     LinearLayout lyPrincipal;
     ImageView ivType;
     TextView tvTitle, tvDescription;
@@ -28,7 +26,7 @@ public class RecordInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_monitoring_info, container, false);
 
         lyPrincipal = (LinearLayout) view.findViewById(R.id.ly_principal);
         ivType = (ImageView) view.findViewById(R.id.iv_type_record);

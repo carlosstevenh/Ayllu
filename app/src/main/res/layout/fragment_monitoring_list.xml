@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.edwin.ayllu.RecordActivity">
+    tools:context="com.example.edwin.ayllu.MonitoringActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Monitoreo QHAPAQ-ÑAN"
+                android:text="@string/titleListMonitoring"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -88,7 +88,7 @@
         android:id="@+id/fab_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
         app:fab_colorNormal="@color/colorPrimaryDark"
         app:fab_icon="@drawable/ic_search"
@@ -100,7 +100,7 @@
         android:id="@+id/fab_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
+        android:layout_gravity="start"
         android:layout_margin="@dimen/fab_margin"
         app:fab_colorNormal="@color/colorPrimaryDark"
         app:fab_icon="@drawable/ic_registration"
@@ -109,10 +109,10 @@
         app:layout_anchorGravity="bottom|center_horizontal" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_reporte"
+        android:id="@+id/fab_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
         app:fab_colorNormal="@color/colorPrimaryDark"
         app:fab_icon="@drawable/ic_report"

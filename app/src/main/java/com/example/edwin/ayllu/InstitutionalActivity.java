@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.edwin.ayllu.ui.InstitutionalListFragment;
 
-public class MonitoreosActivity extends AppCompatActivity{
+public class InstitutionalActivity extends AppCompatActivity{
     String cod_mon = "", pais_mon = "";
 
     @Override
@@ -21,7 +21,7 @@ public class MonitoreosActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monitoreos);
+        setContentView(R.layout.activity_institutional);
 
         Intent intent = getIntent();
         cod_mon = intent.getStringExtra("MONITOR");

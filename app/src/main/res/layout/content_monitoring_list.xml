@@ -14,31 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/area_info"
+    <TextView
+        android:id="@+id/tv_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="@dimen/img_width_height_medium"
-            android:layout_height="@dimen/img_width_height_medium"
-            android:src="@drawable/ic_info"/>
-
-        <TextView
-            android:id="@+id/tv_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text="No hay monitoreos todavía"
-            android:textAlignment="center"
-            android:textStyle="italic"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/slide_desc" />
-
-    </LinearLayout>
+        android:paddingLeft="@dimen/desc_padding"
+        android:paddingRight="@dimen/desc_padding"
+        android:drawableTop="@drawable/ic_info"
+        android:text="@string/descriptionInfoListMonitoring"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:textSize="@dimen/slide_desc" />
 
 </RelativeLayout>

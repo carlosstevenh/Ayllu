@@ -9,7 +9,7 @@
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/fragment_detail_report">
+    tools:showIn="@layout/fragment_monitoring_detail">
 
     <View
         android:id="@+id/divisor1"

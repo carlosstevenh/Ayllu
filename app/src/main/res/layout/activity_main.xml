@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Identificación"
+                android:hint="@string/identificacion"
                 android:inputType="number"
                 android:textColor="@color/colorTextIcons"
                 android:singleLine="true" />
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Contraseña"
+                android:hint="@string/contrasena"
                 android:inputType="textPassword"
                 android:textColor="@color/colorTextIcons"
                 android:singleLine="true" />

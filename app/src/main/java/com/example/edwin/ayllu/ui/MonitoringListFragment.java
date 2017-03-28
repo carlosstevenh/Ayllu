@@ -2,25 +2,23 @@ package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.edwin.ayllu.ActividadEstadisticaPuntoAfactacion;
-import com.example.edwin.ayllu.MonitoringRegistrationFormActivity;
+import com.example.edwin.ayllu.AdminSQLite;
+import com.example.edwin.ayllu.MonitoringRegistrationFormFragment;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
@@ -40,6 +38,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
@@ -48,7 +47,6 @@ import static com.example.edwin.ayllu.domain.SubtramoContract.SubtramoEntry;
 import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
 import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,8 +65,9 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search, fab_new, fab_report;
     private FloatingActionsMenu menu;
-    private LinearLayout areaInfo;
     private TextView tvInfo;
+
+    MonitoringRegistrationFormFragment fragment;
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
@@ -78,7 +77,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
     Interpolator interpolador;
     String item = "";
-    String cod_mon = "", pais_mon = "";
+    String monitor = "", pais = "";
     int i = 0;
 
     //VARIABLES CONTROL DE DATOS FIJOS
@@ -108,12 +107,17 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         int i = 0;
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
-        Intent intent = getActivity().getIntent();
-        cod_mon = intent.getStringExtra("MONITOR");
-        pais_mon = intent.getStringExtra("PAIS");
+        AdminSQLite admin = new AdminSQLite(getActivity().getApplicationContext(), "login", null, 1);
+        SQLiteDatabase bd = admin.getReadableDatabase();
+        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
+        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
+        cursor.moveToFirst();
+        monitor = cursor.getString(0);
+        pais = cursor.getString(1);
+        cursor.close();
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual
-        cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais_mon}, TramoEntry.PAIS);
+        cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais}, TramoEntry.PAIS);
         if (cursor.moveToFirst()) {
             items_tramos = new CharSequence[cursor.getCount()];
             do {
@@ -121,6 +125,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 i++;
             } while (cursor.moveToNext());
         }
+        cursor.close();
     }
 
     /**
@@ -130,47 +135,20 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
-        mReporteList = (RecyclerView) root.findViewById(R.id.monitoring_list);
-        adapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (reportes.size() > 0) {
-                    Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
-                    createMonitoringDialog(reporte).show();
-                }
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
 
-        setupReporteList();
-        return root;
-    }
+        mReporteList = (RecyclerView) view.findViewById(R.id.monitoring_list);
 
-    /**=============================================================================================
-     * METODO: Encargado de de redirigir al usuario al Formulario de Registro con la información del
-     * punto seleccionado
-     **/
+        fab_report = (FloatingActionButton) view.findViewById(R.id.fab_report);
+        fab_new = (FloatingActionButton) view.findViewById(R.id.fab_new);
+        fab_search = (FloatingActionButton) view.findViewById(R.id.fab_search);
+        fab_tramo = (FloatingActionButton) view.findViewById(R.id.fab_tramo);
+        fab_subtramo = (FloatingActionButton) view.findViewById(R.id.fab_subtramo);
+        fab_seccion = (FloatingActionButton) view.findViewById(R.id.fab_seccion);
+        fab_area = (FloatingActionButton) view.findViewById(R.id.fab_area);
+        menu = (FloatingActionsMenu) view.findViewById(R.id.menu_fab);
 
-
-    /**
-     * =============================================================================================
-     * METODO:
-     **/
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        fab_report = (FloatingActionButton) getActivity().findViewById(R.id.fab_reporte);
-        fab_new = (FloatingActionButton) getActivity().findViewById(R.id.fab_new);
-        fab_search = (FloatingActionButton) getActivity().findViewById(R.id.fab_search);
-        fab_tramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_tramo);
-        fab_subtramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_subtramo);
-        fab_seccion = (FloatingActionButton) getActivity().findViewById(R.id.fab_seccion);
-        fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
-        menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
-
-        areaInfo = (LinearLayout) getActivity().findViewById(R.id.area_info);
-        tvInfo = (TextView) getActivity().findViewById(R.id.tv_info);
+        tvInfo = (TextView) view.findViewById(R.id.tv_info);
 
         fab_new.setScaleX(0);
         fab_search.setScaleX(0);
@@ -200,6 +178,25 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_search.setOnClickListener(this);
         fab_new.setOnClickListener(this);
         fab_report.setOnClickListener(this);
+
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (reportes.size() > 0) {
+                    Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
+                    createMonitoringDialog(reporte).show();
+                }
+            }
+        });
+
+        setupReporteList();
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -214,13 +211,17 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
-                                intent.putExtra("MONITOR", cod_mon + "");
-                                intent.putExtra("PAIS", pais_mon);
-                                intent.putExtra("PUNTO", currentReport.getCod_paf() + "");
-                                intent.putExtra("OPCION", "M");
-                                startActivity(intent);
-                                getActivity().finish();
+                                fragment = new MonitoringRegistrationFormFragment();
+                                Bundle params = new Bundle();
+                                params.putString("PUNTO",currentReport.getCod_paf() + "");
+                                params.putString("OPCION","M");
+                                fragment.setArguments(params);
+
+                                //Inflamos el layout para el Fragmento MonitoringListFragment
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .addToBackStack(null)
+                                        .replace(R.id.monitoring_principal_context, fragment)
+                                        .commit();
                             }
                         })
                 .setNegativeButton("CANCELAR",
@@ -355,13 +356,17 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.fab_new:
                 if (op[3] != 0) {
-                    Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
-                    intent.putExtra("MONITOR", cod_mon + "");
-                    intent.putExtra("PAIS", pais_mon);
-                    intent.putExtra("AREA", op[3] + "");
-                    intent.putExtra("OPCION", "N");
-                    startActivity(intent);
-                    getActivity().finish();
+                    fragment = new MonitoringRegistrationFormFragment();
+                    Bundle params = new Bundle();
+                    params.putString("AREA",op[3] + "");
+                    params.putString("OPCION","N");
+                    fragment.setArguments(params);
+
+                    //Inflamos el layout para el Fragmento MonitoringListFragment
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.monitoring_principal_context, fragment)
+                            .commit();
                 } else
                     createSimpleDialog("Seleciona un área para registrar un Monitoreos", "INFORMACIÓN").show();
                 break;
@@ -374,11 +379,11 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
                         if (response.isSuccessful()) {
                             reportes = response.body().getReportes();
-                            if (reportes.size() > 0) areaInfo.setVisibility(View.INVISIBLE);
+                            if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
                             new HackingBackgroundTask().execute();
                             if(reportes.size() == 0){
-                                tvInfo.setText("No hay monitoreos para la seleción actual.");
-                                areaInfo.setVisibility(View.VISIBLE);
+                                tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
+                                tvInfo.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -475,7 +480,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         }
 
         @Override
-        protected void onPostExecute(ArrayList result) {
+        protected void onPostExecute(ArrayList<Reporte> result) {
             super.onPostExecute(result);
 
             // Limpiar elementos antiguos
@@ -547,7 +552,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
     //==============================================================================================
     public void generateReport(ArrayList<Reporte> rp) {
-
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         String format = s.format(new Date());
         s = new SimpleDateFormat("HH:mm:ss");
@@ -560,7 +564,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
             //Crear el objeto que tendra el libro de Excel
             HSSFWorkbook workbook = new HSSFWorkbook(editor);
-            HSSFWorkbook hssfWorkbookNew = new HSSFWorkbook();
 
             //1. Obtenemos la primera hoja del Excel
             //2. Llenamos la primera hoja del Excel
@@ -581,8 +584,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             result.close();
             workbook.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -603,7 +604,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         CellStyle style2 = sheet.getWorkbook().createCellStyle();
         style2.setAlignment(HorizontalAlignment.CENTER);
         style2.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
-        style2.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style2.setBorderBottom(BorderStyle.DASHED);
         style2.setBorderTop(BorderStyle.DASHED);
         style2.setBorderRight(BorderStyle.DASHED);
@@ -613,7 +614,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         CellStyle style3 = sheet.getWorkbook().createCellStyle();
         style3.setAlignment(HorizontalAlignment.CENTER);
         style3.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
-        style3.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style3.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style3.setBorderBottom(BorderStyle.DASHED);
         style3.setBorderTop(BorderStyle.DASHED);
         style3.setBorderRight(BorderStyle.DASHED);
