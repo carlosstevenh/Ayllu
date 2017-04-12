@@ -1,42 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_informacion_punto_critico"
-    android:layout_marginTop="20dp">
+    tools:showIn="@layout/activity_informacion_punto_critico">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView15"
-            android:textSize="5sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:background="@color/colorTitleForm"
-            android:padding="5dp"
-            android:text="@string/informacionMonitoreo"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:paddingRight="2dp"
-            android:paddingTop="5dp">
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/area_fecha"
@@ -51,7 +33,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_date" />
 
                 <TextView
@@ -60,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="FECHA:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -75,7 +57,6 @@
 
             <LinearLayout
                 android:id="@+id/area_monitor"
-                android:layout_below="@id/area_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -85,7 +66,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_monitor" />
 
                 <TextView
@@ -94,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="MONITOR:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -114,15 +95,12 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_height="2dp"
-                android:layout_below="@id/area_monitor"
                 android:alpha=".5"
                 android:elevation="5dp"
-                android:layout_above="@id/layoutDots"
-                android:background="@color/colorAccent" />
+                android:background="@color/colorDivider" />
 
             <LinearLayout
                 android:id="@+id/area_pais"
-                android:layout_below="@id/divisor1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -132,7 +110,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_pais" />
 
                 <TextView
@@ -141,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="PAIS:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -157,7 +135,6 @@
 
             <LinearLayout
                 android:id="@+id/area_tramo"
-                android:layout_below="@id/area_pais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -167,7 +144,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_tramo" />
 
                 <TextView
@@ -177,7 +154,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:text="TRAMO:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -194,7 +171,6 @@
 
             <LinearLayout
                 android:id="@+id/area_subtramo"
-                android:layout_below="@id/area_tramo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -204,7 +180,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_subtramos" />
 
                 <TextView
@@ -214,7 +190,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:text="SUBTRAMO:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -231,7 +207,6 @@
 
             <LinearLayout
                 android:id="@+id/area_seccion"
-                android:layout_below="@id/area_subtramo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -241,7 +216,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_secciones" />
 
                 <TextView
@@ -251,7 +226,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:text="SECCIÓN:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -268,7 +243,6 @@
 
             <LinearLayout
                 android:id="@+id/area_area"
-                android:layout_below="@id/area_seccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -278,7 +252,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_area" />
 
                 <TextView
@@ -288,7 +262,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:text="AREA:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -309,15 +283,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_height="2dp"
-                android:layout_below="@id/area_area"
                 android:alpha=".5"
-                android:elevation="5dp"
-                android:layout_above="@id/layoutDots"
-                android:background="@color/colorAccent" />
+                android:background="@color/colorDivider" />
 
             <LinearLayout
                 android:id="@+id/area_factor"
-                android:layout_below="@id/divisor2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -327,7 +297,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_variable" />
 
                 <TextView
@@ -337,7 +307,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:text="FACTOR:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -353,7 +323,6 @@
 
             <LinearLayout
                 android:id="@+id/area_variable"
-                android:layout_below="@id/area_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -363,7 +332,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_variable" />
 
                 <TextView
@@ -373,7 +342,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:text="VARIABLE:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -394,15 +363,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_height="2dp"
-                android:layout_below="@id/area_variable"
                 android:alpha=".5"
-                android:elevation="5dp"
-                android:layout_above="@id/layoutDots"
-                android:background="@color/colorAccent" />
+                android:background="@color/colorDivider" />
 
             <LinearLayout
                 android:id="@+id/area_latitud"
-                android:layout_below="@id/divisor3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -412,7 +377,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_latitud" />
 
                 <TextView
@@ -421,7 +386,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="LATITUD:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -437,7 +402,6 @@
 
             <LinearLayout
                 android:id="@+id/area_longitud"
-                android:layout_below="@id/area_latitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -447,7 +411,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="@color/colorPrimaryText"
+                    android:tint="@color/colorSecondaryText"
                     android:src="@drawable/ic_longitud" />
 
                 <TextView
@@ -456,7 +420,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="LONGITUD:"
-                    android:textColor="@color/colorIconCardView"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -469,8 +433,8 @@
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp" />
             </LinearLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
-    </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -2,65 +2,30 @@
 <resources>
     <!--.........................................................................................-->
     <!--Colores del Temas-->
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796B</color>
-    <color name="colorAccent">#191938</color>
-    <color name="colorWindowBackground">#e6e6e6</color>
-    <color name="colorWindowBackgroundDark">#d5d3da</color>
-    <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#727272</color>
-    <color name="colorTextIcons">#FFFFFF</color>
-    <color name="colorTitleForm">#c7e4df</color>
+    <color name="colorPrimary">#d32f2f</color>
+    <color name="colorPrimaryLight">#fad9dc</color>
+    <color name="colorPrimaryDark">#b71c1c</color>
 
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorBackground">#f7f7f7</color>
+    <color name="colorDivider">#BDBDBD</color>
+    <!--.........................................................................................-->
+    <!--Colores de Seleción de los Floating Buttons-->
+    <color name="colorAccent">#304ffe</color>
+    <color name="colorAccentLight">#6078ff</color>
     <color name="colorInformationText">#FFFFFF</color>
     <color name="colorInformationBackground">#d8110c1e</color>
     <!--.........................................................................................-->
-    <!--Colores de Seleción de los Radio Butons-->
+    <!--Colores de Seleción de los Radio Buttons-->
     <color name="colorRadioButtonOn">#333366</color>
     <color name="colorRadioButtonOff">#c2c2d4</color>
     <!--.........................................................................................-->
-    <!-- Colores de los Sliders-->
-    <color name="bg_screen1">#5537c1</color>
-    <color name="bg_screen2">#1cbf9c</color>
-    <color name="bg_screen3">#c64c4c</color>
-    <color name="bg_screen4">#9b3c97</color>
-    <!--.........................................................................................-->
-    <!-- Colores de los Puntos inactivos -->
-    <color name="dot_dark_screen1">#311f70</color>
-    <color name="dot_dark_screen2">#0e614f</color>
-    <color name="dot_dark_screen3">#642727</color>
-    <color name="dot_dark_screen4">#5c235a</color>
-    <!--.........................................................................................-->
-    <!-- Colores de los Puntos activos -->
-    <color name="dot_light_screen1">#7757ed</color>
-    <color name="dot_light_screen2">#63dac1</color>
-    <color name="dot_light_screen3">#d47878</color>
-    <color name="dot_light_screen4">#ca89c8</color>
-    <!--.........................................................................................-->
-    <!--Elementos de los Sliders activos-->
-    <array name="array_dot_active">
-        <item>@color/dot_light_screen1</item>
-        <item>@color/dot_light_screen2</item>
-        <item>@color/dot_light_screen3</item>
-        <item>@color/dot_light_screen4</item>
-    </array>
-    <!--.........................................................................................-->
-    <!--Elementos de los Sliders inactivos-->
-    <array name="array_dot_inactive">
-        <item>@color/dot_dark_screen1</item>
-        <item>@color/dot_dark_screen2</item>
-        <item>@color/dot_dark_screen3</item>
-        <item>@color/dot_dark_screen4</item>
-    </array>
-    <!--.........................................................................................-->
     <!--Colores de la CardView-->
-    <color name="colorElementFormBackground">#d7d7d7</color>
-    <color name="colorCardViewBackground">#faf4f5</color>
-    <color name="colorItemPrimaryCardView">#3c3c68</color>
-    <color name="colorItemSecondaryCardView">#6b6b79</color>
-    <color name="colorListBackground">#c9c8c8</color>
     <color name="colorTextCardView">#ffffff</color>
-    <color name="colorIconCardView">#01211e</color>
+    <color name="colorBackgroundCardView">#af000000</color>
+    <color name="colorIconCardView">#ffffff</color>
     <!--.........................................................................................-->
     <!--Colores para el dialogo de coordenadasw-->
     <color name="colorTitleBackground">#0e2a3d</color>

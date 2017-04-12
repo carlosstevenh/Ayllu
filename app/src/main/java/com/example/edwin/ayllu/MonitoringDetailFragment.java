@@ -1,126 +1,72 @@
 package com.example.edwin.ayllu;
-
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.edwin.ayllu.domain.Reporte;
 import com.example.edwin.ayllu.domain.Task;
-import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
-import com.example.edwin.ayllu.io.AylluApiService;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+public class MonitoringDetailFragment extends Fragment implements View.OnClickListener{
 
-public class MonitoringDetailFragment extends Fragment implements View.OnClickListener {
-    TextView tvRep1, tvRep2, tvOrigen, tvPorcentaje, tvFrecuencia, tvLatitud, tvLongitud, tvVariable,
-            titCoordenadas, titVariable;
-    View vDiv1, vDiv2;
-    FloatingActionButton fabRegist;
-    LinearLayout lyLatitud, lyLongitud, lyVariable;
-    Task task;
+    Reporte reporte;
+    String [] imgs;
 
-    MonitoringImageSwipeAdapter adapter;
-    ViewPager vpMonitoring;
+    TextView    tvArea, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
+                tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
 
-    MonitoringInfoFragment fragment;
+    FloatingActionButton fabMonitoring;
 
-    ProgressDialog loading;
-    HttpLoggingInterceptor logging;
+    private MonitoringImageSwipeAdapter adapter;
+    private LinearLayout dotsLayout;
+    private ViewPager vpMonitoring;
 
-    String por_name = "", fre_name = "", var_name = "", rep1_name = "POSITIVAS",
-            rep2_name = "ACTUALES", orig_name = "INTERNO", tipo_upload = "";
-
-    private ArrayList<File> files;
+    private MonitoringRegistrationFormFragment fragment;
 
     /**
      * =============================================================================================
      * METODO:
      **/
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        task = new Task();
+        reporte = new Reporte();
 
-        task.setMonitor(getArguments().getString("MONITOR"));
-        task.setVariable(getArguments().getString("PUNTO_AFECTACION"));
-        task.setFecha(getArguments().getString("FECHA"));
-        task.setRepercusiones(getArguments().getString("REPERCUSIONES"));
-        task.setOrigen(getArguments().getString("ORIGEN"));
-        task.setPorcentaje(Integer.parseInt(getArguments().getString("POR_NUMBER")));
-        task.setFrecuencia(Integer.parseInt(getArguments().getString("FRE_NUMBER")));
+        reporte.setCod_paf(Integer.parseInt(getArguments().getString("PUNTO")));
+        reporte.setArea(getArguments().getString("AREA"));
+        reporte.setVariable(getArguments().getString("VARIABLE"));
+        reporte.setFecha_mon(getArguments().getString("FECHA"));
+        reporte.setLatitud(getArguments().getString("LATITUD"));
+        reporte.setLongitud(getArguments().getString("LONGITUD"));
+        reporte.setUsuario(getArguments().getString("MONITOR"));
+        reporte.setRepercusiones(getArguments().getString("REPERCUSIONES"));
+        reporte.setOrigen(getArguments().getString("ORIGEN"));
+        reporte.setPorcentaje(Integer.parseInt(getArguments().getString("PORCENTAJE")));
+        reporte.setFrecuencia(Integer.parseInt(getArguments().getString("FRECUENCIA")));
+        reporte.setPrueba1(getArguments().getString("PRUEBA1"));
+        reporte.setPrueba2(getArguments().getString("PRUEBA2"));
+        reporte.setPrueba3(getArguments().getString("PRUEBA3"));
 
-        int sizeFile = Integer.parseInt(getArguments().getString("FILES_NUMBER"));
+        int size = reporte.getSize();
+        imgs = new String[size];
+        for (int i = 0; i<size; i++) imgs[i] = ApiConstants.URL_IMG + reporte.getPruebas(i+1);
 
-        if(sizeFile >= 1) task.setNombre(getArguments().getString("PRUEBA1"));
-        if(sizeFile >= 2) task.setNombre2(getArguments().getString("PRUEBA2"));
-        if(sizeFile == 3) task.setNombre3(getArguments().getString("PRUEBA3"));
-
-        files = new ArrayList<>(sizeFile);
-
-        String PATH_IMG;
-        if(!task.getNombre().equals("null")){
-            PATH_IMG = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Ayllu/" + task.getNombre();
-            files.add(new File(PATH_IMG));
-        }
-        if(!task.getNombre2().equals("null")){
-            PATH_IMG = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Ayllu/" + task.getNombre2();
-            files.add(new File(PATH_IMG));
-        }
-        if(!task.getNombre3().equals("null")){
-            PATH_IMG = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Ayllu/" + task.getNombre3();
-            files.add(new File(PATH_IMG));
-        }
-
-
-        por_name = getArguments().getString("POR_NAME");
-        fre_name = getArguments().getString("FRE_NAME");
-
-        if (task.getRepercusiones().charAt(0) == '0') rep1_name = "NEGATIVAS";
-        if (task.getRepercusiones().charAt(2) == '0') rep2_name = "POTENCIALES";
-        if (task.getOrigen().charAt(0) == '0') orig_name = "EXTERNO";
-
-        tipo_upload = getArguments().getString("TYPE_UPLOAD");
-
-        assert tipo_upload != null;
-        if (tipo_upload.equals("NEW")) {
-            task.setVariable(getArguments().getString("VAR_COD"));
-            task.setArea(getArguments().getString("AREA"));
-            task.setLatitud(Integer.parseInt(getArguments().getString("LATITUD")));
-            task.setLongitud(Integer.parseInt(getArguments().getString("LONGITUD")));
-
-            var_name = getArguments().getString("VAR_NAME");
-        }
     }
-
 
     /**
      * =============================================================================================
@@ -133,50 +79,42 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         View view = inflater.inflate(R.layout.fragment_monitoring_detail, container, false);
 
         vpMonitoring = (ViewPager) view.findViewById(R.id.vp_monitoring);
+        dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
 
-        titCoordenadas = (TextView) view.findViewById(R.id.tv_title_coordenadas);
-        titVariable = (TextView) view.findViewById(R.id.tv_title_variable);
-        lyLatitud = (LinearLayout) view.findViewById(R.id.area_latitud);
-        lyLongitud = (LinearLayout) view.findViewById(R.id.area_longitud);
-        lyVariable = (LinearLayout) view.findViewById(R.id.area_variable);
-        vDiv1 = view.findViewById(R.id.divisor5);
-        vDiv2 = view.findViewById(R.id.divisor6);
-
-        tvRep1 = (TextView) view.findViewById(R.id.tv_repercuciones1);
-        tvRep2 = (TextView) view.findViewById(R.id.tv_repercuciones2);
+        tvArea = (TextView) view.findViewById(R.id.tv_area);
+        tvVariable = (TextView) view.findViewById(R.id.tv_variable);
+        tvFecha = (TextView) view.findViewById(R.id.tv_fecha);
+        tvLatitud = (TextView) view.findViewById(R.id.tv_latitud);
+        tvLongitud = (TextView) view.findViewById(R.id.tv_longitud);
+        tvMonitor = (TextView) view.findViewById(R.id.tv_monitor);
+        tvRepercuciones1 = (TextView) view.findViewById(R.id.tv_repercuciones1);
+        tvRepercuciones2 = (TextView) view.findViewById(R.id.tv_repercuciones2);
         tvOrigen = (TextView) view.findViewById(R.id.tv_origen);
         tvPorcentaje = (TextView) view.findViewById(R.id.tv_porcentaje);
         tvFrecuencia = (TextView) view.findViewById(R.id.tv_frecuencia);
-        tvLatitud = (TextView) view.findViewById(R.id.tv_latitud);
-        tvLongitud = (TextView) view.findViewById(R.id.tv_longitud);
-        tvVariable = (TextView) view.findViewById(R.id.tv_variable);
+        fabMonitoring = (FloatingActionButton) view.findViewById(R.id.fab_monitoring);
 
-        fabRegist = (FloatingActionButton) view.findViewById(R.id.fab_reg);
-
-        fabRegist.setOnClickListener(this);
-
-        if (tipo_upload.equals("MONITORING")) {
-            titCoordenadas.setVisibility(View.INVISIBLE);
-            titVariable.setVisibility(View.INVISIBLE);
-            lyLatitud.setVisibility(View.INVISIBLE);
-            lyLongitud.setVisibility(View.INVISIBLE);
-            lyVariable.setVisibility(View.INVISIBLE);
-            vDiv1.setVisibility(View.INVISIBLE);
-            vDiv2.setVisibility(View.INVISIBLE);
-        }
+        fabMonitoring.setOnClickListener(this);
 
         //Cargamos las Imagenes
-        adapter = new MonitoringImageSwipeAdapter(getActivity(), files);
+        adapter = new MonitoringImageSwipeAdapter(getActivity(), imgs);
         vpMonitoring.setAdapter(adapter);
+        vpMonitoring.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        tvRep1.setText(rep1_name);
-        tvRep2.setText(rep2_name);
-        tvOrigen.setText(orig_name);
-        tvPorcentaje.setText(por_name);
-        tvFrecuencia.setText(fre_name);
-        tvLatitud.setText(String.format(Locale.getDefault(),"%d",task.getLatitud()));
-        tvLongitud.setText(String.format(Locale.getDefault(),"%d",task.getLongitud()));
-        tvVariable.setText(var_name);
+        //Cargamos los Datos del Monitoreo
+        tvArea.setText(reporte.getArea());
+        tvVariable.setText(reporte.getVariable());
+        tvFecha.setText(reporte.getFecha_mon());
+        tvLatitud.setText(reporte.getLatitud());
+        tvLongitud.setText(reporte.getLongitud());
+        tvMonitor.setText(reporte.getUsuario());
+        tvRepercuciones1.setText(reporte.getRepercusiones());
+        tvRepercuciones2.setText(reporte.getRepercusiones());
+        tvOrigen.setText(reporte.getOrigen());
+        tvPorcentaje.setText(String.format(Locale.getDefault(),"%d",reporte.getPorcentaje()));
+        tvFrecuencia.setText(String.format(Locale.getDefault(),"%d",reporte.getFrecuencia()));
+
+        addBottomDots(0);
 
         return view;
     }
@@ -188,251 +126,103 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.fab_reg:
-                uploadMonitoringImage(tipo_upload);
+            case R.id.fab_monitoring:
+
+                SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha = s.format(new Date());
+
+                if(fecha.equals(reporte.getFecha_mon())){
+                    createSimpleDialog(
+                            getResources().getString(R.string.descriptionDetailMonitoringDialog),
+                            getResources().getString(R.string.titleDetailMonitoringDialog)
+                    ).show();
+                } else{
+                    fragment = new MonitoringRegistrationFormFragment();
+                    Bundle params = new Bundle();
+                    params.putString("PUNTO", String.format(Locale.getDefault(),"%d",reporte.getCod_paf()));
+                    params.putString("OPCION", "M");
+                    fragment.setArguments(params);
+
+                    //Inflamos el layout para el Fragmento MonitoringListFragment
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.monitoring_principal_context, fragment)
+                            .commit();
+                }
                 break;
             default:
                 break;
         }
     }
 
-
     /**
      * =============================================================================================
-     * METODO: Subir las pruebas de un monitoreo al servidor
+     * METODO: Añade los puntos al LinearLayout encargado de mostrar información de el Slide Actual
      **/
-    public void uploadMonitoringImage(final String tip_upload) {
-        //Comprobamos la conexión a internet
-        if (wifiConected()) {
-            //----------------------------------------------------------------------
-            //Subimos la Imagen al Servidor
+    private void addBottomDots(int currentPage) {
+        TextView[] dots = new TextView[imgs.length];
 
-            PostClient service1 = PostClient.retrofit.create(PostClient.class);
-            loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
-
-            if(files.size()==2){
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
-                MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", files.get(1).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(1)));
-
-                Call<String>call1 = service1.upLoad2(filePart,filePart2);
-                call1.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if(response.isSuccessful()) uploadMonitoring(tip_upload);
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","ERROR");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }
-                });
-            }
-            else if(files.size() == 3){
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
-                MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", files.get(1).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(1)));
-                MultipartBody.Part filePart3 = MultipartBody.Part.createFormData("fotoUp3", files.get(2).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(2)));
-
-                Call<String>call1 = service1.upLoad3(filePart,filePart2,filePart3);
-                call1.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if(response.isSuccessful()) uploadMonitoring(tip_upload);
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","ERROR");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }
-                });
-            }
-            else{
-
-                //MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
-                Call<String> call1 = service1.uploadAttachment(filePart);
-                call1.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if(response.isSuccessful()) uploadMonitoring(tip_upload);
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","ERROR");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }
-                });
-            }
-        } else {
-            //Registramos el Monitoreo en el dispositivo en caso de Desconección
-            TaskDbHelper taskDbHelper = new TaskDbHelper(getActivity());
-            taskDbHelper.saveTask(task);
-
-            fragment = new MonitoringInfoFragment();
-            Bundle params = new Bundle();
-            params.putString("RESULT","OFFLINE");
-            fragment.setArguments(params);
-
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .addToBackStack(null)
-                    .add(R.id.monitoring_principal_context, fragment)
-                    .commit();
+        dotsLayout.removeAllViews();
+        //Limpiamos y recargamos todos lo views para los puntos
+        for (int i = 0; i < dots.length; i++) {
+            //Creamos un nuevo view para el punto con el caracter (.)
+            dots[i] = new TextView(getActivity());
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(60);
+            dots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+            dotsLayout.addView(dots[i]);
         }
+        //Determinamos que punto esta activo segun el layout actual
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(getResources().getColor(R.color.colorTextIcons));
     }
 
     /**
      * =============================================================================================
-     * METODO: Subir datos de un monitoreo al servidor
+     * METODO: Agrega el escucha al view encargado de los Slides con sus respectivos metodos
      **/
-    public void uploadMonitoring (String tip_upload){
-        //--------------------------------------------------------------------------------------
-        //Subimos el monitoreo al Servidor
-        logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiConstants.URL_API_AYLLU)
-                .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        AylluApiService service = retrofit.create(AylluApiService.class);
-
-        if (tip_upload.equals("NEW")) {
-            //Creamos un Objeto tipo task con los datos del formulario
-            Call<Task> call = service.registrarPunto(task);
-            call.enqueue(new retrofit2.Callback<Task>() {
-                @Override
-                public void onResponse(Call<Task> call, Response<Task> response) {
-                    Log.e("TAG:RESPONSE",response.message());
-                    if(response.isSuccessful()) {
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","OK");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }
-                    else {
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","ERROR");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }
-                }
-                @Override
-                public void onFailure(Call<Task> call, Throwable t) {
-                    loading.dismiss();
-                    fragment = new MonitoringInfoFragment();
-                    Bundle params = new Bundle();
-                    params.putString("RESULT","ERROR");
-                    fragment.setArguments(params);
-
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .addToBackStack(null)
-                            .add(R.id.monitoring_principal_context, fragment)
-                            .commit();
-                }
-            });
-        } else if (tip_upload.equals("MONITORING")) {
-            Call<Task> call = service.monitorearPunto(task);
-            call.enqueue(new retrofit2.Callback<Task>() {
-                @Override
-                public void onResponse(Call<Task> call, Response<Task> response) {
-                    if(response.isSuccessful()){
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","OK");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }else {
-                        loading.dismiss();
-                        fragment = new MonitoringInfoFragment();
-                        Bundle params = new Bundle();
-                        params.putString("RESULT","ERROR");
-                        fragment.setArguments(params);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .add(R.id.monitoring_principal_context, fragment)
-                                .commit();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Task> call, Throwable t) {
-                    loading.dismiss();
-                    fragment = new MonitoringInfoFragment();
-                    Bundle params = new Bundle();
-                    params.putString("RESULT","ERROR");
-                    fragment.setArguments(params);
-
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .addToBackStack(null)
-                            .add(R.id.monitoring_principal_context, fragment)
-                            .commit();
-                }
-            });
+        @Override
+        public void onPageSelected(int position) {
+            addBottomDots(position);
         }
-    }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+    };
 
     /**
      * =============================================================================================
-     * METODO: Verifica la Conexión a internet
+     * METODO: Genera un Dialogo basico en pantalla
      **/
-    protected Boolean wifiConected() {
-        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        if(activeNetwork != null){
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) return true;
-            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) return true;
-        }
-        return false;
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("HECHO",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
+
+        return builder.create();
     }
 }

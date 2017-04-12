@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.FactorContract;
@@ -41,7 +42,11 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
-public class MonitoringRegistrationFormFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
+public class MonitoringRegistrationFormFragment extends Fragment implements
+        View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
+
+    // Códigos de petición
+    public static final int REQUEST_LOCATION = 1;
 
     //VARIABLES: Componetes del Formulario de Registro
     Button btn_presencia, btn_frecuencia;
@@ -51,13 +56,13 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
     FloatingActionsMenu fab_menu, fab_menu2;
     private ImageView foto1, foto2, foto3;
 
-    MonitoringDetailFragment fragment;
+    MonitoringSummaryFragment fragment;
 
     //VARIABLES: Control y Procesamiento de datos del formulario
     String punto_afectacion = "", area = "", monitor = "", op_reg, pais = "";
     String origen = "10";
     String fecha = "";
-    int longitud = 0, latitud = 0;
+    String longitud = "0", latitud = "0";
     int[] repercusiones = {1, 0, 0, 1};
 
     //VARIABLES: Control de la selección de opciones
@@ -84,14 +89,16 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
     Cursor cursor;
 
     //VARIABLES: Control de datos para el (PORCENTAJE DE APARICIÓN) y (FRECUENCIA DE APARICIÓN)
-    private CharSequence[] items_presencia = new CharSequence[]{"[1%-10%] RESTRINGIDA", "[11%-50%] LOCALIZADA", "[51%-90%] EXTENSIVA", "[91%-100%] EXTENDIDA"};
-    private CharSequence[] items_frecuencia = new CharSequence[]{"UNA ÚNICA VEZ", "APARICIÓN INTERMITENTE", "PRESENCIA FRECUENTE"};
+    private String[] items_porcentaje, items_frecuencia;
     private int[] seleccion_items = {1, 1};
     private int[] pos_seleccion = {0, 0};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        items_porcentaje = getResources().getStringArray(R.array.listPorcentaje);
+        items_frecuencia = getResources().getStringArray(R.array.listFrecuencia);
     }
 
     @Override
@@ -368,7 +375,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
 
                 //Comprobamos que se creo la imagen
                 if (files.size() > 0) {
-                    fragment = new MonitoringDetailFragment();
+                    fragment = new MonitoringSummaryFragment();
                     Bundle params = new Bundle();
 
                     String rep = "";
@@ -378,7 +385,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
                     params.putString("FECHA", fecha);
                     params.putString("REPERCUSIONES", rep);
                     params.putString("ORIGEN", origen);
-                    params.putString("POR_NAME", items_presencia[pos_seleccion[0]].toString());
+                    params.putString("POR_NAME", items_porcentaje[pos_seleccion[0]].toString());
                     params.putString("POR_NUMBER", seleccion_items[0] + "");
                     params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]].toString());
                     params.putString("FRE_NUMBER", seleccion_items[1] + "");
@@ -405,7 +412,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
                                     .replace(R.id.monitoring_principal_context, fragment)
                                     .commit();
                         } else
-                            createSimpleDialog("Por favor Seleciona una Variable", "ALERTA").show();
+                            createSimpleDialog(
+                                    getResources().getString(R.string.descriptionFormRegistrationMonitoringVariableDialog),
+                                    getResources().getString(R.string.titleFormRegistrationMonitoringDialog)).show();
                     } else {
                         params.putString("PUNTO_AFECTACION", punto_afectacion);
                         params.putString("TYPE_UPLOAD", "MONITORING");
@@ -419,7 +428,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
                                 .commit();
                     }
                 } else
-                    createSimpleDialog("Debes de Tomar una Foto del punto de afectación", "ALERTA").show();
+                    createSimpleDialog(
+                            getResources().getString(R.string.descriptionFormRegistrationMonitoringCameraDialog),
+                            getResources().getString(R.string.titleFormRegistrationMonitoringDialog)).show();
 
                 break;
             //--------------------------------------------------------------------------------------
@@ -450,7 +461,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
             //--------------------------------------------------------------------------------------
             //EVENTO: Seleccionar la Presencia de Aparición
             case R.id.btn_presencia:
-                createSelectorDialog(items_presencia, "PRESENCIA DE APARICIÓN", 1).show();
+                createSelectorDialog(items_porcentaje, "PRESENCIA DE APARICIÓN", 1).show();
                 break;
             //--------------------------------------------------------------------------------------
             //EVENTO: Seleccionar la Frecuencia de Aparición
@@ -483,15 +494,25 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
      **/
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(titulo)
-                .setMessage(mensaje)
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                builder.create().dismiss();
-                            }
-                        });
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("HECHO",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
 
         return builder.create();
     }
@@ -577,7 +598,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
                     case 1:
                         seleccion_items[0] = which + 1;
                         pos_seleccion[0] = which;
-                        btn_presencia.setText(items_presencia[which]);
+                        btn_presencia.setText(items_porcentaje[which]);
                         break;
                     //------------------------------------------------------------------------------
                     //DIALOGO: Se crea una lista de RadioButtons de la Frecuencia
@@ -607,7 +628,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
      * =============================================================================================
      * METODO: Genera un Dialogo personalizado para obtener las Coordenadas geograficas del punto
      **/
-    public AlertDialog createPointDialog(int l1, int l2) {
+    public AlertDialog createPointDialog(String l1, String l2) {
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -622,8 +644,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
         final EditText et_latitud = (EditText) v.findViewById(R.id.et_latitud);
         final EditText et_longitud = (EditText) v.findViewById(R.id.et_longitud);
 
-        et_latitud.setText(String.format(Locale.getDefault(), "%d", l1));
-        et_longitud.setText(String.format(Locale.getDefault(), "%d", l2));
+        et_latitud.setText(String.format(Locale.getDefault(), "%s", l1));
+        et_longitud.setText(String.format(Locale.getDefault(), "%s", l2));
 
         et_latitud.setEnabled(false);
         et_longitud.setEnabled(false);
@@ -648,8 +670,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements View
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!et_latitud.getText().toString().equals("") && !et_longitud.getText().toString().equals("")) {
-                            latitud = Integer.parseInt(et_latitud.getText().toString());
-                            longitud = Integer.parseInt(et_longitud.getText().toString());
+                            latitud = et_latitud.getText().toString();
+                            longitud = et_longitud.getText().toString();
                             builder.create().dismiss();
                         }
                     }

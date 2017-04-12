@@ -43,7 +43,7 @@ public class ActivityPruebasMonitoreo extends AppCompatActivity {
                 if(response.isSuccessful()){
                     ArrayList<Prueba> aux = response.body();
                     if(response.body().size() != 0){
-                        URL += aux.get(0).getNombre();
+                        URL += aux.get(0).getPrueba1();
                     }
 
                     Log.e("URL:",URL);

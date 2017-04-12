@@ -15,18 +15,25 @@ import java.util.ArrayList;
 
 public class MonitoringImageSwipeAdapter extends PagerAdapter{
 
-    private ArrayList<File> imagenes;
+    private ArrayList<File> imagenesFiles = null;
+    private String[] imagenesRutas = null;
     private Context ctx;
     private LayoutInflater layoutInflater;
 
     public MonitoringImageSwipeAdapter(Context ctx, ArrayList<File> imgs){
         this.ctx = ctx;
-        this.imagenes = imgs;
+        this.imagenesFiles = imgs;
+    }
+
+    public MonitoringImageSwipeAdapter(Context ctx, String[] imgs){
+        this.ctx = ctx;
+        this.imagenesRutas = imgs;
     }
 
     @Override
     public int getCount() {
-        return imagenes.size();
+        if(imagenesFiles != null) return imagenesFiles.size();
+        else return  imagenesRutas.length;
     }
 
     @Override
@@ -40,7 +47,11 @@ public class MonitoringImageSwipeAdapter extends PagerAdapter{
         View item_view = layoutInflater.inflate(R.layout.slide_image_monitoring, container, false);
         ImageView ivMonitoring = (ImageView) item_view.findViewById(R.id.iv_monitoring);
 
-        Picasso.with(ctx).load(imagenes.get(position)).fit().centerCrop().into(ivMonitoring);
+        if(imagenesFiles != null)
+            Picasso.with(ctx).load(imagenesFiles.get(position)).fit().centerCrop().into(ivMonitoring);
+        else
+            Picasso.with(ctx).load(imagenesRutas[position]).fit().centerCrop().into(ivMonitoring);
+
         container.addView(item_view);
         return item_view;
     }

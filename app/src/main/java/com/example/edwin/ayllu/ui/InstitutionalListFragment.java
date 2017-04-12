@@ -2,17 +2,14 @@ package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +30,7 @@ import com.example.edwin.ayllu.domain.SubtramoContract;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
 import com.example.edwin.ayllu.domain.TramoContract;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
-import com.example.edwin.ayllu.ui.adapter.MonitoreosAdaprter;
+import com.example.edwin.ayllu.ui.adapter.InstitutionalAdaprter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -45,7 +42,7 @@ import retrofit2.Response;
 
 public class InstitutionalListFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
     //VARIABLES DE VISTA
-    private MonitoreosAdaprter adapter;
+    private InstitutionalAdaprter adapter;
     private RecyclerView mReporteList;
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search;
@@ -79,7 +76,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
         super.onCreate(savedInstanceState);
         //------------------------------------------------------------------------------------------
         //Relacionamos variables con la actividad actual
-        adapter = new MonitoreosAdaprter(getActivity());
+        adapter = new InstitutionalAdaprter(getActivity());
 
         paisDbHelper = new PaisDbHelper(getActivity());
         tramoDbHelper = new TramoDbHelper(getActivity());

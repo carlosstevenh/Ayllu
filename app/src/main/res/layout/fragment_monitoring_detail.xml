@@ -13,13 +13,9 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="match_parent">
 
             <!-- Imagen del detalle -->
             <android.support.v4.view.ViewPager
@@ -33,34 +29,39 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="RESUMEN"
+                    android:text="@string/titleDetailMonitoring"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
             </android.support.v7.widget.Toolbar>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+            <LinearLayout
+                android:id="@+id/layoutDots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
+        </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/include2"
-        layout="@layout/content_monitoring_detail" />
+    <include layout="@layout/content_monitoring_detail" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_reg"
+        android:id="@+id/fab_monitoring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_registration"
+        app:fab_icon="@drawable/ic_next"
         app:fab_size="normal"/>
 
 </android.support.design.widget.CoordinatorLayout>

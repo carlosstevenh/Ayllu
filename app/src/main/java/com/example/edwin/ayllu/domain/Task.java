@@ -8,8 +8,8 @@ public class Task {
     private String monitor;
     private String area;
     private String variable;
-    private int latitud;
-    private int longitud;
+    private String latitud;
+    private String longitud;
 
     private String fecha;
     private String repercusiones;
@@ -22,7 +22,7 @@ public class Task {
     private String nombre2;
     private String nombre3;
 
-    public Task(String monitor, String variable, String area, int latitud, int longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre, String nombre2, String nombre3) {
+    public Task(String monitor, String variable, String area, String latitud, String longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre, String nombre2, String nombre3) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -42,8 +42,8 @@ public class Task {
         this.monitor = "";
         this.variable = "";
         this.area = "";
-        this.latitud = 0;
-        this.longitud = 0;
+        this.latitud = "0";
+        this.longitud = "0";
         this.fecha = "";
         this.repercusiones = "1001";
         this.origen = "10";
@@ -97,19 +97,19 @@ public class Task {
         this.variable = variable;
     }
 
-    public int getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(int latitud) {
+    public void setLatitud(String latitud) {
         this.latitud = latitud;
     }
 
-    public int getLongitud() {
+    public String getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(int longitud) {
+    public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
 

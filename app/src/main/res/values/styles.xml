@@ -12,6 +12,20 @@
         <item name="windowNoTitle">true</item>
     </style>
     <!--=========================================================================================-->
+    <!-- Tema para el Boton -->
+    <style name="RaisedButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccentLight</item>
+        <item name="android:textColor">@color/colorTextIcons</item>
+    </style>
+    <!--=========================================================================================-->
+    <!-- Tema para el Boton Flotante -->
+    <style name="FloatingButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccentLight</item>
+        <item name="android:textColor">@color/colorTextIcons</item>
+    </style>
+    <!--=========================================================================================-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -24,6 +38,11 @@
     <style name="Etiquetas">
         <item name="android:background">@drawable/background_label_fab</item>
         <item name="android:textColor">@color/colorInformationText</item>
+    </style>
+
+    <style name="LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:tint">@color/colorAccentLight</item>
     </style>
 
     <style name="analisis">Análisis</style>

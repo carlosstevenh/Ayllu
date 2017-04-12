@@ -4,19 +4,23 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
+import com.example.edwin.ayllu.io.ApiConstants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -31,11 +35,15 @@ public class InformacionPuntoCritico extends AppCompatActivity {
     private String pa,fm;
     private TextView paf,fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
     private ArrayList<MonitoreoGeneral> mg;
-    private ImageView foto1,foto2,foto3;
     FloatingActionButton fab_pruebas, fab_graficas;
-    private String URL = "http://138.68.40.165/camara/imagenes/";
+    private String URL = ApiConstants.URL_IMG;
     private int tamamo = 0;
     private ArrayList<Prueba> pruebas = new ArrayList<>();
+
+    private MonitoringImageSwipeAdapter adapter;
+    private LinearLayout dotsLayout;
+    private ViewPager vpMonitoring;
+    String [] imgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,50 +68,8 @@ public class InformacionPuntoCritico extends AppCompatActivity {
         lon = (TextView) findViewById(R.id.longitud);
         lat = (TextView) findViewById(R.id.latitud);
 
-        foto1 = (ImageView) findViewById(R.id.foto1);
-        foto2 = (ImageView) findViewById(R.id.foto2);
-        foto3 = (ImageView) findViewById(R.id.foto3);
-
-
-            foto1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String foto = URL;
-                    if(tamamo > 0){
-                        foto += pruebas.get(0).getNombre();
-                        createDialogImage(foto).show();
-                    }
-
-                }
-            });
-
-
-            foto2.setOnClickListener(new View.OnClickListener() {
-                String foto = URL;
-                @Override
-                public void onClick(View view) {
-                    String foto = URL;
-                    if(tamamo > 1){
-                        foto += pruebas.get(1).getNombre();
-                        createDialogImage(foto).show();
-                    }
-
-                }
-            });
-
-            foto3.setOnClickListener(new View.OnClickListener() {
-                String foto = URL;
-                @Override
-                public void onClick(View view) {
-                    String foto = URL;
-                    if(tamamo > 2){
-                        foto += pruebas.get(2).getNombre();
-                        createDialogImage(foto).show();
-                    }
-
-                }
-            });
-
+        vpMonitoring = (ViewPager) findViewById(R.id.vp_monitoring);
+        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
 
         //se realiza la peticion al servidor del nombre de las pruebas del monitoreo
         RestClient service1 = RestClient.retrofit.create(RestClient.class);
@@ -112,30 +78,18 @@ public class InformacionPuntoCritico extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Prueba>> call, Response<ArrayList<Prueba>> response) {
                 if(response.isSuccessful()){
-                    ArrayList<Prueba> aux = response.body();
-                    if(response.body().size() != 0){
-                        pruebas = aux;
-                        tamamo = aux.size();
-                        if(tamamo<=3){
-                            for (int i = 0; i < tamamo; i++){
-                                String ruta = URL + aux.get(i).getNombre();
-                                if(i+1 == 1) cargarImg(ruta,foto1);
-                                if(i+1 == 2) cargarImg(ruta,foto2);
-                                if(i+1 == 3) cargarImg(ruta,foto3);
+                    Prueba prueba = response.body().get(0);
 
-                            }
-                        }
-                        else {
-                            for (int i = 0; i < 3; i++){
-                                String ruta = URL + aux.get(i).getNombre();
-                                if(i+1 == 1) cargarImg(ruta,foto1);
-                                if(i+1 == 2) cargarImg(ruta,foto2);
-                                if(i+1 == 3) cargarImg(ruta,foto3);
-                            }
-                        }
+                    int size = prueba.getSize();
+                    imgs = new String[size];
+                    for (int i = 0; i<size; i++) imgs[i] = ApiConstants.URL_IMG + prueba.getPruebas(i+1);
 
-                    }
+                    //Cargamos las Imagenes
+                    adapter = new MonitoringImageSwipeAdapter(InformacionPuntoCritico.this, imgs);
+                    vpMonitoring.setAdapter(adapter);
+                    vpMonitoring.addOnPageChangeListener(viewPagerPageChangeListener);
 
+                    addBottomDots(0);
                 }
                 else{
                     Log.e("URL:",URL);
@@ -216,57 +170,46 @@ public class InformacionPuntoCritico extends AppCompatActivity {
         });
 
     }
-    //METODO: Encargado de obtener las imagenes en miniatura del servidor
-    void cargarImg(String foto, ImageView img){
 
-        //final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
-        Picasso.with(InformacionPuntoCritico.this).
-                load(foto).into(img, new com.squareup.picasso.Callback() {
+    /**
+     * =============================================================================================
+     * METODO: Añade los puntos al LinearLayout encargado de mostrar información de el Slide Actual
+     **/
+    private void addBottomDots(int currentPage) {
+        TextView[] dots = new TextView[imgs.length];
 
-            @Override
-            public void onSuccess() {
-                //loading.dismiss();
-            }
-
-            @Override
-            public void onError() {
-                //loading.dismiss();
-                Toast.makeText(
-                        InformacionPuntoCritico.this,
-                        getResources().getString(R.string.noEcontroPrueba),
-                        Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
+        dotsLayout.removeAllViews();
+        //Limpiamos y recargamos todos lo views para los puntos
+        for (int i = 0; i < dots.length; i++) {
+            //Creamos un nuevo view para el punto con el caracter (.)
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(60);
+            dots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+            dotsLayout.addView(dots[i]);
+        }
+        //Determinamos que punto esta activo segun el layout actual
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(getResources().getColor(R.color.colorTextIcons));
     }
 
     /**
      * =============================================================================================
-     * METODO: Mostrar imagenes ampliadas
+     * METODO: Agrega el escucha al view encargado de los Slides con sus respectivos metodos
      **/
-    public AlertDialog createDialogImage(String file) {
-        Log.e("Entro","aqui");
-        final AlertDialog.Builder builder = new AlertDialog.Builder(InformacionPuntoCritico.this);
-        LayoutInflater inflater = InformacionPuntoCritico.this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.dialog_image, null);
-        builder.setView(v);
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
-        ImageView img = (ImageView) v.findViewById(R.id.dialogImage);
+        @Override
+        public void onPageSelected(int position) {
+            addBottomDots(position);
+        }
 
-        Picasso.with(InformacionPuntoCritico.this).
-                load(file).into(img, new com.squareup.picasso.Callback() {
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
 
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-
-        return builder.create();
-    }
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+    };
 }

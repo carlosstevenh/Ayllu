@@ -1,11 +1,13 @@
 package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
+import com.example.edwin.ayllu.MonitoringDetailFragment;
 import com.example.edwin.ayllu.MonitoringRegistrationFormFragment;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
@@ -28,7 +32,7 @@ import com.example.edwin.ayllu.domain.SubtramoDbHelper;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
-import com.example.edwin.ayllu.ui.adapter.ReporteAdapter;
+import com.example.edwin.ayllu.ui.adapter.MonitoringAdapter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -47,6 +51,7 @@ import static com.example.edwin.ayllu.domain.SubtramoContract.SubtramoEntry;
 import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
 import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +65,7 @@ import retrofit2.Response;
 
 public class MonitoringListFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
     //VARIABLES DE VISTA
-    private ReporteAdapter adapter;
+    private MonitoringAdapter adapter;
     private RecyclerView mReporteList;
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search, fab_new, fab_report;
@@ -68,6 +73,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     private TextView tvInfo;
 
     MonitoringRegistrationFormFragment fragment;
+    MonitoringDetailFragment monitoringDetailFragment;
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
@@ -97,7 +103,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         //------------------------------------------------------------------------------------------
         //Relacionamos variables con la actividad actual
-        adapter = new ReporteAdapter(getActivity());
+        adapter = new MonitoringAdapter(getActivity());
 
         paisDbHelper = new PaisDbHelper(getActivity());
         tramoDbHelper = new TramoDbHelper(getActivity());
@@ -184,7 +190,30 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             public void onClick(View view) {
                 if (reportes.size() > 0) {
                     Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
-                    createMonitoringDialog(reporte).show();
+
+                    monitoringDetailFragment = new MonitoringDetailFragment();
+                    Bundle params = new Bundle();
+                    params.putString("PUNTO", reporte.getCod_paf() + "");
+                    params.putString("AREA", reporte.getArea());
+                    params.putString("VARIABLE", reporte.getVariable());
+                    params.putString("FECHA", reporte.getFecha_mon());
+                    params.putString("LATITUD", reporte.getLatitud());
+                    params.putString("LONGITUD", reporte.getLongitud());
+                    params.putString("MONITOR", reporte.getUsuario());
+                    params.putString("REPERCUSIONES", reporte.getRepercusiones());
+                    params.putString("ORIGEN", reporte.getOrigen());
+                    params.putString("PORCENTAJE", reporte.getPorcentaje() + "");
+                    params.putString("FRECUENCIA", reporte.getFrecuencia() + "");
+                    params.putString("PRUEBA1",reporte.getPrueba1());
+                    params.putString("PRUEBA2",reporte.getPrueba2());
+                    params.putString("PRUEBA3",reporte.getPrueba3());
+                    monitoringDetailFragment.setArguments(params);
+
+                    //Inflamos el layout para el Fragmento MonitoringListFragment
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.monitoring_principal_context, monitoringDetailFragment)
+                            .commit();
                 }
             }
         });
@@ -201,50 +230,23 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
     /**
      * =============================================================================================
-     * METODO: Presenta en Interfaz un dialogo para Monitorear un Punto de Afectación
-     **/
-    public AlertDialog createMonitoringDialog(final Reporte currentReport) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("MONITOREAR UN PUNTO")
-                .setMessage("¿Quiere monitorear el punto de afectación seleccionado?")
-                .setPositiveButton("ACEPTAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                fragment = new MonitoringRegistrationFormFragment();
-                                Bundle params = new Bundle();
-                                params.putString("PUNTO",currentReport.getCod_paf() + "");
-                                params.putString("OPCION","M");
-                                fragment.setArguments(params);
-
-                                //Inflamos el layout para el Fragmento MonitoringListFragment
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .addToBackStack(null)
-                                        .replace(R.id.monitoring_principal_context, fragment)
-                                        .commit();
-                            }
-                        })
-                .setNegativeButton("CANCELAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                builder.create().dismiss();
-                            }
-                        });
-
-
-        return builder.create();
-    }
-
-    /**
-     * =============================================================================================
      * METODO: Presenta en Interfaz un mensaje Tipo Dialog
      **/
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(titulo)
-                .setMessage(mensaje)
-                .setNegativeButton("OK",
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("HECHO",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -358,8 +360,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 if (op[3] != 0) {
                     fragment = new MonitoringRegistrationFormFragment();
                     Bundle params = new Bundle();
-                    params.putString("AREA",op[3] + "");
-                    params.putString("OPCION","N");
+                    params.putString("AREA", op[3] + "");
+                    params.putString("OPCION", "N");
                     fragment.setArguments(params);
 
                     //Inflamos el layout para el Fragmento MonitoringListFragment
@@ -368,20 +370,27 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                             .replace(R.id.monitoring_principal_context, fragment)
                             .commit();
                 } else
-                    createSimpleDialog("Seleciona un área para registrar un Monitoreos", "INFORMACIÓN").show();
+                    createSimpleDialog(getResources().getString(R.string.descriptionListMonitoringDialog), getResources().getString(R.string.titleListMonitoringDialog)).show();
                 break;
             case R.id.fab_search:
                 menu.collapse();
+                final ProgressDialog loading = new ProgressDialog(getActivity());
+                loading.setMessage("Por favor espere …");
+                loading.setTitle("Buscando los monitoreos");
+                loading.setProgress(10);
+                loading.setIndeterminate(true);
+                loading.show();
 
                 Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
                 call.enqueue(new Callback<ReporteResponse>() {
                     @Override
                     public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
                         if (response.isSuccessful()) {
+                            loading.dismiss();
                             reportes = response.body().getReportes();
                             if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
                             new HackingBackgroundTask().execute();
-                            if(reportes.size() == 0){
+                            if (reportes.size() == 0) {
                                 tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
                                 tvInfo.setVisibility(View.VISIBLE);
                             }
@@ -390,6 +399,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
                     @Override
                     public void onFailure(Call<ReporteResponse> call, Throwable t) {
+                        loading.dismiss();
                         Toast.makeText(
                                 getActivity(),
                                 getResources().getString(R.string.noSePudoConectarServidor),
@@ -560,7 +570,11 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         //Escribiendo en el archivo Excel
         try {
             InputStream editor = getResources().openRawResource(R.raw.plantilla);
-            FileOutputStream result = new FileOutputStream("/storage/sdcard0/Qhapaq-Ñan" + format + ".xls");
+            File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Reportes");
+
+            imagesFolder.mkdirs();
+            //File result = new File(imagesFolder, format);
+            FileOutputStream result = new FileOutputStream(imagesFolder + "/" + format + ".xls");
 
             //Crear el objeto que tendra el libro de Excel
             HSSFWorkbook workbook = new HSSFWorkbook(editor);

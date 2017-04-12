@@ -11,7 +11,7 @@ public class PrestentationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prestentation);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.presentation_principal_context, new MonitoringDetailFragment())
+                .add(R.id.presentation_principal_context, new MonitoringSummaryFragment())
                 .commit();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.edwin.ayllu;
 
+import com.example.edwin.ayllu.io.ApiConstants;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -9,9 +11,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface PostClient {
-
-    String BASE_URL1="http://138.68.40.165/camara/";
-    //String BASE_URL1="http://192.168.43.115/camara/";
 
     @Multipart
     @POST("upload.php")
@@ -29,6 +28,6 @@ public interface PostClient {
                          @Part MultipartBody.Part filePart2);
 
 
-    public static final Retrofit retrofit = new Retrofit.Builder().baseUrl(PostClient.BASE_URL1)
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiConstants.URL_CAMERA)
             .addConverterFactory(GsonConverterFactory.create()).build();
 }

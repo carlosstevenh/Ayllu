@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="FORMULARIO MONITOREO"
+                android:text="@string/titleFormRegistrationMonitoring"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
             app:fab_colorNormal="@color/colorAccent"
             fab:fab_icon="@drawable/ic_tramo"
             fab:fab_size="mini"
-            fab:fab_title="FACTOR" />
+            fab:fab_title="@string/descriptionFloatingButtonFactor" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_variable"
@@ -63,7 +63,7 @@
             app:fab_colorNormal="@color/colorAccent"
             fab:fab_icon="@drawable/ic_subtramos"
             fab:fab_size="mini"
-            fab:fab_title="VARIABLE" />
+            fab:fab_title="@string/descriptionFloatingButtonVariable" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

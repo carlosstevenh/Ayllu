@@ -63,8 +63,8 @@ public class JsonKeys {
     public static final String REPORTE_RESULTS = "REPORTE";
     public static final String REPORTE_ARRAY = "Monitoreos";
 
-    public static final String CODIGO_PAF = "codigo_paf";
-    public static final String VARIABLE = "variable";
+    public static final String PUNTO_AFECTACION = "punto_afectacion";
+    public static final String VARIABLE = "nombre_var";
     public static final String AREA = "area";
     public static final String LATITUD_COO = "latitud_coo";
     public static final String LONGITUD_COO = "longitud_coo";
@@ -82,4 +82,7 @@ public class JsonKeys {
     public static final String RECURSOS = "recursos_res";
     public static final String CONOCIMIENTO = "conocimiento_res";
     public static final String MONITOR_RES = "monitor_res";
+    public static final String PRUEBA1 = "nombre_pru1";
+    public static final String PRUEBA2 = "nombre_pru2";
+    public static final String PRUEBA3 = "nombre_pru3";
 }

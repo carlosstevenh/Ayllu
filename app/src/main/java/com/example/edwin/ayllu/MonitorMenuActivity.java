@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -91,10 +92,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
     private void addBottomDots(int currentPage) {
         TextView[] dots = new TextView[layouts.length];
 
-        //Obtenemos los IDs de las lista de colores para los puntos (activos/inactivos)
-        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
-        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
-
         //Limpiamos y recargamos todos lo views para los puntos
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
@@ -102,12 +99,12 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive[currentPage]);
+            dots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
             dotsLayout.addView(dots[i]);
         }
         //Determinamos que punto esta activo segun el layout actual
         if (dots.length > 0)
-            dots[currentPage].setTextColor(colorsActive[currentPage]);
+            dots[currentPage].setTextColor(getResources().getColor(R.color.colorTextIcons));
     }
 
     /**
@@ -157,7 +154,8 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      **/
     @Override
     public void onBackPressed() {
-        createActivityDialog().show();
+        createSimpleDialog("¿Quieres Salir?",
+                getResources().getString(R.string.titleDetailMonitoringDialog)).show();
     }
 
     /**
@@ -265,23 +263,34 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
             container.removeView(view);
         }
     }
-
     /**
      * =============================================================================================
-     * METODO: Presenta en Interfaz un dialogo antes de Salir de la aplicación
+     * METODO: Genera un Dialogo basico en pantalla
      **/
-    public AlertDialog createActivityDialog() {
+    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("¿Quiere Salir?")
-                .setPositiveButton("ACEPTAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = getIntent();
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                finish();
-                            }
-                        })
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvTitle.setCompoundDrawables(ContextCompat.getDrawable(v.getContext(), R.drawable.ic_question), null, null, null);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("ACEPTAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = getIntent();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                    }
+                })
                 .setNegativeButton("CANCELAR",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -289,7 +298,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                                 builder.create().dismiss();
                             }
                         });
-
 
         return builder.create();
     }

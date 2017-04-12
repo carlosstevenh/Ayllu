@@ -15,7 +15,7 @@
         android:gravity="center"
         android:paddingBottom="@dimen/padding_between"
         android:paddingTop="@dimen/padding_between"
-        android:text="Establece las coordenadas para el punto de afetación"
+        android:text="@string/titlePointDialog"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/colorPrimaryText" />
 
@@ -27,7 +27,7 @@
         android:layout_below="@+id/info_text"
         android:layout_marginBottom="@dimen/padding_between"
         android:layout_marginTop="@dimen/padding_between"
-        android:background="#C8C9CB" />
+        android:background="@color/colorDivider" />
 
     <EditText
         android:id="@+id/et_latitud"
@@ -39,7 +39,7 @@
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:gravity="center_horizontal"
-        android:hint="LATITUD"
+        android:hint="@string/latitudePointDialog"
         android:inputType="numberDecimal"
         android:padding="@dimen/edit_text_padding"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -56,7 +56,7 @@
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:gravity="center_horizontal"
-        android:hint="LONGITUD"
+        android:hint="@string/lengthPointDialog"
         android:inputType="numberDecimal"
         android:padding="@dimen/edit_text_padding"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -70,10 +70,9 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/et_longitud"
         android:layout_gravity="top|right"
-        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorNormal="@color/colorAccent"
         app:fab_icon="@drawable/ic_manual"
         app:fab_size="mini"
-        app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="bottom|center_horizontal" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
@@ -84,10 +83,9 @@
         android:layout_gravity="top|right"
         android:layout_toLeftOf="@+id/fab_manual"
         android:layout_toStartOf="@+id/fab_manual"
-        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorNormal="@color/colorAccent"
         app:fab_icon="@drawable/ic_point"
         app:fab_size="mini"
-        app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="bottom|center_horizontal" />
 
 </RelativeLayout>

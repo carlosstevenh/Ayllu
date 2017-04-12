@@ -140,11 +140,72 @@
     <string name="failedRecordResponseDescription">La respuesta institucional no se ha podido registrar, porfavor intentelo de nuevo</string>
 
     <!--=========================================================================================-->
-    <!--STRINGS: LISTADO DE MONITOREOS (MODULO DE MONITOREO)-->
+    <!--MONITORING MODULE-->
+    <!--=========================================================================================-->
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING LIST-->
     <string name="titleListMonitoring">Monitoreo Qhapaq Ñan</string>
     <string name="descriptionInfoListMonitoring">No hay monitoreos aun</string>
     <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la seleción actual.</string>
+    <string name="descriptionTramo">TRAMO</string>
+    <string name="descriptionSubtramo">SUBTRAMO</string>
+    <string name="descriptionSeccion">SECCIÓN</string>
+    <string name="descriptionArea">ÁREA</string>
+    <string name="itemCardViewFecha">FECHA:</string>
+    <string name="itemCardViewLatitud">LATITUD:</string>
+    <string name="itemCardViewLongitud">LONGITUD:</string>
+    <string name="itemCardViewVariable">VARIABLE:</string>
+    <string name="itemCardViewDescriptionPrueba">Imagen del monitoreo</string>
+    <string name="titleListMonitoringDialog">INFORMACIÓN</string>
+    <string name="descriptionListMonitoringDialog">Seleciona un área para registrar un monitoreo</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING DETAIL-->
+    <string name="titleDetailMonitoring">Monitoreo</string>
+    <string name="itemCardViewArea">ÁREA:</string>
+    <string name="itemCardViewCoordenadas">COORDENADAS:</string>
+    <string name="itemCardViewMonitor">MONITOR:</string>
+    <string name="itemCardViewRepercusiones">REPERCUSIONES:</string>
+    <string name="itemCardViewOrigen">ORIGEN:</string>
+    <string name="itemCardViewPorcentaje">PORCENTAJE DE APARICIÓN:</string>
+    <string name="itemCardViewFrecuencia">FRECUENCIA DE APARICIÓN:</string>
+    <string name="titleDetailMonitoringDialog">INFORMACIÓN</string>
+    <string name="descriptionDetailMonitoringDialog">No puedes monitorear el punto dos veces en el mismo día</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING REGISTRATION FORM-->
+    <string name="titleFormRegistrationMonitoring">Formulario del Monitoreo</string>
+    <string name="titleFormRepercusiones">REPERCUSIONES:</string>
+    <string name="titleFormOrigen">ORIGEN:</string>
+    <string name="titleFormPorcentaje">PORCENTAJE DE APARICIÓN:</string>
+    <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
+    <string name="descriptionFloatingButtonFactor">FACTOR</string>
+    <string name="descriptionFloatingButtonVariable">VARIABLE</string>
+    <string name="titlePointDialog">Establece las coordenadas para el punto de afetación</string>
+    <string name="latitudePointDialog">LATITUD</string>
+    <string name="lengthPointDialog">LONGITUD</string>
+    <string name="optionPositivasRepercusiones">Positivas</string>
+    <string name="optionNegativasRepercusiones">Negativas</string>
+    <string name="optionActualesRepercusiones">Actuales</string>
+    <string name="optionPotencialesRepercusiones">Potenciales</string>
+    <string name="optionInternoOrigen">Interno</string>
+    <string name="optionExternoOrigen">Externo</string>
+    <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
+    <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
+    <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona una Variable</string>
+    <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar una foto del punto de afectación</string>
 
+    <string-array name="listPorcentaje">
+        <item>[1%-10%] RESTRINGIDA</item>
+        <item>[11%-50%] LOCALIZADA</item>
+        <item>[51%-90%] EXTENSIVA</item>
+        <item>[91%-100%] EXTENDIDA</item>
+    </string-array>
+
+    <string-array name="listFrecuencia">
+        <item>UNA ÚNICA VEZ</item>
+        <item>APARICIÓN INTERMITENTE</item>
+        <item>PRESENCIA FRECUENTE</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
