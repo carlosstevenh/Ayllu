@@ -81,7 +81,7 @@ public class SplashScreen extends Activity {
                         startActivity(intent);
                         finish();
                     }
-                },4000);
+                },2000);
             }
             else {
                 new Handler().postDelayed(new Runnable() {
@@ -91,7 +91,7 @@ public class SplashScreen extends Activity {
                         startActivity(intent);
                         finish();
                     }
-                },4000);
+                },2000);
             }
 
         }
@@ -112,7 +112,7 @@ public class SplashScreen extends Activity {
                     startActivity(intent);
                     finish();
                 }
-            }, 4000);
+            }, 2000);
 
 
         }
@@ -210,8 +210,7 @@ public class SplashScreen extends Activity {
                     //Obtengo cada uno de los monitoreos de la tabla Task
                     Task tk = new Task(
                             cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                            Integer.parseInt(cursor.getString(4)),
-                            Integer.parseInt(cursor.getString(5)),
+                            cursor.getString(4), cursor.getString(5),
                             cursor.getString(6), cursor.getString(7), cursor.getString(8),
                             Integer.parseInt(cursor.getString(9)),
                             Integer.parseInt(cursor.getString(10)),

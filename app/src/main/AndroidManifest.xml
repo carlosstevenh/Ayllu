@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -28,15 +29,10 @@
         </activity>
         <activity
             android:name=".MonitorMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MonitoringRegistrationFormActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".administrador.Administrador"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".administrador.UsuariosAdapter"
             android:screenOrientation="portrait" />
         <activity
             android:name=".administrador.EditMonitor"
@@ -45,16 +41,13 @@
             android:name=".SeleccionArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MonitoreosActivity"
+            android:name=".InstitutionalActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".FormRespuesta"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MonitorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RecordActivity"
+            android:name=".MonitoringActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MontoreosPuntosCriticos"
@@ -69,7 +62,8 @@
             android:name=".administrador.InformacionGeneralMonitor"
             android:screenOrientation="portrait" />
         <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
-        <activity android:name=".ActivityPruebasMonitoreo"></activity>
+        <activity android:name=".ActivityPruebasMonitoreo" />
+        <activity android:name=".PrestentationActivity"></activity>
     </application>
 
 </manifest>

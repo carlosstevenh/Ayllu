@@ -1,21 +1,32 @@
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es" >
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="app_name">Ayllu</string>
     <string name="title_activity_welcome">Home Screen</string>
-    <string name="next">Salir</string>
-    <string name="skip">Elegir</string>
+    <!--=========================================================================================-->
+    <!--STRINGS: LOGIN DEL USUARIO-->
+    <string name="login">Login</string>
+    <string name="identificacion">Identificación</string>
+    <string name="contrasena">Contraseña</string>
+    <!--=========================================================================================-->
+    <!--STRINGS: MENU DEL MONITOR-->
+    <string name="menu">SALIR</string>
+    <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
-
-    <string name="slide_1_title">REGISTRAR UN MONITOREO</string>
-    <string name="slide_1_desc">Recorre, monitorea y obtén reportes del estado de conservación del Qhapaq Ñan</string>
-
+    <!--.........................................................................................-->
+    <!--SLIDE REGISTRAR MONITOREO-->
+    <string name="slide_1_title">REGISTRA UN MONITOREO</string>
+    <string name="slide_1_desc">Recorre, Monitorea y Obten Reportes el estado de Conservación del Qhapaq Ñan</string>
+    <!--.........................................................................................-->
+    <!--SLIDE RESPUESTA INSTITUCIONAL-->
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
     <string name="slide_2_desc">Reporta nuevos datos de la respuesta Institucional de un Monitoreo</string>
-
+    <!--.........................................................................................-->
+    <!--SLIDE MAPAS ESTADISTICOS-->
     <string name="slide_3_title">MAPAS ESTADISTICOS</string>
     <string name="slide_3_desc">Toma decisiones de alto impacto en beneficio de este extenso y remoto bien seriado</string>
-
-    <string name="slide_4_title">VISUALIZA EL QHAPAQ ÑAN</string>
-    <string name="slide_4_desc">Observa el Qhapaq Ñan a través de mapas geográficos.</string>
+    <!--.........................................................................................-->
+    <!--SLIDE CONFIGURACIÓN DEL SISTEMA-->
+    <string name="slide_4_title">CONFIGURA TU APLICACIÓN</string>
+    <string name="slide_4_desc">Elige una configuración personalizada para tu trabajo</string>
 
     <string name="spinner_title_tramos">Seleccione un Tramo</string>
     <string name="spinner_title_subtramos">Seleccione un Subtramo</string>
@@ -23,9 +34,6 @@
     <string name="spinner_title_area">Seleccione una Área</string>
     <string name="title_activity_form">FormActivity</string>
 
-    <string name="login">Iniciar</string>
-    <string name="identificacion">Identificación</string>
-    <string name="contrasena">Contraseña</string>
     <string name="title_activity_administrador_">Bienvenido administrador</string>
     <string name="administrador">Administrador</string>
     <string name="monitor">Monitorear</string>
@@ -35,7 +43,6 @@
     <string name="salir">Salir</string>
     <string name="section_format" translatable="false">Hello World from section: %1$d</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="newMonitor">Agregar monitor</string>
     <string name="name">Nombre</string>
     <string name="apellido">Apellido</string>
@@ -72,14 +79,14 @@
     <string name="hasta">Hasta:</string>
     <string name="welcome">Bienvenido</string>
     <string name="iformacionMonitor">Información Monitor</string>
-    <string name="ultimoMonitoreo">Ultimo monitoreo</string>
+    <string name="ultimoMonitoreo">Último monitoreo</string>
     <string name="monitoreos">Monitoreos</string>
     <string name="analisis">Análisis</string>
     <string name="puntaje">Puntaje</string>
     <string name="informacionMonitoreo">Información Monitoreo</string>
 
     <string name="procesando">Procesando</string>
-    <string name="esperar">Por favor espere ...</string>
+    <string name="esperar">Por favor espere …</string>
     <string name="noSeEncontraronDatos">No se encontraron datos</string>
     <string name="noSePudoConectarServidor">No se pudo conectar al servidor</string>
     <string name="registrandoMonitor">Registrando monitor</string>
@@ -109,9 +116,96 @@
     <string name="dowloading">Descargando</string>
     <string name="noEcontroPrueba">No existen pruebas para este monitoreo</string>
     <string name="mostrarContrasena">Mostrar contraseña</string>
+
     <string name="campoInvalido">Campo inválido</string>
     <string name="campoVacio">Campo vacio</string>
     <string name="contrasenaError">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
     <string name="freYpor">Frecuencia y porcentaje de Aparición</string>
     <string name="nuevaContrasena">Nueva contraseña</string>
+
+    <!--=========================================================================================-->
+    <!--STRINGS: INFORMACIÓN DEL REGISTRO DE DATOS-->
+    <string name="successfulRecordTitle">REGISTRO EXITOSO</string>
+    <string name="successfulRecordImageDescription">OK</string>
+    <string name="successfulRecordMonitoringDescription">El monitoreo se ha registrado sin ningún inconveniente</string>
+    <string name="successfulRecordResponseDescription">La respuesta institucional se ha registrado sin ningún inconveniente</string>
+
+    <string name="offlineRecordTitle">REGISTRO SIN CONEXIÓN A INTERNET</string>
+    <string name="offlineRecordImageDescription">OFFLINE</string>
+    <string name="offlineRecordMonitoringDescription">El monitoreo se ha registrado parcialmente en el dispositivo, una vez se conecte a internet el monitoreo se subira automaticamente</string>
+
+    <string name="failedRecordTitle">REGISTRO FALLIDO</string>
+    <string name="failedRecordImageDescription">ERROR</string>
+    <string name="failedRecordMonitoringDescription">El monitoreo no se ha podido registrar, porfavor intentelo de nuevo</string>
+    <string name="failedRecordResponseDescription">La respuesta institucional no se ha podido registrar, porfavor intentelo de nuevo</string>
+
+    <!--=========================================================================================-->
+    <!--MONITORING MODULE-->
+    <!--=========================================================================================-->
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING LIST-->
+    <string name="titleListMonitoring">Monitoreo Qhapaq Ñan</string>
+    <string name="descriptionInfoListMonitoring">No hay monitoreos aun</string>
+    <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la seleción actual.</string>
+    <string name="descriptionTramo">TRAMO</string>
+    <string name="descriptionSubtramo">SUBTRAMO</string>
+    <string name="descriptionSeccion">SECCIÓN</string>
+    <string name="descriptionArea">ÁREA</string>
+    <string name="itemCardViewFecha">FECHA:</string>
+    <string name="itemCardViewLatitud">LATITUD:</string>
+    <string name="itemCardViewLongitud">LONGITUD:</string>
+    <string name="itemCardViewVariable">VARIABLE:</string>
+    <string name="itemCardViewDescriptionPrueba">Imagen del monitoreo</string>
+    <string name="titleListMonitoringDialog">INFORMACIÓN</string>
+    <string name="descriptionListMonitoringDialog">Seleciona un área para registrar un monitoreo</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING DETAIL-->
+    <string name="titleDetailMonitoring">Monitoreo</string>
+    <string name="itemCardViewArea">ÁREA:</string>
+    <string name="itemCardViewCoordenadas">COORDENADAS:</string>
+    <string name="itemCardViewMonitor">MONITOR:</string>
+    <string name="itemCardViewRepercusiones">REPERCUSIONES:</string>
+    <string name="itemCardViewOrigen">ORIGEN:</string>
+    <string name="itemCardViewPorcentaje">PORCENTAJE DE APARICIÓN:</string>
+    <string name="itemCardViewFrecuencia">FRECUENCIA DE APARICIÓN:</string>
+    <string name="titleDetailMonitoringDialog">INFORMACIÓN</string>
+    <string name="descriptionDetailMonitoringDialog">No puedes monitorear el punto dos veces en el mismo día</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING REGISTRATION FORM-->
+    <string name="titleFormRegistrationMonitoring">Formulario del Monitoreo</string>
+    <string name="titleFormRepercusiones">REPERCUSIONES:</string>
+    <string name="titleFormOrigen">ORIGEN:</string>
+    <string name="titleFormPorcentaje">PORCENTAJE DE APARICIÓN:</string>
+    <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
+    <string name="descriptionFloatingButtonFactor">FACTOR</string>
+    <string name="descriptionFloatingButtonVariable">VARIABLE</string>
+    <string name="titlePointDialog">Establece las coordenadas para el punto de afetación</string>
+    <string name="latitudePointDialog">LATITUD</string>
+    <string name="lengthPointDialog">LONGITUD</string>
+    <string name="optionPositivasRepercusiones">Positivas</string>
+    <string name="optionNegativasRepercusiones">Negativas</string>
+    <string name="optionActualesRepercusiones">Actuales</string>
+    <string name="optionPotencialesRepercusiones">Potenciales</string>
+    <string name="optionInternoOrigen">Interno</string>
+    <string name="optionExternoOrigen">Externo</string>
+    <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
+    <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
+    <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona una Variable</string>
+    <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar una foto del punto de afectación</string>
+
+    <string-array name="listPorcentaje">
+        <item>[1%-10%] RESTRINGIDA</item>
+        <item>[11%-50%] LOCALIZADA</item>
+        <item>[51%-90%] EXTENSIVA</item>
+        <item>[91%-100%] EXTENDIDA</item>
+    </string-array>
+
+    <string-array name="listFrecuencia">
+        <item>UNA ÚNICA VEZ</item>
+        <item>APARICIÓN INTERMITENTE</item>
+        <item>PRESENCIA FRECUENTE</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

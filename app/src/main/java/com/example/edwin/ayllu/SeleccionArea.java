@@ -7,10 +7,8 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Area;
 import com.example.edwin.ayllu.domain.Seccion;
@@ -283,7 +281,7 @@ public class SeleccionArea extends AppCompatActivity implements View.OnClickList
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (opci){
                                     case 1:
-                                        Intent intent = new Intent(SeleccionArea.this, MonitoreosActivity.class);
+                                        Intent intent = new Intent(SeleccionArea.this, InstitutionalActivity.class);
                                         intent.putExtra("AREA",""+opciones[3]);
                                         startActivity(intent);
                                         finish();

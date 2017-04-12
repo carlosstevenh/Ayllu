@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.edwin.ayllu.RecordActivity">
+    tools:context="com.example.edwin.ayllu.MonitoringActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Monitoreo QHAPAQ-ÑAN"
+                android:text="@string/titleListMonitoring"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         app:fab_labelStyle="@style/Etiquetas"
-        fab:fab_addButtonColorNormal="?attr/colorPrimaryDark"
+        fab:fab_addButtonColorNormal="?attr/colorAccent"
         fab:fab_addButtonSize="normal"
         fab:fab_labelsPosition="left">
 
@@ -50,26 +50,26 @@
             android:id="@+id/fab_tramo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
+            android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_tramo"
             fab:fab_size="mini"
-            fab:fab_title="TRAMO" />
+            fab:fab_title="@string/descriptionTramo" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_subtramo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
+            android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_subtramos"
             fab:fab_size="mini"
-            fab:fab_title="SUBTRAMO" />
+            fab:fab_title="@string/descriptionSubtramo" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_seccion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_title="SECCION"
+            android:theme="@style/FloatingButtonDark"
+            app:fab_title="@string/descriptionSeccion"
             fab:fab_icon="@drawable/ic_secciones"
             fab:fab_size="mini" />
 
@@ -77,10 +77,10 @@
             android:id="@+id/fab_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
+            android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_area"
             fab:fab_size="mini"
-            fab:fab_title="AREA" />
+            fab:fab_title="@string/descriptionArea" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
@@ -88,9 +88,9 @@
         android:id="@+id/fab_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorNormal="@color/colorAccent"
         app:fab_icon="@drawable/ic_search"
         app:fab_size="normal"
         app:layout_anchor="@+id/include2"
@@ -100,21 +100,21 @@
         android:id="@+id/fab_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
+        android:layout_gravity="start"
         android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorNormal="@color/colorAccent"
         app:fab_icon="@drawable/ic_registration"
         app:fab_size="normal"
         app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="bottom|center_horizontal" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_reporte"
+        android:id="@+id/fab_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorNormal="@color/colorAccent"
         app:fab_icon="@drawable/ic_report"
         app:fab_size="normal"
         app:layout_anchor="@+id/include2"

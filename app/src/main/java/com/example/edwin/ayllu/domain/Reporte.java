@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Reporte {
     //==============================================================================================
     //ATRIBUTOS DE LA CLASE REPORTE
-    @SerializedName(JsonKeys.CODIGO_PAF)
+    @SerializedName(JsonKeys.PUNTO_AFECTACION)
     int cod_paf;
     @SerializedName(JsonKeys.FECHA_MON)
     String fecha_mon;
@@ -46,10 +46,21 @@ public class Reporte {
     String conocimiento;
     @SerializedName(JsonKeys.MONITOR_RES)
     int monitor_res;
+    @SerializedName(JsonKeys.PRUEBA1)
+    String prueba1;
+    @SerializedName(JsonKeys.PRUEBA2)
+    String prueba2;
+    @SerializedName(JsonKeys.PRUEBA3)
+    String prueba3;
 
     //==============================================================================================
     //CONSTRUCTOR DE LA CLASE REPORTE
-    public Reporte(int cod_paf, int monitor_res, String conocimiento, String recursos, String variable, String latitud, String area, String fecha_mon, String repercusiones, String presupuesto, String tiempo, String personal, String evaluacion, String fecha_res, int frecuencia, int porcentaje, String origen, String usuario, String longitud) {
+    public Reporte(int cod_paf, int monitor_res, String conocimiento, String recursos,
+                   String variable, String latitud, String area, String fecha_mon,
+                   String repercusiones, String presupuesto, String tiempo, String personal,
+                   String evaluacion, String fecha_res, int frecuencia, int porcentaje,
+                   String origen, String usuario, String longitud,
+                   String prueba1, String prueba2, String prueba3) {
         this.cod_paf = cod_paf;
         this.monitor_res = monitor_res;
         this.conocimiento = conocimiento;
@@ -69,11 +80,32 @@ public class Reporte {
         this.origen = origen;
         this.usuario = usuario;
         this.longitud = longitud;
+        this.prueba1 = prueba1;
+        this.prueba2 = prueba2;
+        this.prueba3 = prueba3;
     }
 
     //==============================================================================================
     //CONSTRUCTOR VACIO
     public Reporte() {
+    }
+
+    //==============================================================================================
+    //
+    public String getPruebas(int i) {
+        if (i == 1) return this.prueba1;
+        else if (i == 2) return this.prueba2;
+        else return this.prueba3;
+    }
+
+    public int getSize(){
+        int size = 0;
+
+        if(! this.prueba1.equals("null")) size++;
+        if(! this.prueba2.equals("null")) size++;
+        if(! this.prueba3.equals("null")) size++;
+
+        return size;
     }
 
     //==============================================================================================
@@ -119,6 +151,7 @@ public class Reporte {
 
         return info;
     }
+
     //==============================================================================================
     //GETTER Y SETTER DE LOS ATRIBUTOS DE LA CLASE REPORTE
     public int getMonitor_res() {
@@ -271,5 +304,29 @@ public class Reporte {
 
     public void setCod_paf(int cod_paf) {
         this.cod_paf = cod_paf;
+    }
+
+    public String getPrueba1() {
+        return prueba1;
+    }
+
+    public void setPrueba1(String prueba1) {
+        this.prueba1 = prueba1;
+    }
+
+    public String getPrueba2() {
+        return prueba2;
+    }
+
+    public void setPrueba2(String prueba2) {
+        this.prueba2 = prueba2;
+    }
+
+    public String getPrueba3() {
+        return prueba3;
+    }
+
+    public void setPrueba3(String prueba3) {
+        this.prueba3 = prueba3;
     }
 }

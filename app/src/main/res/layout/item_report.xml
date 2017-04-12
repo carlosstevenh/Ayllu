@@ -1,225 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="155dp"
-    android:layout_margin="10dp"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardBackgroundColor="@color/colorCardViewBackground">
+    android:layout_height="300dp"
+    android:layout_marginTop="2dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="10dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorItemPrimaryCardView"
-            android:elevation="5dp"
-            android:padding="3dp">
-
-            <ImageView
-                android:id="@+id/imv_coordenada"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_coordenada" />
-
-            <LinearLayout
-                android:id="@+id/area_latitud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imv_coordenada"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_latitud" />
-
-                <TextView
-                    android:id="@+id/tv_latitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textStyle="bold"
-                    android:paddingLeft="2dp"
-                    android:text="20220020"
-                    android:textColor="@color/colorTextIcons"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/area_longitud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/area_latitud"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_longitud" />
-
-                <TextView
-                    android:id="@+id/tv_longitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textStyle="bold"
-                    android:paddingLeft="2dp"
-                    android:text="20220020"
-                    android:textColor="@color/colorTextIcons"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imv_calendario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/area_longitud"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_date" />
-
-            <TextView
-                android:id="@+id/tv_fecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imv_calendario"
-                android:gravity="center_horizontal"
-                android:textStyle="bold"
-                android:text="20/11/1992"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/iv_prueba"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp">
+            android:contentDescription="@string/itemCardViewDescriptionPrueba"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fondo_splash"/>
 
-            <LinearLayout
-                android:id="@+id/area_zona"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_zona" />
-
-                <TextView
-                    android:id="@+id/tv_title1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="AREA"
-                    android:textColor="@color/colorIconCardView"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <TextView
-                android:id="@+id/tv_area"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/area_zona"
-                android:gravity="left"
-                android:paddingLeft="16dp"
-                android:text="Complejo Ceremonial Volcán Llullaillaco"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="12sp" />
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"/>
 
             <LinearLayout
-                android:id="@+id/area_variable"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_area"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:paddingLeft="12dp"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingRight="8dp"
+                android:paddingEnd="8dp"
+                android:orientation="vertical"
+                android:background="@color/colorBackgroundCardView"
+                android:layout_weight="0.6">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_variable" />
-
-                <TextView
-                    android:id="@+id/tv_title2"
+                <LinearLayout
+                    android:id="@+id/area_fecha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="VARIABLE"
-                    android:textColor="@color/colorIconCardView"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/itemCardViewFecha"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/colorIconCardView"
+                        android:src="@drawable/ic_date" />
 
-            <TextView
-                android:id="@+id/tv_variable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/area_variable"
-                android:gravity="left"
-                android:paddingLeft="16dp"
-                android:text="recoleccion plantas silvestre para subsistencia"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tv_title1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="60"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="start"
+                        android:text="@string/itemCardViewFecha"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_monitor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_variable"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_fecha"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="40"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_monitor" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_title3"
+                <LinearLayout
+                    android:id="@+id/area_latitud"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="MONITOR"
-                    android:textColor="@color/colorIconCardView"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
 
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/itemCardViewLatitud"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/colorIconCardView"
+                        android:src="@drawable/ic_latitud" />
+
+                    <TextView
+                        android:id="@+id/tv_title2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="60"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="start"
+                        android:text="@string/itemCardViewLatitud"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_latitud"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="40"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area_longitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/itemCardViewLongitud"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/colorIconCardView"
+                        android:src="@drawable/ic_longitud" />
+
+                    <TextView
+                        android:id="@+id/tv_title3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="60"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="start"
+                        android:text="@string/itemCardViewLongitud"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_longitud"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="40"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area_variable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/itemCardViewVariable"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/colorIconCardView"
+                        android:src="@drawable/ic_variable" />
+
+                    <TextView
+                        android:id="@+id/tv_title4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="60"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="start"
+                        android:text="@string/itemCardViewVariable"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_variable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="40"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_monitor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/area_monitor"
-                android:paddingLeft="16dp"
-                android:text="Edwin Yovanny"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="12sp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </android.support.v7.widget.CardView>

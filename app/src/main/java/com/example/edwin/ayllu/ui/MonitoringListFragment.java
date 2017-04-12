@@ -1,11 +1,13 @@
 package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.edwin.ayllu.MonitoringRegistrationFormActivity;
+import com.example.edwin.ayllu.AdminSQLite;
+import com.example.edwin.ayllu.MonitoringDetailFragment;
+import com.example.edwin.ayllu.MonitoringRegistrationFormFragment;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
@@ -25,7 +32,7 @@ import com.example.edwin.ayllu.domain.SubtramoDbHelper;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
-import com.example.edwin.ayllu.ui.adapter.ReporteAdapter;
+import com.example.edwin.ayllu.ui.adapter.MonitoringAdapter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -35,6 +42,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
@@ -43,7 +51,7 @@ import static com.example.edwin.ayllu.domain.SubtramoContract.SubtramoEntry;
 import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
 import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,11 +65,15 @@ import retrofit2.Response;
 
 public class MonitoringListFragment extends Fragment implements View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
     //VARIABLES DE VISTA
-    private ReporteAdapter adapter;
+    private MonitoringAdapter adapter;
     private RecyclerView mReporteList;
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search, fab_new, fab_report;
     private FloatingActionsMenu menu;
+    private TextView tvInfo;
+
+    MonitoringRegistrationFormFragment fragment;
+    MonitoringDetailFragment monitoringDetailFragment;
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
@@ -71,7 +83,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
     Interpolator interpolador;
     String item = "";
-    String cod_mon = "", pais_mon = "";
+    String monitor = "", pais = "";
     int i = 0;
 
     //VARIABLES CONTROL DE DATOS FIJOS
@@ -91,7 +103,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         //------------------------------------------------------------------------------------------
         //Relacionamos variables con la actividad actual
-        adapter = new ReporteAdapter(getActivity());
+        adapter = new MonitoringAdapter(getActivity());
 
         paisDbHelper = new PaisDbHelper(getActivity());
         tramoDbHelper = new TramoDbHelper(getActivity());
@@ -101,12 +113,17 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         int i = 0;
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
-        Intent intent = getActivity().getIntent();
-        cod_mon = intent.getStringExtra("MONITOR");
-        pais_mon = intent.getStringExtra("PAIS");
+        AdminSQLite admin = new AdminSQLite(getActivity().getApplicationContext(), "login", null, 1);
+        SQLiteDatabase bd = admin.getReadableDatabase();
+        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
+        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
+        cursor.moveToFirst();
+        monitor = cursor.getString(0);
+        pais = cursor.getString(1);
+        cursor.close();
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual
-        cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais_mon}, TramoEntry.PAIS);
+        cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais}, TramoEntry.PAIS);
         if (cursor.moveToFirst()) {
             items_tramos = new CharSequence[cursor.getCount()];
             do {
@@ -114,6 +131,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 i++;
             } while (cursor.moveToNext());
         }
+        cursor.close();
     }
 
     /**
@@ -123,44 +141,20 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
-        mReporteList = (RecyclerView) root.findViewById(R.id.monitoring_list);
-        adapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (reportes.size() > 0) {
-                    Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
-                    createMonitoringDialog(reporte).show();
-                }
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
 
-        setupReporteList();
-        return root;
-    }
+        mReporteList = (RecyclerView) view.findViewById(R.id.monitoring_list);
 
-    /**=============================================================================================
-     * METODO: Encargado de de redirigir al usuario al Formulario de Registro con la información del
-     * punto seleccionado
-     **/
+        fab_report = (FloatingActionButton) view.findViewById(R.id.fab_report);
+        fab_new = (FloatingActionButton) view.findViewById(R.id.fab_new);
+        fab_search = (FloatingActionButton) view.findViewById(R.id.fab_search);
+        fab_tramo = (FloatingActionButton) view.findViewById(R.id.fab_tramo);
+        fab_subtramo = (FloatingActionButton) view.findViewById(R.id.fab_subtramo);
+        fab_seccion = (FloatingActionButton) view.findViewById(R.id.fab_seccion);
+        fab_area = (FloatingActionButton) view.findViewById(R.id.fab_area);
+        menu = (FloatingActionsMenu) view.findViewById(R.id.menu_fab);
 
-
-    /**
-     * =============================================================================================
-     * METODO:
-     **/
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        fab_report = (FloatingActionButton) getActivity().findViewById(R.id.fab_reporte);
-        fab_new = (FloatingActionButton) getActivity().findViewById(R.id.fab_new);
-        fab_search = (FloatingActionButton) getActivity().findViewById(R.id.fab_search);
-        fab_tramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_tramo);
-        fab_subtramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_subtramo);
-        fab_seccion = (FloatingActionButton) getActivity().findViewById(R.id.fab_seccion);
-        fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
-        menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
+        tvInfo = (TextView) view.findViewById(R.id.tv_info);
 
         fab_new.setScaleX(0);
         fab_search.setScaleX(0);
@@ -190,39 +184,48 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_search.setOnClickListener(this);
         fab_new.setOnClickListener(this);
         fab_report.setOnClickListener(this);
+
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (reportes.size() > 0) {
+                    Reporte reporte = reportes.get(mReporteList.getChildAdapterPosition(view));
+
+                    monitoringDetailFragment = new MonitoringDetailFragment();
+                    Bundle params = new Bundle();
+                    params.putString("PUNTO", reporte.getCod_paf() + "");
+                    params.putString("AREA", reporte.getArea());
+                    params.putString("VARIABLE", reporte.getVariable());
+                    params.putString("FECHA", reporte.getFecha_mon());
+                    params.putString("LATITUD", reporte.getLatitud());
+                    params.putString("LONGITUD", reporte.getLongitud());
+                    params.putString("MONITOR", reporte.getUsuario());
+                    params.putString("REPERCUSIONES", reporte.getRepercusiones());
+                    params.putString("ORIGEN", reporte.getOrigen());
+                    params.putString("PORCENTAJE", reporte.getPorcentaje() + "");
+                    params.putString("FRECUENCIA", reporte.getFrecuencia() + "");
+                    params.putString("PRUEBA1",reporte.getPrueba1());
+                    params.putString("PRUEBA2",reporte.getPrueba2());
+                    params.putString("PRUEBA3",reporte.getPrueba3());
+                    monitoringDetailFragment.setArguments(params);
+
+                    //Inflamos el layout para el Fragmento MonitoringListFragment
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.monitoring_principal_context, monitoringDetailFragment)
+                            .commit();
+                }
+            }
+        });
+
+        setupReporteList();
+        return view;
     }
 
-    /**
-     * =============================================================================================
-     * METODO: Presenta en Interfaz un dialogo para Monitorear un Punto de Afectación
-     **/
-    public AlertDialog createMonitoringDialog(final Reporte currentReport) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("MONITOREAR UN PUNTO")
-                .setMessage("¿Quiere monitorear el punto de afectación seleccionado?")
-                .setPositiveButton("ACEPTAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
-                                intent.putExtra("MONITOR", cod_mon + "");
-                                intent.putExtra("PAIS", pais_mon);
-                                intent.putExtra("PUNTO", currentReport.getCod_paf() + "");
-                                intent.putExtra("OPCION", "M");
-                                startActivity(intent);
-                                getActivity().finish();
-                            }
-                        })
-                .setNegativeButton("CANCELAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                builder.create().dismiss();
-                            }
-                        });
-
-
-        return builder.create();
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -231,9 +234,19 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
      **/
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(titulo)
-                .setMessage(mensaje)
-                .setNegativeButton("OK",
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("HECHO",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -345,32 +358,53 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.fab_new:
                 if (op[3] != 0) {
-                    Intent intent = new Intent(getActivity(), MonitoringRegistrationFormActivity.class);
-                    intent.putExtra("MONITOR", cod_mon + "");
-                    intent.putExtra("PAIS", pais_mon);
-                    intent.putExtra("AREA", op[3] + "");
-                    intent.putExtra("OPCION", "N");
-                    startActivity(intent);
-                    getActivity().finish();
+                    fragment = new MonitoringRegistrationFormFragment();
+                    Bundle params = new Bundle();
+                    params.putString("AREA", op[3] + "");
+                    params.putString("OPCION", "N");
+                    fragment.setArguments(params);
+
+                    //Inflamos el layout para el Fragmento MonitoringListFragment
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.monitoring_principal_context, fragment)
+                            .commit();
                 } else
-                    createSimpleDialog("Seleciona un área para registrar un Monitoreos", "INFORMACIÓN").show();
+                    createSimpleDialog(getResources().getString(R.string.descriptionListMonitoringDialog), getResources().getString(R.string.titleListMonitoringDialog)).show();
                 break;
             case R.id.fab_search:
                 menu.collapse();
+                final ProgressDialog loading = new ProgressDialog(getActivity());
+                loading.setMessage("Por favor espere …");
+                loading.setTitle("Buscando los monitoreos");
+                loading.setProgress(10);
+                loading.setIndeterminate(true);
+                loading.show();
 
                 Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
                 call.enqueue(new Callback<ReporteResponse>() {
                     @Override
                     public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
                         if (response.isSuccessful()) {
+                            loading.dismiss();
                             reportes = response.body().getReportes();
-                            //adapter.addAll(reportes);
+                            if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
                             new HackingBackgroundTask().execute();
+                            if (reportes.size() == 0) {
+                                tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
+                                tvInfo.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ReporteResponse> call, Throwable t) {
+                        loading.dismiss();
+                        Toast.makeText(
+                                getActivity(),
+                                getResources().getString(R.string.noSePudoConectarServidor),
+                                Toast.LENGTH_SHORT)
+                                .show();
                     }
                 });
                 break;
@@ -430,8 +464,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 .scaleX(x)
                 .scaleY(y)
                 .setInterpolator(interpolador)
-                .setDuration(50)
-                .setStartDelay(500);
+                .setDuration(10)
+                .setStartDelay(100);
     }
 
     /**
@@ -456,7 +490,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         }
 
         @Override
-        protected void onPostExecute(ArrayList result) {
+        protected void onPostExecute(ArrayList<Reporte> result) {
             super.onPostExecute(result);
 
             // Limpiar elementos antiguos
@@ -528,7 +562,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
     //==============================================================================================
     public void generateReport(ArrayList<Reporte> rp) {
-
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         String format = s.format(new Date());
         s = new SimpleDateFormat("HH:mm:ss");
@@ -537,11 +570,14 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         //Escribiendo en el archivo Excel
         try {
             InputStream editor = getResources().openRawResource(R.raw.plantilla);
-            FileOutputStream result = new FileOutputStream("/storage/sdcard0/documents/Qhapaq-Ñan" + format + ".xls");
+            File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Reportes");
+
+            imagesFolder.mkdirs();
+            //File result = new File(imagesFolder, format);
+            FileOutputStream result = new FileOutputStream(imagesFolder + "/" + format + ".xls");
 
             //Crear el objeto que tendra el libro de Excel
             HSSFWorkbook workbook = new HSSFWorkbook(editor);
-            HSSFWorkbook hssfWorkbookNew = new HSSFWorkbook();
 
             //1. Obtenemos la primera hoja del Excel
             //2. Llenamos la primera hoja del Excel
@@ -562,8 +598,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             result.close();
             workbook.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -571,7 +605,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     }
 
     //==============================================================================================
-    private void escribirExcel(int cod_plan , int pf, HSSFSheet sheet) {
+    private void escribirExcel(int cod_plan, int pf, HSSFSheet sheet) {
         //Estilo de celda basico
         CellStyle style = sheet.getWorkbook().createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
@@ -584,7 +618,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         CellStyle style2 = sheet.getWorkbook().createCellStyle();
         style2.setAlignment(HorizontalAlignment.CENTER);
         style2.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
-        style2.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style2.setBorderBottom(BorderStyle.DASHED);
         style2.setBorderTop(BorderStyle.DASHED);
         style2.setBorderRight(BorderStyle.DASHED);
@@ -594,7 +628,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         CellStyle style3 = sheet.getWorkbook().createCellStyle();
         style3.setAlignment(HorizontalAlignment.CENTER);
         style3.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
-        style3.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style3.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style3.setBorderBottom(BorderStyle.DASHED);
         style3.setBorderTop(BorderStyle.DASHED);
         style3.setBorderRight(BorderStyle.DASHED);
@@ -615,12 +649,10 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 if (cod_plan == 1 && j > 6 && j < 11) {
                     if (info.get(j).equals("1")) celda.setCellStyle(style2);
                     else celda.setCellStyle(style);
-                }
-                else if (cod_plan == 1 && j > 10){
+                } else if (cod_plan == 1 && j > 10) {
                     if (info.get(j).equals("1")) celda.setCellStyle(style3);
                     else celda.setCellStyle(style);
-                }
-                else {
+                } else {
                     celda.setCellValue(info.get(j));
                     celda.setCellStyle(style);
                 }
