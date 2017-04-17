@@ -7,6 +7,7 @@ import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.Pais;
 import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
+import com.example.edwin.ayllu.domain.RespuestaInstitucional;
 import com.example.edwin.ayllu.domain.ResumenMonitor;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.io.ApiConstants;
@@ -24,6 +25,10 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RestClient {
+
+    //peticion que trae el nombre de la prueba de un monitoreo
+    @GET("getRespuestas/{paf}")
+    Call<ArrayList<RespuestaInstitucional>> getRespuestaInstitucional(@Path("paf") String paf);
 
     //peticion que trae el nombre de la prueba de un monitoreo
     @GET("nombrePrueba/{paf}/{fec}")

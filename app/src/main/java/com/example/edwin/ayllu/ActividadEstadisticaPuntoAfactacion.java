@@ -2,33 +2,20 @@ package com.example.edwin.ayllu;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
-import com.example.edwin.ayllu.domain.Usuario;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -156,13 +143,14 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         set1 = new LineDataSet(yVals, getResources().getString(R.string.freYpor));
         set1.setFillAlpha(110);
         set1.setCircleColor(Color.BLACK);
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(5f);
+        set1.setLineWidth(3f);
+
+        set1.setColor(getResources().getColor(R.color.colorPrimaryDark));
         set1.setDrawCircleHole(false);
         set1.setValueTextSize(9f);
-        set1.setDrawFilled(true);
+        //set1.setDrawFilled(true);
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets
 
         // create a data object with the datasets

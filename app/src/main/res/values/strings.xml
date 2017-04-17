@@ -122,6 +122,8 @@
     <string name="contrasenaError">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
     <string name="freYpor">Frecuencia y porcentaje de Aparición</string>
     <string name="nuevaContrasena">Nueva contraseña</string>
+    <string name="descriptionFloatingButtonRespuesta">GRAFICA RESPUESTA</string>
+    <string name="descriptionFloatingButtonPorcentajeFrecuencia">GRAFICA PRT/FREC</string>
 
     <!--=========================================================================================-->
     <!--STRINGS: INFORMACIÓN DEL REGISTRO DE DATOS-->

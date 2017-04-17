@@ -22,6 +22,7 @@ import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -31,11 +32,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InformacionPuntoCritico extends AppCompatActivity {
+public class InformacionPuntoCritico extends AppCompatActivity implements View.OnClickListener{
     private String pa,fm;
     private TextView paf,fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
     private ArrayList<MonitoreoGeneral> mg;
-    FloatingActionButton fab_pruebas, fab_graficas;
+    FloatingActionButton fab_res, fab_graficas;
+
     private String URL = ApiConstants.URL_IMG;
     private int tamamo = 0;
     private ArrayList<Prueba> pruebas = new ArrayList<>();
@@ -156,19 +158,10 @@ public class InformacionPuntoCritico extends AppCompatActivity {
 
         //se define un variable de tipo button el cual sera la encargada de manejar los eventos del boton analisis
         fab_graficas = (FloatingActionButton) findViewById(R.id.fab_graficas);
+        fab_res = (FloatingActionButton) findViewById(R.id.fab_resp);
 
-        //metodo encargado de llamar a la actividad encargada de realizar la grafica estadistica
-        fab_graficas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle parametro = new Bundle();
-                parametro.putString("pa",pa);
-                Intent intent = new Intent(InformacionPuntoCritico.this,ActividadEstadisticaPuntoAfactacion.class);
-                intent.putExtras(parametro);
-                startActivity(intent);
-            }
-        });
-
+        fab_graficas.setOnClickListener(this);
+        fab_res.setOnClickListener(this);
     }
 
     /**
@@ -212,4 +205,27 @@ public class InformacionPuntoCritico extends AppCompatActivity {
         public void onPageScrollStateChanged(int arg0) {
         }
     };
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fab_graficas:
+                Bundle parametro = new Bundle();
+                parametro.putString("pa",pa);
+                Intent intent = new Intent(InformacionPuntoCritico.this,ActividadEstadisticaPuntoAfactacion.class);
+                intent.putExtras(parametro);
+                startActivity(intent);
+                break;
+            case R.id.fab_resp:
+                Bundle parametro1 = new Bundle();
+                parametro1.putString("pa",pa);
+                Intent intent1 = new Intent(InformacionPuntoCritico.this,GraficaRespuestaInstitucional.class);
+                intent1.putExtras(parametro1);
+                startActivity(intent1);
+
+                break;
+            default:
+                break;
+        }
+    }
 }

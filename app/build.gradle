@@ -42,33 +42,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:10.2.1'
     compile 'com.getbase:floatingactionbutton:1.8.0'
     //compile group: 'commons-codec', name: 'commons-codec', version: '1.6'
+    repositories { maven { url "https://jitpack.io" } }
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     testCompile 'junit:junit:4.12'
-
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
 
-dependencies {
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
-}
-
-dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
-}
-dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
-}
-dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
-}
-dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
-}
-dependencies {
-    compile 'com.android.support:support-v4:25.+'
-}
