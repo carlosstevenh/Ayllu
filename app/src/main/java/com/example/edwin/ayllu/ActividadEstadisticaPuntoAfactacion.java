@@ -24,8 +24,8 @@ import retrofit2.Response;
 public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     private LineChart mChart;
     private ArrayList<AnalisisPorcentajeFrecuencia> datos;
-    private String pa;
-    private TextView fecha,puntaje;
+    private String pa,fac,var;
+    private TextView fecha,puntaje,fact,vari,por,fre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,10 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         //Parametro que llega cuando se inicia esta actividad
         Bundle bundle = getIntent().getExtras();
         pa = bundle.getString("pa");
+        fac = bundle.getString("fac");
+        var = bundle.getString("var");
+
+
         final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
 
         //peticion al servidor de los datos necesarios para realizar la grafica estadistica.
@@ -55,6 +59,12 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 
                 fecha = (TextView) findViewById(R.id.txtFec);
                 puntaje = (TextView) findViewById(R.id.txtPun);
+                fact = (TextView) findViewById(R.id.txtFac);
+                vari = (TextView) findViewById(R.id.txtVar);
+                por = (TextView) findViewById(R.id.txtPorApa);
+                fre = (TextView) findViewById(R.id.txtFreApa);
+                fact.setText(fac);
+                vari.setText(var);
 
                 loading.dismiss();
                 if(response.isSuccessful()){
@@ -76,8 +86,16 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                         public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
                             int aux = e.getXIndex();
-                            if(datos.size()>=0) fecha.setText(datos.get(aux).getFecha());
-                            else fecha.setText("");
+                            if(datos.size()>=0) {
+                                fecha.setText(datos.get(aux).getFecha());
+                                por.setText(datos.get(aux).getProcentaje());
+                                fre.setText(datos.get(aux).getFrecuencia());
+                            }
+                            else {
+                                fecha.setText("");
+                                por.setText("");
+                                fre.setText("");
+                            }
                             puntaje.setText(""+e.getVal());
 
                         }
@@ -125,7 +143,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
         for(int i = 0; i < datos.size(); i++){
-            int aux = (Integer.parseInt(datos.get(i).getFrecuencia()) + Integer.parseInt(datos.get(i).getProcentaje()))/2;
+            float aux = (float) (((float)Integer.parseInt(datos.get(i).getFrecuencia()) + (float)Integer.parseInt(datos.get(i).getProcentaje()))/2.0);
             yVals.add(new Entry(aux, i));
         }
 

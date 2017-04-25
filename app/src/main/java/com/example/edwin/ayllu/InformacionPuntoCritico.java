@@ -212,6 +212,8 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
             case R.id.fab_graficas:
                 Bundle parametro = new Bundle();
                 parametro.putString("pa",pa);
+                parametro.putString("fac",mg.get(0).getFactor());
+                parametro.putString("var",mg.get(0).getVariable());
                 Intent intent = new Intent(InformacionPuntoCritico.this,ActividadEstadisticaPuntoAfactacion.class);
                 intent.putExtras(parametro);
                 startActivity(intent);
@@ -219,6 +221,8 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
             case R.id.fab_resp:
                 Bundle parametro1 = new Bundle();
                 parametro1.putString("pa",pa);
+                parametro1.putString("fac",mg.get(0).getFactor());
+                parametro1.putString("var",mg.get(0).getVariable());
                 Intent intent1 = new Intent(InformacionPuntoCritico.this,GraficaRespuestaInstitucional.class);
                 intent1.putExtras(parametro1);
                 startActivity(intent1);
