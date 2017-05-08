@@ -1,6 +1,8 @@
 package com.example.edwin.ayllu;
 
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
+import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
+import com.example.edwin.ayllu.domain.ConteoVariableFactorTramo;
 import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
@@ -25,6 +27,15 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RestClient {
+
+    //Peticion que obtiene el conteo de las variables dependiendo del factor y tramo
+    @GET("countVariableTramo/{tramo}/{factor}")
+    Call<ArrayList<ConteoVariableFactorTramo>> conteoVariableFactortramo(@Path("tramo") String tramo,
+                                                                         @Path("factor") String factor);
+    
+    //peticion que trae el conteo de factores por tramo
+    @GET("countFactorTramo/{tramo}")
+    Call<ArrayList<ConteoFactoresTramo>> conteoFactorTramo(@Path("tramo") String tramo);
 
     //peticion que trae el nombre de la prueba de un monitoreo
     @GET("getRespuestas/{paf}")

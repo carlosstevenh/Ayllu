@@ -64,7 +64,10 @@
         <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
         <activity android:name=".ActivityPruebasMonitoreo" />
         <activity android:name=".PrestentationActivity" />
-        <activity android:name=".GraficaRespuestaInstitucional"></activity>
+        <activity android:name=".GraficaRespuestaInstitucional" />
+        <activity android:name=".ActivitySeleccionTramoFiltro" />
+        <activity android:name=".GraficaTortaVariables" />
+        <activity android:name=".MenuGraficasEstadisticas"></activity>
     </application>
 
 </manifest>
