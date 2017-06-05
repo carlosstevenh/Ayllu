@@ -27,16 +27,6 @@ public class FormRespuesta extends AppCompatActivity {
     String pa,fm;
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(this, MonitorMenuActivity.class);
-        intent.putExtra("MONITOR", cod_mon);
-        intent.putExtra("PAIS", pais_mon);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_respuesta);
@@ -182,5 +172,11 @@ public class FormRespuesta extends AppCompatActivity {
         else aux ="1";
         return aux;
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

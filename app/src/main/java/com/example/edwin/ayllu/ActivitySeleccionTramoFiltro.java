@@ -334,4 +334,10 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         }
         return items;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

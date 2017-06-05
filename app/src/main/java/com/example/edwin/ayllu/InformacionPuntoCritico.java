@@ -206,6 +206,7 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
         }
     };
 
+    //Metodo obtiene que graficas necesita observar el usuario
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -231,5 +232,11 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

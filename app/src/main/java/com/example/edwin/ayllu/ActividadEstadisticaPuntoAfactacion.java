@@ -178,4 +178,10 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         mChart.setData(data);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

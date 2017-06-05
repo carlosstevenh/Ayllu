@@ -183,4 +183,10 @@ public class GraficaTortaVariables extends AppCompatActivity {
         // update pie chart
         mChart.invalidate();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

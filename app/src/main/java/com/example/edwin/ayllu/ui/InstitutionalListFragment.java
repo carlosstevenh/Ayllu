@@ -125,13 +125,13 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                     intent.putExtra("MONITOR", cod_mon);
                     intent.putExtra("PAIS", pais_mon);
                     startActivity(intent);
-                    getActivity().finish();
                 }
             }
         });
 
         setupReporteList();
         return root;
+        //return inflater.inflate(R.layout.fragment_institutional_list, container, false);
     }
 
     /**=============================================================================================
@@ -175,6 +175,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
         fab_area.setOnClickListener(this);
         menu.setOnFloatingActionsMenuUpdateListener(this);
         fab_search.setOnClickListener(this);
+
     }
 
     /**
@@ -461,7 +462,6 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                             getActivity(),
                             getResources().getString(R.string.noSeEncontraronDatos),
                             Toast.LENGTH_LONG).show();
-                    getActivity().finish();
 
                 }
 

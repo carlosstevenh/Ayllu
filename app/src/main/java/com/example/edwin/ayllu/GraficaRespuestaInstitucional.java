@@ -311,6 +311,10 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
 
         return set;
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
 }

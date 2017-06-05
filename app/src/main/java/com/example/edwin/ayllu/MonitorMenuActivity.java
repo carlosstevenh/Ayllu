@@ -135,7 +135,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("MONITOR", monitor);
         intent.putExtra("PAIS", pais);
         startActivity(intent);
-        finish();
     }
 
     /**
