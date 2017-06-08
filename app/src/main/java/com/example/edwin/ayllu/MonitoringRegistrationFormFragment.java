@@ -3,6 +3,7 @@ package com.example.edwin.ayllu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -12,7 +13,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,18 +40,24 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.jar.Manifest;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.STORAGE_SERVICE;
 
 public class MonitoringRegistrationFormFragment extends Fragment implements
         View.OnClickListener, FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
 
     // Códigos de petición
-    public static final int REQUEST_LOCATION = 1;
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
 
     //VARIABLES: Componetes del Formulario de Registro
     Button btn_presencia, btn_frecuencia;
@@ -55,6 +66,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements
     FloatingActionButton fab_factor, fab_variable;
     FloatingActionsMenu fab_menu, fab_menu2;
     private ImageView foto1, foto2, foto3;
+    View mLayout;
 
     MonitoringSummaryFragment fragment;
 
@@ -111,6 +123,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements
         //Vincula los elementos de la interfaz del formulario con las variables
         btn_presencia = (Button) view.findViewById(R.id.btn_presencia);
         btn_frecuencia = (Button) view.findViewById(R.id.btn_frecuencia);
+        mLayout = view.findViewById(R.id.contenido_principal);
 
         rg_reper1 = (RadioGroup) view.findViewById(R.id.rg_repercusiones1);
         rg_reper2 = (RadioGroup) view.findViewById(R.id.rg_repercusiones2);
@@ -246,6 +259,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements
      * METODO: Recolecta la prueba (Fotografia) del monitoreo y la almacena en un archivo
      **/
     public void getCamara1() {
+
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
 
@@ -436,7 +450,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements
             //--------------------------------------------------------------------------------------
             //EVENTO: Tomar fotografia
             case R.id.fab_camera:
-                if (files.size() < 3) getCamara1();
+                if (files.size() < 3) checkPermission();
                 else {
                     Toast.makeText(getActivity(),
                             "No se puede tomar mas fotos",
@@ -761,4 +775,54 @@ public class MonitoringRegistrationFormFragment extends Fragment implements
                 .setDuration(10)
                 .setStartDelay(100);
     }
+
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+            Toast.makeText(getActivity(), "This version is not Android 6 or later " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            getCamara1();
+
+        } else {
+
+            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(getActivity(),android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_WRITE_EXTERNAL_STORAGE);
+
+                Toast.makeText(getActivity(), "Requesting permissions", Toast.LENGTH_LONG).show();
+
+            }
+            else if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED){
+
+                Toast.makeText(getActivity(), "The permissions are already granted ", Toast.LENGTH_LONG).show();
+                getCamara1();
+
+            }
+
+        }
+
+        return;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "OK Permissions granted ! :-) " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                getCamara1();
+            } else {
+                Toast.makeText(getActivity(), "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+
+    }
 }
+

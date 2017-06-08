@@ -14,32 +14,29 @@
     <!--.........................................................................................-->
     <!--SLIDE REGISTRAR MONITOREO-->
     <string name="slide_1_title">REGISTRA UN MONITOREO</string>
-    <string name="slide_1_desc">Recorre, Monitorea y Obten Reportes el estado de Conservación del Qhapaq Ñan</string>
+    <string name="slide_1_desc">Recorre, monitorea y obtén reportes el estado de Conservación del QHAPAQ ÑAN</string>
     <!--.........................................................................................-->
     <!--SLIDE RESPUESTA INSTITUCIONAL-->
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
-    <string name="slide_2_desc">Reporta nuevos datos de la respuesta Institucional de un Monitoreo</string>
+    <string name="slide_2_desc">Reporta nuevos datos de la respuesta institucional de un monitoreo</string>
     <!--.........................................................................................-->
     <!--SLIDE MAPAS ESTADISTICOS-->
-    <string name="slide_3_title">MAPAS ESTADISTICOS</string>
+    <string name="slide_3_title">GRÁFICOS ESTADÍSTICOS</string>
     <string name="slide_3_desc">Toma decisiones de alto impacto en beneficio de este extenso y remoto bien seriado</string>
     <!--.........................................................................................-->
     <!--SLIDE CONFIGURACIÓN DEL SISTEMA-->
     <string name="slide_4_title">CONFIGURA TU APLICACIÓN</string>
     <string name="slide_4_desc">Elige una configuración personalizada para tu trabajo</string>
 
-    <string name="spinner_title_tramos">Seleccione un Tramo</string>
-    <string name="spinner_title_subtramos">Seleccione un Subtramo</string>
-    <string name="spinner_title_seccion">Seleccione una Sección</string>
-    <string name="spinner_title_area">Seleccione una Área</string>
-    <string name="title_activity_form">FormActivity</string>
+    <string name="spinner_title_tramos">Seleccioné un Tramo</string>
+    <string name="spinner_title_subtramos">Seleccioné un Subtramo</string>
+    <string name="spinner_title_seccion">Seleccioné una Sección</string>
+    <string name="spinner_title_area">Seleccioné una Área</string>
 
     <string name="title_activity_administrador_">Bienvenido administrador</string>
     <string name="administrador">Administrador</string>
     <string name="monitor">Monitorear</string>
     <string name="addMonitor">Registrar monitor</string>
-    <string name="editMonitor">Editar monitor</string>
-    <string name="deleteMonitor">Eliminar monitor</string>
     <string name="salir">Salir</string>
     <string name="section_format" translatable="false">Hello World from section: %1$d</string>
 
@@ -47,10 +44,7 @@
     <string name="name">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="edit">Editar</string>
-    <string name="drop">Eliminar</string>
-    <string name="title_activity_monitoring_registration_form3">
-        MonitoringRegistrationForm3Activity
-    </string>
+
     <string name="fecha">Fecha monitoreo</string>
     <string name="variable">Variable</string>
     <string name="ResAdm">Respuesta institucional</string>
@@ -72,8 +66,6 @@
     <string name="coordenada">Coordenadas</string>
     <string name="latitud">Latitud</string>
     <string name="longitud">Longitud</string>
-    <string name="getPruebas">Obtener Pruebas</string>
-    <string name="title_activity_filtrar">FiltrarActivity</string>
     <string name="FILTRAR">Filtrar</string>
     <string name="desde">Desde:</string>
     <string name="hasta">Hasta:</string>
@@ -92,12 +84,12 @@
     <string name="registrandoMonitor">Registrando monitor</string>
     <string name="registroAdicionado">Registro adicionado</string>
     <string name="seProdujoUnError">Se produjo un errror</string>
-    <string name="confirmarAccion">Esta seguro de deshabilitar el monitor?</string>
+    <string name="confirmarAccion">Está seguro de deshabilitar el monitor?</string>
     <string name="advertencia">Advertencia</string>
     <string name="accionCompletada">Acción completada</string>
     <string name="confirmar">Confirmar</string>
     <string name="cancelar">Cancelar</string>
-    <string name="confirmacionAccionEditar">Esta seguro de actualizar la información del monitor?</string>
+    <string name="confirmacionAccionEditar">Está seguro de actualizar la información del monitor?</string>
     <string name="contraseñasDiferentes">Las contraseñas no coinciden</string>
     <string name="actualizadoMonitor">Actualizando monitor</string>
     <string name="monitorActualizado">Monitor actualizado</string>
@@ -118,12 +110,12 @@
     <string name="mostrarContrasena">Mostrar contraseña</string>
 
     <string name="campoInvalido">Campo inválido</string>
-    <string name="campoVacio">Campo vacio</string>
+    <string name="campoVacio">Campo vacío</string>
     <string name="contrasenaError">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
     <string name="freYpor">Frecuencia y porcentaje de Aparición</string>
     <string name="nuevaContrasena">Nueva contraseña</string>
-    <string name="descriptionFloatingButtonRespuesta">GRAFICA RESPUESTA</string>
-    <string name="descriptionFloatingButtonPorcentajeFrecuencia">GRAFICA PRT/FREC</string>
+    <string name="descriptionFloatingButtonRespuesta">GRÁFICA RESPUESTA</string>
+    <string name="descriptionFloatingButtonPorcentajeFrecuencia">GRÁFICA PRT/FREC</string>
 
     <!--=========================================================================================-->
     <!--STRINGS: INFORMACIÓN DEL REGISTRO DE DATOS-->
@@ -134,12 +126,12 @@
 
     <string name="offlineRecordTitle">REGISTRO SIN CONEXIÓN A INTERNET</string>
     <string name="offlineRecordImageDescription">OFFLINE</string>
-    <string name="offlineRecordMonitoringDescription">El monitoreo se ha registrado parcialmente en el dispositivo, una vez se conecte a internet el monitoreo se subira automaticamente</string>
+    <string name="offlineRecordMonitoringDescription">El monitoreo se ha registrado parcialmente en el dispositivo, una vez se conecté a internet el monitoreo se subirá automáticamente</string>
 
     <string name="failedRecordTitle">REGISTRO FALLIDO</string>
     <string name="failedRecordImageDescription">ERROR</string>
-    <string name="failedRecordMonitoringDescription">El monitoreo no se ha podido registrar, porfavor intentelo de nuevo</string>
-    <string name="failedRecordResponseDescription">La respuesta institucional no se ha podido registrar, porfavor intentelo de nuevo</string>
+    <string name="failedRecordMonitoringDescription">El monitoreo no se ha podido registrar, por favor intentelo de nuevo</string>
+    <string name="failedRecordResponseDescription">La respuesta institucional no se ha podido registrar, por favor intentelo de nuevo</string>
 
     <!--=========================================================================================-->
     <!--MONITORING MODULE-->
@@ -147,8 +139,8 @@
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING LIST-->
     <string name="titleListMonitoring">Monitoreo Qhapaq Ñan</string>
-    <string name="descriptionInfoListMonitoring">No hay monitoreos aun</string>
-    <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la seleción actual.</string>
+    <string name="descriptionInfoListMonitoring">No hay monitoreos aún</string>
+    <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la seleción actual</string>
     <string name="descriptionTramo">TRAMO</string>
     <string name="descriptionSubtramo">SUBTRAMO</string>
     <string name="descriptionSeccion">SECCIÓN</string>
@@ -214,7 +206,7 @@
     <string name="porApr">Porcentaje de aparición</string>
     <string name="freApa">Frecuencia de aparición</string>
     <string name="analisisFactor">Análisis Factor</string>
-    <string name="menuMapasEstadisticos">Menú mapas estadisticos</string>
-    <string name="mapasGenerales">Mapas estadisticos generales</string>
-    <string name="mapasEspecificos">Mapas estaditicos Especificos</string>
+    <string name="menuMapasEstadisticos">Menú gráficos estadísticos</string>
+    <string name="mapasGenerales">Gráficos estadísticos generales</string>
+    <string name="mapasEspecificos">Gráficos estadíticos Especificos</string>
 </resources>

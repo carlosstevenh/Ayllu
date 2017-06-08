@@ -249,6 +249,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
                         loading.dismiss();
+
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","ERROR");
@@ -290,7 +291,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             }
             else{
 
-                //MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));
                 Call<String> call1 = service1.uploadAttachment(filePart);
                 call1.enqueue(new Callback<String>() {
@@ -374,6 +374,9 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                     }
                     else {
                         loading.dismiss();
+
+                        Log.e("Tag Subir", "dsdkfjsdklfj");
+
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","ERROR");
@@ -388,6 +391,9 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                 @Override
                 public void onFailure(Call<Task> call, Throwable t) {
                     loading.dismiss();
+
+                    Log.e("Tag Subir", t.getMessage());
+
                     fragment = new MonitoringInfoFragment();
                     Bundle params = new Bundle();
                     params.putString("RESULT","ERROR");
