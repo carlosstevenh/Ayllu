@@ -50,9 +50,6 @@ public interface RestClient {
     @GET("puntosAfectacion/{paf}")
     Call<ArrayList<AnalisisPorcentajeFrecuencia>> proFre (@Path("paf") String paf);
 
-    //peticion que trae el resumen de un monitor
-    @GET("resumenMonitor/{ide}")
-    Call<ArrayList<ResumenMonitor>> resumenMonitor(@Path("ide") String ide);
 
     //peticion que consulta los ultimos monitores de cada punto de afectacion de acuerdo al filtro que el usuario realice
     @GET("filtrarMonitoreosConFecha/{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{fi}/{ff}/{fac}/{var}")
@@ -107,8 +104,11 @@ public interface RestClient {
     Call<ArrayList<String>> deleteUsuario(@Path("ide") String ide);
 
     //peticion que trae todos los monitoreos de un area especifica
-    @GET("monitoreos/{area}")
-    Call <ArrayList<Monitoreo>> monitoreos (@Path("area") String area);
+    @GET("monitoreos/{tramo}/{subtramo}/{seccion}/{area}")
+    Call <ArrayList<Monitoreo>> monitoreos ( @Path("tramo") String tramo,
+                                             @Path("subtramo") String subtramo,
+                                             @Path("seccion") String seccion,
+                                             @Path("area") String area);
 
     //peticion que registra una respuesta institucional
     @GET ("addRespuesta/{pa}/{fm}/{eva}/{per}/{tie}/{pre}/{rec}/{con}/{mon}")

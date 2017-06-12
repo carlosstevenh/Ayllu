@@ -168,9 +168,11 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_pais:
+                Log.e("Boton pais:", "Esta entrando");
                 createRadioListDialog(items_paises, "PAISES", 1).show();
                 break;
             case R.id.fab_tramo:
+                Log.e("Boton tramo:", "Esta entrando");
                 createRadioListDialog(items_tramos, "TRAMOS", 2).show();
                 break;
             case R.id.fab_search:
@@ -186,9 +188,8 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                             if(response.isSuccessful()){
                                 facTram = response.body();
                                 if(facTram.size()>0){
-                                    setContentView(R.layout.activity_seleccion_tramo_filtro);
+
                                     mChart = (PieChart) findViewById(R.id.piechart);
-                                    //LinearLayout chart = (LinearLayout)findViewById(R.id.layout1);
 
                                     mChart.setUsePercentValues(true);
                                     mChart.setDrawHoleEnabled(true);
@@ -231,6 +232,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                                     l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_INSIDE);
                                     l.setXEntrySpace(7);
                                     l.setYEntrySpace(5);
+
                                 }
                                 else{
                                     Toast.makeText(
@@ -247,6 +249,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                                         Toast.LENGTH_SHORT)
                                         .show();
                             }
+
                         }
 
                         @Override
@@ -260,10 +263,11 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
 
                         }
                     });
+
+
                 }
 
-
-                    break;
+                break;
         }
     }
 
