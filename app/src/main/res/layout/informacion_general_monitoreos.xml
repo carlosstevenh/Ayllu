@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_informacion_punto_critico">
 
@@ -96,7 +97,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_height="2dp"
                 android:alpha=".5"
-                android:elevation="5dp"
                 android:background="@color/colorDivider" />
 
             <LinearLayout

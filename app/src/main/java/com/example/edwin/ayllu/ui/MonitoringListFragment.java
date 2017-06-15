@@ -77,7 +77,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
-    CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas;
+    CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas, items_tipos;;
     int[] op = {0, 0, 0, 0};
     int[] pos = {-1, -1, -1, -1};
 
@@ -226,6 +226,9 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     public void onResume() {
         super.onResume();
         if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
+        comprobarFiltros();
+        menu.collapse();
+
     }
 
     /**
@@ -311,6 +314,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaEntry.SECCION);
                                 items_areas = dataFilter(cursor, 3);
+                                items_tipos = dataFilter(cursor, 2);
                                 break;
                             //----------------------------------------------------------------------
                             case 4:
@@ -354,7 +358,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 createRadioListDialog(items_secciones, "SECCIONES", 3).show();
                 break;
             case R.id.fab_area:
-                createRadioListDialog(items_areas, "AREAS", 4).show();
+                createRadioListDialog(items_tipos, "", 4).show();
                 break;
             case R.id.fab_new:
                 if (op[3] != 0) {
@@ -366,7 +370,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
                     //Inflamos el layout para el Fragmento MonitoringListFragment
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .addToBackStack(null)
+                            .addToBackStack("MonitoringList")
                             .replace(R.id.monitoring_principal_context, fragment)
                             .commit();
                 } else
@@ -529,6 +533,19 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             } while (cursor.moveToNext());
         }
         return items;
+    }
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public void comprobarFiltros(){
+        if(pos[0] >= 0 ) fab_tramo.setEnabled(true);
+        if(pos[1] >= 0 ) fab_subtramo.setEnabled(true);
+        else fab_subtramo.setEnabled(false);
+        if(pos[2] >= 0 ) fab_seccion.setEnabled(true);
+        else fab_seccion.setEnabled(false);
+        if(pos[3] >= 0 ) fab_area.setEnabled(true);
+        else fab_area.setEnabled(false);
     }
 
     /**

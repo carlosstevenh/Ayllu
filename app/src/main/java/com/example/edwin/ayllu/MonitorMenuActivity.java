@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -24,12 +27,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.edwin.ayllu.domain.ImagenContract;
+import com.example.edwin.ayllu.domain.ImagenDbHelper;
+import com.example.edwin.ayllu.domain.Task;
+import com.example.edwin.ayllu.domain.TaskContract;
+import com.example.edwin.ayllu.domain.TaskDbHelper;
+import com.example.edwin.ayllu.io.ApiConstants;
+import com.example.edwin.ayllu.io.AylluApiService;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MonitorMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager viewPager;
     private LinearLayout dotsLayout;
     private int[] layouts;
-    private Button btnSkip, btnMenu;
+    private Button btnSkip, btnNext;
 
     String monitor = "", pais = "", tipo_usu = "A";
 
@@ -61,7 +88,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
-        btnMenu = (Button) findViewById(R.id.btn_menu);
+        btnNext = (Button) findViewById(R.id.btn_next);
 
 
         //Creando un vector de IDs de los layouts para el menu del monitor
@@ -82,7 +109,117 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         btnSkip.setOnClickListener(this);
-        btnMenu.setOnClickListener(this);
+        btnNext.setOnClickListener(this);
+
+        //------------------------------------------------------------------------------------------
+        //REGISTRA MONITOREOS QUE ESTAN ALMACENADOS EN EL MOVIL
+        final TaskDbHelper taskDbHelper = new TaskDbHelper(this);
+        final ImagenDbHelper imagenDbHelper = new ImagenDbHelper(this);
+
+        Cursor cursor1 = taskDbHelper.generateQuery("SELECT * FROM ");
+        final Cursor cursorImg = imagenDbHelper.generateQuery("SELECT * FROM ");
+
+        if (cursorImg.moveToFirst()){
+            if (wifiConected()) {
+                do{
+                    ArrayList<String> nameFiles = new ArrayList<>();
+                    for (int j = 1; j < 4; j++) nameFiles.add(cursorImg.getString(j));
+                    final int numon = cursorImg.getInt(0);
+
+                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(logging);
+                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
+
+                    File file;
+                    File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
+                    imagesFolder.mkdirs();
+
+                    for (int i = 0; i<nameFiles.size(); i++){
+                        if(!nameFiles.get(i).equals("null")){
+                            file = new File(imagesFolder,nameFiles.get(i));
+                            final int con = i;
+
+                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            Call<String> call1 = service1.uploadAttachment(filePart);
+                            call1.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Toast.makeText(MonitorMenuActivity.this,
+                                            "Fotografia N°"+ numon +" Registrado", Toast.LENGTH_SHORT).show();
+
+                                    String[] cond = new String[]{numon+""};
+
+                                    if (con == 0) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA1, ImagenContract.ImagenEntry._ID});
+                                    if (con == 1) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA2, ImagenContract.ImagenEntry._ID});
+                                    if (con == 2) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA3, ImagenContract.ImagenEntry._ID});
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                        else {
+                            Toast.makeText(MonitorMenuActivity.this,
+                                    "Estado imagen (NULL)", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } while (cursorImg.moveToNext());
+            }
+        }
+
+        if (cursor1.moveToFirst()) {
+            if (wifiConected()) {
+                do {
+                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(logging);
+                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
+
+                    //Obtengo cada uno de los monitoreos de la tabla Task
+                    Task tk = new Task(
+                            cursor1.getString(1), cursor1.getString(2), cursor1.getString(3),
+                            cursor1.getString(4), cursor1.getString(5),
+                            cursor1.getString(6), cursor1.getString(7), cursor1.getString(8),
+                            Integer.parseInt(cursor1.getString(9)),
+                            Integer.parseInt(cursor1.getString(10)),
+                            cursor1.getString(11),cursor1.getString(12),cursor1.getString(13));
+
+                    final int numon1 = cursor1.getInt(0);
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(ApiConstants.URL_API_AYLLU)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .client(httpClient.build())
+                            .build();
+
+                    if(!cursor1.getString(11).equals("null")) {
+                        AylluApiService service = retrofit.create(AylluApiService.class);
+                        Call<Task> call = service.registrarPunto(tk);
+                        call.enqueue(new Callback<Task>() {
+                            @Override
+                            public void onResponse(Call<Task> call, Response<Task> response) {
+                                Toast.makeText(MonitorMenuActivity.this,
+                                        "Monitoreo N°" + numon1 + " Registrado", Toast.LENGTH_SHORT).show();
+
+                                String[] cond = new String[]{numon1  + ""};
+                                taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
+                            }
+
+                            @Override
+                            public void onFailure(Call<Task> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                } while (cursor1.moveToNext());
+            }
+        }
     }
 
     /**
@@ -143,8 +280,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      **/
     private void launchRegistroMonitoreo() {
         Intent intent = new Intent(MonitorMenuActivity.this, MonitoringActivity.class);
-        intent.putExtra("MONITOR", monitor);
-        intent.putExtra("PAIS", pais);
+        intent.putExtra("ESTADO","INICIAL");
         startActivity(intent);
     }
 
@@ -197,10 +333,8 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            // Lanza un menu en el caso de que quiera cerrar sesión o si es Administrador (regresar
-            // a la interfaz administrativa).
-            case R.id.btn_menu:
-                //Cerrar Sesión
+            case R.id.btn_next:
+                /*Cerrar Sesión
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -208,7 +342,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                 AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                 SQLiteDatabase bd = admin.getWritableDatabase();
                 bd.delete(admin.TABLENAME, null, null);
-                bd.close();
+                bd.close();*/
                 break;
             //Lanza una activity en el caso en el que el usuario haya elegido un Slide
             case R.id.btn_skip:
@@ -300,5 +434,15 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                         });
 
         return builder.create();
+    }
+
+    //==============================================================================================
+    //METODO: Verifica la conexion a internet
+    protected Boolean wifiConected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifi.isConnected() || mobile.isConnected())return true;
+        else return false;
     }
 }

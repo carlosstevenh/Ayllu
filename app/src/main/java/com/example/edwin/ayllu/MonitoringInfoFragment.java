@@ -1,9 +1,12 @@
 package com.example.edwin.ayllu;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +18,14 @@ public class MonitoringInfoFragment extends Fragment {
     LinearLayout lyPrincipal;
     ImageView ivType;
     TextView tvTitle, tvDescription;
-    String result = "";
+    String result = "", tipo = "", area = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         result = getArguments().getString("RESULT");
+        tipo = getArguments().getString("TIPO");
+
+        if(tipo.equals("NEW") && (result.equals("OK") || result.equals("OFFLINE"))) area = getArguments().getString("AREA");
     }
 
     @Override
@@ -50,7 +56,7 @@ public class MonitoringInfoFragment extends Fragment {
                 break;
             case "ERROR":
                 lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackgroundFailed));
-                ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error));
+                ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
                 ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
                 tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
                 tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));
@@ -75,15 +81,76 @@ public class MonitoringInfoFragment extends Fragment {
             },2000);
         }
         else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            },2000);
+            if (area.equals("")){
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                },2000);
+            } else  createSimpleDialog("¿Desea seguir registrando puntos en la Sección Actual?","INFORMACIÓN").show();
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Genera un Dialogo basico en pantalla
+     **/
+    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvTitle.setCompoundDrawables(ContextCompat.getDrawable(v.getContext(), R.drawable.ic_question), null, null, null);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("ACEPTAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                MonitoringRegistrationFormFragment fragment = new MonitoringRegistrationFormFragment();
+                                Bundle params = new Bundle();
+                                params.putString("AREA", area);
+                                params.putString("OPCION", "N");
+                                fragment.setArguments(params);
+
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.monitoring_principal_context, fragment)
+                                        .commit();
+                            }
+                        },1000);
+                    }
+                })
+                .setNegativeButton("CANCELAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        startActivity(intent);
+                                        getActivity().finish();
+                                    }
+                                },1000);
+                            }
+                        });
+
+        return builder.create();
     }
 }

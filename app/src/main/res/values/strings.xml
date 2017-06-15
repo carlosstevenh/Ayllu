@@ -8,7 +8,7 @@
     <string name="contrasena">Contraseña</string>
     <!--=========================================================================================-->
     <!--STRINGS: MENU DEL MONITOR-->
-    <string name="menu">SALIR</string>
+    <string name="next">SIGUIENTE</string>
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
     <!--.........................................................................................-->
@@ -171,8 +171,8 @@
     <string name="titleFormOrigen">ORIGEN:</string>
     <string name="titleFormPorcentaje">PORCENTAJE DE APARICIÓN:</string>
     <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
-    <string name="descriptionFloatingButtonFactor">FACTOR</string>
-    <string name="descriptionFloatingButtonVariable">VARIABLE</string>
+    <string name="descriptionButtonFactor">FACTOR</string>
+    <string name="descriptionButtonVariable">VARIABLE</string>
     <string name="titlePointDialog">Establece las coordenadas para el punto de afetación</string>
     <string name="latitudePointDialog">LATITUD</string>
     <string name="lengthPointDialog">LONGITUD</string>
@@ -186,7 +186,12 @@
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
     <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona una Variable</string>
-    <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar una foto del punto de afectación</string>
+    <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
+    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona un Porcentaje</string>
+    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona una Frecuencia</string>
+    <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
+    <string name="titlebuttonCambiar">CAMBIAR</string>
+    <string name="titlebuttonElegir">ELEGIR</string>
 
     <string-array name="listPorcentaje">
         <item>[1%-10%] RESTRINGIDA</item>

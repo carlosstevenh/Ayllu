@@ -79,8 +79,7 @@
             android:layout_height="wrap_content"
             android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_area"
-            fab:fab_size="mini"
-            fab:fab_title="@string/descriptionArea" />
+            fab:fab_size="mini"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

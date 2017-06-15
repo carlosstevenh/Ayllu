@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contenido_principal"
     android:layout_width="match_parent"
@@ -9,8 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.edwin.ayllu.MonitoringActivity">
 
-    <include layout="@layout/content_monitoring_registration_form"
-        android:id="@+id/include" />
+    <include layout="@layout/content_monitoring_registration_form"/>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -35,82 +33,4 @@
                 android:textStyle="bold" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fab_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_labelStyle="@style/Etiquetas"
-        fab:fab_addButtonColorNormal="?attr/colorPrimaryDark"
-        fab:fab_addButtonSize="normal"
-        fab:fab_labelsPosition="left">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_factor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            fab:fab_icon="@drawable/ic_tramo"
-            fab:fab_size="mini"
-            fab:fab_title="@string/descriptionFloatingButtonFactor" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_variable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            fab:fab_icon="@drawable/ic_subtramos"
-            fab:fab_size="mini"
-            fab:fab_title="@string/descriptionFloatingButtonVariable" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fab_menu2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        fab:fab_addButtonColorNormal="?attr/colorPrimaryDark"
-        fab:fab_addButtonSize="normal"
-        fab:fab_labelsPosition="left"/>
-
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_icon="@drawable/ic_camera"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|center_horizontal" />
-
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_icon="@drawable/ic_location"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|left" />
-
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_regMon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_icon="@drawable/ic_next"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|center_horizontal" />
-
 </android.support.design.widget.CoordinatorLayout>
