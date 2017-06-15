@@ -1,12 +1,15 @@
 package com.example.edwin.ayllu;
 
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
+import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
+import com.example.edwin.ayllu.domain.ConteoVariableFactorTramo;
 import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.Pais;
 import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
+import com.example.edwin.ayllu.domain.RespuestaInstitucional;
 import com.example.edwin.ayllu.domain.ResumenMonitor;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.io.ApiConstants;
@@ -25,6 +28,19 @@ import retrofit2.http.Path;
 
 public interface RestClient {
 
+    //Peticion que obtiene el conteo de las variables dependiendo del factor y tramo
+    @GET("countVariableTramo/{tramo}/{factor}")
+    Call<ArrayList<ConteoVariableFactorTramo>> conteoVariableFactortramo(@Path("tramo") String tramo,
+                                                                         @Path("factor") String factor);
+    
+    //peticion que trae el conteo de factores por tramo
+    @GET("countFactorTramo/{tramo}")
+    Call<ArrayList<ConteoFactoresTramo>> conteoFactorTramo(@Path("tramo") String tramo);
+
+    //peticion que trae el nombre de la prueba de un monitoreo
+    @GET("getRespuestas/{paf}")
+    Call<ArrayList<RespuestaInstitucional>> getRespuestaInstitucional(@Path("paf") String paf);
+
     //peticion que trae el nombre de la prueba de un monitoreo
     @GET("nombrePrueba/{paf}/{fec}")
     Call<ArrayList<Prueba>> getPrueba(@Path("paf") String paf,
@@ -34,9 +50,6 @@ public interface RestClient {
     @GET("puntosAfectacion/{paf}")
     Call<ArrayList<AnalisisPorcentajeFrecuencia>> proFre (@Path("paf") String paf);
 
-    //peticion que trae el resumen de un monitor
-    @GET("resumenMonitor/{ide}")
-    Call<ArrayList<ResumenMonitor>> resumenMonitor(@Path("ide") String ide);
 
     //peticion que consulta los ultimos monitores de cada punto de afectacion de acuerdo al filtro que el usuario realice
     @GET("filtrarMonitoreosConFecha/{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{fi}/{ff}/{fac}/{var}")
@@ -91,8 +104,11 @@ public interface RestClient {
     Call<ArrayList<String>> deleteUsuario(@Path("ide") String ide);
 
     //peticion que trae todos los monitoreos de un area especifica
-    @GET("monitoreos/{area}")
-    Call <ArrayList<Monitoreo>> monitoreos (@Path("area") String area);
+    @GET("monitoreos/{tramo}/{subtramo}/{seccion}/{area}")
+    Call <ArrayList<Monitoreo>> monitoreos ( @Path("tramo") String tramo,
+                                             @Path("subtramo") String subtramo,
+                                             @Path("seccion") String seccion,
+                                             @Path("area") String area);
 
     //peticion que registra una respuesta institucional
     @GET ("addRespuesta/{pa}/{fm}/{eva}/{per}/{tie}/{pre}/{rec}/{con}/{mon}")

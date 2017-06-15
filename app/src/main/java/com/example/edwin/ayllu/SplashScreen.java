@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.example.edwin.ayllu.administrador.Administrador;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
@@ -52,7 +53,6 @@ public class SplashScreen extends Activity {
     ArrayList<Zona> zonas = new ArrayList<>();
     ArrayList<Categoria> categorias = new ArrayList<>();
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
@@ -331,5 +331,14 @@ public class SplashScreen extends Activity {
         if (    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected() )return true;
         else return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

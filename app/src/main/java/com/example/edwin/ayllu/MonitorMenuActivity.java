@@ -120,7 +120,8 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      * METODO: Carga el Activity encargado de las estadisticas
      **/
     private void launchEstadisticas() {
-        Intent intent = new Intent(MonitorMenuActivity.this, FiltrarActividad.class);
+        //Intent intent = new Intent(MonitorMenuActivity.this, FiltrarActividad.class);
+        Intent intent = new Intent(MonitorMenuActivity.this, MenuGraficasEstadisticas.class);
         intent.putExtra("Monitor", monitor);
         startActivity(intent);
     }
@@ -134,7 +135,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("MONITOR", monitor);
         intent.putExtra("PAIS", pais);
         startActivity(intent);
-        finish();
     }
 
     /**

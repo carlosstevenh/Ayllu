@@ -12,45 +12,39 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin"
-        android:weightSum="1">
+        android:weightSum="11">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.7">
+            android:layout_height="0dp"
+            android:layout_weight="2">
 
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ayllu_title" />
+                android:src="@drawable/ayllu_title"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/form_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="9"
             android:orientation="vertical"
-            android:weightSum="100"
+            android:weightSum="8"
             android:gravity="center"
             android:background="@color/colorBackground"
-            android:padding="@dimen/activity_horizontal_margin">
-
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:src="@drawable/ic_login" />
+            android:padding="@dimen/activity_horizontal_margin"
+            android:layout_height="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:orientation="vertical"
                 android:gravity="center_vertical"
-                android:layout_weight="20">
+                android:layout_weight="6">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/til_id"
@@ -96,8 +90,8 @@
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
+                android:layout_height="0dp"
+                android:layout_weight="2"
                 android:elevation="2dp"
                 android:onClick="login"
                 android:textStyle="bold"

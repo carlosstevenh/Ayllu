@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,13 +126,13 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                     intent.putExtra("MONITOR", cod_mon);
                     intent.putExtra("PAIS", pais_mon);
                     startActivity(intent);
-                    getActivity().finish();
                 }
             }
         });
 
         setupReporteList();
         return root;
+        //return inflater.inflate(R.layout.fragment_institutional_list, container, false);
     }
 
     /**=============================================================================================
@@ -175,6 +176,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
         fab_area.setOnClickListener(this);
         menu.setOnFloatingActionsMenuUpdateListener(this);
         fab_search.setOnClickListener(this);
+
     }
 
     /**
@@ -297,9 +299,10 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                 break;
             case R.id.fab_search:
                 menu.collapse();
-                if (op[3] != 0) getListReports(op[3]+"");
+                Log.i("Datos:" , ""+ op[0] +":" +op[1]+":" +op[2]+":" +op[3]);
+                if (op[0] != 0) getListReports(op[0]+"",op[1]+"",op[2]+"",op[3]+"");
                 else
-                    createSimpleDialog("Seleciona un área para buscar los Monitoreos", "INFORMACIÓN").show();
+                    createSimpleDialog("Seleciona un tramo para buscar los Monitoreos", "INFORMACIÓN").show();
                 break;
             default:
                 break;
@@ -444,10 +447,10 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      * =============================================================================================
      * METODO:
      **/
-    public void getListReports(String area){
+    public void getListReports(String tramo, String subtramo, String seccion, String area){
         final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
-        Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(area);
+        Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(tramo, subtramo, seccion, area);
         requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
             @Override
             public void onResponse(Call<ArrayList<Monitoreo>> call, Response<ArrayList<Monitoreo>> response) {
@@ -461,7 +464,6 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                             getActivity(),
                             getResources().getString(R.string.noSeEncontraronDatos),
                             Toast.LENGTH_LONG).show();
-                    getActivity().finish();
 
                 }
 

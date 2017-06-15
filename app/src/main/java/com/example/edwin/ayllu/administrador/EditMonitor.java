@@ -182,6 +182,12 @@ public class EditMonitor extends AppCompatActivity {
         return builder.create();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     //METODOS: validan los datos que se introducen en las cajas de texto (nombre, apellido,contraseñas)
 
     private boolean esNombreValido(String nombre,TextInputLayout til) {

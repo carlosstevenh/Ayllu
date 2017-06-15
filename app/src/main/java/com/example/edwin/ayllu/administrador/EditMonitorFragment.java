@@ -131,29 +131,6 @@ public class EditMonitorFragment extends Fragment  {
 
         registerForContextMenu(usuarios);
 
-        usuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //se crean los parametros para posteriormente ser enviados a la actividad encargada de monstrar informacion del monitor
-                Bundle parametro = new Bundle();
-                Usuario aux = (Usuario) usuarios.getItemAtPosition(i);
-                parametro.putInt("codigo", aux.getCodigo_usu());
-                parametro.putString("iden", aux.getIdentificacion_usu());
-                parametro.putString("nombre", aux.getNombre_usu());
-                parametro.putString("apellido", aux.getApellido_usu());
-                parametro.putString("tipo", aux.getTipo_usu());
-                parametro.putString("con", aux.getContrasena_usu());
-                parametro.putString("cla" , aux.getClave_api());
-                parametro.putString("pais", aux.getPais_usu());
-
-                Intent intent = new Intent(getActivity(),InformacionGeneralMonitor.class);
-                intent.putExtras(parametro);
-                startActivity(intent);
-
-            }
-        });
-
         //metodo encargado de recargar la informacion de la lista
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

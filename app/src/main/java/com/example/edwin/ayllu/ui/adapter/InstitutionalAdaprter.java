@@ -6,10 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.Monitoreo;
+import com.example.edwin.ayllu.io.ApiConstants;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,9 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
     public void onBindViewHolder(MonitoreoHolder holder, int position) {
         holder.date.setText(""+monitoreos.get(position).getDate());
         holder.variable.setText(""+monitoreos.get(position).getVariable());
+        holder.latitud.setText(""+monitoreos.get(position).getLatitud());
+        holder.longitud.setText(""+monitoreos.get(position).getLongitud());
+        holder.setPrueba(ApiConstants.URL_IMG+monitoreos.get(position).getPrueba());
     }
 
     @Override
@@ -63,13 +69,21 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
     public static class MonitoreoHolder extends RecyclerView.ViewHolder {
         TextView date;
         TextView variable;
+        TextView latitud;
+        TextView longitud;
+        ImageView prueba;
         private String mItem;
 
         public MonitoreoHolder(View itemView) {
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.date);
             variable = (TextView) itemView.findViewById(R.id.variable);
+            latitud = (TextView) itemView.findViewById(R.id.tv_latitud);
+            longitud = (TextView) itemView.findViewById(R.id.tv_longitud);
+            prueba = (ImageView) itemView.findViewById(R.id.iv_prueba);
         }
+
+        void setPrueba(String cad) { Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);}
 
     }
 
@@ -85,4 +99,6 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
         this.monitoreos.addAll(monitoreos);
         notifyItemRangeInserted(getItemCount()-1, monitoreos.size());
     }
+
+
 }
