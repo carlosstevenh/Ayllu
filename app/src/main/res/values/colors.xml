@@ -3,7 +3,7 @@
     <!--.........................................................................................-->
     <!--Colores del Temas-->
     <color name="colorPrimary">#d32f2f</color>
-    <color name="colorPrimaryLight">#fad9dc</color>
+    <color name="colorPrimaryLight">#975a5f</color>
     <color name="colorPrimaryDark">#b71c1c</color>
 
     <color name="colorPrimaryText">#212121</color>

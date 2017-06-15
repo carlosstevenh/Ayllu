@@ -2,33 +2,20 @@ package com.example.edwin.ayllu;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
-import com.example.edwin.ayllu.domain.Usuario;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +24,8 @@ import retrofit2.Response;
 public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     private LineChart mChart;
     private ArrayList<AnalisisPorcentajeFrecuencia> datos;
-    private String pa;
-    private TextView fecha,puntaje;
+    private String pa,fac,var;
+    private TextView fecha,puntaje,fact,vari,por,fre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +34,10 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         //Parametro que llega cuando se inicia esta actividad
         Bundle bundle = getIntent().getExtras();
         pa = bundle.getString("pa");
+        fac = bundle.getString("fac");
+        var = bundle.getString("var");
+
+
         final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
 
         //peticion al servidor de los datos necesarios para realizar la grafica estadistica.
@@ -68,6 +59,12 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 
                 fecha = (TextView) findViewById(R.id.txtFec);
                 puntaje = (TextView) findViewById(R.id.txtPun);
+                fact = (TextView) findViewById(R.id.txtFac);
+                vari = (TextView) findViewById(R.id.txtVar);
+                por = (TextView) findViewById(R.id.txtPorApa);
+                fre = (TextView) findViewById(R.id.txtFreApa);
+                fact.setText(fac);
+                vari.setText(var);
 
                 loading.dismiss();
                 if(response.isSuccessful()){
@@ -89,8 +86,16 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                         public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
                             int aux = e.getXIndex();
-                            if(datos.size()>=0) fecha.setText(datos.get(aux).getFecha());
-                            else fecha.setText("");
+                            if(datos.size()>=0) {
+                                fecha.setText(datos.get(aux).getFecha());
+                                por.setText(datos.get(aux).getProcentaje());
+                                fre.setText(datos.get(aux).getFrecuencia());
+                            }
+                            else {
+                                fecha.setText("");
+                                por.setText("");
+                                fre.setText("");
+                            }
                             puntaje.setText(""+e.getVal());
 
                         }
@@ -138,7 +143,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
         for(int i = 0; i < datos.size(); i++){
-            int aux = (Integer.parseInt(datos.get(i).getFrecuencia()) + Integer.parseInt(datos.get(i).getProcentaje()))/2;
+            float aux = (float) (((float)Integer.parseInt(datos.get(i).getFrecuencia()) + (float)Integer.parseInt(datos.get(i).getProcentaje()))/2.0);
             yVals.add(new Entry(aux, i));
         }
 
@@ -156,13 +161,14 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         set1 = new LineDataSet(yVals, getResources().getString(R.string.freYpor));
         set1.setFillAlpha(110);
         set1.setCircleColor(Color.BLACK);
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(5f);
+        set1.setLineWidth(3f);
+
+        set1.setColor(getResources().getColor(R.color.colorPrimaryDark));
         set1.setDrawCircleHole(false);
         set1.setValueTextSize(9f);
-        set1.setDrawFilled(true);
+        //set1.setDrawFilled(true);
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets
 
         // create a data object with the datasets
@@ -171,5 +177,11 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         // set data
         mChart.setData(data);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

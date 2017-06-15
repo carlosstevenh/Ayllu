@@ -153,6 +153,7 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
 
     }
 
+    //Obtiene la primera fecha que fue seleccionada
     private void actualizarLaFechaDesde() {
         fcDesde = convertirFecha(dia,mes,año);
         if(fcDesde>fcActual){
@@ -171,6 +172,7 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //Obtiene la segunda fecha que fue seleccionada
     private void actualizarLaFechaHasta() {
         fcHasta = convertirFecha(dia,mes,año);
         if(fcHasta>fcActual){
@@ -189,10 +191,12 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //Metodo utilizado para convertir la fecha para realizar los comparaciones
     private long convertirFecha(int dia, int mes, int año) {
         return (dia*24)+(mes*30*24)+(año*12*30*24);
     }
 
+    //Metodo el cual identifica el boton que fue clickeado para realizar alguna acción
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -208,6 +212,7 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //Metodo que se encarga de obtener todas las opciones que el usuario selecciono para posteriomente realizar el filtro de los monitoreos
     private void filtrar() {
         boolean apro = true;
 
@@ -279,6 +284,7 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
 
     }
 
+    //Metodo que se encarga de crear el dialogo para la selecion de la primera fecha
     private DatePickerDialog.OnDateSetListener dateSetListener = new  DatePickerDialog.OnDateSetListener() {
 
         @Override
@@ -291,6 +297,7 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
         }
     };
 
+    //Metodo que se encarga de crear el dialogo para la seleccion de la segunda fecha
     private DatePickerDialog.OnDateSetListener timeSetListener = new  DatePickerDialog.OnDateSetListener() {
 
         @Override
@@ -373,6 +380,13 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
 
 
         return builder.create();
+    }
+
+    //Metodo que escucha el boton de back
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 }

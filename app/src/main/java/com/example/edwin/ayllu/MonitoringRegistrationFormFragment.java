@@ -14,17 +14,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,20 +34,15 @@ import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
 import com.example.edwin.ayllu.domain.VariableContract;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-import java.util.regex.Pattern;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
-
 import static android.app.Activity.RESULT_OK;
 
 public class MonitoringRegistrationFormFragment extends Fragment implements VerticalStepperForm {
@@ -240,6 +230,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: Recolecta la prueba (Fotografia) del monitoreo y la almacena en un archivo
      **/
     public void getCamara1() {
+
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
 
@@ -301,7 +292,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(ibImg2);
             else if (files.size() == 3)
                 Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(ibImg3);
-
 
             if(op_reg.equals("M"))onStepOpening(0);
             else onStepOpening(2);
@@ -950,5 +940,5 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
 }
+

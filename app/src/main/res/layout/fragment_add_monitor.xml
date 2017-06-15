@@ -12,7 +12,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
@@ -47,7 +47,8 @@
                     android:id="@+id/til_ide"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp">
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp">
 
                     <EditText
                         android:id="@+id/txtide"
@@ -71,7 +72,8 @@
                     android:id="@+id/til_nom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp">
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp">
 
                     <EditText
                         android:id="@+id/txtname"
@@ -94,7 +96,8 @@
                     android:id="@+id/til_ape"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp">
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp">
 
                     <EditText
                         android:id="@+id/txtApe"
@@ -118,7 +121,8 @@
                     android:id="@+id/til_con"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp">
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp">
 
                     <EditText
                         android:id="@+id/txtCon"
@@ -143,7 +147,8 @@
                     android:id="@+id/til_con1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp">
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp">
 
                     <EditText
                         android:id="@+id/contraseña2"
@@ -160,6 +165,11 @@
                 android:id="@+id/btnReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:elevation="2dp"
+                android:onClick="login"
+                android:textStyle="bold"
+                android:theme="@style/RaisedButtonDark"
                 android:backgroundTint="@color/colorAccent"
                 android:text="@string/registrar"
                 android:textColor="@android:color/white"

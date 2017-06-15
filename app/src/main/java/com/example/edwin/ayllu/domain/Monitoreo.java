@@ -13,11 +13,20 @@ public class Monitoreo {
     private String variable;
     @SerializedName("codigo_paf")
     private String codigo;
+    @SerializedName("latitud_coo")
+    private String latitud;
+    @SerializedName("longitud_coo")
+    private String longitud;
+    @SerializedName("nombre_pru1")
+    private String prueba;
 
-    public Monitoreo(String date, String variable, String codigo) {
+    public Monitoreo(String date, String variable, String codigo, String latitud, String longitud, String prueba) {
         this.date = date;
         this.variable = variable;
         this.codigo = codigo;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.prueba = prueba;
     }
 
     public String getDate() {
@@ -42,5 +51,29 @@ public class Monitoreo {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getPrueba() {
+        return prueba;
+    }
+
+    public void setPrueba(String prueba) {
+        this.prueba = prueba;
     }
 }

@@ -5,58 +5,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.KeyEvent;
 
 import com.example.edwin.ayllu.administrador.Administrador;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.Categoria;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
-import com.example.edwin.ayllu.domain.ImagenDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
-import com.example.edwin.ayllu.domain.Task;
-import com.example.edwin.ayllu.domain.TaskContract;
-import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
 import com.example.edwin.ayllu.domain.Zona;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
-import com.example.edwin.ayllu.io.AylluApiService;
-import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.example.edwin.ayllu.domain.ImagenContract.ImagenEntry;
-import static com.example.edwin.ayllu.domain.TaskContract.TaskEntry;
 
 public class SplashScreen extends Activity {
     String tipo;
     ArrayList<Zona> zonas = new ArrayList<>();
     ArrayList<Categoria> categorias = new ArrayList<>();
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
@@ -232,5 +211,14 @@ public class SplashScreen extends Activity {
         }
         else if(dir!= null && dir.isFile()) return dir.delete();
         else return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

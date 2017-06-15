@@ -17,4 +17,10 @@ public class MontoreosPuntosCriticos extends AppCompatActivity {
                 .add(R.id.monitor_principal_context, new ListaMonitoreosFiltro())
                 .commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
