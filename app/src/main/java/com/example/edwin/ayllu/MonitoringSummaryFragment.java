@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.edwin.ayllu.domain.Imagen;
+import com.example.edwin.ayllu.domain.ImagenDbHelper;
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
@@ -45,6 +47,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
     FloatingActionButton fabRegist;
     LinearLayout lyLatitud, lyLongitud, lyVariable;
     Task task;
+    Imagen imagen;
 
     private MonitoringImageSwipeAdapter adapter;
     private LinearLayout dotsLayout;
@@ -69,6 +72,8 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         super.onCreate(savedInstanceState);
 
         task = new Task();
+        imagen = new Imagen();
+
 
         task.setMonitor(getArguments().getString("MONITOR"));
         task.setVariable(getArguments().getString("PUNTO_AFECTACION"));
@@ -83,6 +88,10 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         if(sizeFile >= 1) task.setNombre(getArguments().getString("PRUEBA1"));
         if(sizeFile >= 2) task.setNombre2(getArguments().getString("PRUEBA2"));
         if(sizeFile == 3) task.setNombre3(getArguments().getString("PRUEBA3"));
+
+        imagen.setFotografia1(task.getNombre());
+        imagen.setFotografia2(task.getNombre2());
+        imagen.setFotografia3(task.getNombre3());
 
         files = new ArrayList<>(sizeFile);
 
@@ -317,11 +326,18 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         } else {
             //Registramos el Monitoreo en el dispositivo en caso de Desconección
             TaskDbHelper taskDbHelper = new TaskDbHelper(getActivity());
+            ImagenDbHelper imagenDbHelper = new ImagenDbHelper(getActivity());
+
             taskDbHelper.saveTask(task);
+            imagenDbHelper.saveImagen(imagen);
 
             fragment = new MonitoringInfoFragment();
             Bundle params = new Bundle();
             params.putString("RESULT","OFFLINE");
+            if (tip_upload.equals("NEW")){
+                params.putString("TIPO","NEW");
+                params.putString("AREA",task.getArea());
+            }
             fragment.setArguments(params);
 
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -359,12 +375,13 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             call.enqueue(new retrofit2.Callback<Task>() {
                 @Override
                 public void onResponse(Call<Task> call, Response<Task> response) {
-                    Log.e("TAG:RESPONSE",response.message());
                     if(response.isSuccessful()) {
                         loading.dismiss();
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","OK");
+                        params.putString("TIPO","NEW");
+                        params.putString("AREA",task.getArea());
                         fragment.setArguments(params);
 
                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -377,6 +394,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","ERROR");
+                        params.putString("TIPO","NEW");
                         fragment.setArguments(params);
 
                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -391,6 +409,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                     fragment = new MonitoringInfoFragment();
                     Bundle params = new Bundle();
                     params.putString("RESULT","ERROR");
+                    params.putString("TIPO","NEW");
                     fragment.setArguments(params);
 
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -409,6 +428,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","OK");
+                        params.putString("TIPO","MONITORING");
                         fragment.setArguments(params);
 
                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -420,6 +440,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","ERROR");
+                        params.putString("TIPO","MONITORING");
                         fragment.setArguments(params);
 
                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -435,6 +456,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                     fragment = new MonitoringInfoFragment();
                     Bundle params = new Bundle();
                     params.putString("RESULT","ERROR");
+                    params.putString("TIPO","MONITORING");
                     fragment.setArguments(params);
 
                     getActivity().getSupportFragmentManager().beginTransaction()

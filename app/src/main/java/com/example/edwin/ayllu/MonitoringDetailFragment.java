@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -27,7 +28,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
     String [] imgs;
 
     TextView    tvArea, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
-                tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
+            tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
 
     FloatingActionButton fabMonitoring;
 
@@ -36,6 +37,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
     private ViewPager vpMonitoring;
 
     private MonitoringRegistrationFormFragment fragment;
+    private String[] items_porcentaje, items_frecuencia;
 
     /**
      * =============================================================================================
@@ -44,6 +46,9 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        items_porcentaje = getResources().getStringArray(R.array.listPorcentaje);
+        items_frecuencia = getResources().getStringArray(R.array.listFrecuencia);
 
         reporte = new Reporte();
 
@@ -101,6 +106,23 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         vpMonitoring.setAdapter(adapter);
         vpMonitoring.addOnPageChangeListener(viewPagerPageChangeListener);
 
+        String repercusiones = reporte.getRepercusiones();
+        String origen = reporte.getOrigen();
+
+        String rep1 = "";
+        String rep2 = "";
+        String org = "";
+
+        if(repercusiones.charAt(0) == '1') rep1 = getResources().getString(R.string.optionPositivasRepercusiones);
+        else  rep1 = getResources().getString(R.string.optionNegativasRepercusiones);
+
+        if(repercusiones.charAt(2) == '1') rep2 = getResources().getString(R.string.optionActualesRepercusiones);
+        else rep2 = getResources().getString(R.string.optionPotencialesRepercusiones);
+
+        if(origen.charAt(0) == '1') org = getResources().getString(R.string.optionInternoOrigen);
+        else org = getResources().getString(R.string.optionExternoOrigen);
+
+
         //Cargamos los Datos del Monitoreo
         tvArea.setText(reporte.getArea());
         tvVariable.setText(reporte.getVariable());
@@ -108,11 +130,11 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         tvLatitud.setText(reporte.getLatitud());
         tvLongitud.setText(reporte.getLongitud());
         tvMonitor.setText(reporte.getUsuario());
-        tvRepercuciones1.setText(reporte.getRepercusiones());
-        tvRepercuciones2.setText(reporte.getRepercusiones());
-        tvOrigen.setText(reporte.getOrigen());
-        tvPorcentaje.setText(String.format(Locale.getDefault(),"%d",reporte.getPorcentaje()));
-        tvFrecuencia.setText(String.format(Locale.getDefault(),"%d",reporte.getFrecuencia()));
+        tvRepercuciones1.setText(rep1);
+        tvRepercuciones2.setText(rep2);
+        tvOrigen.setText(org);
+        tvPorcentaje.setText(items_porcentaje[reporte.getPorcentaje()-1]);
+        tvFrecuencia.setText(items_frecuencia[reporte.getFrecuencia()-1]);
 
         addBottomDots(0);
 

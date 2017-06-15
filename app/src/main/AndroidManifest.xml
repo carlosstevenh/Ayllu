@@ -6,15 +6,29 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+
+    <uses-permission-sdk-22
+        android:name="android.permission.INTERNET"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-22
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-22
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-22
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-22 android:name="android.permission.CLEAR_APP_CACHE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:largeHeap="true">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
@@ -29,8 +43,8 @@
         </activity>
         <activity
             android:name=".MonitorMenuActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".administrador.Administrador"
             android:screenOrientation="portrait" />
@@ -48,6 +62,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MonitoringActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MontoreosPuntosCriticos"
@@ -63,7 +78,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
         <activity android:name=".ActivityPruebasMonitoreo" />
-        <activity android:name=".PrestentationActivity"></activity>
+        <activity android:name=".PrestentationActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

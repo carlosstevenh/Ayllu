@@ -11,15 +11,18 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.edwin.ayllu.administrador.Administrador;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.Categoria;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
+import com.example.edwin.ayllu.domain.ImagenDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
 import com.example.edwin.ayllu.domain.Task;
+import com.example.edwin.ayllu.domain.TaskContract;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
@@ -31,9 +34,7 @@ import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -46,6 +47,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.edwin.ayllu.domain.ImagenContract.ImagenEntry;
+import static com.example.edwin.ayllu.domain.TaskContract.TaskEntry;
 
 public class SplashScreen extends Activity {
     String tipo;
@@ -138,6 +142,7 @@ public class SplashScreen extends Activity {
         int sizeArea = areaDbHelper.getSizeDatabase();
 
         if(sizePais == 0 && sizeTramo == 0 && sizeSubtramo == 0 && sizeSeccion == 0 && sizeArea == 0){
+            deleteCache(this);
             Log.e("INFO","TABLAS DE ZONAS VACIAS :( - ESCRIBIENDO... :)");
             //--------------------------------------------------------------------------------------
             //OBTIENE LAS ZONAS
@@ -197,139 +202,35 @@ public class SplashScreen extends Activity {
             });
         }
         else Log.e("INFO","TABLAS DE CATEGORIAS CON DATOS :)");
+    }
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
 
-        //------------------------------------------------------------------------------------------
-        //REGISTRA MONITOREOS QUE ESTAN ALMACENADOS EN EL MOVIL
-        TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-        Cursor cursor = taskDbHelper.generateQuery("SELECT * FROM ");
-        int con = 0;
-
-        if (cursor.moveToFirst()) {
-            if (wifiConected()) {
-                do {
-                    //Obtengo cada uno de los monitoreos de la tabla Task
-                    Task tk = new Task(
-                            cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                            cursor.getString(4), cursor.getString(5),
-                            cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                            Integer.parseInt(cursor.getString(9)),
-                            Integer.parseInt(cursor.getString(10)),
-                            cursor.getString(11),cursor.getString(12),cursor.getString(13));
-                    con ++;
-
-                    //Subo el monitoreo al servidor
-                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                    httpClient.addInterceptor(logging);
-
-                    //Variable para almacenar la foto
-                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
-                    File file = null;
-                    File file2 = null;
-                    File file3 = null;
-                    String foto = cursor.getString(11);
-                    String foto2 = cursor.getString(12);
-                    String foto3 = cursor.getString(13);
-                    File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
-                    imagesFolder.mkdirs();
-                    //se carga la foto al la variable
-
-                    if(foto2.equals("null")){
-                        file = new File(imagesFolder,foto);
-                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        Call<String> call1 = service1.uploadAttachment(filePart);
-                        call1.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                Log.e("Fotos1 ","registro exitoso");
-                                //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-
-                            }
-                        });
-                    }
-                    else if (foto3.equals("null")){
-                        file = new File(imagesFolder,foto);
-                        file2 = new File(imagesFolder,foto2);
-
-                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", file2.getName(), RequestBody.create(MediaType.parse("image/*"), file2));
-
-                        Call<String>call1 = service1.upLoad2(filePart,filePart2);
-                        call1.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                Log.e("Fotos2 ","registro exitoso");
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-
-                            }
-                        });
-                    }
-                    else if (!foto.equals("null") && !foto2.equals("null") && !foto3.equals("null")){
-                        file = new File(imagesFolder,foto);
-                        file2 = new File(imagesFolder,foto2);
-                        file3 = new File(imagesFolder,foto3);
-
-                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("fotoUp2", file2.getName(), RequestBody.create(MediaType.parse("image/*"), file2));
-                        MultipartBody.Part filePart3 = MultipartBody.Part.createFormData("fotoUp3", file3.getName(), RequestBody.create(MediaType.parse("image/*"), file3));
-
-                        Call<String>call1 = service1.upLoad3(filePart,filePart2,filePart3);
-                        call1.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                Log.e("Fotos3 ","registro exitoso");
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-
-                            }
-                        });
-                    }
-
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(ApiConstants.URL_API_AYLLU)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                            .client(httpClient.build())
-                            .build();
-
-                    AylluApiService service = retrofit.create(AylluApiService.class);
-                    Call<Task> call = service.registrarPunto(tk);
-                    call.enqueue(new Callback<Task>() {
-                        @Override
-                        public void onResponse(Call<Task> call, Response<Task> response) {
-
-                        }
-                        @Override
-                        public void onFailure(Call<Task> call, Throwable t) {
-
-                        }
-                    });
-
-                } while (cursor.moveToNext());
-                //Elimino la base de datos Task
-                taskDbHelper.deleteDataBase();
-            }
-        }
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
     }
 
-    //==============================================================================================
-    //METODO: Verifica la conexion a internet
-    protected Boolean wifiConected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected() )return true;
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        }
+        else if(dir!= null && dir.isFile()) return dir.delete();
         else return false;
     }
 }

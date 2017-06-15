@@ -23,9 +23,10 @@
     <color name="colorRadioButtonOff">#c2c2d4</color>
     <!--.........................................................................................-->
     <!--Colores de la CardView-->
-    <color name="colorTextCardView">#ffffff</color>
-    <color name="colorBackgroundCardView">#af000000</color>
-    <color name="colorIconCardView">#ffffff</color>
+    <color name="colorTextCardView">#000000</color>
+    <color name="colorBackgroundCardView">#ffffff</color>
+    <color name="colorIconCardView">#1f2549</color>
+    <color name="colorBackgroundList">#bcbcbc</color>
     <!--.........................................................................................-->
     <!--Colores para el dialogo de coordenadasw-->
     <color name="colorTitleBackground">#0e2a3d</color>

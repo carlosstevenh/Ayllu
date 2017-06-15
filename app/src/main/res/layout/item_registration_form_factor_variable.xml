@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/content_factor_variable"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_factor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="15dp"
+        android:layout_margin="5dp"
+        android:background="@color/colorAccent"
+        android:drawableLeft="@drawable/ic_variable"
+        android:drawableStart="@drawable/ic_variable"
+        android:text="@string/descriptionButtonFactor"
+        android:drawableTint="@color/colorTextIcons"
+        android:textColor="@color/colorTextIcons" />
+
+    <TextView
+        android:id="@+id/tv_factor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryText"/>
+
+    <View
+        android:id="@+id/divisor1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:alpha=".5"
+        android:background="@color/colorDivider"/>
+
+    <Button
+        android:id="@+id/btn_variable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:padding="15dp"
+        android:background="@color/colorAccentLight"
+        android:drawableLeft="@drawable/ic_variable"
+        android:drawableStart="@drawable/ic_variable"
+        android:text="@string/descriptionButtonVariable"
+        android:drawableTint="@color/colorTextIcons"
+        android:textColor="@color/colorTextIcons" />
+
+    <TextView
+        android:id="@+id/tv_variable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryText"/>
+
+    <View
+        android:id="@+id/divisor2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:alpha=".5"
+        android:background="@color/colorDivider"/>
+
+</LinearLayout>

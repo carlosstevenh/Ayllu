@@ -47,25 +47,32 @@
             android:weightSum="120">
 
             <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_unesco_icon"
-                android:layout_weight="40"/>
-
-            <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/udenar_logo"
-                android:layout_weight="40"/>
+                android:layout_weight="30"/>
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_unesco_icon"
+                android:layout_weight="30"/>
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_logo_japon"
+                android:layout_weight="30"/>
 
             <ImageView
                 android:id="@+id/imageView6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_patrimonio"
-                android:layout_weight="40"/>
+                android:layout_weight="30"/>
 
         </LinearLayout>
 
