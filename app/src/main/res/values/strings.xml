@@ -216,4 +216,9 @@
     <string name="mapasEspecificos">Gráficos estadíticos Especificos</string>
     <string name="graficaPorTramo">GraficaPorTramo</string>
     <string name="descargaGrafica">Imagen descarda en la galería</string>
+    <string name="graficaPorVariable">GraficaPorVariable</string>
+    <string name="analisisVariable">Análisis Variable</string>
+    <string name="graficaPorcentajeFrecuencia">Grafica_porcentaje_frecuencia</string>
+    <string name="rangoFechas">Seleccione el rango de fechas</string>
+    <string name="graficaRespuestaInstitucional">GraficaRespuestaInstitucional</string>
 </resources>

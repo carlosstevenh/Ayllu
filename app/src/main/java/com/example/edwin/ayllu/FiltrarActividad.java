@@ -277,7 +277,7 @@ public class FiltrarActividad extends AppCompatActivity implements View.OnClickL
 
             Toast.makeText(
                     FiltrarActividad.this,
-                    "seleccione el rango de fechas",
+                    getResources().getString(R.string.rangoFechas),
                     Toast.LENGTH_LONG)
                     .show();
         }

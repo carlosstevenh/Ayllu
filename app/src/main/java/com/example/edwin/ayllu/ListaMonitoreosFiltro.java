@@ -53,8 +53,8 @@ public class ListaMonitoreosFiltro extends Fragment {
         pc.enqueue(new Callback<ArrayList<PuntoCritico>>() {
             @Override
             public void onResponse(Call<ArrayList<PuntoCritico>> call, Response<ArrayList<PuntoCritico>> response) {
+                loading.dismiss();
                 if (response.isSuccessful()) {
-                    loading.dismiss();
                     monitoreos = response.body();
 
                     //invocacion al metodo setOnclickListener cuando el usuario clickea un elementod de la lista
