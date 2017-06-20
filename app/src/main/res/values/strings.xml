@@ -214,4 +214,6 @@
     <string name="menuMapasEstadisticos">Menú gráficos estadísticos</string>
     <string name="mapasGenerales">Gráficos estadísticos generales</string>
     <string name="mapasEspecificos">Gráficos estadíticos Especificos</string>
+    <string name="graficaPorTramo">GraficaPorTramo</string>
+    <string name="descargaGrafica">Imagen descarda en la galería</string>
 </resources>

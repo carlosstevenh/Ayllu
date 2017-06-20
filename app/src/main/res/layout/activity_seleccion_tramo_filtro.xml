@@ -77,4 +77,16 @@ tools:context="com.example.edwin.ayllu.ActivitySeleccionTramoFiltro">
         app:layout_anchor="@+id/include3"
         app:layout_anchorGravity="bottom|center_horizontal" />
 
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_dowload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="@dimen/fab_margin"
+        app:fab_colorNormal="@color/colorAccent"
+        app:fab_icon="@drawable/ic_download"
+        app:fab_size="normal"
+        app:layout_anchor="@+id/include3"
+        app:layout_anchorGravity="bottom|center_horizontal" />
+
 </android.support.design.widget.CoordinatorLayout>

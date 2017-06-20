@@ -4,8 +4,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +32,9 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.crypto.AEADBadTagException;
 
@@ -41,7 +47,10 @@ import static com.example.edwin.ayllu.domain.TramoContract.TramoEntry;
 
 public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements View.OnClickListener{
 
-    private FloatingActionButton fabPais, fabTramo, fabSearch;
+    private FloatingActionButton fabPais, fabTramo, fabSearch, fabDowload;
+
+    // Códigos de petición
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
 
     //VARIABLES DATOS TEMPORALES
     CharSequence[] items_paises, items_tramos;
@@ -84,8 +93,10 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         fabPais = (FloatingActionButton) findViewById(R.id.fab_pais);
         fabTramo = (FloatingActionButton) findViewById(R.id.fab_tramo);
         fabSearch = (FloatingActionButton) findViewById(R.id.fab_search);
+        fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
 
         fabTramo.setEnabled(false);
+        fabDowload.setEnabled(false);
 
         fabPais.setOnClickListener(this);
         fabTramo.setOnClickListener(this);
@@ -233,6 +244,14 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                                     l.setXEntrySpace(7);
                                     l.setYEntrySpace(5);
 
+                                    fabDowload.setEnabled(true);
+                                    fabDowload.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            checkPermission();
+                                        }
+                                    });
+
                                 }
                                 else{
                                     Toast.makeText(
@@ -343,5 +362,49 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    void dowload(){
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String format = s.format(new Date());
+        String grafica = getResources().getString(R.string.graficaPorTramo)+format + ".jpg";
+        mChart.saveToGallery(grafica,100);
+
+        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+    }
+    /**
+     * =============================================================================================
+     * METODO: CHEQUEA LOS PERMISOS DEL DISPOSITIVO
+     **/
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) dowload();
+        else {
+            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_WRITE_EXTERNAL_STORAGE);
+            }
+            else dowload();
+        }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
+            else {
+                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
