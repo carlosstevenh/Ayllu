@@ -347,11 +347,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
                         opciones[0] = cursor.getString(1);
                         pos[0] = which;
-                        opciones[1] = "0";
+                        opciones[1] = "";
                         pos[1] = -1;
 
                         items_variables = null;
-                        //fab_variable.setEnabled(true);
 
                         i = 0;
                         cursor = variableDbHelper.generateConditionalQuery(new String[]{opciones[0]}, VariableContract.VariableEntry.FACTOR);

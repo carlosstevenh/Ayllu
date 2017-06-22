@@ -2,6 +2,7 @@ package com.example.edwin.ayllu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,9 @@ import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,6 +29,9 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
 
     Reporte reporte;
     String [] imgs;
+    String estado = "";
+    int sizeimgs = 0;
+    private ArrayList<File> files = new ArrayList<>();
 
     TextView    tvArea, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
             tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
@@ -67,9 +73,18 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         reporte.setPrueba2(getArguments().getString("PRUEBA2"));
         reporte.setPrueba3(getArguments().getString("PRUEBA3"));
 
-        int size = reporte.getSize();
-        imgs = new String[size];
-        for (int i = 0; i<size; i++) imgs[i] = ApiConstants.URL_IMG + reporte.getPruebas(i+1);
+        estado = getArguments().getString("ESTADO");
+        reporte.setEstado(estado);
+
+        if(estado.equals("ONLINE")){
+            sizeimgs = reporte.getSize();
+            imgs = new String[sizeimgs];
+            for (int i = 0; i<sizeimgs; i++) imgs[i] = ApiConstants.URL_IMG + reporte.getPruebas(i+1);
+        } else {
+            File file = new File(Environment.getExternalStorageDirectory() + "/Ayllu/Offline/" + reporte.getPrueba1());
+            files.add(file);
+            sizeimgs = 1;
+        }
 
     }
 
@@ -102,7 +117,8 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         fabMonitoring.setOnClickListener(this);
 
         //Cargamos las Imagenes
-        adapter = new MonitoringImageSwipeAdapter(getActivity(), imgs);
+        if (estado.equals("ONLINE")) adapter = new MonitoringImageSwipeAdapter(getActivity(), imgs);
+        else adapter = new MonitoringImageSwipeAdapter(getActivity(), files);
         vpMonitoring.setAdapter(adapter);
         vpMonitoring.addOnPageChangeListener(viewPagerPageChangeListener);
 
@@ -182,7 +198,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
      * METODO: Añade los puntos al LinearLayout encargado de mostrar información de el Slide Actual
      **/
     private void addBottomDots(int currentPage) {
-        TextView[] dots = new TextView[imgs.length];
+        TextView[] dots = new TextView[sizeimgs];
 
         dotsLayout.removeAllViews();
         //Limpiamos y recargamos todos lo views para los puntos

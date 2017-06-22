@@ -102,7 +102,7 @@
     <string name="descriptionTramo">SECTION</string>
     <string name="descriptionSubtramo">SUBSECTION</string>
     <string name="descriptionSeccion">SEGMENT</string>
-    <string name="descriptionArea">AREA</string>
+    <string name="descriptionPropiedad">PROPERTY NOMINATED</string>
     <string name="itemCardViewFecha">DATE:</string>
     <string name="itemCardViewLatitud">LATITUDE:</string>
     <string name="itemCardViewLongitud">LENGTH:</string>

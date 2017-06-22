@@ -22,11 +22,21 @@
         android:maxSdkVersion="25" />
     <uses-permission-sdk-22 android:name="android.permission.CLEAR_APP_CACHE" />
 
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET" android:maxSdkVersion="25" />
-    <uses-permission-sdk-23 android:name="android.permission.ACCESS_NETWORK_STATE" android:maxSdkVersion="25" />
-    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="25" />
-    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="25" />
-    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="25" />
+    <uses-permission-sdk-23
+        android:name="android.permission.INTERNET"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-23
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-23
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-23
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="25" />
+    <uses-permission-sdk-23
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:maxSdkVersion="25" />
 
     <application
         android:allowBackup="true"
@@ -35,8 +45,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
@@ -51,55 +60,53 @@
             android:launchMode="singleInstance" />
         <activity
             android:name=".administrador.Administrador"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".administrador.EditMonitor"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".SeleccionArea"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".InstitutionalActivity"
-            android:configChanges="screenSize|orientation"/>
-        <activity
-            android:name=".FormRespuesta" />
+            android:configChanges="screenSize|orientation" />
+        <activity android:name=".FormRespuesta" />
         <activity
             android:name=".MonitoringActivity"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".MontoreosPuntosCriticos"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".InformacionPuntoCritico"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".FiltrarActividad"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".ActividadEstadisticaPuntoAfactacion"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".ActivityPruebasMonitoreo"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".PrestentationActivity"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".GraficaRespuestaInstitucional"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".ActivitySeleccionTramoFiltro"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".GraficaTortaVariables"
-            android:configChanges="screenSize|orientation"/>
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name=".MenuGraficasEstadisticas"
-            android:configChanges="screenSize|orientation">
-
-        </activity>
->>>>>>> upstream/experimental
+            android:configChanges="screenSize|orientation"></activity>
+        >>>>>>> upstream/experimental
+        <activity android:name=".SettingsAppActivity"></activity>
     </application>
 
 </manifest>

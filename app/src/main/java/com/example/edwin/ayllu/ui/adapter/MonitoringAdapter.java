@@ -1,6 +1,11 @@
 package com.example.edwin.ayllu.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +18,8 @@ import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.Reporte;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.ReporteViewHolder> implements View.OnClickListener{
@@ -43,7 +50,11 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
         holder.setReporteLatitud(currentReporte.getLatitud());
         holder.setReporteLongitud(currentReporte.getLongitud());
         holder.setReporteFecha(currentReporte.getFecha_mon());
-        holder.setPrueba(ApiConstants.URL_IMG+currentReporte.getPrueba1());
+        if(currentReporte.getEstado().equals("ONLINE")) holder.setPruebaOnline(ApiConstants.URL_IMG + currentReporte.getPrueba1());
+        else {
+            File file = new File(Environment.getExternalStorageDirectory() + "/Ayllu/Offline/" +currentReporte.getPrueba1());
+            holder.setPruebaOffline(file);
+        }
     }
     //----------------------------------------------------------------------------------------------
     //RETORNA EL TAMAÑO DE CUANTOS ELEMENTOS HAY EN LA LISTA
@@ -95,6 +106,11 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
         void setReporteLatitud(String cad){ latitud.setText(cad);}
         void setReporteLongitud(String cad) { longitud.setText(cad);}
         void setReporteFecha(String cad) { fecha.setText(cad);}
-        void setPrueba(String cad) { Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);}
+        void setPruebaOnline(String cad) {
+            Picasso.with(itemView.getContext()).load(cad).fit().error(R.drawable.fondo_splash).centerCrop().into(prueba);
+        }
+        void setPruebaOffline(File cad) {
+            Picasso.with(itemView.getContext()).load(cad).fit().error(R.drawable.fondo_splash).centerCrop().into(prueba);
+        }
     }
 }

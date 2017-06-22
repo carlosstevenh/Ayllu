@@ -27,6 +27,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    repositories { maven { url "https://jitpack.io" } }
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -40,13 +42,13 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'commons-codec:commons-codec:1.9'
-    compile 'com.google.android.gms:play-services-location:10.2.1'
-    compile 'com.getbase:floatingactionbutton:1.8.0'
+    compile 'com.google.android.gms:play-services-location:11.0.1'
+    compile 'com.getbase:floatingactionbutton:1.9.0'
     compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
-    repositories { maven { url "https://jitpack.io" } }
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-
 }
+
 
 

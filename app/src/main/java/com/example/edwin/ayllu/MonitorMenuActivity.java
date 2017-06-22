@@ -280,7 +280,15 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      **/
     private void launchRegistroMonitoreo() {
         Intent intent = new Intent(MonitorMenuActivity.this, MonitoringActivity.class);
-        intent.putExtra("ESTADO","INICIAL");
+        startActivity(intent);
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Carga el Activity encargada de la Configuración
+     **/
+    private void launchConfiguracion() {
+        Intent intent = new Intent(MonitorMenuActivity.this, SettingsAppActivity.class);
         startActivity(intent);
     }
 
@@ -350,6 +358,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                 if (current == 0) launchRegistroMonitoreo();
                 else if (current == 1) launchRespuestaInstitucional();
                 else if (current == 2) launchEstadisticas();
+                else if (current == 3) launchConfiguracion();
                 else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Funcionalidad en Construccion", Toast.LENGTH_LONG);
                     toast.show();
