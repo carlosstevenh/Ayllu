@@ -1,13 +1,19 @@
 package com.example.edwin.ayllu;
 
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -15,7 +21,10 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +35,10 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     private ArrayList<AnalisisPorcentajeFrecuencia> datos;
     private String pa,fac,var;
     private TextView fecha,puntaje,fact,vari,por,fre;
+    private FloatingActionButton fabDowload;
+
+    // Códigos de petición
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +78,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 fre = (TextView) findViewById(R.id.txtFreApa);
                 fact.setText(fac);
                 vari.setText(var);
+                fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
 
                 loading.dismiss();
                 if(response.isSuccessful()){
@@ -105,7 +119,12 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
 
                         }
                     });
-
+                    fabDowload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            checkPermission();
+                        }
+                    });
 
                 }
                 else {
@@ -183,5 +202,49 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    void dowload(){
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String format = s.format(new Date());
+        String grafica = getResources().getString(R.string.graficaPorcentajeFrecuencia)+format + ".jpg";
+        mChart.saveToGallery(grafica,100);
+
+        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+    }
+    /**
+     * =============================================================================================
+     * METODO: CHEQUEA LOS PERMISOS DEL DISPOSITIVO
+     **/
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) dowload();
+        else {
+            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_WRITE_EXTERNAL_STORAGE);
+            }
+            else dowload();
+        }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
+            else {
+                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

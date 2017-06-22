@@ -1,7 +1,11 @@
 package com.example.edwin.ayllu;
 
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.RespuestaInstitucional;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +38,11 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
     private RadioGroup grup;
     private BarChart mChart;
     private TextView facView,varView;
+    private FloatingActionButton fabDowload;
+    private String save = "E";
+
+    // Códigos de petición
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +56,8 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         rec = (RadioButton) findViewById(R.id.radio_rec);
         con = (RadioButton) findViewById(R.id.radio_con);
         mChart = (BarChart) findViewById(R.id.linechart);
+        fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
+        fabDowload.setEnabled(false);
 
         Bundle bundle = getIntent().getExtras();
         pa = bundle.getString("pa");
@@ -69,7 +83,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                     Log.e("Error",response.body().size()+"");
                     rp = response.body();
                     ban = true;
-
+                    save = "E";
                     ArrayList<BarDataSet> aux = valoresYq(evaluacion());
                     BarData data= new BarData(valoresX(), aux);
                     data.setGroupSpace(0);
@@ -79,6 +93,14 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                     mChart.animateX(2000);
                     mChart.animateY(2000);
                     mChart.animateXY(2000, 2000);
+
+                    fabDowload.setEnabled(true);
+                    fabDowload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            checkPermission();
+                        }
+                    });
                 }
                 else Log.e("Error","encontro pero nada");
             }
@@ -107,12 +129,19 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         ArrayList<BarDataSet> aux = valoresYq(evaluacion());
                         BarData data= new BarData(valoresX(), aux);
                         data.setGroupSpace(0);
-
+                        save = "E";
                         mChart.setData(data);
                         mChart.invalidate();
                         mChart.animateX(2000);
                         mChart.animateY(2000);
                         mChart.animateXY(2000, 2000);
+
+                        fabDowload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkPermission();
+                            }
+                        });
                     }
 
 
@@ -126,12 +155,19 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         ArrayList<BarDataSet> aux = valoresYq(personal());
                         BarData data= new BarData(valoresX(), aux);
                         data.setGroupSpace(0);
-
+                        save = "P";
                         mChart.setData(data);
                         mChart.invalidate();
                         mChart.animateX(2000);
                         mChart.animateY(2000);
                         mChart.animateXY(2000, 2000);
+
+                        fabDowload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkPermission();
+                            }
+                        });
                     }
 
 
@@ -144,12 +180,19 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         ArrayList<BarDataSet> aux = valoresYq(tiempo());
                         BarData data= new BarData(valoresX(), aux);
                         data.setGroupSpace(0);
-
+                        save = "T";
                         mChart.setData(data);
                         mChart.invalidate();
                         mChart.animateX(2000);
                         mChart.animateY(2000);
                         mChart.animateXY(2000, 2000);
+
+                        fabDowload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkPermission();
+                            }
+                        });
                     }
 
                 }
@@ -161,12 +204,19 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         ArrayList<BarDataSet> aux = valoresYq(presupuesto());
                         BarData data= new BarData(valoresX(), aux);
                         data.setGroupSpace(0);
-
+                        save = "PR";
                         mChart.setData(data);
                         mChart.invalidate();
                         mChart.animateX(2000);
                         mChart.animateY(2000);
                         mChart.animateXY(2000, 2000);
+
+                        fabDowload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkPermission();
+                            }
+                        });
                     }
 
                 }
@@ -178,12 +228,19 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         ArrayList<BarDataSet> aux = valoresYq(recursos());
                         BarData data= new BarData(valoresX(), aux);
                         data.setGroupSpace(0);
-
+                        save = "R";
                         mChart.setData(data);
                         mChart.invalidate();
                         mChart.animateX(2000);
                         mChart.animateY(2000);
                         mChart.animateXY(2000, 2000);
+
+                        fabDowload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkPermission();
+                            }
+                        });
                     }
 
                 }
@@ -195,12 +252,19 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         ArrayList<BarDataSet> aux = valoresYq(conocimiento());
                         BarData data= new BarData(valoresX(), aux);
                         data.setGroupSpace(0);
-
+                        save = "C";
                         mChart.setData(data);
                         mChart.invalidate();
                         mChart.animateX(2000);
                         mChart.animateY(2000);
                         mChart.animateXY(2000, 2000);
+
+                        fabDowload.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkPermission();
+                            }
+                        });
                     }
                 }
                 break;
@@ -317,4 +381,53 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         finish();
     }
 
+    void dowload(){
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String format = s.format(new Date());
+        String grafica;
+        if(save.equals("E")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.evaluacion)+format + ".jpg";
+        else if(save.equals("P")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.personal)+format + ".jpg";
+        else if(save.equals("T")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.tiempo)+format + ".jpg";
+        else if(save.equals("PR")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.presupuesto)+format + ".jpg";
+        else if(save.equals("R")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.recursos)+format + ".jpg";
+        else grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.conocimiento)+format + ".jpg";
+        mChart.saveToGallery(grafica,100);
+
+        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+    }
+    /**
+     * =============================================================================================
+     * METODO: CHEQUEA LOS PERMISOS DEL DISPOSITIVO
+     **/
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) dowload();
+        else {
+            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_WRITE_EXTERNAL_STORAGE);
+            }
+            else dowload();
+        }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
+            else {
+                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 }

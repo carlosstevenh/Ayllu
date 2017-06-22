@@ -34,13 +34,11 @@ import retrofit2.Response;
 
 public class InformacionPuntoCritico extends AppCompatActivity implements View.OnClickListener{
     private String pa,fm;
-    private TextView paf,fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
+    private TextView fec,nom,pais,tra,sub,sec,are,fac,var,lon,lat;
     private ArrayList<MonitoreoGeneral> mg;
     FloatingActionButton fab_res, fab_graficas;
 
     private String URL = ApiConstants.URL_IMG;
-    private int tamamo = 0;
-    private ArrayList<Prueba> pruebas = new ArrayList<>();
 
     private MonitoringImageSwipeAdapter adapter;
     private LinearLayout dotsLayout;

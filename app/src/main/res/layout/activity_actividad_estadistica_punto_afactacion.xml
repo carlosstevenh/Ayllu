@@ -1,92 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                android:background="?attr/colorPrimary"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center_horizontal"
-                >
+                android:background="?attr/colorPrimary">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/analisis"
-                    android:textSize="18sp"
-                    android:textColor="#fff"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="10dp"/>
+                    android:text="@string/analisis"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
         <TextView
+            android:id="@+id/textView33"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView33"
-            android:textStyle="normal|italic"
             android:text="@string/fecha"
+            android:textAlignment="center"
             android:textSize="12sp"
-            android:textAlignment="center" />
+            android:textStyle="normal|italic" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp">
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="19dp"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:weightSum="1">
 
                 <TextView
+                    android:id="@+id/textView61"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView61"
                     android:layout_weight="0.56" />
 
                 <TextView
-                    android:text="@string/puntaje"
+                    android:id="@+id/textView52"
                     android:layout_width="9dp"
                     android:layout_height="159dp"
-                    android:id="@+id/textView52"
-                    android:scrollbars = "horizontal"
-                    android:textStyle="normal|italic"
+                    android:layout_weight="0.61"
+                    android:scrollbars="horizontal"
+                    android:text="@string/puntaje"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:layout_weight="0.61" />
+                    android:textStyle="normal|italic" />
             </LinearLayout>
 
             <include
+                layout="@layout/grafica_estadistica"
                 android:layout_width="match_parent"
                 android:layout_height="262dp"
-                layout="@layout/grafica_estadistica"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView46" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -95,7 +97,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -104,170 +106,183 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:text="@string/fecha"
+                                android:id="@+id/textView37"
                                 android:layout_width="146dp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/textView37"
-                                android:textStyle="normal|bold"
+                                android:text="@string/fecha"
                                 android:textColor="@color/colorPrimaryText"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/txtFec"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:text="@string/puntaje"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/textView44"
-                                android:layout_weight="0.23"
                                 android:textSize="18sp"
-                                android:textColor="@color/colorPrimaryText"
                                 android:textStyle="normal|bold" />
 
                             <TextView
+                                android:id="@+id/txtFec"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView44"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.23"
+                                android:text="@string/puntaje"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="18sp"
+                                android:textStyle="normal|bold" />
+
+                            <TextView
                                 android:id="@+id/txtPun"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1" />
                         </LinearLayout>
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:text="@string/porApr"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/textView27"
-                                android:layout_weight="1"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textStyle="normal|bold"
-                                android:textSize="18sp" />
-
-                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/porApr"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="18sp"
+                                android:textStyle="normal|bold" />
+
+                            <TextView
                                 android:id="@+id/txtPorApa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1" />
                         </LinearLayout>
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:text="@string/freApa"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/textView36"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textStyle="normal|bold"
+                                android:text="@string/freApa"
                                 android:textColor="@color/colorPrimaryText"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                android:textStyle="normal|bold" />
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/txtFreApa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1" />
                         </LinearLayout>
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:text="@string/factor"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/textView48"
-                                android:layout_weight="1"
-                                android:textSize="18sp"
-                                android:textStyle="normal|bold"
-                                android:textColor="@color/colorPrimaryText" />
-
-                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/factor"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="18sp"
+                                android:textStyle="normal|bold" />
+
+                            <TextView
                                 android:id="@+id/txtFac"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1" />
                         </LinearLayout>
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:text="@string/variable"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/textView45"
-                                android:layout_weight="1"
-                                android:textStyle="normal|bold"
-                                android:textSize="18sp"
-                                android:textColor="@color/colorPrimaryText" />
-
-                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/variable"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="18sp"
+                                android:textStyle="normal|bold" />
+
+                            <TextView
                                 android:id="@+id/txtVar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1" />
 
                         </LinearLayout>
+
+
                     </TableRow>
 
                 </TableLayout>
             </LinearLayout>
         </ScrollView>
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_dowload"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_weight="1"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_download"
+            app:fab_size="normal" />
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+
