@@ -41,11 +41,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MonitoringSummaryFragment extends Fragment implements View.OnClickListener {
-    TextView tvRep1, tvRep2, tvOrigen, tvPorcentaje, tvFrecuencia, tvLatitud, tvLongitud, tvVariable,
-            titCoordenadas, titVariable;
-    View vDiv1, vDiv2;
+    TextView tvRep1, tvRep2, tvOrigen, tvPorcentaje, tvFrecuencia, tvLatitud, tvLongitud,
+             tvFactor, tvVariable;
     FloatingActionButton fabRegist;
-    LinearLayout lyLatitud, lyLongitud, lyVariable;
     Task task;
     Imagen imagen;
 
@@ -58,7 +56,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
     ProgressDialog loading;
     HttpLoggingInterceptor logging;
 
-    String por_name = "", fre_name = "", var_name = "", rep1_name = "POSITIVAS",
+    String por_name = "", fre_name = "", factor_name = "", var_name = "", rep1_name = "POSITIVAS",
             rep2_name = "ACTUALES", orig_name = "INTERNO", tipo_upload = "";
 
     private ArrayList<File> files;
@@ -73,7 +71,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
 
         task = new Task();
         imagen = new Imagen();
-
 
         task.setMonitor(getArguments().getString("MONITOR"));
         task.setVariable(getArguments().getString("PUNTO_AFECTACION"));
@@ -117,16 +114,18 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         if (task.getRepercusiones().charAt(2) == '0') rep2_name = "POTENCIALES";
         if (task.getOrigen().charAt(0) == '0') orig_name = "EXTERNO";
 
+        task.setLatitud(getArguments().getString("LATITUD"));
+        task.setLongitud(getArguments().getString("LONGITUD"));
+        var_name = getArguments().getString("VAR_NAME");
+        factor_name = getArguments().getString("FACTOR_NAME");
         tipo_upload = getArguments().getString("TYPE_UPLOAD");
 
         assert tipo_upload != null;
         if (tipo_upload.equals("NEW")) {
             task.setVariable(getArguments().getString("VAR_COD"));
             task.setArea(getArguments().getString("AREA"));
-            task.setLatitud(getArguments().getString("LATITUD"));
-            task.setLongitud(getArguments().getString("LONGITUD"));
-            var_name = getArguments().getString("VAR_NAME");
-        }
+
+        } else task.setTipo("M");
     }
 
 
@@ -143,14 +142,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         vpMonitoring = (ViewPager) view.findViewById(R.id.vp_monitoring);
         dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
 
-        titCoordenadas = (TextView) view.findViewById(R.id.tv_title_coordenadas);
-        titVariable = (TextView) view.findViewById(R.id.tv_title_variable);
-        lyLatitud = (LinearLayout) view.findViewById(R.id.area_latitud);
-        lyLongitud = (LinearLayout) view.findViewById(R.id.area_longitud);
-        lyVariable = (LinearLayout) view.findViewById(R.id.area_variable);
-        vDiv1 = view.findViewById(R.id.divisor5);
-        vDiv2 = view.findViewById(R.id.divisor6);
-
         tvRep1 = (TextView) view.findViewById(R.id.tv_repercuciones1);
         tvRep2 = (TextView) view.findViewById(R.id.tv_repercuciones2);
         tvOrigen = (TextView) view.findViewById(R.id.tv_origen);
@@ -158,21 +149,11 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         tvFrecuencia = (TextView) view.findViewById(R.id.tv_frecuencia);
         tvLatitud = (TextView) view.findViewById(R.id.tv_latitud);
         tvLongitud = (TextView) view.findViewById(R.id.tv_longitud);
+        tvFactor = (TextView) view.findViewById(R.id.tv_factor);
         tvVariable = (TextView) view.findViewById(R.id.tv_variable);
 
         fabRegist = (FloatingActionButton) view.findViewById(R.id.fab_reg);
-
         fabRegist.setOnClickListener(this);
-
-        if (tipo_upload.equals("MONITORING")) {
-            titCoordenadas.setVisibility(View.INVISIBLE);
-            titVariable.setVisibility(View.INVISIBLE);
-            lyLatitud.setVisibility(View.INVISIBLE);
-            lyLongitud.setVisibility(View.INVISIBLE);
-            lyVariable.setVisibility(View.INVISIBLE);
-            vDiv1.setVisibility(View.INVISIBLE);
-            vDiv2.setVisibility(View.INVISIBLE);
-        }
 
         //Cargamos las Imagenes
         adapter = new MonitoringImageSwipeAdapter(getActivity(), files);
@@ -187,6 +168,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         tvLatitud.setText(task.getLatitud());
         tvLongitud.setText(task.getLongitud());
         tvVariable.setText(var_name);
+        tvFactor.setText(factor_name);
 
         addBottomDots(0);
 
@@ -337,6 +319,8 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             if (tip_upload.equals("NEW")){
                 params.putString("TIPO","NEW");
                 params.putString("AREA",task.getArea());
+            } else {
+                params.putString("TIPO","MONITORING");
             }
             fragment.setArguments(params);
 

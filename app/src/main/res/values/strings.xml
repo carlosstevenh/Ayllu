@@ -149,6 +149,7 @@
     <string name="itemCardViewLatitud">LATITUD:</string>
     <string name="itemCardViewLongitud">LONGITUD:</string>
     <string name="itemCardViewVariable">VARIABLE:</string>
+    <string name="itemCardViewFactor">FACTOR:</string>
     <string name="itemCardViewDescriptionPrueba">Imagen del monitoreo</string>
     <string name="titleListMonitoringDialog">INFORMACIÓN</string>
     <string name="descriptionListMonitoringDialog">Seleciona un área para registrar un monitoreo</string>
@@ -193,6 +194,7 @@
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
+    <string name="titlebuttonFijar">FIJAR</string>
 
     <string-array name="listPorcentaje">
         <item>[1%-10%] RESTRINGIDA</item>

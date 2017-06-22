@@ -187,7 +187,8 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                             cursor1.getString(6), cursor1.getString(7), cursor1.getString(8),
                             Integer.parseInt(cursor1.getString(9)),
                             Integer.parseInt(cursor1.getString(10)),
-                            cursor1.getString(11),cursor1.getString(12),cursor1.getString(13));
+                            cursor1.getString(11),cursor1.getString(12),cursor1.getString(13),
+                            cursor1.getString(14));
 
                     final int numon1 = cursor1.getInt(0);
 
@@ -199,23 +200,44 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                             .build();
 
                     if(!cursor1.getString(11).equals("null")) {
-                        AylluApiService service = retrofit.create(AylluApiService.class);
-                        Call<Task> call = service.registrarPunto(tk);
-                        call.enqueue(new Callback<Task>() {
-                            @Override
-                            public void onResponse(Call<Task> call, Response<Task> response) {
-                                Toast.makeText(MonitorMenuActivity.this,
-                                        "Monitoreo N°" + numon1 + " Registrado", Toast.LENGTH_SHORT).show();
+                        if(tk.getTipo().equals("N")){
+                            AylluApiService service = retrofit.create(AylluApiService.class);
+                            Call<Task> call = service.registrarPunto(tk);
+                            call.enqueue(new Callback<Task>() {
+                                @Override
+                                public void onResponse(Call<Task> call, Response<Task> response) {
+                                    Toast.makeText(MonitorMenuActivity.this,
+                                            "Punto de afectación N°" + numon1 + " Registrado", Toast.LENGTH_SHORT).show();
 
-                                String[] cond = new String[]{numon1  + ""};
-                                taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
-                            }
+                                    String[] cond = new String[]{numon1  + ""};
+                                    taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
+                                }
 
-                            @Override
-                            public void onFailure(Call<Task> call, Throwable t) {
+                                @Override
+                                public void onFailure(Call<Task> call, Throwable t) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
+                        else if (tk.getTipo().equals("M")){
+                            AylluApiService service = retrofit.create(AylluApiService.class);
+                            Call<Task> call = service.monitorearPunto(tk);
+                            call.enqueue(new Callback<Task>() {
+                                @Override
+                                public void onResponse(Call<Task> call, Response<Task> response) {
+                                    Toast.makeText(MonitorMenuActivity.this,
+                                            "Monitoreo N°" + numon1 + " Registrado", Toast.LENGTH_SHORT).show();
+
+                                    String[] cond = new String[]{numon1  + ""};
+                                    taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
+                                }
+
+                                @Override
+                                public void onFailure(Call<Task> call, Throwable t) {
+
+                                }
+                            });
+                        }
                     }
                 } while (cursor1.moveToNext());
             }

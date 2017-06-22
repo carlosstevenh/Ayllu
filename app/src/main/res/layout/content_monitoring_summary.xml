@@ -22,24 +22,26 @@
             android:orientation="vertical">
 
             <View
-                android:id="@+id/divisor1"
+                android:id="@+id/divisor6"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
-                android:background="@color/colorDivider"/>
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
 
             <TextView
-                android:id="@+id/tv_title_repercuciones"
+                android:id="@+id/tv_title_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_gravity="left"
-                android:text="REPERCUSIONES:"
+                android:layout_marginBottom="8dp"
+                android:text="FACTOR:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+
             <LinearLayout
-                android:id="@+id/area_repercuciones1"
+                android:id="@+id/area_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -50,23 +52,34 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_selected"
+                    android:src="@drawable/ic_variable"
                     android:tint="@color/colorPrimaryText" />
 
                 <TextView
-                    android:id="@+id/tv_repercuciones1"
+                    android:id="@+id/tv_factor"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
-                    android:text="POSITIVAS"
+                    android:text="Contaminación"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tv_title_variable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="VARIABLE:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
             <LinearLayout
-                android:id="@+id/area_repercuciones2"
+                android:id="@+id/area_variable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -77,41 +90,41 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_selected"
+                    android:src="@drawable/ic_variable"
                     android:tint="@color/colorPrimaryText" />
 
                 <TextView
-                    android:id="@+id/tv_repercuciones2"
+                    android:id="@+id/tv_variable"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
-                    android:text="ACTUALES"
+                    android:text="identidad, cohesion social, cambios en la poblacion y comunidades locales "
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <View
-                android:id="@+id/divisor2"
+                android:id="@+id/divisor5"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="8dp"
                 android:alpha=".5"
-                android:background="@color/colorDivider"/>
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
 
             <TextView
-                android:id="@+id/tv_title_origen"
+                android:id="@+id/tv_title_coordenadas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginBottom="8dp"
-                android:text="ORIGEN:"
+                android:text="COORDENADAS:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/area_origen"
+                android:id="@+id/area_latitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -122,15 +135,41 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_selected"
+                    android:src="@drawable/ic_latitud"
                     android:tint="@color/colorPrimaryText" />
 
                 <TextView
-                    android:id="@+id/tv_origen"
+                    android:id="@+id/tv_latitud"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="INTERNO"
+                    android:text="12343423"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_longitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_longitud"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_longitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="12343423"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -225,25 +264,25 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/divisor5"
+                android:id="@+id/divisor2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginTop="8dp"
                 android:alpha=".5"
-                android:background="@color/colorDivider"
-                android:layout_marginTop="8dp"/>
+                android:background="@color/colorDivider"/>
 
             <TextView
-                android:id="@+id/tv_title_coordenadas"
+                android:id="@+id/tv_title_origen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginBottom="8dp"
-                android:text="COORDENADAS:"
+                android:text="ORIGEN:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/area_latitud"
+                android:id="@+id/area_origen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -254,67 +293,39 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_latitud"
+                    android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
                 <TextView
-                    android:id="@+id/tv_latitud"
+                    android:id="@+id/tv_origen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="12343423"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/area_longitud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_longitud"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_longitud"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="12343423"
+                    android:text="INTERNO"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <View
-                android:id="@+id/divisor6"
+                android:id="@+id/divisor1"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
-                android:background="@color/colorDivider"
-                android:layout_marginTop="8dp"/>
+                android:background="@color/colorDivider"/>
 
             <TextView
-                android:id="@+id/tv_title_variable"
+                android:id="@+id/tv_title_repercuciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
                 android:layout_marginBottom="8dp"
-                android:text="VARIABLE:"
+                android:layout_gravity="left"
+                android:text="REPERCUSIONES:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
             <LinearLayout
-                android:id="@+id/area_variable"
+                android:id="@+id/area_repercuciones1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -325,21 +336,47 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_variable"
+                    android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
                 <TextView
-                    android:id="@+id/tv_variable"
+                    android:id="@+id/tv_repercuciones1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="identidad, cohesion social, cambios en la poblacion y comunidades locales "
+                    android:text="POSITIVAS"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/area_repercuciones2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_selected"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_repercuciones2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="ACTUALES"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

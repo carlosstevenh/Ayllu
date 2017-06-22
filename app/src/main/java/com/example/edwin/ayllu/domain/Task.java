@@ -22,7 +22,11 @@ public class Task {
     private String nombre2;
     private String nombre3;
 
-    public Task(String monitor, String variable, String area, String latitud, String longitud, String fecha, String repercusiones, String origen, int porcentaje, int frecuencia, String nombre, String nombre2, String nombre3) {
+    private String tipo;
+
+    public Task(String monitor, String variable, String area, String latitud, String longitud,
+                String fecha, String repercusiones, String origen, int porcentaje,
+                int frecuencia, String nombre, String nombre2, String nombre3, String tipo) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -36,6 +40,7 @@ public class Task {
         this.nombre = nombre;
         this.nombre2 = nombre2;
         this.nombre3 = nombre3;
+        this.tipo = tipo;
     }
 
     public Task() {
@@ -52,6 +57,7 @@ public class Task {
         this.nombre = "null";
         this.nombre2 = "null";
         this.nombre3 = "null";
+        this.tipo = "N";
     }
 
     public ContentValues toContentValues() {
@@ -69,6 +75,7 @@ public class Task {
         values.put(TaskEntry.NOMBRE, nombre);
         values.put(TaskEntry.NOMBRE2, nombre2);
         values.put(TaskEntry.NOMBRE3, nombre3);
+        values.put(TaskEntry.TIPO, tipo);
 
         return values;
     }
@@ -176,4 +183,8 @@ public class Task {
     public void setNombre3(String nombre3) {
         this.nombre3 = nombre3;
     }
+
+    public String getTipo() {return tipo;}
+
+    public void setTipo(String tipo) {this.tipo = tipo;}
 }
