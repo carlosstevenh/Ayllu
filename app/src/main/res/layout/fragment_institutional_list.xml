@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         app:fab_labelStyle="@style/Etiquetas"
-        fab:fab_addButtonColorNormal="?attr/colorPrimaryDark"
+        fab:fab_addButtonColorNormal="?attr/colorAccent"
         fab:fab_addButtonSize="normal"
         fab:fab_labelsPosition="left">
 
@@ -52,7 +52,7 @@
             app:fab_colorNormal="@color/colorAccent"
             fab:fab_icon="@drawable/ic_tramo"
             fab:fab_size="mini"
-            fab:fab_title="TRAMO" />
+            fab:fab_title="@string/descriptionTramo" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_subtramo"
@@ -61,14 +61,14 @@
             app:fab_colorNormal="@color/colorAccent"
             fab:fab_icon="@drawable/ic_subtramos"
             fab:fab_size="mini"
-            fab:fab_title="SUBTRAMO" />
+            fab:fab_title="@string/descriptionSubtramo" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_seccion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/colorAccent"
-            app:fab_title="SECCION"
+            app:fab_title="@string/descriptionSeccion"
             fab:fab_icon="@drawable/ic_secciones"
             fab:fab_size="mini" />
 
@@ -77,9 +77,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/colorAccent"
+            app:fab_title="@string/descriptionPropiedad"
             fab:fab_icon="@drawable/ic_area"
-            fab:fab_size="mini"
-            fab:fab_title="AREA" />
+            fab:fab_size="mini" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

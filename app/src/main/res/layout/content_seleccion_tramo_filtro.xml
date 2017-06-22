@@ -8,6 +8,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_seleccion_tramo_filtro">
 
-    <include layout="@layout/diagrama_torta" />
+    <include
+        layout="@layout/diagrama_torta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

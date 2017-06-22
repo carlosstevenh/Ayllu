@@ -95,6 +95,7 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
         void setReporteLatitud(String cad){ latitud.setText(cad);}
         void setReporteLongitud(String cad) { longitud.setText(cad);}
         void setReporteFecha(String cad) { fecha.setText(cad);}
-        void setPrueba(String cad) { Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);}
+        void setPrueba(String cad) {
+            Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);}
     }
 }

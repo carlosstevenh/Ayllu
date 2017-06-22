@@ -144,7 +144,7 @@
     <string name="descriptionTramo">TRAMO</string>
     <string name="descriptionSubtramo">SUBTRAMO</string>
     <string name="descriptionSeccion">SECCIÓN</string>
-    <string name="descriptionArea">ÁREA</string>
+    <string name="descriptionPropiedad">PROPIEDAD NOMINADA</string>
     <string name="itemCardViewFecha">FECHA:</string>
     <string name="itemCardViewLatitud">LATITUD:</string>
     <string name="itemCardViewLongitud">LONGITUD:</string>
@@ -192,6 +192,7 @@
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
+    <string name="seleccioneTramoParaBuscar">Seleciona un tramo para buscar los Monitoreos</string>
 
     <string-array name="listPorcentaje">
         <item>[1%-10%] RESTRINGIDA</item>
@@ -214,4 +215,11 @@
     <string name="menuMapasEstadisticos">Menú gráficos estadísticos</string>
     <string name="mapasGenerales">Gráficos estadísticos generales</string>
     <string name="mapasEspecificos">Gráficos estadíticos Especificos</string>
+    <string name="graficaPorTramo">GraficaPorTramo</string>
+    <string name="descargaGrafica">Imagen descarda en la galería</string>
+    <string name="graficaPorVariable">GraficaPorVariable</string>
+    <string name="analisisVariable">Análisis Variable</string>
+    <string name="graficaPorcentajeFrecuencia">Grafica_porcentaje_frecuencia</string>
+    <string name="rangoFechas">Seleccione el rango de fechas</string>
+    <string name="graficaRespuestaInstitucional">GraficaRespuestaInstitucional</string>
 </resources>
