@@ -77,6 +77,7 @@
             android:id="@+id/fab_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_title="@string/descriptionPropiedad"
             android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_area"
             fab:fab_size="mini"/>
@@ -106,17 +107,5 @@
         app:fab_size="normal"
         app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="bottom|center_horizontal" />
-
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_report"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include2"
-        app:layout_anchorGravity="bottom|left" />
 
 </android.support.design.widget.CoordinatorLayout>

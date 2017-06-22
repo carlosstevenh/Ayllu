@@ -49,6 +49,6 @@
         android:padding="15dp"
         android:layout_margin="5dp"
         android:background="@color/colorAccent"
-        android:text="@string/titlebuttonElegir"
+        android:text="@string/titlebuttonFijar"
         android:textColor="@color/colorTextIcons" />
 </LinearLayout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_settings_app">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_monitoreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="MONITOREO SIN CONEXIÓN"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/opcion_habilitar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Estado monitoreo sin conexión"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/cb_monitoreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Desactivado" />
+
+                <View
+                    android:id="@+id/divisor3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:alpha=".5"
+                    android:background="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/opcion_elegir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Elegir listado de monitoreos"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Determina el lugar que quieres monitorear"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textStyle="normal" />
+
+                <View
+                    android:id="@+id/divisor2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:alpha=".5"
+                    android:background="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title_general"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="GENERAL"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/opcion_salir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Cerrar Sesión"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Finalizar el uso de la aplicación para el usuario actual."
+                    android:textColor="@color/colorSecondaryText"
+                    android:textStyle="normal" />
+
+                <View
+                    android:id="@+id/divisor5"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:alpha=".5"
+                    android:background="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/opcion_acerca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Acerca de la aplicación"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Información general de la aplicación"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textStyle="normal" />
+
+                <View
+                    android:id="@+id/divisor8"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:alpha=".5"
+                    android:background="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/opcion_administrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Administrador"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Ingresa al modo Administrador"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textStyle="normal" />
+
+                <View
+                    android:id="@+id/divisor6"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:alpha=".5"
+                    android:background="@color/colorPrimaryText" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

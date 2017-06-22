@@ -1,9 +1,10 @@
 package com.example.edwin.ayllu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -13,21 +14,30 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.edwin.ayllu.domain.FactorDbHelper;
 import com.example.edwin.ayllu.domain.Reporte;
-import com.example.edwin.ayllu.domain.Task;
+import com.example.edwin.ayllu.domain.VariableDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.example.edwin.ayllu.domain.FactorContract.FactorEntry;
+import static com.example.edwin.ayllu.domain.VariableContract.VariableEntry;
 
 public class MonitoringDetailFragment extends Fragment implements View.OnClickListener{
 
     Reporte reporte;
     String [] imgs;
+    String estado = "", factor;
+    int sizeimgs = 0;
+    private ArrayList<File> files = new ArrayList<>();
 
-    TextView    tvArea, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
+    TextView    tvArea, tvFactor, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
             tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
 
     FloatingActionButton fabMonitoring;
@@ -38,6 +48,9 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
 
     private MonitoringRegistrationFormFragment fragment;
     private String[] items_porcentaje, items_frecuencia;
+    private FactorDbHelper factorDbHelper;
+    private VariableDbHelper variableDbHelper;
+    private Cursor cursor;
 
     /**
      * =============================================================================================
@@ -49,6 +62,8 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
 
         items_porcentaje = getResources().getStringArray(R.array.listPorcentaje);
         items_frecuencia = getResources().getStringArray(R.array.listFrecuencia);
+        factorDbHelper = new FactorDbHelper(getActivity());
+        variableDbHelper = new VariableDbHelper(getActivity());
 
         reporte = new Reporte();
 
@@ -67,9 +82,33 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         reporte.setPrueba2(getArguments().getString("PRUEBA2"));
         reporte.setPrueba3(getArguments().getString("PRUEBA3"));
 
-        int size = reporte.getSize();
-        imgs = new String[size];
-        for (int i = 0; i<size; i++) imgs[i] = ApiConstants.URL_IMG + reporte.getPruebas(i+1);
+        //Obtiene el codigo del factor a través del nombre de la variable
+        cursor = variableDbHelper.generateConditionalQuery(new String[]{reporte.getVariable()},VariableEntry.NOMBRE);
+        if (cursor.moveToFirst()){
+            String codfac = cursor.getString(3);
+            cursor.close();
+
+            //Obtiene el nombre del factor a través de su codigo
+            cursor = factorDbHelper.generateConditionalQuery(new String[]{codfac}, FactorEntry.CODIGO);
+            if(cursor.moveToFirst()){
+                factor = cursor.getString(2);
+                cursor.close();
+            }
+        }
+
+
+        estado = getArguments().getString("ESTADO");
+        reporte.setEstado(estado);
+
+        if(estado.equals("ONLINE")){
+            sizeimgs = reporte.getSize();
+            imgs = new String[sizeimgs];
+            for (int i = 0; i<sizeimgs; i++) imgs[i] = ApiConstants.URL_IMG + reporte.getPruebas(i+1);
+        } else {
+            File file = new File(Environment.getExternalStorageDirectory() + "/Ayllu/Offline/" + reporte.getPrueba1());
+            files.add(file);
+            sizeimgs = 1;
+        }
 
     }
 
@@ -87,6 +126,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
 
         tvArea = (TextView) view.findViewById(R.id.tv_area);
+        tvFactor = (TextView) view.findViewById(R.id.tv_factor);
         tvVariable = (TextView) view.findViewById(R.id.tv_variable);
         tvFecha = (TextView) view.findViewById(R.id.tv_fecha);
         tvLatitud = (TextView) view.findViewById(R.id.tv_latitud);
@@ -102,16 +142,14 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         fabMonitoring.setOnClickListener(this);
 
         //Cargamos las Imagenes
-        adapter = new MonitoringImageSwipeAdapter(getActivity(), imgs);
+        if (estado.equals("ONLINE")) adapter = new MonitoringImageSwipeAdapter(getActivity(), imgs);
+        else adapter = new MonitoringImageSwipeAdapter(getActivity(), files);
         vpMonitoring.setAdapter(adapter);
         vpMonitoring.addOnPageChangeListener(viewPagerPageChangeListener);
 
         String repercusiones = reporte.getRepercusiones();
         String origen = reporte.getOrigen();
-
-        String rep1 = "";
-        String rep2 = "";
-        String org = "";
+        String rep1, rep2, org;
 
         if(repercusiones.charAt(0) == '1') rep1 = getResources().getString(R.string.optionPositivasRepercusiones);
         else  rep1 = getResources().getString(R.string.optionNegativasRepercusiones);
@@ -122,9 +160,9 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         if(origen.charAt(0) == '1') org = getResources().getString(R.string.optionInternoOrigen);
         else org = getResources().getString(R.string.optionExternoOrigen);
 
-
         //Cargamos los Datos del Monitoreo
         tvArea.setText(reporte.getArea());
+        tvFactor.setText(factor);
         tvVariable.setText(reporte.getVariable());
         tvFecha.setText(reporte.getFecha_mon());
         tvLatitud.setText(reporte.getLatitud());
@@ -163,6 +201,10 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
                     Bundle params = new Bundle();
                     params.putString("PUNTO", String.format(Locale.getDefault(),"%d",reporte.getCod_paf()));
                     params.putString("OPCION", "M");
+                    params.putString("FACTOR_NAME", factor);
+                    params.putString("VAR_NAME", reporte.getVariable());
+                    params.putString("LATITUD", reporte.getLatitud());
+                    params.putString("LONGITUD", reporte.getLongitud());
                     fragment.setArguments(params);
 
                     //Inflamos el layout para el Fragmento MonitoringListFragment
@@ -182,7 +224,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
      * METODO: Añade los puntos al LinearLayout encargado de mostrar información de el Slide Actual
      **/
     private void addBottomDots(int currentPage) {
-        TextView[] dots = new TextView[imgs.length];
+        TextView[] dots = new TextView[sizeimgs];
 
         dotsLayout.removeAllViews();
         //Limpiamos y recargamos todos lo views para los puntos

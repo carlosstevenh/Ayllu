@@ -1,7 +1,11 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
+
+import static com.example.edwin.ayllu.domain.MonitoreoContract.MonitoreoEntry;
 
 import java.util.ArrayList;
 
@@ -52,6 +56,7 @@ public class Reporte {
     String prueba2;
     @SerializedName(JsonKeys.PRUEBA3)
     String prueba3;
+    String estado;
 
     //==============================================================================================
     //CONSTRUCTOR DE LA CLASE REPORTE
@@ -83,11 +88,57 @@ public class Reporte {
         this.prueba1 = prueba1;
         this.prueba2 = prueba2;
         this.prueba3 = prueba3;
+        this.estado = "ONLINE";
+    }
+
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(MonitoreoEntry.PUNTO, cod_paf);
+        values.put(MonitoreoEntry.FECHA, fecha_mon);
+        values.put(MonitoreoEntry.MONITOR, usuario);
+        values.put(MonitoreoEntry.PROPIEDAD, area);
+        values.put(MonitoreoEntry.VARIABLE, variable);
+        values.put(MonitoreoEntry.FECHA, fecha_mon);
+        values.put(MonitoreoEntry.LATITUD, latitud);
+        values.put(MonitoreoEntry.LONGITUD, longitud);
+        values.put(MonitoreoEntry.REPERCUSIONES, repercusiones);
+        values.put(MonitoreoEntry.ORIGEN, origen);
+        values.put(MonitoreoEntry.PORCENTAJE, porcentaje);
+        values.put(MonitoreoEntry.FRECUENCIA, frecuencia);
+        values.put(MonitoreoEntry.NOMBRE, prueba1);
+        values.put(MonitoreoEntry.NOMBRE2, prueba2);
+        values.put(MonitoreoEntry.NOMBRE3, prueba3);
+        values.put(MonitoreoEntry.ESTADO, estado);
+
+        return values;
     }
 
     //==============================================================================================
     //CONSTRUCTOR VACIO
     public Reporte() {
+        this.cod_paf = 0;
+        this.monitor_res = 0;
+        this.conocimiento = "";
+        this.recursos = "";
+        this.variable = "";
+        this.latitud = "";
+        this.area = "";
+        this.fecha_mon = "";
+        this.repercusiones = "";
+        this.presupuesto = "";
+        this.tiempo = "";
+        this.personal = "";
+        this.evaluacion = "";
+        this.fecha_res = "";
+        this.frecuencia = 0;
+        this.porcentaje = 0;
+        this.origen = "";
+        this.usuario = "";
+        this.longitud = "";
+        this.prueba1 = "null";
+        this.prueba2 = "null";
+        this.prueba3 = "null";
+        this.estado = "ONLINE";
     }
 
     //==============================================================================================
@@ -328,5 +379,13 @@ public class Reporte {
 
     public void setPrueba3(String prueba3) {
         this.prueba3 = prueba3;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

@@ -17,6 +17,8 @@ import com.example.edwin.ayllu.io.ApiConstants;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,7 +34,7 @@ public interface RestClient {
     @GET("countVariableTramo/{tramo}/{factor}")
     Call<ArrayList<ConteoVariableFactorTramo>> conteoVariableFactortramo(@Path("tramo") String tramo,
                                                                          @Path("factor") String factor);
-    
+
     //peticion que trae el conteo de factores por tramo
     @GET("countFactorTramo/{tramo}")
     Call<ArrayList<ConteoFactoresTramo>> conteoFactorTramo(@Path("tramo") String tramo);
@@ -121,7 +123,6 @@ public interface RestClient {
                                           @Path("rec") String rec,
                                           @Path("con") String con,
                                           @Path("mon") String mon);
-
 
     Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiConstants.URL_WEBSERVICE)
             .addConverterFactory(GsonConverterFactory.create()).build();

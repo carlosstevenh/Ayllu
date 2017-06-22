@@ -2,9 +2,12 @@ package com.example.edwin.ayllu.ui;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +28,7 @@ import com.example.edwin.ayllu.MonitoringDetailFragment;
 import com.example.edwin.ayllu.MonitoringRegistrationFormFragment;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
+import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.Reporte;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
@@ -68,7 +72,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     private MonitoringAdapter adapter;
     private RecyclerView mReporteList;
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
-    private FloatingActionButton fab_search, fab_new, fab_report;
+    private FloatingActionButton fab_search, fab_new;
     private FloatingActionsMenu menu;
     private TextView tvInfo;
 
@@ -92,6 +96,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     SubtramoDbHelper subtramoDbHelper;
     SeccionDbHelper seccionDbHelper;
     AreaDbHelper areaDbHelper;
+    MonitoreoDbHelper monitoreoDbHelper;
     Cursor cursor;
 
     /**
@@ -110,6 +115,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         subtramoDbHelper = new SubtramoDbHelper(getActivity());
         seccionDbHelper = new SeccionDbHelper(getActivity());
         areaDbHelper = new AreaDbHelper(getActivity());
+        monitoreoDbHelper = new MonitoreoDbHelper(getActivity());
         int i = 0;
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
@@ -145,7 +151,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
         mReporteList = (RecyclerView) view.findViewById(R.id.monitoring_list);
 
-        fab_report = (FloatingActionButton) view.findViewById(R.id.fab_report);
         fab_new = (FloatingActionButton) view.findViewById(R.id.fab_new);
         fab_search = (FloatingActionButton) view.findViewById(R.id.fab_search);
         fab_tramo = (FloatingActionButton) view.findViewById(R.id.fab_tramo);
@@ -160,8 +165,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_search.setScaleX(0);
         fab_new.setScaleY(0);
         fab_search.setScaleY(0);
-        fab_report.setScaleY(0);
-        fab_report.setScaleY(0);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             interpolador = AnimationUtils.loadInterpolator(getActivity().getBaseContext(),
@@ -172,7 +175,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         fab_subtramo.setEnabled(false);
         fab_seccion.setEnabled(false);
         fab_area.setEnabled(false);
-        fab_report.setEnabled(false);
         fab_new.setEnabled(false);
         fab_search.setEnabled(false);
 
@@ -183,7 +185,6 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         menu.setOnFloatingActionsMenuUpdateListener(this);
         fab_search.setOnClickListener(this);
         fab_new.setOnClickListener(this);
-        fab_report.setOnClickListener(this);
 
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,6 +208,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     params.putString("PRUEBA1",reporte.getPrueba1());
                     params.putString("PRUEBA2",reporte.getPrueba2());
                     params.putString("PRUEBA3",reporte.getPrueba3());
+                    params.putString("ESTADO",reporte.getEstado());
                     monitoringDetailFragment.setArguments(params);
 
                     //Inflamos el layout para el Fragmento MonitoringListFragment
@@ -249,13 +251,51 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         tvTitle.setText(titulo);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton("HECHO",
+        builder.setPositiveButton(getResources().getString(R.string.opcionListMonitoringDialog),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 builder.create().dismiss();
                             }
                         });
+
+        return builder.create();
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Presenta en Interfaz un mensaje Tipo Dialog
+     **/
+    public AlertDialog createOfflineMonitoringDialog(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton("ACEPTAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        reportes = monitoreoDbHelper.getMonitoreos();
+                        tvInfo.setVisibility(View.INVISIBLE);
+                        new HackingBackgroundTask().execute();
+                        builder.create().dismiss();
+                    }
+                })
+                .setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
 
         return builder.create();
     }
@@ -314,7 +354,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaEntry.SECCION);
                                 items_areas = dataFilter(cursor, 3);
-                                items_tipos = dataFilter(cursor, 2);
+                                items_tipos = dataFilterTipos(cursor, 2, 3);
                                 break;
                             //----------------------------------------------------------------------
                             case 4:
@@ -349,16 +389,16 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     public void onClick(final View view) {
         switch (view.getId()) {
             case R.id.fab_tramo:
-                createRadioListDialog(items_tramos, "TRAMOS", 1).show();
+                createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1).show();
                 break;
             case R.id.fab_subtramo:
-                createRadioListDialog(items_subtramos, "SUBTRAMOS", 2).show();
+                createRadioListDialog(items_subtramos, getResources().getString(R.string.descriptionSubtramo), 2).show();
                 break;
             case R.id.fab_seccion:
-                createRadioListDialog(items_secciones, "SECCIONES", 3).show();
+                createRadioListDialog(items_secciones, getResources().getString(R.string.descriptionSeccion), 3).show();
                 break;
             case R.id.fab_area:
-                createRadioListDialog(items_tipos, "", 4).show();
+                createRadioListDialog(items_tipos, getResources().getString(R.string.descriptionPropiedad), 4).show();
                 break;
             case R.id.fab_new:
                 if (op[3] != 0) {
@@ -378,42 +418,44 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.fab_search:
                 menu.collapse();
-                final ProgressDialog loading = new ProgressDialog(getActivity());
-                loading.setMessage("Por favor espere …");
-                loading.setTitle("Buscando los monitoreos");
-                loading.setProgress(10);
-                loading.setIndeterminate(true);
-                loading.show();
 
-                Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
-                call.enqueue(new Callback<ReporteResponse>() {
-                    @Override
-                    public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
-                        if (response.isSuccessful()) {
-                            loading.dismiss();
-                            reportes = response.body().getReportes();
-                            if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
-                            new HackingBackgroundTask().execute();
-                            if (reportes.size() == 0) {
-                                tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
-                                tvInfo.setVisibility(View.VISIBLE);
+                if(wifiConected()){
+                    final ProgressDialog loading = new ProgressDialog(getActivity());
+                    loading.setMessage("Por favor espere …");
+                    loading.setTitle("Buscando los monitoreos");
+                    loading.setProgress(10);
+                    loading.setIndeterminate(true);
+                    loading.show();
+
+                    Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
+                    call.enqueue(new Callback<ReporteResponse>() {
+                        @Override
+                        public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
+                            if (response.isSuccessful()) {
+                                loading.dismiss();
+                                reportes = response.body().getReportes();
+                                if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
+                                new HackingBackgroundTask().execute();
+                                if (reportes.size() == 0) {
+                                    tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
+                                    tvInfo.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ReporteResponse> call, Throwable t) {
-                        loading.dismiss();
-                        Toast.makeText(
-                                getActivity(),
-                                getResources().getString(R.string.noSePudoConectarServidor),
-                                Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                });
-                break;
-            case R.id.fab_report:
-                generateReport(reportes);
+                        @Override
+                        public void onFailure(Call<ReporteResponse> call, Throwable t) {
+                            loading.dismiss();
+                            Toast.makeText(
+                                    getActivity(),
+                                    getResources().getString(R.string.noSePudoConectarServidor),
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                } else {
+                    createOfflineMonitoringDialog("Hay un paquete de puntos de afectación disponible. \n ¿Desea utilizarlos?", "Monitoreo sin conexión a internet").show();
+                }
                 break;
             default:
                 break;
@@ -437,11 +479,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     public void onMenuExpanded() {
         animationButton(fab_new, 1, 1);
         animationButton(fab_search, 1, 1);
-        animationButton(fab_report, 1, 1);
-
         fab_new.setEnabled(true);
         fab_search.setEnabled(true);
-        fab_report.setEnabled(true);
     }
 
     /**
@@ -452,11 +491,9 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     public void onMenuCollapsed() {
         fab_new.setEnabled(false);
         fab_search.setEnabled(false);
-        fab_report.setEnabled(false);
 
         animationButton(fab_new, 0, 0);
         animationButton(fab_search, 0, 0);
-        animationButton(fab_report, 0, 0);
     }
 
     /**
@@ -534,6 +571,25 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         }
         return items;
     }
+
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public CharSequence[] dataFilterTipos(Cursor cur, int position, int position2) {
+        i = 0;
+        CharSequence[] items = new CharSequence[0];
+
+        if (cur.moveToFirst()) {
+            items = new CharSequence[cursor.getCount()];
+            do {
+                items[i] = cursor.getString(position) + " - " + cursor.getString(position2);
+                i++;
+            } while (cursor.moveToNext());
+        }
+        return items;
+    }
     /**
      * =============================================================================================
      * METODO:
@@ -575,6 +631,16 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    //==============================================================================================
+    //METODO: Verifica la conexion a internet
+    protected Boolean wifiConected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifi.isConnected() || mobile.isConnected())return true;
+        else return false;
     }
 
     //==============================================================================================

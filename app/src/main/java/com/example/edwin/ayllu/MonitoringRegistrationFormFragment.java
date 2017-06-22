@@ -65,6 +65,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     String fecha = "";
     String longitud = "0", latitud = "0";
     int[] repercusiones = {1, 0, 0, 1};
+    String factor = "", variable = "", lat = "", logt = "";
 
     //VARIABLES: Control de la selección de opciones
     CharSequence[] items_factores, items_variables;
@@ -130,6 +131,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
         assert op_reg != null;
         if (op_reg.equals("M")){
+            factor = getArguments().getString("FACTOR_NAME");
+            variable = getArguments().getString("VAR_NAME");
+            lat =getArguments().getString("LATITUD");
+            logt = getArguments().getString("LONGITUD");
 
             punto_afectacion = getArguments().getString("PUNTO");
             mySteps = new String[] {"Pruebas", "Porcentaje de aparición",
@@ -347,11 +352,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
                         opciones[0] = cursor.getString(1);
                         pos[0] = which;
-                        opciones[1] = "0";
+                        opciones[1] = "";
                         pos[1] = -1;
 
                         items_variables = null;
-                        //fab_variable.setEnabled(true);
 
                         i = 0;
                         cursor = variableDbHelper.generateConditionalQuery(new String[]{opciones[0]}, VariableContract.VariableEntry.FACTOR);
@@ -655,6 +659,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             if (!opciones[1].equals("")) {
                 params.putString("VAR_COD", opciones[1]);
                 params.putString("VAR_NAME", items_variables[pos[1]].toString());
+                params.putString("FACTOR_NAME", items_factores[pos[0]].toString());
                 params.putString("AREA", area);
                 params.putString("LATITUD", latitud + "");
                 params.putString("LONGITUD", longitud + "");
@@ -672,6 +677,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                         getResources().getString(R.string.descriptionFormRegistrationMonitoringVariableDialog),
                         getResources().getString(R.string.titleFormRegistrationMonitoringDialog)).show();
         } else {
+            params.putString("VAR_NAME", variable);
+            params.putString("FACTOR_NAME", factor);
+            params.putString("LATITUD", lat);
+            params.putString("LONGITUD", logt);
             params.putString("PUNTO_AFECTACION", punto_afectacion);
             params.putString("TYPE_UPLOAD", "MONITORING");
 

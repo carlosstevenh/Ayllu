@@ -6,6 +6,7 @@
     <string name="login">Login</string>
     <string name="identificacion">Identificación</string>
     <string name="contrasena">Contraseña</string>
+    <string name="mostrarContrasena">Mostrar contraseña</string>
     <!--=========================================================================================-->
     <!--STRINGS: MENU DEL MONITOR-->
     <string name="next">SIGUIENTE</string>
@@ -107,7 +108,6 @@
     <string name="iniciandoSesion">Iniciando Sesión</string>
     <string name="dowloading">Descargando</string>
     <string name="noEcontroPrueba">No existen pruebas para este monitoreo</string>
-    <string name="mostrarContrasena">Mostrar contraseña</string>
 
     <string name="campoInvalido">Campo inválido</string>
     <string name="campoVacio">Campo vacío</string>
@@ -149,9 +149,11 @@
     <string name="itemCardViewLatitud">LATITUD:</string>
     <string name="itemCardViewLongitud">LONGITUD:</string>
     <string name="itemCardViewVariable">VARIABLE:</string>
+    <string name="itemCardViewFactor">FACTOR:</string>
     <string name="itemCardViewDescriptionPrueba">Imagen del monitoreo</string>
     <string name="titleListMonitoringDialog">INFORMACIÓN</string>
     <string name="descriptionListMonitoringDialog">Seleciona un área para registrar un monitoreo</string>
+    <string name="opcionListMonitoringDialog">HECHO</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING DETAIL-->
     <string name="titleDetailMonitoring">Monitoreo</string>
@@ -192,6 +194,7 @@
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
+    <string name="titlebuttonFijar">FIJAR</string>
     <string name="seleccioneTramoParaBuscar">Seleciona un tramo para buscar los Monitoreos</string>
 
     <string-array name="listPorcentaje">
