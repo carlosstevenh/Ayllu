@@ -3,6 +3,7 @@ package com.example.edwin.ayllu;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.edwin.ayllu.ui.InstitutionalListFragment;
 
@@ -12,7 +13,11 @@ public class InstitutionalActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        //Intent intent = new Intent(InstitutionalActivity.this, MonitorMenuActivity.class);
+        //startActivity(intent);
         finish();
+
     }
 
     @Override

@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +28,9 @@ public class FormRespuesta extends AppCompatActivity {
     String cod_mon = "", pais_mon = "";
     List<String> eval, res;
     String pa,fm;
+    LinearLayout lyPrincipal;
+    ImageView ivType;
+    TextView tvTitle, tvDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,11 @@ public class FormRespuesta extends AppCompatActivity {
         pa = bundle.getString("pa");
         fm = bundle.getString("fm");
         Log.i("TAG", "punto afecation: " + fm);
+
+        lyPrincipal = (LinearLayout) findViewById(R.id.ly_principal);
+        ivType = (ImageView) findViewById(R.id.iv_type_record);
+        tvTitle = (TextView) findViewById(R.id.tv_title_record);
+        tvDescription = (TextView) findViewById(R.id.tv_description_record);
 
         //se instancian los elementos de la vista
         eva = (Spinner) findViewById(R.id.spinner_eva);
@@ -142,9 +153,33 @@ public class FormRespuesta extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
                 loading.dismiss();
-                Toast login = Toast.makeText(getApplicationContext(),
+                if(response.isSuccessful()){
+                    if(response.body().get(0).equals("1")){
+                        Toast login = Toast.makeText(getApplicationContext(),
+                                getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
+                        login.show();
+                        /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackground));
+                        ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_positive));
+                        ivType.setContentDescription(getResources().getString(R.string.successfulRecordImageDescription));
+                        tvTitle.setText(getResources().getString(R.string.successfulRecordTitle));
+                        tvDescription.setText(getResources().getString(R.string.successfulRecordMonitoringDescription));*/
+                    }
+                    else{
+                        Toast login = Toast.makeText(getApplicationContext(),
+                                getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
+                        login.show();
+                        /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackgroundFailed));
+                        ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
+                        ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
+                        tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
+                        tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));*/
+                    }
+                }
+
+
+                /*Toast login = Toast.makeText(getApplicationContext(),
                         getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
-                login.show();
+                login.show();*/
 
                 Intent intent = new Intent(FormRespuesta.this, MonitorMenuActivity.class);
                 startActivity(intent);
@@ -154,6 +189,13 @@ public class FormRespuesta extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                 loading.dismiss();
+
+                /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackgroundFailed));
+                ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
+                ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
+                tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
+                tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));*/
+
                 Toast login = Toast.makeText(getApplicationContext(),
                         getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
                 login.show();

@@ -51,7 +51,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Monitoreo> monitoreos = new ArrayList<>();
-    CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas;
+    CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas, items_tipos;
     int[] op = {0, 0, 0, 0};
     int[] pos = {-1, -1, -1, -1};
 
@@ -252,6 +252,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
 
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaContract.AreaEntry.SECCION);
                                 items_areas = dataFilter(cursor, 3);
+                                items_tipos = dataFilterTipos(cursor, 2, 3);
                                 break;
                             //----------------------------------------------------------------------
                             case 4:
@@ -286,23 +287,23 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
     public void onClick(final View view) {
         switch (view.getId()) {
             case R.id.fab_tramo:
-                createRadioListDialog(items_tramos, "TRAMOS", 1).show();
+                createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1).show();
                 break;
             case R.id.fab_subtramo:
-                createRadioListDialog(items_subtramos, "SUBTRAMOS", 2).show();
+                createRadioListDialog(items_subtramos, getResources().getString(R.string.descriptionSubtramo), 2).show();
                 break;
             case R.id.fab_seccion:
-                createRadioListDialog(items_secciones, "SECCIONES", 3).show();
+                createRadioListDialog(items_secciones, getResources().getString(R.string.descriptionSeccion), 3).show();
                 break;
             case R.id.fab_area:
-                createRadioListDialog(items_areas, "AREAS", 4).show();
+                createRadioListDialog(items_tipos, getResources().getString(R.string.descriptionPropiedad), 4).show();
                 break;
             case R.id.fab_search:
                 menu.collapse();
                 Log.i("Datos:" , ""+ op[0] +":" +op[1]+":" +op[2]+":" +op[3]);
                 if (op[0] != 0) getListReports(op[0]+"",op[1]+"",op[2]+"",op[3]+"");
                 else
-                    createSimpleDialog("Seleciona un tramo para buscar los Monitoreos", "INFORMACIÓN").show();
+                    createSimpleDialog(getResources().getString(R.string.seleccioneTramoParaBuscar), getResources().getString(R.string.titleListMonitoringDialog)).show();
                 break;
             default:
                 break;
@@ -418,6 +419,24 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      * =============================================================================================
      * METODO:
      **/
+    public CharSequence[] dataFilterTipos(Cursor cur, int position, int position2) {
+        i = 0;
+        CharSequence[] items = new CharSequence[0];
+
+        if (cur.moveToFirst()) {
+            items = new CharSequence[cursor.getCount()];
+            do {
+                items[i] = cursor.getString(position) + " - " + cursor.getString(position2);
+                i++;
+            } while (cursor.moveToNext());
+        }
+        return items;
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
     public void inhabilitarFiltros(int num_zn) {
         switch (num_zn) {
             case 1:
@@ -456,8 +475,18 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
             public void onResponse(Call<ArrayList<Monitoreo>> call, Response<ArrayList<Monitoreo>> response) {
                 loading.dismiss();
                 if (response.isSuccessful()) {
-                    monitoreos = response.body();
-                    new HackingBackgroundTask().execute();
+
+                    if(response.body().size()==0){
+                        Toast.makeText(
+                                getActivity(),
+                                getResources().getString(R.string.noSeEncontraronDatos),
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        monitoreos = response.body();
+                        new HackingBackgroundTask().execute();
+                    }
+
                 }
                 else{
                     Toast.makeText(
@@ -476,7 +505,6 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                         getActivity(),
                         getResources().getString(R.string.noSePudoConectarServidor),
                         Toast.LENGTH_LONG).show();
-                getActivity().finish();
             }
         });
     }

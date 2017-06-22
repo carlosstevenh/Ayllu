@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
@@ -101,6 +103,8 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         fabPais.setOnClickListener(this);
         fabTramo.setOnClickListener(this);
         fabSearch.setOnClickListener(this);
+
+
     }
 
     //Metodo que se encarga de obtener los porcentajes de cada factor
@@ -129,7 +133,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
         ArrayList<String> xValores = xDatas();
         ArrayList<Float> yValores = yDatas();
-
+        //tableRow.add
         for (int i = 0; i < yValores.size(); i++)
             yVals1.add(new Entry(yValores.get(i), i));
 
