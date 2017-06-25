@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,15 @@ import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -126,6 +130,18 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                         }
                     });
 
+                    YAxis leftAxis = mChart.getAxisLeft();
+
+                    LimitLine ll = new LimitLine(140f, "Critical Blood Pressure");
+                    ll.setLineColor(Color.RED);
+                    ll.setLineWidth(4f);
+                    ll.setTextColor(Color.BLACK);
+                    ll.setTextSize(12f);
+// .. and more styling options
+
+                    leftAxis.addLimitLine(ll);
+
+
                 }
                 else {
                     Toast.makeText(
@@ -207,8 +223,10 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     void dowload(){
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-        String grafica = getResources().getString(R.string.graficaPorcentajeFrecuencia)+format + ".jpg";
-        mChart.saveToGallery(grafica,100);
+        String grafica = getResources().getString(R.string.graficaPorcentajeFrecuencia)+format;
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
+        imagesFolder.mkdirs();
+        mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
         Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
     }

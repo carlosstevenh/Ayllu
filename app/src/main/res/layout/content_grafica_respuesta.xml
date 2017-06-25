@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:background="?attr/colorPrimary"
+                android:layout_gravity="center_horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/analisis"
+                    android:textSize="18sp"
+                    android:textColor="#fff"
+                    android:layout_marginLeft="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView33"
+            android:textStyle="normal|italic"
+            android:text="@string/fecha"
+            android:textSize="12sp"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="19dp"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/textView61"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_weight="0.56" />
+
+                <TextView
+                    android:id="@+id/textView52"
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.61"
+                    android:scrollbars="horizontal"
+                    android:text="@string/valor"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="normal|italic" />
+            </LinearLayout>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="239dp"
+                layout="@layout/grafica_estadistica_respuesta_institucional" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView46"
+            android:text="@string/opciones"
+            android:textStyle="normal|bold"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/grup"
+                    android:checkedButton="@+id/radio_eval">
+
+                    <RadioButton android:id="@+id/radio_eval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/evaluacion"
+                        android:onClick="onRadioButtonClicked"
+                        android:checked="false"
+                        android:textSize="14sp" />
+                    <RadioButton android:id="@+id/radio_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personal"
+                        android:onClick="onRadioButtonClicked"
+                        android:textSize="14sp" />
+                    <RadioButton android:id="@+id/radio_tiempo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tiempo"
+                        android:onClick="onRadioButtonClicked"
+                        android:textSize="14sp" />
+                    <RadioButton android:id="@+id/radio_presu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/presupuesto"
+                        android:onClick="onRadioButtonClicked"
+                        android:textSize="14sp" />
+                    <RadioButton android:id="@+id/radio_rec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/recursos"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/radio_con"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/conocimiento"
+                        android:onClick="onRadioButtonClicked"/>
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView39"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="@string/factor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView21"
+                        android:layout_weight="0.19"
+                        android:textStyle="normal|bold"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtFac"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="@string/variable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView31"
+                        android:layout_weight="0.24"
+                        android:textStyle="normal|bold"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtVar"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

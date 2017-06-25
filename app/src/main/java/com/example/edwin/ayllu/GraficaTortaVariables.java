@@ -1,11 +1,15 @@
 package com.example.edwin.ayllu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +28,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +40,6 @@ import retrofit2.Response;
 public class GraficaTortaVariables extends AppCompatActivity {
     private ArrayList<ConteoVariableFactorTramo> VarTram;
     private PieChart mChart;
-
     private FloatingActionButton fabDowload;
 
     // Códigos de petición
@@ -219,8 +223,10 @@ public class GraficaTortaVariables extends AppCompatActivity {
     void dowload(){
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-        String grafica = getResources().getString(R.string.graficaPorVariable)+format + ".jpg";
-        mChart.saveToGallery(grafica,100);
+        String grafica = getResources().getString(R.string.graficaPorVariable)+format;
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
+        imagesFolder.mkdirs();
+        mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
         Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
     }

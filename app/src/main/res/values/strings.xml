@@ -106,6 +106,7 @@
     <string name="media">Capacidad media</string>
     <string name="baja">Capacidad baja</string>
     <string name="iniciandoSesion">Iniciando Sesión</string>
+    <string name="cerrandoSesion">Cerrando Sesión</string>
     <string name="dowloading">Descargando</string>
     <string name="noEcontroPrueba">No existen pruebas para este monitoreo</string>
 
@@ -219,10 +220,15 @@
     <string name="mapasGenerales">Gráficos estadísticos generales</string>
     <string name="mapasEspecificos">Gráficos estadíticos Especificos</string>
     <string name="graficaPorTramo">GraficaPorTramo</string>
-    <string name="descargaGrafica">Imagen descarda en la galería</string>
+    <string name="descargaGrafica">Gráfica descarda</string>
     <string name="graficaPorVariable">GraficaPorVariable</string>
     <string name="analisisVariable">Análisis Variable</string>
     <string name="graficaPorcentajeFrecuencia">Grafica_porcentaje_frecuencia</string>
     <string name="rangoFechas">Seleccione el rango de fechas</string>
     <string name="graficaRespuestaInstitucional">GraficaRespuestaInstitucional</string>
+
+    <string name="cerrarSesion">¿Está seguro de cerrar sesión?</string>
+
+    <!--String configuraciones-->
+    <string name="noAdmin">Usted no es un administrador</string>
 </resources>

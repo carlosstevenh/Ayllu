@@ -245,7 +245,7 @@ public class EditMonitorFragment extends Fragment  {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    //metodo encargado de crear los dialogos informativos dependiendo de lo que suceda durante la ejecuion de la actividad
+    //metodo encargado de crear los dialogos informativos dependiendo de lo que suceda durante la ejecucion de la actividad
     public AlertDialog createSimpleDialog(String mensaje, String titulo,String usuario) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String dh = usuario;

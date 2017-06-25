@@ -85,8 +85,7 @@
             android:name=".FiltrarActividad"
             android:configChanges="screenSize|orientation" />
         <activity
-            android:name=".ActividadEstadisticaPuntoAfactacion"
-            android:configChanges="screenSize|orientation" />
+            android:name=".ActividadEstadisticaPuntoAfactacion"/>
         <activity
             android:name=".ActivityPruebasMonitoreo"
             android:configChanges="screenSize|orientation" />
@@ -94,8 +93,7 @@
             android:name=".PrestentationActivity"
             android:configChanges="screenSize|orientation" />
         <activity
-            android:name=".GraficaRespuestaInstitucional"
-            android:configChanges="screenSize|orientation" />
+            android:name=".GraficaRespuestaInstitucional" />
         <activity
             android:name=".ActivitySeleccionTramoFiltro"
             android:configChanges="screenSize|orientation" />
