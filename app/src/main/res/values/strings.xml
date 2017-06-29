@@ -231,9 +231,9 @@
 
     <!--String configuraciones-->
     <string name="noAdmin">Usted no es un administrador</string>
-    <string name="desarrolladoPor">Desarrollado por</string>
-    <string name="enColaboracion">En colaboracion con:</string>
+    <string name="desarrolladoPor">Desarrollado por:</string>
+    <string name="enColaboracion">En colaboración con:</string>
     <string name="AcerceDe">Acerca de</string>
-    <string name="analisisVarTie">Analisis variable sobre tiempo</string>
+    <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
 </resources>
