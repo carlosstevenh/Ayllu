@@ -45,6 +45,7 @@
     <string name="name">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="edit">Editar</string>
+    <string name="editMonitor">Editar monitor</string>
 
     <string name="fecha">Fecha monitoreo</string>
     <string name="variable">Variable</string>
