@@ -41,6 +41,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
     private ArrayList<ConteoVariableFactorTramo> VarTram;
     private PieChart mChart;
     private FloatingActionButton fabDowload;
+    private String tramo;
 
     // Códigos de petición
     private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
@@ -54,7 +55,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
         fabDowload.setEnabled(false);
 
         Bundle bundle = getIntent().getExtras();
-        String tramo = bundle.getString("tramo");
+        tramo = bundle.getString("tramo");
         String factor = bundle.getString("factor");
 
         final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
@@ -89,14 +90,15 @@ public class GraficaTortaVariables extends AppCompatActivity {
                             // display msg when value selected
                             if (e == null)
                                 return;
-                            //Bundle parametro = new Bundle();
-                            //parametro.putString("tramo",""+opTramo);
+                            Bundle parametro = new Bundle();
+                            parametro.putString("tramo",tramo);
+                            parametro.putString("variable",VarTram.get(e.getXIndex()).getCodigo());
                             //parametro.putString("factor",facTram.get(e.getXIndex()).getCodigo());
-                            //Intent intent = new Intent(ActivitySeleccionTramoFiltro.this,GraficaTortaVariables.class);
-                            //intent.putExtras(parametro);
-                            //startActivity(intent);
+                            Intent intent = new Intent(GraficaTortaVariables.this,GraficaAnalisisVariableTiempo.class);
+                            intent.putExtras(parametro);
+                            startActivity(intent);
                             Toast.makeText(GraficaTortaVariables.this,
-                                    VarTram.get(e.getXIndex()).getNombre(), Toast.LENGTH_SHORT).show();
+                                    VarTram.get(e.getXIndex()).getCodigo() +", "+tramo, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

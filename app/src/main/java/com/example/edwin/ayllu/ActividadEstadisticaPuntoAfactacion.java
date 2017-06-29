@@ -167,7 +167,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     //metodo encargado de obtener las etiquetas de la grafica
     private ArrayList<String> valoresX(ArrayList<AnalisisPorcentajeFrecuencia> datos){
         ArrayList<String> xVals = new ArrayList<String>();
-        for(int i = 0; i < datos.size(); i++){
+        for(int i = 1; i <= datos.size(); i++){
             xVals.add(""+i);
         }
         return xVals;

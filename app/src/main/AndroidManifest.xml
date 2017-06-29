@@ -84,16 +84,14 @@
         <activity
             android:name=".FiltrarActividad"
             android:configChanges="screenSize|orientation" />
-        <activity
-            android:name=".ActividadEstadisticaPuntoAfactacion"/>
+        <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
         <activity
             android:name=".ActivityPruebasMonitoreo"
             android:configChanges="screenSize|orientation" />
         <activity
             android:name=".PrestentationActivity"
             android:configChanges="screenSize|orientation" />
-        <activity
-            android:name=".GraficaRespuestaInstitucional" />
+        <activity android:name=".GraficaRespuestaInstitucional" />
         <activity
             android:name=".ActivitySeleccionTramoFiltro"
             android:configChanges="screenSize|orientation" />
@@ -102,9 +100,11 @@
             android:configChanges="screenSize|orientation" />
         <activity
             android:name=".MenuGraficasEstadisticas"
-            android:configChanges="screenSize|orientation"></activity>
+            android:configChanges="screenSize|orientation" />
         >>>>>>> upstream/experimental
-        <activity android:name=".SettingsAppActivity"></activity>
+        <activity android:name=".SettingsAppActivity" />
+        <activity android:name=".About" />
+        <activity android:name=".GraficaAnalisisVariableTiempo"></activity>
     </application>
 
 </manifest>

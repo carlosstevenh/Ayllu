@@ -147,12 +147,14 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.advertencia)).show();
                 break;
             case R.id.opcion_acerca:
+                Intent in = new Intent(getApplicationContext(), About.class);
+                startActivity(in);
+                finish();
                 break;
             case R.id.opcion_administrar:
                 if(tipo.equals("A")){
                     Intent i = new Intent(getApplicationContext(), Administrador.class);
                     startActivity(i);
-                    finish();
                 }
                 else{
                     Toast login = Toast.makeText(getApplicationContext(),
