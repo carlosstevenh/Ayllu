@@ -23,9 +23,10 @@ import retrofit2.http.Path;
 public interface RestClient {
 
     //peticion para obtener los promedios dependiendo el tramo y variable
-    @GET("promedioTramoVariable/{tramo}/{variable}")
+    @GET("promedioTramoVariable/{tramo}/{variable}/{monitor}")
     Call<ArrayList<Promedio>> promedios(@Path("tramo") String tramo,
-                                        @Path("variable") String variable);
+                                        @Path("variable") String variable,
+                                        @Path("monitor") String monitor);
 
     //Peticion que obtiene el conteo de las variables dependiendo del factor y tramo
     @GET("countVariableTramo/{tramo}/{factor}")

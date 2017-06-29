@@ -97,8 +97,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
                             Intent intent = new Intent(GraficaTortaVariables.this,GraficaAnalisisVariableTiempo.class);
                             intent.putExtras(parametro);
                             startActivity(intent);
-                            Toast.makeText(GraficaTortaVariables.this,
-                                    VarTram.get(e.getXIndex()).getCodigo() +", "+tramo, Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override

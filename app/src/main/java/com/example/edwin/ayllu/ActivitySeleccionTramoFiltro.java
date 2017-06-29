@@ -195,7 +195,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
             case R.id.fab_search:
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
-                    final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.presupuesto),getResources().getString(R.string.esperar),false,false);
+                    final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
                     RestClient service = RestClient.retrofit.create(RestClient.class);
                     Call<ArrayList<ConteoFactoresTramo>> requestUser = service.conteoFactorTramo(""+opTramo);
                     requestUser.enqueue(new Callback<ArrayList<ConteoFactoresTramo>>() {
