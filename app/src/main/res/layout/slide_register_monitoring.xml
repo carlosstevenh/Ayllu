@@ -10,7 +10,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/monitoring"
+            android:src="@drawable/img_registro"
             android:scaleType="centerCrop"/>
 
         <TextView

@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.edwin.ayllu.SplashScreen">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/fondo_splash"
-        android:scaleType="centerCrop"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,28 +41,29 @@
             android:weightSum="120">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/udenar_logo"
+                android:src="@drawable/img_udenar"
                 android:layout_weight="30"/>
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_unesco_icon"
                 android:layout_weight="30"/>
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_logo_japon"
+                android:src="@drawable/img_japon"
                 android:layout_weight="30"/>
 
+
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_patrimonio"

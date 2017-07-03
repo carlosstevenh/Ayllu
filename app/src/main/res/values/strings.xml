@@ -1,14 +1,80 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="app_name">Ayllu</string>
     <string name="title_activity_welcome">Home Screen</string>
-    <!--=========================================================================================-->
-    <!--STRINGS: LOGIN DEL USUARIO-->
+    <!--============================================================================================
+        STRINGS: LOGIN DEL USUARIO
+        ============================================================================================-->
     <string name="login">Login</string>
     <string name="identificacion">Identificación</string>
     <string name="contrasena">Contraseña</string>
     <string name="mostrarContrasena">Mostrar contraseña</string>
-    <!--=========================================================================================-->
-    <!--STRINGS: MENU DEL MONITOR-->
+
+    <!--============================================================================================
+        STRINGS: MENU DEL ADMINISTRADOR
+        ============================================================================================-->
+    <string name="item_navbar_monitor_recoder">REGISTRAR MONITOR</string>
+    <string name="item_navbar_monitor_list">MONITORES</string>
+    <string name="item_menu_monitoring">Monitorear</string>
+    <string name="item_menu_exit">Salir</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT REGISTRAR MONITOR-->
+    <string name="registration_form_id">Identificación</string>
+    <string name="registration_form_name">Nombre</string>
+    <string name="registration_form_surname">Apellido</string>
+    <string name="registration_form_password">Contraseña</string>
+    <string name="registration_form_confpassword">Confirmar contraseña</string>
+    <string name="registration_form_button_record">Registrar</string>
+
+    <string name="registration_form_alert_invalid_field">Campo inválido</string>
+    <string name="registration_form_alert_empty_field">Campo vacío</string>
+    <string name="registration_form_alert_password">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="registration_form_alert_different_passwords">Las contraseñas no coinciden</string>
+
+    <string name="registration_form_process_shipping_status">Registrando monitor</string>
+    <string name="registration_form_process_message">Por favor espere …</string>
+    <string name="registration_form_process_successful_message">Registro adicionado</string>
+    <string name="registration_form_process_error_message">Se produjo un error</string>
+    <string name="registration_form_process_message_server">No se pudo conectar al servidor</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT LISTA DE MONITORES -->
+    <string name="item_menu_edit_monitor">Editar monitor</string>
+    <string name="item_menu_disable_monitor">Deshabilitar monitor</string>
+
+    <string name="item_cardview_user_name">Nombre</string>
+    <string name="item_cardview_user_surname">Apellido</string>
+    <string name="item_cardview_user_id">Identificación</string>
+
+    <string name="process_message_question">¿Está seguro de deshabilitar al monitor?</string>
+    <string name="process_message_title_alert">Advertencia</string>
+    <string name="process_message_disable_monitor">Deshabilitando al monitor</string>
+    <string name="process_message">Por favor espere …</string>
+    <string name="process_successful_message">Monitor deshabilitado</string>
+    <string name="process_error_message">No se encontraron datos</string>
+    <string name="process_message_server">No se pudo conectar al servidor</string>
+    <!--.........................................................................................-->
+    <!--ACTIVITY EDITAR MONITOR -->
+    <string name="title_activity_edit_monitor">Editar monitor</string>
+
+    <string name="edit_form_id">Identificación</string>
+    <string name="edit_form_name">Nombre</string>
+    <string name="edit_form_surname">Apellido</string>
+    <string name="edit_form_password">Contraseña</string>
+    <string name="edit_form_confpassword">Confirmar contraseña</string>
+
+    <string name="edit_form_alert_invalid_field">Campo inválido</string>
+    <string name="redit_form_alert_empty_field">Campo vacío</string>
+    <string name="edit_form_alert_password">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="edit_form_alert_different_passwords">Las contraseñas no coinciden</string>
+
+    <string name="edit_form_process_message_update_monitor">Actualizando monitor</string>
+    <string name="edit_form_process_message">Por favor espere …</string>
+    <string name="edit_form_process_successful_message">Monitor actualizado</string>
+    <string name="edit_form_process_error_message">Se produjo un error</string>
+    <string name="edit_form_process_message_server">No se pudo conectar al servidor</string>
+
+    <!--============================================================================================
+        STRINGS: MENU DEL MONITOR
+        ============================================================================================-->
     <string name="next">SIGUIENTE</string>
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
@@ -29,16 +95,14 @@
     <string name="slide_4_title">CONFIGURA TU APLICACIÓN</string>
     <string name="slide_4_desc">Elige una configuración personalizada para tu trabajo</string>
 
+
     <string name="spinner_title_tramos">Seleccioné un Tramo</string>
     <string name="spinner_title_subtramos">Seleccioné un Subtramo</string>
     <string name="spinner_title_seccion">Seleccioné una Sección</string>
     <string name="spinner_title_area">Seleccioné una Área</string>
-
+    <string name="editMonitor">Editar monitor</string>
     <string name="title_activity_administrador_">Bienvenido administrador</string>
     <string name="administrador">Administrador</string>
-    <string name="monitor">Monitorear</string>
-    <string name="addMonitor">Registrar monitor</string>
-    <string name="salir">Salir</string>
     <string name="section_format" translatable="false">Hello World from section: %1$d</string>
 
     <string name="newMonitor">Agregar monitor</string>
@@ -46,7 +110,8 @@
     <string name="apellido">Apellido</string>
     <string name="edit">Editar</string>
 
-    <string name="fecha">Fecha monitoreo</string>
+    <string name="fecha">FECHA DEL MONITOREO</string>
+    <string name="fecha_title_graf">Fecha del monitoreo</string>
     <string name="variable">Variable</string>
     <string name="ResAdm">Respuesta institucional</string>
     <string name="evaluacion">Evaluación</string>
@@ -75,7 +140,8 @@
     <string name="ultimoMonitoreo">Último monitoreo</string>
     <string name="monitoreos">Monitoreos</string>
     <string name="analisis">Análisis</string>
-    <string name="puntaje">Puntaje</string>
+    <string name="puntajeVertical">P\nu\nn\nt\na\nj\ne</string>
+    <string name="puntajeHorizontal">PUNTAJE</string>
     <string name="informacionMonitoreo">Información Monitoreo</string>
 
     <string name="procesando">Procesando</string>
@@ -114,6 +180,7 @@
     <string name="contrasenaError">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
     <string name="freYpor">Frecuencia y porcentaje de Aparición</string>
     <string name="nuevaContrasena">Nueva contraseña</string>
+    <string name="confirmarContrasena">Confirmar contraseña</string>
     <string name="descriptionFloatingButtonRespuesta">GRÁFICA RESPUESTA</string>
     <string name="descriptionFloatingButtonPorcentajeFrecuencia">GRÁFICA PRT/FREC</string>
 

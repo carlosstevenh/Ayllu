@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_stadistic_pa">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fecha_title_graf"
+                android:textColor="@color/colorSecondaryText"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView52"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingRight="10dp"
+                    android:scrollbars="horizontal"
+                    android:textColor="@color/colorSecondaryText"
+                    android:text="@string/puntajeVertical"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic" />
+
+                <include
+                    layout="@layout/grafica_estadistica"
+                    android:layout_width="match_parent"
+                    android:layout_height="262dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title_monitoreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="INFORMACIÓN POR PUNTO"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divisor1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_factor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="FACTOR:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/area_factor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_variable"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_factor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="Contaminación"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_variable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="VARIABLE:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/area_variable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_variable"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_variable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="identidad, cohesion social, cambios en la poblacion y comunidades locales "
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="@string/fecha"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/area_fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_date"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="2017-02-12"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_puntaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="@string/puntajeHorizontal"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/area_puntaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_selected"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_puntaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="1"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_porcentaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="@string/itemCardViewPorcentaje"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/area_porcentaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_selected"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_porcentaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="[1%-10%] RESTRINGIDA"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divisor6"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_frecuencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="8dp"
+                android:text="@string/itemCardViewFrecuencia"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/area_frecuencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_selected"
+                    android:tint="@color/colorPrimaryText" />
+
+                <TextView
+                    android:id="@+id/tv_frecuencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="APARICIÓN INTERMITENTE"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

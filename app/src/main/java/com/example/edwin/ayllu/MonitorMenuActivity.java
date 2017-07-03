@@ -1,6 +1,7 @@
 package com.example.edwin.ayllu;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -36,7 +38,6 @@ import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiService;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.MediaType;
@@ -60,6 +61,17 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
 
     String monitor = "", pais = "", tipo_usu = "A";
 
+    //Progresbar
+    ProgressDialog progressBar;
+    private int progressBarStatus = 0;
+    private int sizeImg = 0;
+    private int portj = 0;
+    private Handler progressBarHandler = new Handler();
+
+    //Bases de Datos
+    private TaskDbHelper taskDbHelper;
+    private ImagenDbHelper imagenDbHelper;
+
     /**
      * =============================================================================================
      * METODO: Establece todas las acciones a realizar una vez creado el Activity
@@ -72,7 +84,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
         SQLiteDatabase bd = admin.getReadableDatabase();
         //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
+        final Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
         cursor.moveToFirst();
         monitor = cursor.getString(0);
         pais = cursor.getString(1);
@@ -94,9 +106,9 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         //Creando un vector de IDs de los layouts para el menu del monitor
         layouts = new int[]{
                 R.layout.slide_register_monitoring,
-                R.layout.slide_update_monitoring,
+                R.layout.slide_institutional_response,
                 R.layout.slide_statistical_maps,
-                R.layout.slide_visualize_qhapaq_nan};
+                R.layout.slide_mobile_settings};
 
         //Añadiendo los bottom dots
         addBottomDots(0);
@@ -113,62 +125,63 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
 
         //------------------------------------------------------------------------------------------
         //REGISTRA MONITOREOS QUE ESTAN ALMACENADOS EN EL MOVIL
-        final TaskDbHelper taskDbHelper = new TaskDbHelper(this);
-        final ImagenDbHelper imagenDbHelper = new ImagenDbHelper(this);
+        taskDbHelper = new TaskDbHelper(this);
+        imagenDbHelper = new ImagenDbHelper(this);
 
         Cursor cursor1 = taskDbHelper.generateQuery("SELECT * FROM ");
         final Cursor cursorImg = imagenDbHelper.generateQuery("SELECT * FROM ");
 
-        if (cursorImg.moveToFirst()){
-            if (wifiConected()) {
-                do{
-                    ArrayList<String> nameFiles = new ArrayList<>();
-                    for (int j = 1; j < 4; j++) nameFiles.add(cursorImg.getString(j));
-                    final int numon = cursorImg.getInt(0);
+        if (cursorImg.moveToFirst() && wifiConected()){
 
-                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                    httpClient.addInterceptor(logging);
-                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
+            // prepare for a progress bar dialog
+            progressBar = new ProgressDialog(this);
+            progressBar.setCancelable(true);
+            progressBar.setMessage("Subiendo Imagenes ...");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressBar.setProgress(0);
+            progressBar.setMax(100);
+            progressBar.show();
 
-                    File file;
-                    File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
-                    imagesFolder.mkdirs();
+            //reset progress bar status
+            progressBarStatus = 0;
+            sizeImg  = cursorImg.getCount();
+            portj = 100/sizeImg;
 
-                    for (int i = 0; i<nameFiles.size(); i++){
-                        if(!nameFiles.get(i).equals("null")){
-                            file = new File(imagesFolder,nameFiles.get(i));
-                            final int con = i;
+            new Thread(new Runnable() {
+                public void run() {
+                    do {
+                        progressBarStatus += uploadImages(cursorImg);
 
-                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                            Call<String> call1 = service1.uploadAttachment(filePart);
-                            call1.enqueue(new Callback<String>() {
-                                @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
-                                    Toast.makeText(MonitorMenuActivity.this,
-                                            "Fotografia N°"+ numon +" Registrado", Toast.LENGTH_SHORT).show();
-
-                                    String[] cond = new String[]{numon+""};
-
-                                    if (con == 0) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA1, ImagenContract.ImagenEntry._ID});
-                                    if (con == 1) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA2, ImagenContract.ImagenEntry._ID});
-                                    if (con == 2) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA3, ImagenContract.ImagenEntry._ID});
-                                }
-
-                                @Override
-                                public void onFailure(Call<String> call, Throwable t) {
-
-                                }
-                            });
+                        //Dormir por 1 segundo
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                        else {
-                            Toast.makeText(MonitorMenuActivity.this,
-                                    "Estado imagen (NULL)", Toast.LENGTH_SHORT).show();
+
+                        //Actualizar el progressBar
+                        progressBarHandler.post(new Runnable() {
+                            public void run() {
+                                progressBar.setProgress(progressBarStatus);
+                            }
+                        });
+                    } while (progressBarStatus < 100 && cursorImg.moveToNext());
+
+                    // Imagenes subidas
+                    if (progressBarStatus >= 100) {
+
+                        //Dormir por dos segundos para mirar el 100%
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+
+                        //Cerrar el progresBar
+                        progressBar.dismiss();
                     }
-                } while (cursorImg.moveToNext());
-            }
+                }
+            }).start();
         }
 
         if (cursor1.moveToFirst()) {
@@ -242,6 +255,54 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                 } while (cursor1.moveToNext());
             }
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Subir Fotografias
+     * **/
+    private int uploadImages (Cursor cursor){
+        ArrayList<String> nameFiles = new ArrayList<>();
+        for (int j = 1; j < 4; j++) nameFiles.add(cursor.getString(j));
+        final int numon = cursor.getInt(0);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+        PostClient service1 = PostClient.retrofit.create(PostClient.class);
+
+        File file;
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
+        imagesFolder.mkdirs();
+
+        for (int i = 0; i<nameFiles.size(); i++){
+            if(!nameFiles.get(i).equals("null")){
+                file = new File(imagesFolder,nameFiles.get(i));
+                final int con = i;
+
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                Call<String> call1 = service1.uploadAttachment(filePart);
+                call1.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()){
+                            String[] cond = new String[]{numon+""};
+
+                            if (con == 0) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA1, ImagenContract.ImagenEntry._ID});
+                            if (con == 1) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA2, ImagenContract.ImagenEntry._ID});
+                            if (con == 2) imagenDbHelper.generateConditionalUpdate(cond, new String[]{ImagenContract.ImagenEntry.FOTOGRAFIA3, ImagenContract.ImagenEntry._ID});
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+            }
+        }
+        return portj;
     }
 
     /**

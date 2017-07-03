@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.example.edwin.ayllu.administrador.Administrador;
+import com.example.edwin.ayllu.ui.AdministratorActivity;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.Categoria;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
@@ -60,7 +60,7 @@ public class SplashScreen extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(SplashScreen.this, Administrador.class);
+                        Intent intent = new Intent(SplashScreen.this, AdministratorActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -91,7 +91,7 @@ public class SplashScreen extends Activity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
