@@ -469,6 +469,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
     public void getListReports(String tramo, String subtramo, String seccion, String area){
         final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
+        Log.e("Datos","tramo: "+tramo);
         Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(tramo, subtramo, seccion, area);
         requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
             @Override

@@ -130,10 +130,10 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
         ArrayList<String> xVals = new ArrayList<String>();
 
         for(int i = 0; i < promedios.size(); i++){
-            if(!promedios.get(i).getPromedio().equals("0")){
+            if(!promedios.get(i).getPromedio().equals("0.0")){
                 String label = "";
-                if(promedios.get(i).getSemestre().equals("1"))label = promedios.get(i).getAnio()+"A";
-                if(promedios.get(i).getSemestre().equals("2"))label = promedios.get(i).getAnio()+"B";
+                if(promedios.get(i).getSemestre().equals("1"))label = promedios.get(i).getAnio()+"-A";
+                if(promedios.get(i).getSemestre().equals("2"))label = promedios.get(i).getAnio()+"-B";
                 xVals.add(label);
             }
         }
@@ -146,7 +146,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
         int aux = 0;
         for(int i = 0; i < promedios.size(); i++){
 
-            if(!promedios.get(i).getPromedio().equals("0")){
+            if(!promedios.get(i).getPromedio().equals("0.0")){
                 float promedio = Float.parseFloat(promedios.get(i).getPromedio());
                 vals.add(new BarEntry(promedio,aux));
                 aux++;
