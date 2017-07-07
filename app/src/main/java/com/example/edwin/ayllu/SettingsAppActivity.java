@@ -3,6 +3,7 @@ package com.example.edwin.ayllu;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.edwin.ayllu.administrador.Administrador;
 import com.example.edwin.ayllu.domain.AreaContract;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
@@ -61,7 +63,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     String opciones = "";
 
     String item = "";
-    String monitor = "", pais = "";
+    String monitor = "", pais = "", tipo = "";
     int i = 0;
 
     //VARIABLES CONTROL DE DATOS FIJOS
@@ -91,10 +93,11 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
         SQLiteDatabase bd = admin.getReadableDatabase();
         //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
+        Cursor cursor = bd.rawQuery("SELECT codigo, tipo, pais FROM login LIMIT 1", null);
         cursor.moveToFirst();
         monitor = cursor.getString(0);
-        pais = cursor.getString(1);
+        tipo = cursor.getString(1);
+        pais = cursor.getString(2);
         cursor.close();
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual
@@ -119,6 +122,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         opElegir.setOnClickListener(this);
         opAcerca.setOnClickListener(this);
         opAdministrar.setOnClickListener(this);
+        opSalir.setOnClickListener(this);
 
         cbMonitoreo.setEnabled(false);
     }
@@ -140,10 +144,23 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1).show();
                 break;
             case R.id.opcion_salir:
+                createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.advertencia)).show();
                 break;
             case R.id.opcion_acerca:
+                Intent in = new Intent(getApplicationContext(), About.class);
+                startActivity(in);
+                finish();
                 break;
             case R.id.opcion_administrar:
+                if(tipo.equals("A")){
+                    Intent i = new Intent(getApplicationContext(), Administrador.class);
+                    startActivity(i);
+                }
+                else{
+                    Toast login = Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.noAdmin), Toast.LENGTH_SHORT);
+                    login.show();
+                }
                 break;
         }
     }
@@ -254,6 +271,37 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         return builder.create();
     }
 
+    //metodo encargado de crear los dialogos informativos
+    public AlertDialog createSimpleDialogSalir(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo)
+                .setMessage(mensaje)
+                .setPositiveButton(getResources().getString(R.string.confirmar),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                                SQLiteDatabase bd = admin.getWritableDatabase();
+                                bd.delete(admin.TABLENAME, null, null);
+                                bd.close();
+
+                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(i);
+                                finish();
+                                builder.create().dismiss();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.cancelar),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
+        return builder.create();
+    }
     /**
      * =============================================================================================
      * METODO: Presenta en Interfaz un mensaje Tipo Dialog

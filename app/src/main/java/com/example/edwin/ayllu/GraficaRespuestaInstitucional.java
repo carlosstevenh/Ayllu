@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -385,13 +387,16 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
         String grafica;
-        if(save.equals("E")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.evaluacion)+format + ".jpg";
-        else if(save.equals("P")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.personal)+format + ".jpg";
-        else if(save.equals("T")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.tiempo)+format + ".jpg";
-        else if(save.equals("PR")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.presupuesto)+format + ".jpg";
-        else if(save.equals("R")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.recursos)+format + ".jpg";
-        else grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.conocimiento)+format + ".jpg";
-        mChart.saveToGallery(grafica,100);
+        if(save.equals("E")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.evaluacion)+format;
+        else if(save.equals("P")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.personal)+format;
+        else if(save.equals("T")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.tiempo)+format;
+        else if(save.equals("PR")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.presupuesto)+format;
+        else if(save.equals("R")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.recursos)+format;
+        else grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.conocimiento)+format;
+
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
+        imagesFolder.mkdirs();
+        mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
         Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
     }

@@ -3,32 +3,30 @@ package com.example.edwin.ayllu;
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
 import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
 import com.example.edwin.ayllu.domain.ConteoVariableFactorTramo;
-import com.example.edwin.ayllu.domain.Factor;
 import com.example.edwin.ayllu.domain.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
-import com.example.edwin.ayllu.domain.Pais;
+import com.example.edwin.ayllu.domain.Promedio;
 import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.example.edwin.ayllu.domain.RespuestaInstitucional;
-import com.example.edwin.ayllu.domain.ResumenMonitor;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.io.ApiConstants;
 
 import java.util.ArrayList;
 
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RestClient {
+
+    //peticion para obtener los promedios dependiendo el tramo y variable
+    @GET("promedioTramoVariable/{tramo}/{variable}/{monitor}")
+    Call<ArrayList<Promedio>> promedios(@Path("tramo") String tramo,
+                                        @Path("variable") String variable,
+                                        @Path("monitor") String monitor);
 
     //Peticion que obtiene el conteo de las variables dependiendo del factor y tramo
     @GET("countVariableTramo/{tramo}/{factor}")

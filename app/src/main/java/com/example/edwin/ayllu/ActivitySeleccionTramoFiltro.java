@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
@@ -34,6 +35,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -193,7 +195,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
             case R.id.fab_search:
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
-                    final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.presupuesto),getResources().getString(R.string.esperar),false,false);
+                    final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
                     RestClient service = RestClient.retrofit.create(RestClient.class);
                     Call<ArrayList<ConteoFactoresTramo>> requestUser = service.conteoFactorTramo(""+opTramo);
                     requestUser.enqueue(new Callback<ArrayList<ConteoFactoresTramo>>() {
@@ -371,8 +373,10 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     void dowload(){
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-        String grafica = getResources().getString(R.string.graficaPorTramo)+format + ".jpg";
-        mChart.saveToGallery(grafica,100);
+        String grafica = getResources().getString(R.string.graficaPorTramo)+format;
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
+        imagesFolder.mkdirs();
+        mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
         Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
     }
