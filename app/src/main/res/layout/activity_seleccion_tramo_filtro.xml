@@ -23,7 +23,7 @@ tools:context="com.example.edwin.ayllu.ActivitySeleccionTramoFiltro">
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/analisisFactor"
+                android:text="@string/general_statistical_graph_title"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -34,59 +34,70 @@ tools:context="com.example.edwin.ayllu.ActivitySeleccionTramoFiltro">
     <include layout="@layout/content_seleccion_tramo_filtro"
         android:id="@+id/include3"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/menu_fab"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_labelStyle="@style/Etiquetas"
-        fab:fab_addButtonColorNormal="?attr/colorAccent"
-        fab:fab_addButtonSize="normal"
-        fab:fab_labelsPosition="left">
+        android:gravity="end|bottom">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_pais"
+            android:id="@+id/fab_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/FloatingButtonDark"
-            fab:fab_icon="@drawable/ic_pais"
-            fab:fab_size="mini"
-            fab:fab_title="PAIS" />
+            android:layout_alignBottom="@+id/menu_fab"
+            android:layout_alignLeft="@+id/menu_fab"
+            android:layout_alignStart="@+id/menu_fab"
+            android:layout_gravity="bottom|end"
+            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_search"
+            app:fab_size="normal"
+            app:layout_anchorGravity="bottom|center_horizontal" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_tramo"
+            android:id="@+id/fab_dowload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/FloatingButtonDark"
-            fab:fab_icon="@drawable/ic_tramo"
-            fab:fab_size="mini"
-            fab:fab_title="@string/descriptionTramo" />
+            android:layout_marginEnd="71dp"
+            android:layout_marginRight="71dp"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_download"
+            app:fab_size="normal"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            android:layout_alignTop="@+id/fab_search"
+            android:layout_alignRight="@+id/fab_search"
+            android:layout_alignEnd="@+id/fab_search" />
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            app:fab_labelStyle="@style/Etiquetas"
+            fab:fab_addButtonColorNormal="?attr/colorAccent"
+            fab:fab_addButtonSize="normal"
+            fab:fab_labelsPosition="left">
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_search"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include3"
-        app:layout_anchorGravity="bottom|center_horizontal" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_pais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatingButtonDark"
+                fab:fab_icon="@drawable/ic_pais"
+                fab:fab_size="mini"
+                fab:fab_title="@string/general_statistical_graph_button_pais" />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_dowload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_download"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include3"
-        app:layout_anchorGravity="bottom|center_horizontal" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_tramo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatingButtonDark"
+                fab:fab_icon="@drawable/ic_tramo"
+                fab:fab_size="mini"
+                fab:fab_title="@string/general_statistical_graph_button_tramo" />
 
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

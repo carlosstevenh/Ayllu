@@ -33,9 +33,9 @@
                 android:id="@+id/tv_title_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="FACTOR:"
+                android:text="@string/summary_item_title_factor"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
                 android:id="@+id/area_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -52,6 +52,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_variable"
                     android:tint="@color/colorPrimaryText" />
 
@@ -60,20 +61,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="0dp"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="0dp"
                     android:gravity="center_vertical"
-                    android:text="Contaminación"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
+            <View
+                android:id="@+id/divisor7"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
             <TextView
                 android:id="@+id/tv_title_variable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="VARIABLE:"
+                android:text="@string/summary_item_title_variable"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -82,7 +93,7 @@
                 android:id="@+id/area_variable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -90,6 +101,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_variable"
                     android:tint="@color/colorPrimaryText" />
 
@@ -98,8 +110,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="0dp"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="0dp"
                     android:gravity="center_vertical"
-                    android:text="identidad, cohesion social, cambios en la poblacion y comunidades locales "
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -117,9 +131,9 @@
                 android:id="@+id/tv_title_coordenadas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="COORDENADAS:"
+                android:text="@string/summary_item_title_coodinates"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -127,7 +141,7 @@
                 android:id="@+id/area_latitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -135,6 +149,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_latitud"
                     android:tint="@color/colorPrimaryText" />
 
@@ -143,7 +158,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="12343423"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -153,7 +167,7 @@
                 android:id="@+id/area_longitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -161,6 +175,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_longitud"
                     android:tint="@color/colorPrimaryText" />
 
@@ -169,7 +184,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="12343423"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -187,9 +201,9 @@
                 android:id="@+id/tv_title_porcentaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="PORCENTAJE DE APARICIÓN:"
+                android:text="@string/summary_item_title_percentage"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -197,7 +211,7 @@
                 android:id="@+id/area_porcentaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -205,6 +219,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
@@ -213,7 +228,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="[1%-10%] RESTRINGIDA"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -231,9 +245,9 @@
                 android:id="@+id/tv_title_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="FRECUENCIA DE APARICIÓN:"
+                android:text="@string/summary_item_title_frequency"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -241,7 +255,7 @@
                 android:id="@+id/area_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -249,6 +263,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
@@ -257,7 +272,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="UNA ÚNICA VEZ"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -275,9 +289,9 @@
                 android:id="@+id/tv_title_origen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="ORIGEN:"
+                android:text="@string/summary_item_title_origin"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -285,7 +299,7 @@
                 android:id="@+id/area_origen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -293,6 +307,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
@@ -301,7 +316,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="INTERNO"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -319,8 +333,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_gravity="left"
-                android:text="REPERCUSIONES:"
+                android:layout_gravity="start"
+                android:text="@string/summary_item_title_repercussions"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -328,7 +342,7 @@
                 android:id="@+id/area_repercuciones1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -336,6 +350,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
@@ -344,7 +359,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="POSITIVAS"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -355,7 +369,7 @@
                 android:id="@+id/area_repercuciones2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -363,6 +377,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_selected"
                     android:tint="@color/colorPrimaryText" />
 
@@ -371,7 +386,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="ACTUALES"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="12sp"
                     android:textStyle="bold" />

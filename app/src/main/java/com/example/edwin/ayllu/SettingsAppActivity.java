@@ -3,23 +3,23 @@ package com.example.edwin.ayllu;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Interpolator;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.edwin.ayllu.administrador.Administrador;
 import com.example.edwin.ayllu.domain.AreaContract;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
@@ -35,14 +35,27 @@ import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
+import com.example.edwin.ayllu.ui.AdministratorActivity;
 import com.example.edwin.ayllu.ui.MonitoringListFragment;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -53,8 +66,10 @@ import retrofit2.Retrofit;
 
 public class SettingsAppActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout opHabilitar, opElegir, opSalir, opAcerca, opAdministrar;
-    CheckBox cbMonitoreo;
+    // Códigos de petición
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
+
+    LinearLayout opHabilitar, opElegir, opSalir, opAcerca, opAdministrar, opReporte;
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
@@ -116,32 +131,21 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         opSalir = (LinearLayout) findViewById(R.id.opcion_salir);
         opAcerca = (LinearLayout) findViewById(R.id.opcion_acerca);
         opAdministrar = (LinearLayout) findViewById(R.id.opcion_administrar);
-        cbMonitoreo = (CheckBox) findViewById(R.id.cb_monitoreo);
+        opReporte = (LinearLayout) findViewById(R.id.opcion_reporte);
 
         opHabilitar.setOnClickListener(this);
         opElegir.setOnClickListener(this);
         opAcerca.setOnClickListener(this);
         opAdministrar.setOnClickListener(this);
+        opReporte.setOnClickListener(this);
         opSalir.setOnClickListener(this);
-
-        cbMonitoreo.setEnabled(false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.opcion_habilitar:
-                if(cbMonitoreo.isChecked()) {
-                    cbMonitoreo.setChecked(false);
-                    cbMonitoreo.setText("Desactivado");
-                }
-                else {
-                    cbMonitoreo.setChecked(true);
-                    cbMonitoreo.setText("Activado");
-                }
-                break;
             case R.id.opcion_elegir:
-                createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1).show();
+                createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1, "OFFLINE").show();
                 break;
             case R.id.opcion_salir:
                 createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.advertencia)).show();
@@ -153,7 +157,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.opcion_administrar:
                 if(tipo.equals("A")){
-                    Intent i = new Intent(getApplicationContext(), Administrador.class);
+                    Intent i = new Intent(getApplicationContext(), AdministratorActivity.class);
                     startActivity(i);
                 }
                 else{
@@ -161,6 +165,9 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                             getResources().getString(R.string.noAdmin), Toast.LENGTH_SHORT);
                     login.show();
                 }
+                break;
+            case R.id.opcion_reporte:
+                createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1, "REPORT").show();
                 break;
         }
     }
@@ -170,7 +177,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
      * METODO: Presenta en Interfaz un mensaje tipo dialog con los datos correspondientes a las
      * Zonas y asi aplicar los filtros correspondientes para la consulta de monitoreos
      **/
-    public AlertDialog createRadioListDialog(final CharSequence[] items, final String title, final int zn) {
+    public AlertDialog createRadioListDialog(final CharSequence[] items, final String title, final int zn, final String type) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(title)
@@ -244,19 +251,19 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
                                 switch (zn){
                                     case 1:
-                                        if(op[0] != 0) createRadioListDialog(items_subtramos, getResources().getString(R.string.descriptionSubtramo), 2).show();
+                                        if(op[0] != 0) createRadioListDialog(items_subtramos, getResources().getString(R.string.descriptionSubtramo), 2, type).show();
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                     case 2:
-                                        if(op[1] != 0) createRadioListDialog(items_secciones, getResources().getString(R.string.descriptionSeccion), 3).show();
+                                        if(op[1] != 0) createRadioListDialog(items_secciones, getResources().getString(R.string.descriptionSeccion), 3, type).show();
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                     case 3:
-                                        if(op[2] != 0) createRadioListDialog(items_tipos, getResources().getString(R.string.descriptionPropiedad), 4).show();
+                                        if(op[2] != 0) createRadioListDialog(items_tipos, getResources().getString(R.string.descriptionPropiedad), 4, type).show();
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                     case 4:
-                                        if(op[3] != 0) createSimpleDialog(opciones, "SELECCIÓN A DESCARGAR").show();
+                                        if(op[3] != 0) createSimpleDialog(opciones, "SELECCIÓN A DESCARGAR", type).show();
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                 }
@@ -265,7 +272,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 .setNegativeButton("CONFIRMAR", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        createSimpleDialog(opciones, "SELECCIÓN A DESCARGAR").show();
+                        createSimpleDialog(opciones, "SELECCIÓN A DESCARGAR", type).show();
                     }
                 });
         return builder.create();
@@ -286,7 +293,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 bd.delete(admin.TABLENAME, null, null);
                                 bd.close();
 
-                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(i);
                                 finish();
                                 builder.create().dismiss();
@@ -306,7 +313,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
      * =============================================================================================
      * METODO: Presenta en Interfaz un mensaje Tipo Dialog
      **/
-    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
+    public AlertDialog createSimpleDialog(String mensaje, String titulo, final String tipo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -340,20 +347,24 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                     builder.create().dismiss();
 
                                     reportes = response.body().getReportes();
+
                                     if (reportes.size() > 0){
-                                        //Borrar todos los datos
-                                        monitoreoDbHelper.deleteDataBase();
-                                        monitoreoDbHelper.close();
-                                        monitoreoDbHelper = new MonitoreoDbHelper(SettingsAppActivity.this);
+                                        if (tipo.equals("OFFLINE")){
+                                            //Borrar todos los datos
+                                            monitoreoDbHelper.deleteDataBase();
+                                            monitoreoDbHelper.close();
+                                            monitoreoDbHelper = new MonitoreoDbHelper(SettingsAppActivity.this);
 
-                                        //Ingresar los datos en la tabla Monitoreos
-                                        for (int i = 0; i<reportes.size(); i++) monitoreoDbHelper.saveMonitoreos(reportes.get(i));
-                                        monitoreoDbHelper.close();
+                                            //Ingresar los datos en la tabla Monitoreos
+                                            for (int i = 0; i<reportes.size(); i++) monitoreoDbHelper.saveMonitoreos(reportes.get(i));
+                                            monitoreoDbHelper.close();
 
-                                        //Descargar Imagenes del Servidor
-                                        for (int i = 0; i<reportes.size(); i++) downloadZipFile(reportes.get(i).getPrueba1());
+                                            //Descargar Imagenes del Servidor
+                                            for (int i = 0; i<reportes.size(); i++) downloadZipFile(reportes.get(i).getPrueba1());
 
-                                        Toast.makeText(SettingsAppActivity.this,"Monitoreos Descargados", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SettingsAppActivity.this,"Monitoreos Descargados", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else checkPermission();
                                     }
                                     if (reportes.size() == 0) {
                                         Toast.makeText(SettingsAppActivity.this,"No hay monitoreos para la seleción actual", Toast.LENGTH_SHORT).show();
@@ -457,11 +468,9 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
     public void saveToDisk(ResponseBody body, String name) {
         try {
-            File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Offline");
-
-            imagesFolder.mkdirs();
-            new File("/data/data/" + getPackageName() + "/games").mkdir();
-            File destinationFile = new File(Environment.getExternalStorageDirectory(), "Ayllu/Offline/" + name);
+            File folder = new File(Environment.getExternalStorageDirectory(),"/Ayllu/Offline");
+            folder.mkdirs();
+            File destinationFile = new File(folder.getPath() + name);
 
             InputStream is = null;
             OutputStream os = null;
@@ -495,6 +504,149 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
             Log.d("", "Failed to save the file!");
             return;
+        }
+    }
+
+    //==============================================================================================
+    public void generateReport(ArrayList<Reporte> rp) {
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        String name = "Reporte-"+s.format(new Date());
+        s = new SimpleDateFormat("HH:mm:ss");
+        name += "-"+s.format(new Date())+".xls";
+        name = "reporte.xls";
+        //------------------------------------------------------------------------------------------
+        //Escribiendo en el archivo Excel
+        try {
+            InputStream editor = getResources().openRawResource(R.raw.plantilla);
+            File folder = new File(Environment.getExternalStorageDirectory(), "/Ayllu/Reportes");
+            folder.mkdirs();
+            File imagesFolder = new File(folder.getPath() + name);
+
+            FileOutputStream result = new FileOutputStream(imagesFolder);
+
+            //Crear el objeto que tendra el libro de Excel
+            HSSFWorkbook workbook = new HSSFWorkbook(editor);
+
+            //1. Obtenemos la primera hoja del Excel
+            //2. Llenamos la primera hoja del Excel
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            escribirExcel(1, 12, sheet);
+
+            //1. Obtenemos la segunda hoja del Excel
+            //2. Llenamos la segunda hoja del Excel
+            sheet = workbook.getSheetAt(1);
+            escribirExcel(2, 6, sheet);
+
+            //1. Obtenemos la tercera hoja del Excel
+            //2. Llenamos la tercera hoja del Excel
+            sheet = workbook.getSheetAt(2);
+            escribirExcel(3, 6, sheet);
+
+            workbook.write(result);
+            result.close();
+            workbook.close();
+
+            Toast.makeText(
+                    SettingsAppActivity.this,
+                    "Reporte generado \n!Exitosamente¡",
+                    Toast.LENGTH_SHORT)
+                    .show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //==============================================================================================
+    private void escribirExcel(int cod_plan, int pf, HSSFSheet sheet) {
+        //Estilo de celda basico
+        CellStyle style = sheet.getWorkbook().createCellStyle();
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setBorderBottom(BorderStyle.DASHED);
+        style.setBorderTop(BorderStyle.DASHED);
+        style.setBorderRight(BorderStyle.DASHED);
+        style.setBorderLeft(BorderStyle.DASHED);
+
+        //Estilo de celda para Repercusiones y Origenes
+        CellStyle style2 = sheet.getWorkbook().createCellStyle();
+        style2.setAlignment(HorizontalAlignment.CENTER);
+        style2.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+        style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        style2.setBorderBottom(BorderStyle.DASHED);
+        style2.setBorderTop(BorderStyle.DASHED);
+        style2.setBorderRight(BorderStyle.DASHED);
+        style2.setBorderLeft(BorderStyle.DASHED);
+
+        //Estilo de celda para Repercusiones y Origenes
+        CellStyle style3 = sheet.getWorkbook().createCellStyle();
+        style3.setAlignment(HorizontalAlignment.CENTER);
+        style3.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
+        style3.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        style3.setBorderBottom(BorderStyle.DASHED);
+        style3.setBorderTop(BorderStyle.DASHED);
+        style3.setBorderRight(BorderStyle.DASHED);
+        style3.setBorderLeft(BorderStyle.DASHED);
+
+        //Variable para el punto de escritura
+        int punto = pf;
+
+        //------------------------------------------------------------------------------------------
+        for (int i = 0; i < reportes.size(); i++) {
+            HSSFRow fila = sheet.createRow(punto);
+            HSSFCell celda;
+            ArrayList<String> info = reportes.get(i).generarInfoPlantilla(cod_plan);
+            punto++;
+            //--------------------------------------------------------------------------------------
+            for (int j = 0; j < info.size(); j++) {
+                celda = fila.createCell(j);
+                if (cod_plan == 1 && j > 6 && j < 11) {
+                    if (info.get(j).equals("1")) celda.setCellStyle(style2);
+                    else celda.setCellStyle(style);
+                } else if (cod_plan == 1 && j > 10) {
+                    if (info.get(j).equals("1")) celda.setCellStyle(style3);
+                    else celda.setCellStyle(style);
+                } else {
+                    celda.setCellValue(info.get(j));
+                    celda.setCellStyle(style);
+                }
+            }
+        }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: CHEQUEA LOS PERMISOS DEL DISPOSITIVO
+     **/
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) generateReport(reportes);
+        else {
+            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_WRITE_EXTERNAL_STORAGE);
+            }
+            else generateReport(reportes);
+        }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) generateReport(reportes);
+            else {
+                Toast.makeText(this, getResources().getString(R.string.registration_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

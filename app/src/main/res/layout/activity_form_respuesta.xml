@@ -4,8 +4,8 @@
     android:id="@+id/activity_form_respuesta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.FormRespuesta"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.edwin.ayllu.FormRespuesta">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,18 +16,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:background="?attr/colorPrimary">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="#fff"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
                 android:layout_marginBottom="10dp"
-                android:text="@string/slide_2_title" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/institutional_response_form_title"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -40,17 +41,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingEnd="30dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingRight="30dp"
                 android:paddingTop="10dp"
-                tools:paddingLeft="30dp"
-                android:paddingEnd="30dp">
+                tools:paddingLeft="30dp">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -58,84 +60,84 @@
                     android:paddingTop="20dp">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:text="@string/evaluacion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/textView4"
-                            android:layout_weight="1"
-                            android:textStyle="normal|bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorPrimaryText" />
-
-                    </LinearLayout>
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_eva"
-                        android:layout_weight="1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingTop="20dp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/personal"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView10"
                             android:layout_weight="1"
-                            android:textStyle="normal|bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorPrimaryText" />
-
-                    </LinearLayout>
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_per"
-                        android:layout_weight="1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingTop="20dp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/tiempo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView11"
-                            android:layout_weight="1"
-                            android:textSize="18sp"
+                            android:text="@string/institutional_response_form_item_evaluacion"
                             android:textColor="@color/colorPrimaryText"
+                            android:textSize="18sp"
                             android:textStyle="normal|bold" />
 
                     </LinearLayout>
 
                     <Spinner
+                        android:id="@+id/spinner_eva"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/institutional_response_form_item_personal"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="18sp"
+                            android:textStyle="normal|bold" />
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/institutional_response_form_item_tiempo"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="18sp"
+                            android:textStyle="normal|bold" />
+
+                    </LinearLayout>
+
+                    <Spinner
                         android:id="@+id/spinner_tie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1" />
                 </TableRow>
 
@@ -145,103 +147,98 @@
                     android:paddingTop="20dp">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:text="@string/presupuesto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/textView14"
-                            android:layout_weight="1"
-                            android:textSize="18sp"
-                            android:textStyle="normal|bold"
-                            android:textColor="@color/colorPrimaryText" />
-
-                    </LinearLayout>
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_pre"
-                        android:layout_weight="1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingTop="20dp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/recursos"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView12"
                             android:layout_weight="1"
-                            android:textSize="18sp"
-                            android:textStyle="normal|bold"
-                            android:textColor="@color/colorPrimaryText" />
-
-                    </LinearLayout>
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_rec"
-                        android:layout_weight="1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingTop="20dp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:text="@string/conocimiento"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView13"
-                            android:layout_weight="1"
-                            android:textSize="18sp"
+                            android:text="@string/institutional_response_form_item_presupuesto"
                             android:textColor="@color/colorPrimaryText"
+                            android:textSize="18sp"
                             android:textStyle="normal|bold" />
 
                     </LinearLayout>
 
                     <Spinner
+                        android:id="@+id/spinner_pre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/institutional_response_form_item_recursos"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="18sp"
+                            android:textStyle="normal|bold" />
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_rec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView13"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/institutional_response_form_item_conocimiento"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="18sp"
+                            android:textStyle="normal|bold" />
+
+                    </LinearLayout>
+
+                    <Spinner
                         android:id="@+id/spinner_con"
-                        android:layout_weight="1"
-                        />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
                 </TableRow>
             </TableLayout>
 
             <Button
-                android:text="@string/registrar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_margin="@dimen/activity_vertical_margin"
                 android:onClick="registrar"
+                android:text="@string/institutional_response_form_button_register"
                 android:textColor="@color/colorTextIcons"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:theme="@style/RaisedButtonDark"
-                android:layout_marginTop="30dp"
                 android:textStyle="bold"
-                android:backgroundTint="@color/colorAccent"
-                android:layout_weight="40"
-                android:elevation="2dp"/>
+                android:theme="@style/RaisedButtonDark" />
 
 
         </LinearLayout>

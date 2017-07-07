@@ -53,9 +53,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     //VARIABLES: Componetes del Formulario de Registro
     Button btnVar, btnFac, btnPor, btnFre, btnFijar;
     RadioGroup rgRep1, rgRep2, rgOrg;
-    EditText etLat, etLong;
+    EditText etLatOrientation, etLongOrientation, etLatGrados, etLongGrados, etLatMinutes, etLongMinutes, etLatSegunds, etLongSegunds;
     TextView tvVar, tvFac, tvPor, tvFre;
     ImageButton ibImg1, ibImg2, ibImg3;
+    private TextView tvInfo;
 
     MonitoringSummaryFragment fragment;
 
@@ -109,6 +110,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monitoring_registration_form, container, false);
 
+        tvInfo = (TextView) view.findViewById(R.id.tv_info);
+
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         fecha = s.format(new Date());
 
@@ -137,13 +140,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             logt = getArguments().getString("LONGITUD");
 
             punto_afectacion = getArguments().getString("PUNTO");
-            mySteps = new String[] {"Pruebas", "Porcentaje de aparición",
-                    "Frecuencia de aparición", "Origen", "Repercusiones"};
+            mySteps = getResources().getStringArray(R.array.registration_form_monitoring);
         } else {
+            //tvInfo.setVisibility(View.INVISIBLE);
             area = getArguments().getString("AREA");
-            mySteps = new String[] {"Factor & Variable", "Coordenadas", "Pruebas",
-                    "Porcentaje de aparición", "Frecuencia de aparición",
-                    "Origen", "Repercusiones"};
+            mySteps = getResources().getStringArray(R.array.registration_form_new);
         }
         //------------------------------------------------------------------------------------------
         //Se obtiene todos los factores
@@ -320,7 +321,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         tvTitle.setText(titulo);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton("HECHO",
+        builder.setPositiveButton(getResources().getString(R.string.registration_form_dialog_option_positive),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -392,7 +393,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 onStepOpening(0);
             }
         })
-                .setNegativeButton("OK",
+                .setNegativeButton(getResources().getString(R.string.registration_form_dialog_option_ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -441,7 +442,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 }
             }
         })
-                .setNegativeButton("OK",
+                .setNegativeButton(getResources().getString(R.string.registration_form_dialog_option_ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -471,7 +472,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
         bitMapImg(file, img);
 
-        builder.setPositiveButton("CAMBIAR",
+        builder.setPositiveButton(getResources().getString(R.string.titlebuttonCambiar),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -482,7 +483,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                         builder.create().dismiss();
                     }
                 });
-        builder.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getResources().getString(R.string.registration_form_dialog_option_cancel),
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 builder.create().dismiss();
@@ -592,7 +594,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     }
                     break;
                 case 1:
-                    if (latitud.length() == 6 && longitud.length() == 6) verticalStepperForm.setStepAsCompleted(1);
+                    if (latitud.length() == 6 && longitud.length() == 7) verticalStepperForm.setStepAsCompleted(1);
                     else {
                         String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
@@ -645,9 +647,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         params.putString("FECHA", fecha);
         params.putString("REPERCUSIONES", rep);
         params.putString("ORIGEN", origen);
-        params.putString("POR_NAME", items_porcentaje[pos_seleccion[0]].toString());
+        params.putString("POR_NAME", items_porcentaje[pos_seleccion[0]]);
         params.putString("POR_NUMBER", seleccion_items[0] + "");
-        params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]].toString());
+        params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]]);
         params.putString("FRE_NUMBER", seleccion_items[1] + "");
         params.putString("FILES_NUMBER", files.size() + "");
 
@@ -712,13 +714,13 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         btnFac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createRadioListDialog(items_factores, "FACTORES", 1).show();
+                createRadioListDialog(items_factores, getResources().getString(R.string.registration_form_dialog_title_factors), 1).show();
             }
         });
         btnVar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createRadioListDialog(items_variables, "VARIABLES", 2).show();
+                createRadioListDialog(items_variables, getResources().getString(R.string.registration_form_dialog_title_variables), 2).show();
             }
         });
 
@@ -733,15 +735,23 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
         LinearLayout coordenadasLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_coordenadas, null, false);
 
-        etLat = (EditText) coordenadasLayoutContent.findViewById(R.id.txt_latitud);
-        etLong = (EditText) coordenadasLayoutContent.findViewById(R.id.txt_longitud);
+        etLatOrientation = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_orientation);
+        etLongOrientation = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_orientation);
+        etLatGrados = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_grados);
+        etLongGrados = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_grados);
+        etLatMinutes = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_minutes);
+        etLongMinutes = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_minutes);
+        etLatSegunds = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_segundos);
+        etLongSegunds = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_segundos);
+
+
         btnFijar = (Button) coordenadasLayoutContent.findViewById(R.id.btn_fijar);
 
         btnFijar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                latitud = etLat.getText().toString();
-                longitud = etLong.getText().toString();
+                latitud = etLatGrados.getText().toString() + etLatMinutes.getText().toString() + etLatSegunds.getText().toString();
+                longitud = etLongGrados.getText().toString() + etLongMinutes.getText().toString() + etLongSegunds.getText().toString();
                 onStepOpening(1);
             }
         });
@@ -810,7 +820,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         btnPor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createSelectorDialog(items_porcentaje, "PORCENTAJE DE APARICIÓN", 1).show();
+                createSelectorDialog(items_porcentaje, getResources().getString(R.string.registration_form_dialog_title_percentage), 1).show();
             }
         });
 
@@ -831,7 +841,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         btnFre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createSelectorDialog(items_frecuencia, "FRECUENCIA DE APARICIÓN", 2).show();
+                createSelectorDialog(items_frecuencia, getResources().getString(R.string.registration_form_dialog_title_frequency), 2).show();
             }
         });
 
@@ -943,7 +953,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getCamara1();
             else {
-                Toast.makeText(getActivity(), "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.registration_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);

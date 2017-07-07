@@ -76,7 +76,7 @@
                     android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:scrollbars="horizontal"
-                    android:text="@string/puntaje"
+                    android:text="P\nu\nn\nt\na\nj\ne"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="normal|italic"
@@ -144,7 +144,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.23"
-                                android:text="@string/puntaje"
+                                android:text="Puntaje"
                                 android:textColor="@color/colorPrimaryText"
                                 android:textSize="18sp"
                                 android:textStyle="normal|bold" />

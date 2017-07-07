@@ -23,7 +23,7 @@ public class MenuGraficasEstadisticas extends AppCompatActivity {
     }
 
     public void graficasEspecificas(View v){
-        Intent intent = new Intent(MenuGraficasEstadisticas.this, FiltrarActividad.class);
+        Intent intent = new Intent(MenuGraficasEstadisticas.this, FilterMonitoringActivity.class);
         startActivity(intent);
     }
 }

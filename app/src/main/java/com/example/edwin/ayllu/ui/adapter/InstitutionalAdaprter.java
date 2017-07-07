@@ -36,7 +36,7 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
 
     @Override
     public MonitoreoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.monitoreos,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_monitoring,parent,false);
         v.setOnClickListener(this);
         MonitoreoHolder holder = new MonitoreoHolder(v);
         return holder;
@@ -76,8 +76,8 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
 
         public MonitoreoHolder(View itemView) {
             super(itemView);
-            date = (TextView) itemView.findViewById(R.id.date);
-            variable = (TextView) itemView.findViewById(R.id.variable);
+            date = (TextView) itemView.findViewById(R.id.tv_fecha);
+            variable = (TextView) itemView.findViewById(R.id.tv_variable);
             latitud = (TextView) itemView.findViewById(R.id.tv_latitud);
             longitud = (TextView) itemView.findViewById(R.id.tv_longitud);
             prueba = (ImageView) itemView.findViewById(R.id.iv_prueba);

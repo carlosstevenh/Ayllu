@@ -56,8 +56,8 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
     ProgressDialog loading;
     HttpLoggingInterceptor logging;
 
-    String por_name = "", fre_name = "", factor_name = "", var_name = "", rep1_name = "POSITIVAS",
-            rep2_name = "ACTUALES", orig_name = "INTERNO", tipo_upload = "";
+    String  por_name = "", fre_name = "", factor_name = "", var_name = "", tipo_upload = "",
+            rep1_name = "", rep2_name = "", orig_name = "";
 
     private ArrayList<File> files;
 
@@ -71,6 +71,11 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
 
         task = new Task();
         imagen = new Imagen();
+
+        rep1_name = getResources().getString(R.string.summary_item_description_rep_positive);
+        rep2_name = getResources().getString(R.string.summary_item_description_rep_current);
+        orig_name = getResources().getString(R.string.summary_item_description_org_internal);
+
 
         task.setMonitor(getArguments().getString("MONITOR"));
         task.setVariable(getArguments().getString("PUNTO_AFECTACION"));
@@ -110,9 +115,9 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         por_name = getArguments().getString("POR_NAME");
         fre_name = getArguments().getString("FRE_NAME");
 
-        if (task.getRepercusiones().charAt(0) == '0') rep1_name = "NEGATIVAS";
-        if (task.getRepercusiones().charAt(2) == '0') rep2_name = "POTENCIALES";
-        if (task.getOrigen().charAt(0) == '0') orig_name = "EXTERNO";
+        if (task.getRepercusiones().charAt(0) == '0') rep1_name = getResources().getString(R.string.summary_item_description_rep_negative);
+        if (task.getRepercusiones().charAt(2) == '0') rep2_name = getResources().getString(R.string.summary_item_description_rep_potential);
+        if (task.getOrigen().charAt(0) == '0') orig_name = getResources().getString(R.string.summary_item_description_org_external);
 
         task.setLatitud(getArguments().getString("LATITUD"));
         task.setLongitud(getArguments().getString("LONGITUD"));
@@ -224,7 +229,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             //Subimos la Imagen al Servidor
 
             PostClient service1 = PostClient.retrofit.create(PostClient.class);
-            loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+            loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.summary_process_message_upload),getResources().getString(R.string.summary_process_message),false,false);
 
             if(files.size()==2){
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("fotoUp", files.get(0).getName(), RequestBody.create(MediaType.parse("image/*"), files.get(0)));

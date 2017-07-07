@@ -37,7 +37,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
     int sizeimgs = 0;
     private ArrayList<File> files = new ArrayList<>();
 
-    TextView    tvArea, tvFactor, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
+    TextView    tvPropiedad, tvFactor, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
             tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
 
     FloatingActionButton fabMonitoring;
@@ -125,7 +125,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         vpMonitoring = (ViewPager) view.findViewById(R.id.vp_monitoring);
         dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
 
-        tvArea = (TextView) view.findViewById(R.id.tv_area);
+        tvPropiedad = (TextView) view.findViewById(R.id.tv_propiedad);
         tvFactor = (TextView) view.findViewById(R.id.tv_factor);
         tvVariable = (TextView) view.findViewById(R.id.tv_variable);
         tvFecha = (TextView) view.findViewById(R.id.tv_fecha);
@@ -151,17 +151,17 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         String origen = reporte.getOrigen();
         String rep1, rep2, org;
 
-        if(repercusiones.charAt(0) == '1') rep1 = getResources().getString(R.string.optionPositivasRepercusiones);
-        else  rep1 = getResources().getString(R.string.optionNegativasRepercusiones);
+        if(repercusiones.charAt(0) == '1') rep1 = getResources().getString(R.string.monitoring_detail_rep_positive);
+        else  rep1 = getResources().getString(R.string.monitoring_detail_rep_negative);
 
-        if(repercusiones.charAt(2) == '1') rep2 = getResources().getString(R.string.optionActualesRepercusiones);
-        else rep2 = getResources().getString(R.string.optionPotencialesRepercusiones);
+        if(repercusiones.charAt(2) == '1') rep2 = getResources().getString(R.string.monitoring_detail_rep_current);
+        else rep2 = getResources().getString(R.string.monitoring_detail_rep_potential);
 
-        if(origen.charAt(0) == '1') org = getResources().getString(R.string.optionInternoOrigen);
-        else org = getResources().getString(R.string.optionExternoOrigen);
+        if(origen.charAt(0) == '1') org = getResources().getString(R.string.monitoring_detail_org_internal);
+        else org = getResources().getString(R.string.monitoring_detail_org_external);
 
         //Cargamos los Datos del Monitoreo
-        tvArea.setText(reporte.getArea());
+        tvPropiedad.setText(reporte.getArea());
         tvFactor.setText(factor);
         tvVariable.setText(reporte.getVariable());
         tvFecha.setText(reporte.getFecha_mon());
@@ -279,7 +279,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         tvTitle.setText(titulo);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton("HECHO",
+        builder.setPositiveButton(getResources().getString(R.string.monitoring_detail_dialog_option_positive),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

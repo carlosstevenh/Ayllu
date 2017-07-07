@@ -46,7 +46,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actividad_estadistica_punto_afactacion);
+        setContentView(R.layout.activity_stadistic_pa);
 
         //Parametro que llega cuando se inicia esta actividad
         Bundle bundle = getIntent().getExtras();
@@ -63,7 +63,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         requestUser.enqueue(new Callback<ArrayList<AnalisisPorcentajeFrecuencia>>() {
             @Override
             public void onResponse(Call<ArrayList<AnalisisPorcentajeFrecuencia>> call, Response<ArrayList<AnalisisPorcentajeFrecuencia>> response) {
-                setContentView(R.layout.activity_actividad_estadistica_punto_afactacion);
+                setContentView(R.layout.activity_stadistic_pa);
 
                 mChart = (LineChart) findViewById(R.id.linechart);
                 mChart.setDoubleTapToZoomEnabled(false);
@@ -74,12 +74,12 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 mChart.animateY(2000);
                 mChart.animateXY(2000, 2000);
                 
-                fecha = (TextView) findViewById(R.id.txtFec);
-                puntaje = (TextView) findViewById(R.id.txtPun);
-                fact = (TextView) findViewById(R.id.txtFac);
-                vari = (TextView) findViewById(R.id.txtVar);
-                por = (TextView) findViewById(R.id.txtPorApa);
-                fre = (TextView) findViewById(R.id.txtFreApa);
+                fecha = (TextView) findViewById(R.id.tv_fecha);
+                puntaje = (TextView) findViewById(R.id.tv_puntaje);
+                fact = (TextView) findViewById(R.id.tv_factor);
+                vari = (TextView) findViewById(R.id.tv_variable);
+                por = (TextView) findViewById(R.id.tv_porcentaje);
+                fre = (TextView) findViewById(R.id.tv_frecuencia);
                 fact.setText(fac);
                 vari.setText(var);
                 fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);

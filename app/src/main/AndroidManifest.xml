@@ -45,7 +45,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
@@ -59,10 +59,10 @@
             android:name=".MonitorMenuActivity"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".administrador.Administrador"
+            android:name=".ui.AdministratorActivity"
             android:configChanges="screenSize|orientation" />
         <activity
-            android:name=".administrador.EditMonitor"
+            android:name=".ui.EditMonitorActivity"
             android:configChanges="screenSize|orientation" />
         <activity
             android:name=".SeleccionArea"
@@ -82,7 +82,7 @@
             android:name=".InformacionPuntoCritico"
             android:configChanges="screenSize|orientation" />
         <activity
-            android:name=".FiltrarActividad"
+            android:name=".FilterMonitoringActivity"
             android:configChanges="screenSize|orientation" />
         <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
         <activity

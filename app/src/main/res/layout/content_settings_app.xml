@@ -42,16 +42,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Estado monitoreo sin conexión"
+                    android:text="Borrar listado de puntos"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <CheckBox
-                    android:id="@+id/cb_monitoreo"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Desactivado" />
+                    android:layout_height="match_parent"
+                    android:text="Libera espacio de disco, de puntos que no necesites"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textStyle="normal" />
 
                 <View
                     android:id="@+id/divisor3"
@@ -72,7 +73,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Elegir listado de monitoreos"
+                    android:text="Elegir listado de puntos"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -86,6 +87,50 @@
 
                 <View
                     android:id="@+id/divisor2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:alpha=".5"
+                    android:background="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title_reporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="REPORTE"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/opcion_reporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Elige los puntos a reportar"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Determina el lugar que quieres reportar"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textStyle="normal" />
+
+                <View
+                    android:id="@+id/divisor7"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginTop="5dp"

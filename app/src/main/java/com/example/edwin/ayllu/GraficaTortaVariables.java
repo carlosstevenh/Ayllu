@@ -58,7 +58,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
         tramo = bundle.getString("tramo");
         String factor = bundle.getString("factor");
 
-        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<ConteoVariableFactorTramo>> requestUser = service.conteoVariableFactortramo(tramo,factor);
         requestUser.enqueue(new Callback<ArrayList<ConteoVariableFactorTramo>>() {
@@ -126,7 +126,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
                 else{
                     Toast.makeText(
                             GraficaTortaVariables.this,
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.statistical_graph_variable_process_message_negative),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -137,7 +137,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
                 loading.dismiss();
                 Toast.makeText(
                         GraficaTortaVariables.this,
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.statistical_graph_variable_process_message_server),
                         Toast.LENGTH_SHORT)
                         .show();
             }
@@ -229,7 +229,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
         imagesFolder.mkdirs();
         mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
-        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.statistical_graph_variable_alert_dowload) , Toast.LENGTH_LONG).show();
     }
     /**
      * =============================================================================================
@@ -260,7 +260,7 @@ public class GraficaTortaVariables extends AppCompatActivity {
         if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
             else {
-                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.statistical_graph_variable_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
