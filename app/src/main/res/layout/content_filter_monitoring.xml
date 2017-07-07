@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -29,12 +29,16 @@
                         android:id="@+id/textView30"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:background="@color/colorPrimaryLight"
+                        android:drawableLeft="@drawable/ic_pais"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/ic_pais"
+                        android:gravity="center_vertical"
                         android:padding="5dp"
-                        android:text="@string/pais"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="12sp"
+                        android:text="@string/search_form_item_title_country"
+                        android:textColor="@color/colorTextIcons"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -49,21 +53,24 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Argentina" />
+                            android:text="Argentina"
+                            android:textSize="16sp" />
 
                         <CheckBox
                             android:id="@+id/bolivia"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Bolivia" />
+                            android:text="Bolivia"
+                            android:textSize="16sp" />
 
                         <CheckBox
                             android:id="@+id/chile"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Chile" />
+                            android:text="Chile"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -79,21 +86,24 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Colombia" />
+                            android:text="Colombia"
+                            android:textSize="16sp" />
 
                         <CheckBox
                             android:id="@+id/ecuador"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Ecuador" />
+                            android:text="Ecuador"
+                            android:textSize="16sp" />
 
                         <CheckBox
                             android:id="@+id/peru"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Perú" />
+                            android:text="Perú"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -109,17 +119,31 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:background="@color/colorPrimaryLight"
+                        android:drawableLeft="@drawable/ic_date_small"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/ic_date_small"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="@string/search_form_item_title_date"
+                        android:textColor="@color/colorTextIcons"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                     <CheckBox
                         android:id="@+id/fechaMonitoreo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:background="@color/colorPrimaryLight"
-                        android:padding="5dp"
-                        android:text="@string/fecha"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/search_form_item_description_date_enable"
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -132,35 +156,37 @@
                             android:id="@+id/desde1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="0.7"
                             android:gravity="center_vertical"
-                            android:text="@string/desde"
-                            android:paddingLeft="10dp"
+                            android:paddingEnd="0dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="0dp"
+                            android:paddingStart="8dp"
+                            android:text="@string/search_form_item_description_date_since"
                             android:textColor="@color/colorPrimaryText"
-                            android:textStyle="normal|bold" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/inicio"
-
-                            android:gravity="center"
-                            android:textColor="@color/colorPrimaryText"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="1.3"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="16sp" />
 
                         <ImageView
                             android:id="@+id/imgViewDesde"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="32dp"
                             android:layout_margin="1dp"
                             android:layout_weight="1"
                             android:background="@color/colorAccent"
-                            android:src="@drawable/ic_date"
-                            android:tint="@color/colorTextIcons"
+                            android:src="@drawable/ic_date_small"
                             android:textStyle="bold"
                             android:theme="@style/RaisedButtonDark"
-                            android:backgroundTint="@color/colorAccent"/>
-
+                            android:tint="@color/colorTextIcons" />
 
 
                     </LinearLayout>
@@ -176,33 +202,36 @@
                             android:id="@+id/textView28"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="0.7"
                             android:gravity="center_vertical"
-                            android:text="@string/hasta"
-                            android:paddingLeft="10dp"
+                            android:paddingEnd="0dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="0dp"
+                            android:paddingStart="8dp"
+                            android:text="@string/search_form_item_description_date_until"
                             android:textColor="@color/colorPrimaryText"
-                            android:textStyle="normal|bold" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/fin"
-                            android:gravity="center"
-                            android:textColor="@color/colorPrimaryText"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="1.3"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimaryText" />
 
                         <ImageView
                             android:id="@+id/hasta"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="32dp"
                             android:layout_margin="1dp"
                             android:layout_weight="1"
                             android:background="@color/colorAccent"
-                            android:src="@drawable/ic_date"
-                            android:tint="@color/colorTextIcons"
+                            android:src="@drawable/ic_date_small"
                             android:textStyle="bold"
                             android:theme="@style/RaisedButtonDark"
-                            android:backgroundTint="@color/colorAccent"/>
+                            android:tint="@color/colorTextIcons" />
 
                     </LinearLayout>
 
@@ -219,17 +248,33 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp">
 
+                    <TextView
+                        android:id="@+id/textView33"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:background="@color/colorPrimaryLight"
+                        android:drawableLeft="@drawable/ic_variable_big"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/ic_variable_big"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="@string/search_form_item_title_factor"
+                        android:textColor="@color/colorTextIcons"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                     <CheckBox
                         android:id="@+id/factor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:background="@color/colorPrimaryLight"
-                        android:padding="5dp"
-                        android:text="@string/factor"
+                        android:layout_below="@id/textView33"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/search_form_item_description_factor"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp"/>
 
                     <CheckBox
                         android:id="@+id/variable"
@@ -238,28 +283,12 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/factor"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/variable" />
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/search_form_item_description_variable"
+                        android:textSize="16sp"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@color/colorAccent"
-                android:elevation="2dp"
-                android:text="@string/FILTRAR"
-                android:textColor="@color/colorTextIcons"
-                android:textStyle="bold"
-                android:theme="@style/RaisedButtonDark"
-                android:backgroundTint="@color/colorAccent"/>
-
-
         </LinearLayout>
     </ScrollView>
 

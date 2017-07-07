@@ -5,8 +5,8 @@
     android:id="@+id/activity_menu_graficas_estadisticas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.MenuGraficasEstadisticas"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.edwin.ayllu.MenuGraficasEstadisticas">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/menuMapasEstadisticos"
+                android:text="@string/statistical_graphs_menu_title"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -33,89 +33,91 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardMG"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:cardBackgroundColor="@color/colorPrimaryLight"
-            android:layout_weight="1"
-            app:contentPadding="@dimen/button_padding"
-            android:elevation="0dp"
-            android:id="@+id/cardMG"
-            android:layout_marginTop="@dimen/fab_elevation"
             android:layout_marginLeft="@dimen/fab_elevation"
             android:layout_marginRight="@dimen/fab_elevation"
-            android:onClick="graficasGenerales">
+            android:layout_marginTop="@dimen/fab_elevation"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:onClick="graficasGenerales"
+            app:cardBackgroundColor="@color/colorPrimaryLight"
+            app:contentPadding="@dimen/button_padding">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="3"
                 android:layout_centerInParent="true"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <ImageView
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_grafica"
                     android:id="@+id/imageView12"
-                    android:scaleType="centerCrop"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_grafica" />
 
                 <TextView
-                    android:text="@string/mapasGenerales"
+                    android:id="@+id/textView152q"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView152q"
-                    android:textSize="24sp"
-                    android:textStyle="normal|bold"
+                    android:layout_weight="2"
+                    android:text="@string/statistical_graphs_menu_card_view_general"
                     android:textColor="@color/colorBackgroundCardView"
-                    android:layout_weight="2" />
+                    android:textSize="24sp"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardME"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:cardBackgroundColor="@color/colorRadioButtonOn"
-            android:layout_weight="1"
-
-            android:id="@+id/cardME"
-            android:onClick="graficasEspecificas"
-            android:clickable="true"
             android:layout_margin="@dimen/fab_elevation"
+
+            android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="graficasEspecificas"
+            app:cardBackgroundColor="@color/colorRadioButtonOn"
             app:contentPadding="@dimen/button_padding">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:weightSum="3">
 
                 <ImageView
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_grafica"
                     android:id="@+id/imageView1"
-                    android:scaleType="centerCrop"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_grafica" />
 
                 <TextView
-                    android:text="@string/mapasEspecificos"
+                    android:id="@+id/textView152"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView152"
-                    android:textSize="24sp"
-                    android:textStyle="normal|bold"
+                    android:layout_weight="2"
+                    android:text="@string/statistical_graphs_menu_card_view_specific"
                     android:textColor="@color/colorBackgroundCardView"
-                    android:layout_weight="2" />
+                    android:textSize="24sp"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

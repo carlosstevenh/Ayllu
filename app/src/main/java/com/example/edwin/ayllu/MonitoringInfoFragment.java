@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +92,7 @@ public class MonitoringInfoFragment extends Fragment {
                         getActivity().finish();
                     }
                 },2000);
-            } else  createSimpleDialog("¿Desea seguir registrando puntos en la Sección Actual?","INFORMACIÓN").show();
+            } else  createSimpleDialog(getResources().getString(R.string.info_dialog_description),getResources().getString(R.string.info_dialog_title)).show();
         }
     }
 
@@ -114,7 +115,7 @@ public class MonitoringInfoFragment extends Fragment {
         tvTitle.setCompoundDrawables(ContextCompat.getDrawable(v.getContext(), R.drawable.ic_question), null, null, null);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton("ACEPTAR",
+        builder.setPositiveButton(getResources().getString(R.string.info_dialog_option_accept),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -127,6 +128,8 @@ public class MonitoringInfoFragment extends Fragment {
                                 params.putString("OPCION", "N");
                                 fragment.setArguments(params);
 
+                                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.monitoring_principal_context, fragment)
                                         .commit();
@@ -134,7 +137,7 @@ public class MonitoringInfoFragment extends Fragment {
                         },1000);
                     }
                 })
-                .setNegativeButton("CANCELAR",
+                .setNegativeButton(getResources().getString(R.string.info_dialog_option_cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

@@ -26,7 +26,7 @@ import retrofit2.Response;
 public class FormRespuesta extends AppCompatActivity {
     private Spinner eva, per, tie, pre, con,rec;
     String cod_mon = "", pais_mon = "";
-    List<String> eval, res;
+    String [] eval, res;
     String pa,fm;
     LinearLayout lyPrincipal;
     ImageView ivType;
@@ -57,26 +57,19 @@ public class FormRespuesta extends AppCompatActivity {
         rec = (Spinner) findViewById(R.id.spinner_rec);
 
         //se crean los elementos del spiner de evaluacion
-        eval = new ArrayList<String>();
-        eval.add(getResources().getString(R.string.insignificantes));
-        eval.add(getResources().getString(R.string.menores));
-        eval.add(getResources().getString(R.string.significativas));
-
         //se crean los elementos de los spinners de personal,tiempo,presupuesto,conocimeintos y recursos
-        res = new ArrayList<String>();
-        res.add(getResources().getString(R.string.ninuguna));
-        res.add(getResources().getString(R.string.baja));
-        res.add(getResources().getString(R.string.media));
-        res.add(getResources().getString(R.string.alta));
+        eval = getResources().getStringArray(R.array.list_general_evaluation);
+        res = getResources().getStringArray(R.array.list_specific_evaluation);
+
 
         //se crean los adapters para los spinners
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,  eval);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, eval);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eva.setAdapter(dataAdapter);
 
-        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,  res);
+        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, res);
         dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //se crea el spinner con los adapters
@@ -127,8 +120,8 @@ public class FormRespuesta extends AppCompatActivity {
 
         //se realiza la conversion numeria dependiendo de la opcion que el monitor seleccione en la evaluacion
         String aux = String.valueOf(eva.getSelectedItem());
-        if (aux.equals("Insignificantes")) evaluacion="1";
-        else if (aux.equals("Menores")) evaluacion = "2";
+        if (aux.equals(eval[0])) evaluacion="1";
+        else if (aux.equals(eval[1])) evaluacion = "2";
         else evaluacion = "3";
 
         //se obtiene el valor dependiendo de lo que el monitor selecciono y se la convierte a numeros para poder inserta en la base de datos
@@ -146,7 +139,7 @@ public class FormRespuesta extends AppCompatActivity {
 
         Log.i("TAG", "punto afecation: " + pa+"-"+fm+"-"+ evaluacion+"-"+personal+"-"+tiempo+"-"+presupuesto+"-"+recursos+"-"+conocimiento+"-"+monitor);
         //se realiza la peticion del registro de la respuesta institucional al servidor
-        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.institutional_response_form_process_message_upload),getResources().getString(R.string.institutional_response_form_process_message),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<String>> requestUser = service.addRespuesta(pa,fm, evaluacion,personal,tiempo,presupuesto,recursos,conocimiento,monitor);
         requestUser.enqueue(new Callback<ArrayList<String>>() {
@@ -156,7 +149,7 @@ public class FormRespuesta extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().get(0).equals("1")){
                         Toast login = Toast.makeText(getApplicationContext(),
-                                getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
+                                getResources().getString(R.string.institutional_response_form_process_message_positive), Toast.LENGTH_LONG);
                         login.show();
                         /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackground));
                         ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_positive));
@@ -166,7 +159,7 @@ public class FormRespuesta extends AppCompatActivity {
                     }
                     else{
                         Toast login = Toast.makeText(getApplicationContext(),
-                                getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
+                                getResources().getString(R.string.institutional_response_form_process_message_negative), Toast.LENGTH_LONG);
                         login.show();
                         /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackgroundFailed));
                         ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
@@ -181,8 +174,8 @@ public class FormRespuesta extends AppCompatActivity {
                         getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
                 login.show();*/
 
-                Intent intent = new Intent(FormRespuesta.this, MonitorMenuActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(FormRespuesta.this, MonitorMenuActivity.class);
+                //startActivity(intent);
                 finish();
             }
 
@@ -197,7 +190,7 @@ public class FormRespuesta extends AppCompatActivity {
                 tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));*/
 
                 Toast login = Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_LONG);
+                        getResources().getString(R.string.institutional_response_form_process_message_server), Toast.LENGTH_LONG);
                 login.show();
             }
         });
@@ -206,11 +199,11 @@ public class FormRespuesta extends AppCompatActivity {
 
     //metodo encargador de convertir el resultado del spiner a un valir numerico
     private String comparar(String cad){
-        String aux ="";
-        if(cad.equals(getResources().getString(R.string.ninuguna))) aux = "1";
-        else if (cad.equals(getResources().getString(R.string.baja))) aux = "2";
-        else if (cad.equals(getResources().getString(R.string.media))) aux = "3";
-        else if (cad.equals(getResources().getString(R.string.alta))) aux = "4";
+        String aux;
+        if(cad.equals(res[0])) aux = "1";
+        else if (cad.equals(res[1])) aux = "2";
+        else if (cad.equals(res[2])) aux = "3";
+        else if (cad.equals(res[3])) aux = "4";
         else aux ="1";
         return aux;
 

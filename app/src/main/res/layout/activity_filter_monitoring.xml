@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/FILTRAR"
+                android:text="@string/search_form_title"
                 android:textSize="18sp"
                 android:textColor="#fff"
                 android:layout_marginLeft="20dp"
@@ -32,14 +32,16 @@
 
     <include layout="@layout/content_filter_monitoring"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_search"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_search"
-        app:fab_size="normal"/>
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@color/colorAccent"
+        android:text="@string/FILTRAR"
+        android:textColor="@color/colorTextIcons"
+        android:textStyle="bold"
+        android:theme="@style/RaisedButtonDark" />
 
 </android.support.design.widget.CoordinatorLayout>

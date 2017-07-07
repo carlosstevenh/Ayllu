@@ -280,7 +280,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         tvTitle.setText(titulo);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton("ACEPTAR",
+        builder.setPositiveButton(getResources().getString(R.string.opcion_list_monitoring_dialog_acept),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -290,7 +290,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                         builder.create().dismiss();
                     }
                 })
-                .setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getResources().getString(R.string.opcion_list_monitoring_dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         builder.create().dismiss();
@@ -371,7 +371,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
                     }
                 })
-                .setNegativeButton("OK",
+                .setNegativeButton(getResources().getString(R.string.opcion_list_monitoring_dialog_ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -421,8 +421,8 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
 
                 if(wifiConected()){
                     final ProgressDialog loading = new ProgressDialog(getActivity());
-                    loading.setMessage("Por favor espere …");
-                    loading.setTitle("Buscando los monitoreos");
+                    loading.setMessage(getResources().getString(R.string.list_monitoring_process_message));
+                    loading.setTitle(getResources().getString(R.string.list_monitoring_process_message_search));
                     loading.setProgress(10);
                     loading.setIndeterminate(true);
                     loading.show();
@@ -448,13 +448,16 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                             loading.dismiss();
                             Toast.makeText(
                                     getActivity(),
-                                    getResources().getString(R.string.noSePudoConectarServidor),
+                                    getResources().getString(R.string.list_monitoring_process_message_server),
                                     Toast.LENGTH_SHORT)
                                     .show();
                         }
                     });
                 } else {
-                    createOfflineMonitoringDialog("Hay un paquete de puntos de afectación disponible. \n ¿Desea utilizarlos?", "Monitoreo sin conexión a internet").show();
+                    createOfflineMonitoringDialog(
+                            getResources().getString(R.string.list_monitoring_description_dialog_offline)+
+                            "\n"+getResources().getString(R.string.list_monitoring_description_dialog_offline_question),
+                            getResources().getString(R.string.list_monitoring_title_dialog_offline)).show();
                 }
                 break;
             default:
@@ -641,105 +644,5 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (wifi.isConnected() || mobile.isConnected())return true;
         else return false;
-    }
-
-    //==============================================================================================
-    public void generateReport(ArrayList<Reporte> rp) {
-        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
-        String format = s.format(new Date());
-        s = new SimpleDateFormat("HH:mm:ss");
-        format += "[" + s.format(new Date()) + "]";
-        //------------------------------------------------------------------------------------------
-        //Escribiendo en el archivo Excel
-        try {
-            InputStream editor = getResources().openRawResource(R.raw.plantilla);
-            File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Reportes");
-
-            imagesFolder.mkdirs();
-            //File result = new File(imagesFolder, format);
-            FileOutputStream result = new FileOutputStream(imagesFolder + "/" + format + ".xls");
-
-            //Crear el objeto que tendra el libro de Excel
-            HSSFWorkbook workbook = new HSSFWorkbook(editor);
-
-            //1. Obtenemos la primera hoja del Excel
-            //2. Llenamos la primera hoja del Excel
-            HSSFSheet sheet = workbook.getSheetAt(0);
-            escribirExcel(1, 12, sheet);
-
-            //1. Obtenemos la segunda hoja del Excel
-            //2. Llenamos la segunda hoja del Excel
-            sheet = workbook.getSheetAt(1);
-            escribirExcel(2, 6, sheet);
-
-            //1. Obtenemos la tercera hoja del Excel
-            //2. Llenamos la tercera hoja del Excel
-            sheet = workbook.getSheetAt(2);
-            escribirExcel(3, 6, sheet);
-
-            workbook.write(result);
-            result.close();
-            workbook.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    //==============================================================================================
-    private void escribirExcel(int cod_plan, int pf, HSSFSheet sheet) {
-        //Estilo de celda basico
-        CellStyle style = sheet.getWorkbook().createCellStyle();
-        style.setAlignment(HorizontalAlignment.CENTER);
-        style.setBorderBottom(BorderStyle.DASHED);
-        style.setBorderTop(BorderStyle.DASHED);
-        style.setBorderRight(BorderStyle.DASHED);
-        style.setBorderLeft(BorderStyle.DASHED);
-
-        //Estilo de celda para Repercusiones y Origenes
-        CellStyle style2 = sheet.getWorkbook().createCellStyle();
-        style2.setAlignment(HorizontalAlignment.CENTER);
-        style2.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
-        style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        style2.setBorderBottom(BorderStyle.DASHED);
-        style2.setBorderTop(BorderStyle.DASHED);
-        style2.setBorderRight(BorderStyle.DASHED);
-        style2.setBorderLeft(BorderStyle.DASHED);
-
-        //Estilo de celda para Repercusiones y Origenes
-        CellStyle style3 = sheet.getWorkbook().createCellStyle();
-        style3.setAlignment(HorizontalAlignment.CENTER);
-        style3.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
-        style3.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        style3.setBorderBottom(BorderStyle.DASHED);
-        style3.setBorderTop(BorderStyle.DASHED);
-        style3.setBorderRight(BorderStyle.DASHED);
-        style3.setBorderLeft(BorderStyle.DASHED);
-
-        //Variable para el punto de escritura
-        int punto = pf;
-
-        //------------------------------------------------------------------------------------------
-        for (int i = 0; i < reportes.size(); i++) {
-            HSSFRow fila = sheet.createRow(punto);
-            HSSFCell celda;
-            ArrayList<String> info = reportes.get(i).generarInfoPlantilla(cod_plan);
-            punto++;
-            //--------------------------------------------------------------------------------------
-            for (int j = 0; j < info.size(); j++) {
-                celda = fila.createCell(j);
-                if (cod_plan == 1 && j > 6 && j < 11) {
-                    if (info.get(j).equals("1")) celda.setCellStyle(style2);
-                    else celda.setCellStyle(style);
-                } else if (cod_plan == 1 && j > 10) {
-                    if (info.get(j).equals("1")) celda.setCellStyle(style3);
-                    else celda.setCellStyle(style);
-                } else {
-                    celda.setCellValue(info.get(j));
-                    celda.setCellStyle(style);
-                }
-            }
-        }
     }
 }

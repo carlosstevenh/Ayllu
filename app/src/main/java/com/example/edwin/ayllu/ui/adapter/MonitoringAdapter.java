@@ -1,10 +1,6 @@
 package com.example.edwin.ayllu.ui.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +31,7 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
     @Override
     public ReporteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.item_report,parent,false);
+                .inflate(R.layout.card_view_monitoring,parent,false);
 
         itemView.setOnClickListener(this);
         return new ReporteViewHolder(itemView);

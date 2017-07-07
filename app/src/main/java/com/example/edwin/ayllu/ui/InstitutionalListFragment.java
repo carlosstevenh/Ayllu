@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.FormRespuesta;
@@ -181,19 +183,30 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
 
     /**
      * =============================================================================================
-     * METODO: Presenta en Interfaz un mensaje Tipo Dialog
+     * METODO: Genera un Dialogo basico en pantalla
      **/
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(titulo)
-                .setMessage(mensaje)
-                .setNegativeButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                builder.create().dismiss();
-                            }
-                        });
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvTitle.setCompoundDrawables(ContextCompat.getDrawable(v.getContext(), R.drawable.ic_question), null, null, null);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton(getResources().getString(R.string.institutional_list_dialog_option_ok),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
 
         return builder.create();
     }
@@ -269,7 +282,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
 
                     }
                 })
-                .setNegativeButton("OK",
+                .setNegativeButton(getResources().getString(R.string.institutional_list_dialog_option_ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -287,23 +300,23 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
     public void onClick(final View view) {
         switch (view.getId()) {
             case R.id.fab_tramo:
-                createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1).show();
+                createRadioListDialog(items_tramos, getResources().getString(R.string.institutional_list_button_tramo), 1).show();
                 break;
             case R.id.fab_subtramo:
-                createRadioListDialog(items_subtramos, getResources().getString(R.string.descriptionSubtramo), 2).show();
+                createRadioListDialog(items_subtramos, getResources().getString(R.string.institutional_list_button_subtramo), 2).show();
                 break;
             case R.id.fab_seccion:
-                createRadioListDialog(items_secciones, getResources().getString(R.string.descriptionSeccion), 3).show();
+                createRadioListDialog(items_secciones, getResources().getString(R.string.institutional_list_button_seccion), 3).show();
                 break;
             case R.id.fab_area:
-                createRadioListDialog(items_tipos, getResources().getString(R.string.descriptionPropiedad), 4).show();
+                createRadioListDialog(items_tipos, getResources().getString(R.string.institutional_list_button_propiedad), 4).show();
                 break;
             case R.id.fab_search:
                 menu.collapse();
                 Log.i("Datos:" , ""+ op[0] +":" +op[1]+":" +op[2]+":" +op[3]);
                 if (op[0] != 0) getListReports(op[0]+"",op[1]+"",op[2]+"",op[3]+"");
                 else
-                    createSimpleDialog(getResources().getString(R.string.seleccioneTramoParaBuscar), getResources().getString(R.string.titleListMonitoringDialog)).show();
+                    createSimpleDialog(getResources().getString(R.string.institutional_list_dialog_description), getResources().getString(R.string.institutioanl_list_dialog_title)).show();
                 break;
             default:
                 break;
@@ -467,7 +480,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      * METODO:
      **/
     public void getListReports(String tramo, String subtramo, String seccion, String area){
-        final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.institutional_list_process_message_search),getResources().getString(R.string.institutional_list_process_message),false,false);
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(tramo, subtramo, seccion, area);
         requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
@@ -479,7 +492,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                     if(response.body().size()==0){
                         Toast.makeText(
                                 getActivity(),
-                                getResources().getString(R.string.noSeEncontraronDatos),
+                                getResources().getString(R.string.institutional_list_process_message_negative),
                                 Toast.LENGTH_LONG).show();
                     }
                     else{
@@ -491,7 +504,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                 else{
                     Toast.makeText(
                             getActivity(),
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.institutional_list_process_message_negative),
                             Toast.LENGTH_LONG).show();
 
                 }
@@ -503,7 +516,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                 loading.dismiss();
                 Toast.makeText(
                         getActivity(),
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.institutional_list_process_message_server),
                         Toast.LENGTH_LONG).show();
             }
         });

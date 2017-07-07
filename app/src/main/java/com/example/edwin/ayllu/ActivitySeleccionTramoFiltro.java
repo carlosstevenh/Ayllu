@@ -184,16 +184,16 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         switch (view.getId()){
             case R.id.fab_pais:
                 Log.e("Boton pais:", "Esta entrando");
-                createRadioListDialog(items_paises, "PAISES", 1).show();
+                createRadioListDialog(items_paises, getResources().getString(R.string.general_statistical_graph_dialog_title_countries), 1).show();
                 break;
             case R.id.fab_tramo:
                 Log.e("Boton tramo:", "Esta entrando");
-                createRadioListDialog(items_tramos, "TRAMOS", 2).show();
+                createRadioListDialog(items_tramos, getResources().getString(R.string.general_statistical_graph_dialog_title_tramos), 2).show();
                 break;
             case R.id.fab_search:
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
-                    final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.presupuesto),getResources().getString(R.string.esperar),false,false);
+                    final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.general_statistical_graph_process_message_analysis),getResources().getString(R.string.general_statistical_graph_process_message),false,false);
                     RestClient service = RestClient.retrofit.create(RestClient.class);
                     Call<ArrayList<ConteoFactoresTramo>> requestUser = service.conteoFactorTramo(""+opTramo);
                     requestUser.enqueue(new Callback<ArrayList<ConteoFactoresTramo>>() {
@@ -229,8 +229,6 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                                             Intent intent = new Intent(ActivitySeleccionTramoFiltro.this,GraficaTortaVariables.class);
                                             intent.putExtras(parametro);
                                             startActivity(intent);
-                                            //Toast.makeText(ActivitySeleccionTramoFiltro.this,
-                                            //        facTram.get(e.getXIndex()).getNombre(), Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
@@ -260,7 +258,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                                 else{
                                     Toast.makeText(
                                             ActivitySeleccionTramoFiltro.this,
-                                            getResources().getString(R.string.noSeEncontraronDatos),
+                                            getResources().getString(R.string.general_statistical_graph_process_message_negative),
                                             Toast.LENGTH_SHORT)
                                             .show();
                                 }
@@ -268,7 +266,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                             else{
                                 Toast.makeText(
                                         ActivitySeleccionTramoFiltro.this,
-                                        getResources().getString(R.string.noSeEncontraronDatos),
+                                        getResources().getString(R.string.general_statistical_graph_process_message_negative),
                                         Toast.LENGTH_SHORT)
                                         .show();
                             }
@@ -280,7 +278,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                             loading.dismiss();
                             Toast.makeText(
                                     ActivitySeleccionTramoFiltro.this,
-                                    getResources().getString(R.string.noSePudoConectarServidor),
+                                    getResources().getString(R.string.general_statistical_graph_process_message_server),
                                     Toast.LENGTH_SHORT)
                                     .show();
 
@@ -334,7 +332,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                         }
                     }
                 })
-                .setNegativeButton("OK",
+                .setNegativeButton(getResources().getString(R.string.general_statistical_graph_dialog_option_ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -374,7 +372,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         String grafica = getResources().getString(R.string.graficaPorTramo)+format + ".jpg";
         mChart.saveToGallery(grafica,100);
 
-        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.general_statistical_graph_alert_dowload) , Toast.LENGTH_LONG).show();
     }
     /**
      * =============================================================================================
@@ -405,7 +403,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
             else {
-                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.general_statistical_graph_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
