@@ -1,5 +1,7 @@
 package com.example.edwin.ayllu.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -77,14 +79,7 @@ public class AdministratorActivity extends AppCompatActivity implements Register
 
             //opcion de cerrar sesion
             case R.id.salir:
-                Intent i = new Intent(this, LoginActivity.class);
-                startActivity(i);
-                finish();
-
-                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-                SQLiteDatabase bd = admin.getWritableDatabase();
-                bd.delete(admin.TABLENAME, null, null);
-                bd.close();
+                createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.advertencia)).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -124,5 +119,37 @@ public class AdministratorActivity extends AppCompatActivity implements Register
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    //metodo encargado de crear los dialogos informativos
+    public AlertDialog createSimpleDialogSalir(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo)
+                .setMessage(mensaje)
+                .setPositiveButton(getResources().getString(R.string.confirmar),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
+                                SQLiteDatabase bd = admin.getWritableDatabase();
+                                bd.delete(admin.TABLENAME, null, null);
+                                bd.close();
+
+                                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(i);
+                                finish();
+                                builder.create().dismiss();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.cancelar),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
+        return builder.create();
     }
 }
