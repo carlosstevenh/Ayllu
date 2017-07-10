@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
 import com.example.edwin.ayllu.domain.VariableContract;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -43,6 +46,7 @@ import java.util.Date;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
+
 import static android.app.Activity.RESULT_OK;
 
 public class MonitoringRegistrationFormFragment extends Fragment implements VerticalStepperForm {
@@ -51,11 +55,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
 
     //VARIABLES: Componetes del Formulario de Registro
-    Button btnVar, btnFac, btnPor, btnFre, btnFijar;
+    Button btnVar, btnFac, btnPor, btnFre;
     RadioGroup rgRep1, rgRep2, rgOrg;
-    EditText etLatOrientation, etLongOrientation, etLatGrados, etLongGrados, etLatMinutes, etLongMinutes, etLatSegunds, etLongSegunds;
-    TextView tvVar, tvFac, tvPor, tvFre;
+    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong;
     ImageButton ibImg1, ibImg2, ibImg3;
+    FloatingActionButton fabLat, fabLong;
     private TextView tvInfo;
 
     MonitoringSummaryFragment fragment;
@@ -64,7 +68,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     String punto_afectacion = "", area = "", monitor = "", op_reg, pais = "";
     String origen = "10";
     String fecha = "";
-    String longitud = "0", latitud = "0";
+    String longitud = "", latitud = "";
     int[] repercusiones = {1, 0, 0, 1};
     String factor = "", variable = "", lat = "", logt = "";
 
@@ -133,16 +137,15 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         String[] mySteps;
 
         assert op_reg != null;
-        if (op_reg.equals("M")){
+        if (op_reg.equals("M")) {
             factor = getArguments().getString("FACTOR_NAME");
             variable = getArguments().getString("VAR_NAME");
-            lat =getArguments().getString("LATITUD");
+            lat = getArguments().getString("LATITUD");
             logt = getArguments().getString("LONGITUD");
 
             punto_afectacion = getArguments().getString("PUNTO");
             mySteps = getResources().getStringArray(R.array.registration_form_monitoring);
         } else {
-            //tvInfo.setVisibility(View.INVISIBLE);
             area = getArguments().getString("AREA");
             mySteps = getResources().getStringArray(R.array.registration_form_new);
         }
@@ -184,9 +187,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
         //------------------------------------------------------------------------------------------
         //Cargamos el Factor y la Variable
-        if (op_reg.equals("N") && pos[0] !=  -1){
+        if (op_reg.equals("N") && pos[0] != -1) {
             tvFac.setText(items_factores[pos[0]]);
             tvVar.setText(items_variables[pos[1]]);
+
+            tvLat.setText(latitud);
+            tvLong.setText(longitud);
 
             btnVar.setEnabled(true);
             btnVar.setBackgroundColor(getActivity().getResources().getColor(R.color.colorAccent));
@@ -195,14 +201,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         //------------------------------------------------------------------------------------------
         //Cargamos las fotografias
 
-        if (files.size() == 1){
+        if (files.size() == 1) {
             Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
-        }
-        else if (files.size() == 2) {
+        } else if (files.size() == 2) {
             Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
             Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(ibImg2);
-        }
-        else if (files.size() == 3) {
+        } else if (files.size() == 3) {
             Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
             Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(ibImg2);
             Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(ibImg3);
@@ -211,7 +215,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         //------------------------------------------------------------------------------------------
         //Cargamos el porcentaje y la frecuencia de aparición
 
-        if (pos_seleccion[0] != -1 && pos_seleccion[1] != -1){
+        if (pos_seleccion[0] != -1 && pos_seleccion[1] != -1) {
             tvPor.setText(items_porcentaje[pos_seleccion[0]]);
             tvFre.setText(items_frecuencia[pos_seleccion[1]]);
         }
@@ -219,15 +223,15 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         //------------------------------------------------------------------------------------------
         //Cargamos las repercusiones
 
-        if(repercusiones[0] == 1) rgRep1.check(R.id.rb_positive);
+        if (repercusiones[0] == 1) rgRep1.check(R.id.rb_positive);
         else rgRep1.check(R.id.rb_negative);
 
-        if(repercusiones[2] == 1) rgRep2.check(R.id.rb_current);
+        if (repercusiones[2] == 1) rgRep2.check(R.id.rb_current);
         else rgRep2.check(R.id.rb_potencial);
 
         //------------------------------------------------------------------------------------------
         //Cargamos el origen
-        if(origen.charAt(0) == '1') rgOrg.check(R.id.rb_interno);
+        if (origen.charAt(0) == '1') rgOrg.check(R.id.rb_interno);
         else rgOrg.check(R.id.rb_externo);
     }
 
@@ -299,10 +303,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             else if (files.size() == 3)
                 Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(ibImg3);
 
-            if(op_reg.equals("M"))onStepOpening(0);
+            if (op_reg.equals("M")) onStepOpening(0);
             else onStepOpening(2);
         }
     }
+
     /**
      * =============================================================================================
      * METODO: Genera un Dialogo basico en pantalla
@@ -485,11 +490,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 });
         builder.setNegativeButton(getResources().getString(R.string.registration_form_dialog_option_cancel),
                 new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                builder.create().dismiss();
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
 
         return builder.create();
     }
@@ -502,7 +507,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     public View createStepContentView(int stepNumber) {
         View view = null;
         assert op_reg != null;
-        if (op_reg.equals("M")){
+        if (op_reg.equals("M")) {
             switch (stepNumber) {
                 case 0:
                     view = createPruebasView();
@@ -554,7 +559,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
     @Override
     public void onStepOpening(int stepNumber) {
-        if (op_reg.equals("M")){
+        if (op_reg.equals("M")) {
             switch (stepNumber) {
                 case 0:
                     if (files.size() > 0) verticalStepperForm.setStepAsCompleted(0);
@@ -594,7 +599,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     }
                     break;
                 case 1:
-                    if (latitud.length() == 6 && longitud.length() == 7) verticalStepperForm.setStepAsCompleted(1);
+                    if (!latitud.equals("") && !longitud.equals(""))
+                        verticalStepperForm.setStepAsCompleted(1);
                     else {
                         String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
@@ -635,6 +641,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     public void sendData() {
         fragment = new MonitoringSummaryFragment();
         Bundle params = new Bundle();
+        String cad;
 
         comprobarOrigen();
         comprobarRepercusiones1();
@@ -663,8 +670,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 params.putString("VAR_NAME", items_variables[pos[1]].toString());
                 params.putString("FACTOR_NAME", items_factores[pos[0]].toString());
                 params.putString("AREA", area);
-                params.putString("LATITUD", latitud + "");
-                params.putString("LONGITUD", longitud + "");
+                params.putString("LATITUD", latitud);
+                params.putString("LATITUD_NUMBER", processCoordinate(latitud, "LATITUD"));
+                params.putString("LONGITUD", longitud);
+                params.putString("LONGITUD_NUMBER", processCoordinate(longitud , "LONGITUD"));
                 params.putString("TYPE_UPLOAD", "NEW");
 
                 fragment.setArguments(params);
@@ -682,7 +691,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             params.putString("VAR_NAME", variable);
             params.putString("FACTOR_NAME", factor);
             params.putString("LATITUD", lat);
+            params.putString("LATITUD_NUMBER","0");
             params.putString("LONGITUD", logt);
+            params.putString("LONGITUD_NUMBER","0");
             params.putString("PUNTO_AFECTACION", punto_afectacion);
             params.putString("TYPE_UPLOAD", "MONITORING");
 
@@ -735,24 +746,62 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
         LinearLayout coordenadasLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_coordenadas, null, false);
 
-        etLatOrientation = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_orientation);
-        etLongOrientation = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_orientation);
-        etLatGrados = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_grados);
-        etLongGrados = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_grados);
-        etLatMinutes = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_minutes);
-        etLongMinutes = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_minutes);
-        etLatSegunds = (EditText) coordenadasLayoutContent.findViewById(R.id.et_lat_segundos);
-        etLongSegunds = (EditText) coordenadasLayoutContent.findViewById(R.id.et_long_segundos);
+        fabLat = (FloatingActionButton) coordenadasLayoutContent.findViewById(R.id.fab_latitud);
+        fabLong = (FloatingActionButton) coordenadasLayoutContent.findViewById(R.id.fab_longitud);
+        tvLat = (TextView) coordenadasLayoutContent.findViewById(R.id.tv_latitud);
+        tvLong = (TextView) coordenadasLayoutContent.findViewById(R.id.tv_longitud);
 
-
-        btnFijar = (Button) coordenadasLayoutContent.findViewById(R.id.btn_fijar);
-
-        btnFijar.setOnClickListener(new View.OnClickListener() {
+        fabLat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                latitud = etLatGrados.getText().toString() + etLatMinutes.getText().toString() + etLatSegunds.getText().toString();
-                longitud = etLongGrados.getText().toString() + etLongMinutes.getText().toString() + etLongSegunds.getText().toString();
-                onStepOpening(1);
+                String opcard1 = "10";
+                String cadnum;
+                int opdeg = 0;
+                int opmin = 0;
+                int opsec = 0;
+
+                if (!latitud.equals("")){
+                    String cadLat = processCoordinate(latitud, "LATITUD");
+                    if(cadLat.charAt(0) == 'S') opcard1 = "01";
+                    //Obtenemos los grados
+                    cadnum = cadLat.charAt(1) + "" +cadLat.charAt(2);
+                    opdeg = Integer.parseInt(cadnum);
+                    //Obtenemos los minutos
+                    cadnum = cadLat.charAt(3) + "" +cadLat.charAt(4);
+                    opmin = Integer.parseInt(cadnum);
+                    //Obtenemos los segundos
+                    cadnum = cadLat.charAt(5) + "" +cadLat.charAt(6);
+                    opsec = Integer.parseInt(cadnum);
+                }
+
+                createCoordinatesDialog("LATITUD", opcard1, opdeg, opmin, opsec).show();
+            }
+        });
+
+        fabLong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String opcard2 = "10";
+                String cadnum;
+                int opdeg = 0;
+                int opmin = 0;
+                int opsec = 0;
+
+                if (!longitud.equals("")){
+                    String cadLong = processCoordinate(longitud, "LONGITUD");
+                    if(cadLong.charAt(0) == 'W') opcard2 = "01";
+                    //Obtenemos los grados
+                    cadnum = cadLong.charAt(1) + "" +cadLong.charAt(2) + "" + cadLong.charAt(3);
+                    opdeg = Integer.parseInt(cadnum);
+                    //Obtenemos los minutos
+                    cadnum = cadLong.charAt(4) + "" +cadLong.charAt(5);
+                    opmin = Integer.parseInt(cadnum);
+                    //Obtenemos los segundos
+                    cadnum = cadLong.charAt(6) + "" +cadLong.charAt(7);
+                    opsec = Integer.parseInt(cadnum);
+                }
+
+                createCoordinatesDialog("LONGITUD", opcard2, opdeg, opmin, opsec).show();
             }
         });
 
@@ -926,20 +975,111 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
     /**
      * =============================================================================================
+     * METODO: Presenta en Interfaz un mensaje Tipo Dialog para las Coordenadas
+     **/
+    public AlertDialog createCoordinatesDialog(final String titulo, String op_check, int op_deg, int op_min, int op_sec) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_coordinates, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        final RadioButton diag1 = (RadioButton) v.findViewById(R.id.rb_card1);
+        RadioButton diag2 = (RadioButton) v.findViewById(R.id.rb_card2);
+        final NumberPicker npDegrees = (NumberPicker) v.findViewById(R.id.np_degrees);
+        final NumberPicker npMinutes = (NumberPicker) v.findViewById(R.id.np_minutes);
+        final NumberPicker npSeconds = (NumberPicker) v.findViewById(R.id.np_seconds);
+
+        npMinutes.setMaxValue(60);
+        npMinutes.setMinValue(0);
+        npSeconds.setMaxValue(60);
+        npSeconds.setMinValue(0);
+        npDegrees.setMinValue(0);
+
+        if (op_check.charAt(0) == '1') diag1.setChecked(true);
+        else diag2.setChecked(true);
+
+        if (titulo.equals("LATITUD")) {
+            npDegrees.setMaxValue(90);
+            diag1.setButtonDrawable(getResources().getDrawable(R.drawable.rb_positive_north));
+            diag2.setButtonDrawable(getResources().getDrawable(R.drawable.rb_negative_south));
+        } else {
+            npDegrees.setMaxValue(180);
+            diag1.setButtonDrawable(getResources().getDrawable(R.drawable.rb_positive_east));
+            diag2.setButtonDrawable(getResources().getDrawable(R.drawable.rb_negative_west));
+        }
+
+        npDegrees.setValue(op_deg);
+        npMinutes.setValue(op_min);
+        npSeconds.setValue(op_sec);
+        tvTitle.setText(titulo);
+
+        builder.setPositiveButton("FIJAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (titulo.equals("LATITUD")) {
+                            String punto_card, degrees, minutes, seconds;
+                            //Comprobamos la selección del punto cardinal
+                            if (diag1.isChecked()) punto_card = "N-";
+                            else punto_card = "S-";
+                            //Completamos los grados para valores de una cifra
+                            if (npDegrees.getValue() < 10) degrees = "0" + npDegrees.getValue();
+                            else degrees = "" + npDegrees.getValue();
+                            //Completamos los minutos para valores de una cifra
+                            if (npMinutes.getValue() < 10) minutes = "0" + npMinutes.getValue();
+                            else minutes = "" + npMinutes.getValue();
+                            //Completamos los segundos para valores de una cifra
+                            if (npSeconds.getValue() < 10) seconds = "0" + npSeconds.getValue();
+                            else seconds = "" + npSeconds.getValue();
+
+                            latitud = punto_card + degrees + "°" + minutes + "'" + seconds + "''";
+                            tvLat.setText(latitud);
+                        } else {
+                            String punto_card, degrees, minutes, seconds;
+                            //Comprobamos la selección del punto cardinal
+                            if (diag1.isChecked()) punto_card = "E-";
+                            else punto_card = "W-";
+                            //Completamos los grados para valores de una cifra
+                            if (npDegrees.getValue() < 10) degrees = "00" + npDegrees.getValue();
+                            else if (npDegrees.getValue() < 100) degrees = "0" + npDegrees.getValue();
+                            else degrees = "" + npDegrees.getValue();
+                            //Completamos los minutos para valores de una cifra
+                            if (npMinutes.getValue() < 10) minutes = "0" + npMinutes.getValue();
+                            else minutes = "" + npMinutes.getValue();
+                            //Completamos los segundos para valores de una cifra
+                            if (npSeconds.getValue() < 10) seconds = "0" + npSeconds.getValue();
+                            else seconds = "" + npSeconds.getValue();
+
+                            longitud = punto_card + degrees + "°" + minutes + "'" + seconds + "''";
+                            tvLong.setText(longitud);
+                        }
+
+                        onStepOpening(1);
+                        builder.create().dismiss();
+                    }
+                });
+
+        return builder.create();
+    }
+
+    /**
+     * =============================================================================================
      * METODO: CHEQUEA LOS PERMISOS DEL DISPOSITIVO
      **/
     private void checkPermission() {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) getCamara1();
         else {
-            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(getActivity(),android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int hasWriteContactsPermission = ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
             if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MY_WRITE_EXTERNAL_STORAGE);
-            }
-            else getCamara1();
+            } else getCamara1();
         }
     }
 
@@ -950,14 +1090,39 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
+        if (MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getCamara1();
             else {
                 Toast.makeText(getActivity(), getResources().getString(R.string.registration_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
-        }else{
+        } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public String processCoordinate(String cad, String opc_coord) {
+        String pc, minu, sec, deg, coordinate;
+        pc = "" + cad.charAt(0);
+
+        if (opc_coord.equals("LATITUD")){
+            deg = "" + cad.charAt(2) + "" + cad.charAt(3);
+            minu = "" + cad.charAt(5) + "" + cad.charAt(6);
+            sec = "" + cad.charAt(8) + "" + cad.charAt(9);
+        }
+        else {
+            deg = "" + cad.charAt(2) + "" + cad.charAt(3) + "" + cad.charAt(4);
+            minu = "" + cad.charAt(6) + "" + cad.charAt(7);
+            sec = "" + cad.charAt(9) + "" + cad.charAt(10);
+        }
+
+        coordinate = pc + deg + minu + sec;
+        return coordinate;
+    }
+
+
 }
 

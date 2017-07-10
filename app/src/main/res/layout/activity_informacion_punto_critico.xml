@@ -78,7 +78,7 @@ tools:context="com.example.edwin.ayllu.InformacionPuntoCritico">
             android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_update"
             fab:fab_size="mini"
-            fab:fab_title="@string/descriptionFloatingButtonRespuesta" />
+            fab:fab_title="@string/info_critical_point_button_response" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_graficas"
@@ -87,7 +87,7 @@ tools:context="com.example.edwin.ayllu.InformacionPuntoCritico">
             android:theme="@style/FloatingButtonDark"
             fab:fab_icon="@drawable/ic_grafica"
             fab:fab_size="mini"
-            fab:fab_title="@string/descriptionFloatingButtonPorcentajeFrecuencia" />
+            fab:fab_title="@string/info_critical_point_button_porfre" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

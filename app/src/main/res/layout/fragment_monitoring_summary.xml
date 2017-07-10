@@ -31,11 +31,11 @@
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/summary_title"
+                    android:paddingTop="@dimen/activity_vertical_margin"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 

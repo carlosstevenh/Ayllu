@@ -72,7 +72,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         varView.setText(var);
 
         //Se hace la peticion al servidor para obtener la calificacion de las respuestas intitucionales de un punto de afectacion en especifico
-        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
 
         RestClient service = RestClient.retrofit.create(RestClient.class);
         final Call<ArrayList<RespuestaInstitucional>> requestUser = service.getRespuestaInstitucional(pa);
@@ -296,7 +296,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             vals.add(new BarEntry(Integer.parseInt(rp.get(i).getEvaluacion()), i));
 
         }
-        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.evaluacion)));
+        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.graph_institutional_response_evaluation)));
         set.setColor(Color.rgb(255, 102, 102));
 
         return set;
@@ -311,7 +311,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             vals.add(new BarEntry(Integer.parseInt(rp.get(i).getPersonal()), i));
 
         }
-        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.personal)));
+        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.graph_institutional_response_personal)));
         set.setColor(Color.rgb(102, 102, 255));
 
         return set;
@@ -326,7 +326,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             vals.add(new BarEntry(Integer.parseInt(rp.get(i).getTiempo()), i));
 
         }
-        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.tiempo)));
+        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.graph_institutional_response_time)));
         set.setColor(Color.rgb(178, 102, 255));
 
         return set;
@@ -341,7 +341,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             vals.add(new BarEntry(Integer.parseInt(rp.get(i).getPresupuesto()), i));
 
         }
-        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.presupuesto)));
+        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.graph_institutional_response_budget)));
         set.setColor(Color.rgb(255, 178, 102));
 
         return set;
@@ -356,7 +356,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             vals.add(new BarEntry(Integer.parseInt(rp.get(i).getRecursos()), i));
 
         }
-        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.recursos)));
+        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.graph_institutional_response_means)));
         set.setColor(Color.rgb(255, 102, 255));
 
 
@@ -372,7 +372,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             vals.add(new BarEntry(Integer.parseInt(rp.get(i).getConocimiento()), i));
 
         }
-        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.conocimiento)));
+        BarDataSet set = new BarDataSet(vals, getResources().getString((R.string.graph_institutional_response_knowledge)));
         set.setColor(Color.rgb(104, 241, 175));
 
         return set;
@@ -387,12 +387,12 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
         String grafica;
-        if(save.equals("E")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.evaluacion)+format;
-        else if(save.equals("P")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.personal)+format;
-        else if(save.equals("T")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.tiempo)+format;
-        else if(save.equals("PR")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.presupuesto)+format;
-        else if(save.equals("R")) grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.recursos)+format;
-        else grafica = getResources().getString(R.string.graficaRespuestaInstitucional)+getResources().getString(R.string.conocimiento)+format;
+        if(save.equals("E")) grafica = getResources().getString(R.string.graph_institutional_response_file_name)+getResources().getString(R.string.graph_institutional_response_evaluation)+format;
+        else if(save.equals("P")) grafica = getResources().getString(R.string.graph_institutional_response_file_name)+getResources().getString(R.string.graph_institutional_response_personal)+format;
+        else if(save.equals("T")) grafica = getResources().getString(R.string.graph_institutional_response_file_name)+getResources().getString(R.string.graph_institutional_response_time)+format;
+        else if(save.equals("PR")) grafica = getResources().getString(R.string.graph_institutional_response_file_name)+getResources().getString(R.string.graph_institutional_response_budget)+format;
+        else if(save.equals("R")) grafica = getResources().getString(R.string.graph_institutional_response_file_name)+getResources().getString(R.string.graph_institutional_response_means)+format;
+        else grafica = getResources().getString(R.string.graph_institutional_response_file_name)+getResources().getString(R.string.graph_institutional_response_knowledge)+format;
 
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
         imagesFolder.mkdirs();
@@ -429,7 +429,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
             else {
-                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.registration_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);

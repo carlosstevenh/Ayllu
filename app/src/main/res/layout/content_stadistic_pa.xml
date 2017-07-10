@@ -22,7 +22,7 @@
                 android:id="@+id/textView33"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/fecha_title_graf"
+                android:text="@string/graph_percentage_frequency_subtitle_horizontal"
                 android:textColor="@color/colorSecondaryText"
                 android:textAlignment="center"
                 android:textSize="18sp"
@@ -41,7 +41,7 @@
                     android:paddingRight="10dp"
                     android:scrollbars="horizontal"
                     android:textColor="@color/colorSecondaryText"
-                    android:text="@string/puntajeVertical"
+                    android:text="@string/graph_percentage_frequency_subtitle_vertical"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold|italic" />
@@ -59,7 +59,7 @@
                 android:layout_gravity="left"
                 android:background="@color/colorPrimaryLight"
                 android:padding="5dp"
-                android:text="INFORMACIÓN POR PUNTO"
+                android:text="@string/graph_percentage_frequency_subtitle_info"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -76,9 +76,9 @@
                 android:id="@+id/tv_title_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="FACTOR:"
+                android:text="@string/info_critical_point_item_factor"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -87,7 +87,7 @@
                 android:id="@+id/area_factor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -122,9 +122,9 @@
                 android:id="@+id/tv_title_variable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="VARIABLE:"
+                android:text="@string/info_critical_point_item_variable"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -168,9 +168,9 @@
                 android:id="@+id/tv_title_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="@string/fecha"
+                android:text="@string/info_critical_point_item_date"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -214,9 +214,9 @@
                 android:id="@+id/tv_title_puntaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="@string/puntajeHorizontal"
+                android:text="@string/graph_percentage_frequency_item_Puntaje"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -262,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewPorcentaje"
+                android:text="@string/summary_item_title_percentage"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -306,9 +306,9 @@
                 android:id="@+id/tv_title_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewFrecuencia"
+                android:text="@string/summary_item_title_frequency"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 

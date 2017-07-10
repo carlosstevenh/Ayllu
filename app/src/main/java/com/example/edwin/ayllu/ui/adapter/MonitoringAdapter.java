@@ -43,8 +43,8 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
         Reporte currentReporte = reportes.get(position);
 
         holder.setReporteVariable(currentReporte.getVariable());
-        holder.setReporteLatitud(currentReporte.getLatitud());
-        holder.setReporteLongitud(currentReporte.getLongitud());
+        holder.setReporteLatitud(reverseCoordinates(currentReporte.getLatitud(),"LATITUD"));
+        holder.setReporteLongitud(reverseCoordinates(currentReporte.getLongitud(),"LONGITUD"));
         holder.setReporteFecha(currentReporte.getFecha_mon());
         if(currentReporte.getEstado().equals("ONLINE")) holder.setPruebaOnline(ApiConstants.URL_IMG + currentReporte.getPrueba1());
         else {
@@ -108,5 +108,21 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
         void setPruebaOffline(File cad) {
             Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);
         }
+    }
+
+    private String reverseCoordinates(String cad, String opc){
+        String reverseCad;
+        if (opc.equals("LATITUD")){
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + "°" +
+                    cad.charAt(3) + cad.charAt(4) + "'" +
+                    cad.charAt(5) + cad.charAt(6) + "''";
+        }
+        else {
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + cad.charAt(3) + "°" +
+                    cad.charAt(4) + cad.charAt(5) + "'" +
+                    cad.charAt(6) + cad.charAt(7) + "''";
+        }
+
+        return reverseCad;
     }
 }

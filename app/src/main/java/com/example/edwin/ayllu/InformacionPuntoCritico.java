@@ -95,7 +95,7 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
                     Log.e("URL:",URL);
                     Toast.makeText(
                             InformacionPuntoCritico.this,
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.statistical_graph_variable_process_message_negative),
                             Toast.LENGTH_LONG)
                             .show();
                 }
@@ -105,7 +105,7 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
             public void onFailure(Call<ArrayList<Prueba>> call, Throwable t) {
                 Toast.makeText(
                         InformacionPuntoCritico.this,
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.statistical_graph_variable_process_message_server),
                         Toast.LENGTH_SHORT)
                         .show();
                 finish();
@@ -131,14 +131,14 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
                     are.setText("  "+aux.getArea());
                     fac.setText("  "+aux.getFactor());
                     var.setText("  "+aux.getVariable());
-                    lon.setText("  "+aux.getLongitud());
-                    lat.setText("  "+aux.getLatitud());
+                    lon.setText(reverseCoordinates(aux.getLongitud(),"LONGITUD"));
+                    lat.setText(reverseCoordinates(aux.getLatitud(),"LATITUD"));
 
                 }
                 else{
                     Toast.makeText(
                             InformacionPuntoCritico.this,
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.statistical_graph_variable_process_message_negative),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -148,7 +148,7 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
             public void onFailure(Call<ArrayList<MonitoreoGeneral>> call, Throwable t) {
                 Toast.makeText(
                         InformacionPuntoCritico.this,
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.statistical_graph_variable_process_message_server),
                         Toast.LENGTH_SHORT)
                         .show();
             }
@@ -236,5 +236,21 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    private String reverseCoordinates(String cad, String opc){
+        String reverseCad;
+        if (opc.equals("LATITUD")){
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + "°" +
+                    cad.charAt(3) + cad.charAt(4) + "'" +
+                    cad.charAt(5) + cad.charAt(6) + "''";
+        }
+        else {
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + cad.charAt(3) + "°" +
+                    cad.charAt(4) + cad.charAt(5) + "'" +
+                    cad.charAt(6) + cad.charAt(7) + "''";
+        }
+
+        return reverseCad;
     }
 }

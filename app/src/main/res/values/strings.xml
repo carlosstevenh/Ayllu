@@ -71,10 +71,6 @@
     <string name="next">SIGUIENTE</string>
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
-    <!--.........................................................................................-->
-    <!--SLIDE CONFIGURACIÓN DEL SISTEMA-->
-    <string name="slide_4_title">CONFIGURA TU APLICACIÓN</string>
-    <string name="slide_4_desc">Elige una configuración personalizada para tu trabajo</string>
 
     <!--============================================================================================
         MONITORING MODULE
@@ -141,10 +137,10 @@
     <string name="titlePointDialog">Establece las coordenadas para el punto de afetación</string>
     <string name="latitudePointDialog">LATITUD</string>
     <string name="lengthPointDialog">LONGITUD</string>
-    <string name="optionPositivasRepercusiones">Positivas</string>
-    <string name="optionNegativasRepercusiones">Negativas</string>
-    <string name="optionActualesRepercusiones">Actuales</string>
-    <string name="optionPotencialesRepercusiones">Potenciales</string>
+    <string name="optionPositivasRepercusiones">Positiva</string>
+    <string name="optionNegativasRepercusiones">Negativa</string>
+    <string name="optionActualesRepercusiones">Actual</string>
+    <string name="optionPotencialesRepercusiones">Potencial</string>
     <string name="optionInternoOrigen">Interno</string>
     <string name="optionExternoOrigen">Externo</string>
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
@@ -183,7 +179,7 @@
     <string-array name="registration_form_new">
         <item>FACTOR Y VARIABLE</item>
         <item>COORDENADAS</item>
-        <item>EVIDENCIA FOTOGRAFIA</item>
+        <item>EVIDENCIA FOTOGRAFICA</item>
         <item>PORCENTAJE DE APARICIÓN</item>
         <item>FRECUENCIA DE APARICIÓN</item>
         <item>ORIGEN</item>
@@ -199,7 +195,7 @@
     </string-array>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING SUMMARY-->
-    <string name="summary_title">RESUMEN</string>
+    <string name="summary_title">Resumen</string>
     <string name="summary_item_title_factor">FACTOR:</string>
     <string name="summary_item_title_variable">VARIABLE:</string>
     <string name="summary_item_title_coodinates">COORDENADAS:</string>
@@ -320,8 +316,7 @@
     <string name="statistical_graph_variable_message_permissions">Permisos no concedidos</string>
     <!--.........................................................................................-->
     <!--STRINGS: GENERAL STATISTICAL GRAPHS OF VARIABLE IN TIME-->
-
-
+    <string name="statistical_graph_variable_weather_title">Análisis variable/tiempo</string>
     <!--.........................................................................................-->
     <!--STRINGS: SEARCH FORM-->
     <string name="search_form_title">Filtros de busqueda</string>
@@ -333,54 +328,60 @@
     <string name="search_form_item_description_date_until">Hasta:</string>
     <string name="search_form_item_description_factor">Factor</string>
     <string name="search_form_item_description_variable">Variable</string>
+    <string name="search_form_item_title_button_filter">FILTRAR</string>
+    <string name="search_form_alert_factor">Seleccione un factor</string>
+    <string name="search_form_alert_variable">Seleccione una variable</string>
+    <string name="search_form_alert_date">Fecha incorrecta</string>
+    <string name="search_form_alert_date_range">Seleccione un rango de fechas</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: LIST OF CRITICAL POINTS-->
+    <string name="list_critical_points_title">Monitoreos</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: INFO CRITICAL POINTS-->
+    <string name="info_critical_point_item_date">FECHA:</string>
+    <string name="info_critical_point_item_monitor">MONITOR:</string>
+    <string name="info_critical_point_item_country">PAIS:</string>
+    <string name="info_critical_point_item_tramo">TRAMO:</string>
+    <string name="info_critical_point_item_subtramo">SUBTRAMO:</string>
+    <string name="info_critical_point_item_seccion">SECCIÓN:</string>
+    <string name="info_critical_point_item_propiedad">PRO. NOMINADA:</string>
+    <string name="info_critical_point_item_factor">FACTOR:</string>
+    <string name="info_critical_point_item_variable">VARIABLE:</string>
+    <string name="info_critical_point_item_lenght">LONGITUD:</string>
+    <string name="info_critical_point_item_latitude">LATITUD:</string>
+    <string name="info_critical_point_button_response">GRÁFICA RESPUESTA</string>
+    <string name="info_critical_point_button_porfre">GRÁFICA\nPORCENTAJE vs\nFRECUENCIA</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GRAPH PERCENTAGE AND FREQUENCY-->
+    <string name="graph_percentage_frequency_title">Porcentaje y Frecuencia en el tiempo</string>
+    <string name="graph_percentage_frequency_subtitle_horizontal">Fecha del monitoreo</string>
+    <string name="graph_percentage_frequency_subtitle_vertical">P\nu\nn\nt\na\nj\ne</string>
+    <string name="graph_percentage_frequency_subtitle_info">INFORMACIÓN POR PUNTO</string>
+    <string name="graph_percentage_frequency_item_Puntaje">PUNTAJE:</string>
+    <string name="graph_percentage_frequency_description">Porcentaje y frecuencia de aparición</string>
+    <string name="graph_percentage_frequency_file_name">Grafica_porcentaje_frecuencia</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GRAPH INSTITUTIONAL RESPONSE-->
+    <string name="graph_institutional_response_title">Respuesta institucional\nen el tiempo</string>
+    <string name="graph_institutional_response_subtitle_horizontal">FECHA DEL MONITOREO</string>
+    <string name="graph_institutional_response_subtitle_vertical">V\nA\nL\nO\nR</string>
+    <string name="graph_institutional_response_settings">Opciones</string>
+    <string name="graph_institutional_response_evaluation">Evaluación</string>
+    <string name="graph_institutional_response_personal">Personal</string>
+    <string name="graph_institutional_response_time">Tiempo</string>
+    <string name="graph_institutional_response_budget">Presupuesto</string>
+    <string name="graph_institutional_response_means">Recursos</string>
+    <string name="graph_institutional_response_knowledge">Conocimiento</string>
+    <string name="graph_institutional_response_file_name">GraficaRespuestaInstitucional</string>
 
-    <string name="spinner_title_tramos">Seleccioné un Tramo</string>
-    <string name="spinner_title_subtramos">Seleccioné un Subtramo</string>
-    <string name="spinner_title_seccion">Seleccioné una Sección</string>
-    <string name="spinner_title_area">Seleccioné una Área</string>
-    <string name="editMonitor">Editar monitor</string>
-    <string name="title_activity_administrador_">Bienvenido administrador</string>
-    <string name="administrador">Administrador</string>
-    <string name="section_format" translatable="false">Hello World from section: %1$d</string>
-
-    <string name="newMonitor">Agregar monitor</string>
-    <string name="name">Nombre</string>
-    <string name="apellido">Apellido</string>
-    <string name="edit">Editar</string>
-
-    <string name="fecha">FECHA DEL MONITOREO</string>
-    <string name="fecha_title_graf">Fecha del monitoreo</string>
-    <string name="variable">Variable</string>
-    <string name="ResAdm">Respuesta institucional</string>
-    <string name="evaluacion">Evaluación</string>
-    <string name="personal">Personal</string>
-    <string name="tiempo">Tiempo</string>
-    <string name="presupuesto">Presupuesto</string>
-    <string name="recursos">Recursos</string>
-    <string name="conocimiento">Conocimiento</string>
-    <string name="deshabilitar">Deshabilitar</string>
-    <string name="pais">País</string>
-    <string name="subtramo">Subtramo</string>
-    <string name="area">Área</string>
-    <string name="factor">Factor</string>
-    <string name="seccion">Sección</string>
-    <string name="tramo">Tramo</string>
-    <string name="puntos_criticos">Puntos críticos</string>
-    <string name="user">Monitor</string>
-    <string name="coordenada">Coordenadas</string>
-    <string name="latitud">Latitud</string>
-    <string name="longitud">Longitud</string>
-    <string name="FILTRAR">Filtrar</string>
-    <string name="desde">Desde:</string>
-    <string name="hasta">Hasta:</string>
-    <string name="welcome">Bienvenido</string>
-    <string name="iformacionMonitor">Información Monitor</string>
-    <string name="ultimoMonitoreo">Último monitoreo</string>
-    <string name="monitoreos">Monitoreos</string>
-    <string name="analisis">Análisis</string>
-    <string name="puntajeVertical">P\nu\nn\nt\na\nj\ne</string>
-    <string name="puntajeHorizontal">PUNTAJE</string>
-    <string name="informacionMonitoreo">Información Monitoreo</string>
+    <!--============================================================================================
+       SETTINGS APP MODULE
+       =============================================================================================-->
+    <!--.........................................................................................-->
+    <!--SLIDE CONFIGURACIÓN DEL SISTEMA-->
+    <string name="slide_4_title">CONFIGURA TU APLICACIÓN</string>
+    <string name="slide_4_desc">Elige una configuración personalizada para tu trabajo</string>
+    
 
     <string name="procesando">Procesando</string>
     <string name="esperar">Por favor espere …</string>
@@ -420,8 +421,7 @@
     <string name="freYpor">Frecuencia y porcentaje de Aparición</string>
     <string name="nuevaContrasena">Nueva contraseña</string>
     <string name="confirmarContrasena">Confirmar contraseña</string>
-    <string name="descriptionFloatingButtonRespuesta">GRÁFICA RESPUESTA</string>
-    <string name="descriptionFloatingButtonPorcentajeFrecuencia">GRÁFICA PRT/FREC</string>
+
 
 
 

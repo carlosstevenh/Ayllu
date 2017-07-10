@@ -1,205 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content_coordenadas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title_latitud"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:drawableLeft="@drawable/ic_latitud"
-        android:drawableStart="@drawable/ic_latitud"
-        android:padding="5dp"
-        android:text="LATITUD"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <View
-        android:id="@+id/divisor3"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:alpha=".5"
-        android:background="@color/colorPrimaryText" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="4">
-
-        <EditText
-            android:id="@+id/et_lat_orientation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:hint="N/S"
-            android:inputType="text"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <EditText
-            android:id="@+id/et_lat_grados"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="GRA"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <EditText
-            android:id="@+id/et_lat_minutes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="MIN"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <EditText
-            android:id="@+id/et_lat_segundos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="SEG"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:weightSum="1">
 
         <TextView
+            android:id="@+id/tv_latitud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="0.8"
+            android:layout_margin="8dp"
+            android:background="@drawable/edit_text_border"
+            android:text="@string/latitudePointDialog"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textSize="32sp"
-            android:text="''"/>
+            android:gravity="center"
+            android:padding="@dimen/edit_text_padding"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_latitud"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_margin="@dimen/fab_margin"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_point"
+            app:fab_size="mini"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_title_longitud"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:drawableLeft="@drawable/ic_longitud"
-        android:drawableStart="@drawable/ic_longitud"
-        android:padding="5dp"
-        android:text="LONGITUD"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <View
-        android:id="@+id/divisor4"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:alpha=".5"
-        android:background="@color/colorPrimaryText" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="1">
 
-        <EditText
-            android:id="@+id/et_long_orientation"
+        <TextView
+            android:id="@+id/tv_longitud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.8"
             android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="W/O"
             android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:inputType="text"
-            android:maxLength="1"
-            android:maxLines="1"
+            android:text="@string/lengthPointDialog"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
             android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-        <EditText
-            android:id="@+id/et_long_grados"
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_longitud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:hint="GRA"
-            android:inputType="number"
-            android:maxLength="3"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-        <EditText
-            android:id="@+id/et_long_minutes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="MIN"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-        <EditText
-            android:id="@+id/et_long_segundos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="SEG"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
+            android:layout_weight="0.2"
+            app:fab_colorNormal="@color/colorAccent"
+            android:layout_margin="@dimen/fab_margin"
+            app:fab_icon="@drawable/ic_point"
+            app:fab_size="mini"/>
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btn_fijar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="5dp"
-        android:background="@color/colorAccent"
-        android:padding="15dp"
-        android:text="@string/titlebuttonFijar"
-        android:textColor="@color/colorTextIcons" />
 </LinearLayout>

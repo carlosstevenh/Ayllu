@@ -40,8 +40,8 @@ public class PuntoCriticoAdapter extends RecyclerView.Adapter<PuntoCriticoAdapte
         holder.factor.setText("  "+puntosCriticos.get(position).getFactor());
         holder.variable.setText("  "+puntosCriticos.get(position).getVariable());
         holder.date.setText("  "+puntosCriticos.get(position).getFecha());
-        holder.longitud.setText(" "+puntosCriticos.get(position).getLongitud());
-        holder.latitud.setText(" "+puntosCriticos.get(position).getLatitud());
+        holder.longitud.setText(reverseCoordinates(puntosCriticos.get(position).getLongitud(),"LONGITUD"));
+        holder.latitud.setText(reverseCoordinates(puntosCriticos.get(position).getLatitud(),"LATITUD"));
 
         int por = Integer.parseInt(puntosCriticos.get(position).getPorcentaje());
         int fre = Integer.parseInt(puntosCriticos.get(position).getFrecuencia());
@@ -90,5 +90,21 @@ public class PuntoCriticoAdapter extends RecyclerView.Adapter<PuntoCriticoAdapte
             color = (TextView) itemView.findViewById(R.id.color);
         }
 
+    }
+
+    private String reverseCoordinates(String cad, String opc){
+        String reverseCad;
+        if (opc.equals("LATITUD")){
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + "°" +
+                    cad.charAt(3) + cad.charAt(4) + "'" +
+                    cad.charAt(5) + cad.charAt(6) + "''";
+        }
+        else {
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + cad.charAt(3) + "°" +
+                    cad.charAt(4) + cad.charAt(5) + "'" +
+                    cad.charAt(6) + cad.charAt(7) + "''";
+        }
+
+        return reverseCad;
     }
 }
