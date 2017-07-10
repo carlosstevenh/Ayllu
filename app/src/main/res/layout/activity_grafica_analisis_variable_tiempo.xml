@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/analisisVarTie"
+                    android:text= "@string/statistical_graph_variable_weather_title"
                     android:textColor="@color/colorTextIcons"
                     android:textSize="18sp"
                     android:textStyle="bold" />

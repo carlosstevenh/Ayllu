@@ -108,7 +108,7 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    createRadioListDialog(items_factores, "Seleccione un Factor", 1).show();
+                    createRadioListDialog(items_factores, getResources().getString(R.string.search_form_alert_factor), 1).show();
                     variable.setEnabled(true);
                 }
                 else{
@@ -123,7 +123,7 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    createRadioListDialog(items_variables, "Selecione una Variable", 2).show();
+                    createRadioListDialog(items_variables, getResources().getString(R.string.search_form_alert_variable), 2).show();
                 }
                 else {
                     opciones[1] = "0";
@@ -153,7 +153,7 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
             inicio.setText("");
             Toast.makeText(
                     FilterMonitoringActivity.this,
-                    "Fecha incorrecta",
+                    getResources().getString(R.string.search_form_alert_date),
                     Toast.LENGTH_SHORT)
                     .show();
         }
@@ -172,7 +172,7 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
             fin.setText("");
             Toast.makeText(
                     FilterMonitoringActivity.this,
-                    "Fecha incorrecta",
+                    getResources().getString(R.string.search_form_alert_date),
                     Toast.LENGTH_SHORT)
                     .show();
         }
@@ -270,7 +270,7 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
 
             Toast.makeText(
                     FilterMonitoringActivity.this,
-                    getResources().getString(R.string.rangoFechas),
+                    getResources().getString(R.string.search_form_alert_date_range),
                     Toast.LENGTH_LONG)
                     .show();
         }

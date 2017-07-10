@@ -165,8 +165,8 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         tvFactor.setText(factor);
         tvVariable.setText(reporte.getVariable());
         tvFecha.setText(reporte.getFecha_mon());
-        tvLatitud.setText(reporte.getLatitud());
-        tvLongitud.setText(reporte.getLongitud());
+        tvLatitud.setText(reverseCoordinates(reporte.getLatitud(),"LATITUD"));
+        tvLongitud.setText(reverseCoordinates(reporte.getLongitud(),"LONGITUD"));
         tvMonitor.setText(reporte.getUsuario());
         tvRepercuciones1.setText(rep1);
         tvRepercuciones2.setText(rep2);
@@ -288,5 +288,21 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
                 });
 
         return builder.create();
+    }
+
+    private String reverseCoordinates(String cad, String opc){
+        String reverseCad;
+        if (opc.equals("LATITUD")){
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + "°" +
+                    cad.charAt(3) + cad.charAt(4) + "'" +
+                    cad.charAt(5) + cad.charAt(6) + "''";
+        }
+        else {
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + cad.charAt(3) + "°" +
+                    cad.charAt(4) + cad.charAt(5) + "'" +
+                    cad.charAt(6) + cad.charAt(7) + "''";
+        }
+
+        return reverseCad;
     }
 }

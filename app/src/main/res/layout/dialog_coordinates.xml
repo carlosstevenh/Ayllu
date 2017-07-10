@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_normal"
+        android:drawableStart="@drawable/ic_normal"
+        android:drawablePadding="8dp"
+        android:padding="@dimen/title_padding"
+        android:textSize="18sp"
+        android:text="LATITUD"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorTextIcons" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:weightSum="4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            android:text="°"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            android:text="'"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            android:text="''"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:weightSum="4"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rg_coordenada"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/rb_card1"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_card1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@drawable/rb_positive_north" />
+
+            <RadioButton
+                android:id="@+id/rb_card2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@drawable/rb_negative_south" />
+
+        </RadioGroup>
+
+
+        <NumberPicker
+            android:id="@+id/np_degrees"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp" />
+
+        <NumberPicker
+            android:id="@+id/np_minutes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp" />
+
+        <NumberPicker
+            android:id="@+id/np_seconds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp" />
+    </LinearLayout>
+</LinearLayout>

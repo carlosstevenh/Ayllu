@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:text="Externo"
+        android:text="@string/optionExternoOrigen"
         android:textColor="@color/colorSecondaryText"
         android:textSize="12sp"
         android:textStyle="bold" />
@@ -55,7 +55,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:text="Interno"
+        android:text="@string/optionInternoOrigen"
         android:textColor="@color/colorSecondaryText"
         android:textSize="12sp"
         android:textStyle="bold" />

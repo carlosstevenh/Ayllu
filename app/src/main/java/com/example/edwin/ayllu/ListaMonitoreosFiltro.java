@@ -44,7 +44,7 @@ public class ListaMonitoreosFiltro extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
 
         //peticion al servidor para obtener los ultimos monitoreos de cada punto de afactacion
-        final ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.institutional_list_process_message_search),getResources().getString(R.string.institutional_list_process_message),false,false);
 
         RestClient service = RestClient.retrofit.create(RestClient.class);
         Call<ArrayList<PuntoCritico>> pc = service.getFiltro(bundle.getString("p1"),bundle.getString("p2"),bundle.getString("p3"),
@@ -80,7 +80,7 @@ public class ListaMonitoreosFiltro extends Fragment {
                 else{
                     Toast.makeText(
                             getActivity(),
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.institutional_response_form_process_message_negative),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -91,7 +91,7 @@ public class ListaMonitoreosFiltro extends Fragment {
                 loading.dismiss();
                 Toast.makeText(
                         getActivity(),
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.institutional_list_process_message_server),
                         Toast.LENGTH_SHORT)
                         .show();
                 getActivity().finish();

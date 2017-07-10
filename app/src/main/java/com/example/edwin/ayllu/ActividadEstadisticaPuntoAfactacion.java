@@ -55,7 +55,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         var = bundle.getString("var");
 
 
-        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
 
         //peticion al servidor de los datos necesarios para realizar la grafica estadistica.
         RestClient service = RestClient.retrofit.create(RestClient.class);
@@ -146,7 +146,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 else {
                     Toast.makeText(
                             ActividadEstadisticaPuntoAfactacion.this,
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.statistical_graph_variable_process_message_negative),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -157,7 +157,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                 loading.dismiss();
                 Toast.makeText(
                         ActividadEstadisticaPuntoAfactacion.this,
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.statistical_graph_variable_process_message_server),
                         Toast.LENGTH_SHORT)
                         .show();
             }
@@ -193,7 +193,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
 
         LineDataSet set1;
         // create a dataset and give it a type
-        set1 = new LineDataSet(yVals, getResources().getString(R.string.freYpor));
+        set1 = new LineDataSet(yVals, getResources().getString(R.string.graph_percentage_frequency_description));
         set1.setFillAlpha(110);
         set1.setCircleColor(Color.BLACK);
         set1.setLineWidth(3f);
@@ -223,7 +223,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     void dowload(){
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-        String grafica = getResources().getString(R.string.graficaPorcentajeFrecuencia)+format;
+        String grafica = getResources().getString(R.string.graph_percentage_frequency_file_name)+format;
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
         imagesFolder.mkdirs();
         mChart.saveToPath(grafica,"/Ayllu/Graficos");
@@ -259,7 +259,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
             else {
-                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.registration_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);

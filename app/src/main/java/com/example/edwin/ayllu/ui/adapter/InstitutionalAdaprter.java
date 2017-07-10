@@ -46,8 +46,8 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
     public void onBindViewHolder(MonitoreoHolder holder, int position) {
         holder.date.setText(""+monitoreos.get(position).getDate());
         holder.variable.setText(""+monitoreos.get(position).getVariable());
-        holder.latitud.setText(""+monitoreos.get(position).getLatitud());
-        holder.longitud.setText(""+monitoreos.get(position).getLongitud());
+        holder.latitud.setText(reverseCoordinates(monitoreos.get(position).getLatitud(),"LATITUD"));
+        holder.longitud.setText(reverseCoordinates(monitoreos.get(position).getLongitud(),"LONGITUD"));
         holder.setPrueba(ApiConstants.URL_IMG+monitoreos.get(position).getPrueba());
     }
 
@@ -100,5 +100,19 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
         notifyItemRangeInserted(getItemCount()-1, monitoreos.size());
     }
 
+    private String reverseCoordinates(String cad, String opc){
+        String reverseCad;
+        if (opc.equals("LATITUD")){
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + "°" +
+                    cad.charAt(3) + cad.charAt(4) + "'" +
+                    cad.charAt(5) + cad.charAt(6) + "''";
+        }
+        else {
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + cad.charAt(3) + "°" +
+                    cad.charAt(4) + cad.charAt(5) + "'" +
+                    cad.charAt(6) + cad.charAt(7) + "''";
+        }
 
+        return reverseCad;
+    }
 }

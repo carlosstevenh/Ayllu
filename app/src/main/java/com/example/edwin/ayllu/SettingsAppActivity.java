@@ -470,7 +470,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         try {
             File folder = new File(Environment.getExternalStorageDirectory(),"/Ayllu/Offline");
             folder.mkdirs();
-            File destinationFile = new File(folder.getPath() + name);
+            File destinationFile = new File(folder.getPath(), name);
 
             InputStream is = null;
             OutputStream os = null;
@@ -520,7 +520,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
             InputStream editor = getResources().openRawResource(R.raw.plantilla);
             File folder = new File(Environment.getExternalStorageDirectory(), "/Ayllu/Reportes");
             folder.mkdirs();
-            File imagesFolder = new File(folder.getPath() + name);
+            File imagesFolder = new File(folder.getPath(), name);
 
             FileOutputStream result = new FileOutputStream(imagesFolder);
 

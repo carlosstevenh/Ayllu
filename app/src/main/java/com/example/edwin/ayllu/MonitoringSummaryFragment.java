@@ -57,7 +57,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
     HttpLoggingInterceptor logging;
 
     String  por_name = "", fre_name = "", factor_name = "", var_name = "", tipo_upload = "",
-            rep1_name = "", rep2_name = "", orig_name = "";
+            rep1_name = "", rep2_name = "", orig_name = "", lat_name = "", long_name = "";
 
     private ArrayList<File> files;
 
@@ -119,8 +119,10 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         if (task.getRepercusiones().charAt(2) == '0') rep2_name = getResources().getString(R.string.summary_item_description_rep_potential);
         if (task.getOrigen().charAt(0) == '0') orig_name = getResources().getString(R.string.summary_item_description_org_external);
 
-        task.setLatitud(getArguments().getString("LATITUD"));
-        task.setLongitud(getArguments().getString("LONGITUD"));
+        task.setLatitud(getArguments().getString("LATITUD_NUMBER"));
+        task.setLongitud(getArguments().getString("LONGITUD_NUMBER"));
+        lat_name = getArguments().getString("LATITUD");
+        long_name = getArguments().getString("LONGITUD");
         var_name = getArguments().getString("VAR_NAME");
         factor_name = getArguments().getString("FACTOR_NAME");
         tipo_upload = getArguments().getString("TYPE_UPLOAD");
@@ -170,8 +172,8 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         tvOrigen.setText(orig_name);
         tvPorcentaje.setText(por_name);
         tvFrecuencia.setText(fre_name);
-        tvLatitud.setText(task.getLatitud());
-        tvLongitud.setText(task.getLongitud());
+        tvLatitud.setText(lat_name);
+        tvLongitud.setText(long_name);
         tvVariable.setText(var_name);
         tvFactor.setText(factor_name);
 

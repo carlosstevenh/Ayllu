@@ -59,7 +59,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
 
         Log.i("Codigo",""+monitor);
 
-        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.procesando),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
         //peticion al servidor de los datos necesarios para realizar la grafica estadistica.
         RestClient service = RestClient.retrofit.create(RestClient.class);
         final Call<ArrayList<Promedio>> requestUser = service.promedios(tramo,variable,monitor);
@@ -97,7 +97,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
                     else{
                         Toast.makeText(
                                 GraficaAnalisisVariableTiempo.this,
-                                getResources().getString(R.string.noSeEncontraronDatos),
+                                getResources().getString(R.string.statistical_graph_variable_process_message_negative),
                                 Toast.LENGTH_SHORT)
                                 .show();
                     }
@@ -105,7 +105,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
                 else{
                     Toast.makeText(
                             GraficaAnalisisVariableTiempo.this,
-                            getResources().getString(R.string.noSeEncontraronDatos),
+                            getResources().getString(R.string.statistical_graph_variable_process_message_server),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -117,7 +117,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
                 loading.dismiss();
                 Toast.makeText(
                         GraficaAnalisisVariableTiempo.this,
-                        getResources().getString(R.string.noSePudoConectarServidor),
+                        getResources().getString(R.string.statistical_graph_variable_process_message_server),
                         Toast.LENGTH_SHORT)
                         .show();
             }
@@ -166,7 +166,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
         imagesFolder.mkdirs();
         mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
-        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.statistical_graph_variable_alert_dowload) , Toast.LENGTH_LONG).show();
     }
     /**
      * =============================================================================================
@@ -197,7 +197,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
         if(MY_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) dowload();
             else {
-                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.statistical_graph_variable_message_permissions) + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
