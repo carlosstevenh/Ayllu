@@ -45,7 +45,9 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
@@ -57,54 +59,79 @@
         </activity>
         <activity
             android:name=".MonitorMenuActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.AdministratorActivity"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.EditMonitorActivity"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".SeleccionArea"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".InstitutionalActivity"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".FormRespuesta" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".FormRespuesta"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MonitoringActivity"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MontoreosPuntosCriticos"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".InformacionPuntoCritico"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".FilterMonitoringActivity"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".ActividadEstadisticaPuntoAfactacion"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ActivityPruebasMonitoreo"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".PrestentationActivity"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".GraficaRespuestaInstitucional" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".GraficaRespuestaInstitucional"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ActivitySeleccionTramoFiltro"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".GraficaTortaVariables"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MenuGraficasEstadisticas"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         >>>>>>> upstream/experimental
-        <activity android:name=".SettingsAppActivity" />
-        <activity android:name=".About" />
-        <activity android:name=".GraficaAnalisisVariableTiempo"></activity>
+        <activity
+            android:name=".SettingsAppActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".About"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".GraficaAnalisisVariableTiempo"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>

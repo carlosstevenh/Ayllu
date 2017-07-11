@@ -130,18 +130,6 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                         }
                     });
 
-                    YAxis leftAxis = mChart.getAxisLeft();
-
-                    LimitLine ll = new LimitLine(140f, "Critical Blood Pressure");
-                    ll.setLineColor(Color.RED);
-                    ll.setLineWidth(4f);
-                    ll.setTextColor(Color.BLACK);
-                    ll.setTextSize(12f);
-// .. and more styling options
-
-                    leftAxis.addLimitLine(ll);
-
-
                 }
                 else {
                     Toast.makeText(

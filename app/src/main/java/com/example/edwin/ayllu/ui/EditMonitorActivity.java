@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.RestClient;
+import com.example.edwin.ayllu.domain.SHA1;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -112,7 +113,7 @@ public class EditMonitorActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Se realiza la peticion al servidor para actualizar la informacion del monitor
                                 if(!con.getText().toString().equals("") && !con2.getText().toString().equals("")){
-                                    contrasena = con.getText().toString();
+                                    contrasena = SHA1.getHash(con.getText().toString(),"SHA1");
                                 }
                                 final ProgressDialog loading = ProgressDialog.show(EditMonitorActivity.this,getResources().getString(R.string.edit_form_process_message_update_monitor),getResources().getString(R.string.edit_form_process_message),false,false);
                                 RestClient service = RestClient.retrofit.create(RestClient.class);

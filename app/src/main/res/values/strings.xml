@@ -393,8 +393,8 @@
     <string name="confirmarAccion">Está seguro de deshabilitar el monitor?</string>
     <string name="advertencia">Advertencia</string>
     <string name="accionCompletada">Acción completada</string>
-    <string name="confirmar">Confirmar</string>
-    <string name="cancelar">Cancelar</string>
+    <string name="confirmar">CONFIRMAR</string>
+    <string name="cancelar">CANCELAR</string>
     <string name="confirmacionAccionEditar">Está seguro de actualizar la información del monitor?</string>
     <string name="contraseñasDiferentes">Las contraseñas no coinciden</string>
     <string name="actualizadoMonitor">Actualizando monitor</string>
@@ -451,4 +451,12 @@
     <string name="AcerceDe">Acerca de</string>
     <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
+
+    <!--String agreagados el 11 de julio (Nuevos)-->
+    <string name="borrarDatos">¿Está seguro que desea borrar monitoreos descargados?</string>
+    <string name="continuar">CONTINUAR</string>
+    <string name="seleccionDescargar">SELECCIÓN A DESCARGAR</string>
+    <string name="dowload">DESCARGAR</string>
+    <string name="monitoreosDescargados">Monitoreos Descargados</string>
+    <string name="reporteGenerado">Reporte generado !Exitosamente¡"</string>
 </resources>
