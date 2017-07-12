@@ -70,7 +70,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().size()>0){
                         setContentView(R.layout.activity_grafica_analisis_variable_tiempo);
-                        mChart = (BarChart) findViewById(R.id.variableTiempo);
+                        mChart = (BarChart) findViewById(R.id.barchart);
                         promedios = response.body();
 
                         BarData data= new BarData(valoresX(), valoresY());

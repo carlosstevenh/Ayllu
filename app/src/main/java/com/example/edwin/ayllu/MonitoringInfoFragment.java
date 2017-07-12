@@ -26,7 +26,10 @@ public class MonitoringInfoFragment extends Fragment {
         result = getArguments().getString("RESULT");
         tipo = getArguments().getString("TIPO");
 
-        if(tipo.equals("NEW") && (result.equals("OK") || result.equals("OFFLINE"))) area = getArguments().getString("AREA");
+        if(tipo != null){
+            if(tipo.equals("NEW") && (result.equals("OK") || result.equals("OFFLINE")))
+                area = getArguments().getString("AREA");
+        }
     }
 
     @Override

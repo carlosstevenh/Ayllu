@@ -34,4 +34,8 @@
     <!--COLORS: SplashScreen de información del registro-->
     <color name="colorSplashBackground">#143a48</color>
     <color name="colorSplashBackgroundFailed">#541616</color>
+    <!--.........................................................................................-->
+    <!--COLORS: Images state-->
+    <color name="colorBackgroundStatePositive">#298964</color>
+    <color name="colorBackgroundStateNegative">#4b4b4b</color>
 </resources>

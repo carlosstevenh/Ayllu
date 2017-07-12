@@ -2,6 +2,7 @@ package com.example.edwin.ayllu;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,12 +11,16 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -25,6 +30,7 @@ import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -49,9 +55,12 @@ import retrofit2.Response;
 import static com.example.edwin.ayllu.domain.PaisContract.PaisEntry;
 import static com.example.edwin.ayllu.domain.TramoContract.TramoEntry;
 
-public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements View.OnClickListener{
+public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements View.OnClickListener,
+        FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
 
     private FloatingActionButton fabPais, fabTramo, fabSearch, fabDowload;
+    private FloatingActionsMenu fabMenu;
+    Interpolator interpolador;
 
     // Códigos de petición
     private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
@@ -78,6 +87,9 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccion_tramo_filtro);
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            interpolador = AnimationUtils.loadInterpolator(this, android.R.interpolator.fast_out_slow_in);
+        }
 
         paisDbHelper = new PaisDbHelper(this);
         tramoDbHelper = new TramoDbHelper(this);
@@ -98,21 +110,32 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         fabTramo = (FloatingActionButton) findViewById(R.id.fab_tramo);
         fabSearch = (FloatingActionButton) findViewById(R.id.fab_search);
         fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
+        fabMenu = (FloatingActionsMenu) findViewById(R.id.menu_fab);
 
         fabTramo.setEnabled(false);
-        fabDowload.setEnabled(false);
 
         fabPais.setOnClickListener(this);
         fabTramo.setOnClickListener(this);
         fabSearch.setOnClickListener(this);
+        fabDowload.setOnClickListener(this);
+        fabMenu.setOnFloatingActionsMenuUpdateListener(this);
 
+        fabDowload.setScaleX(0);
+        fabDowload.setScaleY(0);
+        fabSearch.setScaleX(0);
+        fabSearch.setScaleY(0);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fabMenu.collapse();
     }
 
     //Metodo que se encarga de obtener los porcentajes de cada factor
     private ArrayList<Float> yDatas(){
         int cantidad = 0;
-        ArrayList<Float> aux = new ArrayList<Float>();
+        ArrayList<Float> aux = new ArrayList<>();
         for(int i = 0; i < facTram.size(); i++) cantidad += Integer.parseInt(facTram.get(i).getCantidad());
         for(int i = 0; i < facTram.size(); i++){
             float por = (Integer.parseInt(facTram.get(i).getCantidad())*100)/cantidad;
@@ -124,7 +147,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
 
     //Metodo que se encarga de obtener las etiquetas del diagrama de torta (los diferentes factores presentados)
     private ArrayList<String> xDatas(){
-        ArrayList<String> datos = new ArrayList<String>();
+        ArrayList<String> datos = new ArrayList<>();
         for(int i = 0; i < facTram.size(); i++) datos.add(facTram.get(i).getNombre());
         return datos;
     }
@@ -132,7 +155,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     //Metodo encargado de obtener tanto los porcentajes como las etiquetas para posteriormente ser representados
     //en el diagra de torta
     private void addData() {
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+        ArrayList<Entry> yVals1 = new ArrayList<>();
         ArrayList<String> xValores = xDatas();
         ArrayList<Float> yValores = yDatas();
         //tableRow.add
@@ -145,7 +168,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         dataSet.setSelectionShift(5);
 
         // add many colors
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<Integer> colors = new ArrayList<>();
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
@@ -193,6 +216,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                 createRadioListDialog(items_tramos, getResources().getString(R.string.general_statistical_graph_dialog_title_tramos), 2).show();
                 break;
             case R.id.fab_search:
+                fabMenu.collapse();
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
                     final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.general_statistical_graph_process_message_analysis),getResources().getString(R.string.general_statistical_graph_process_message),false,false);
@@ -248,14 +272,6 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                                     l.setXEntrySpace(7);
                                     l.setYEntrySpace(5);
 
-                                    fabDowload.setEnabled(true);
-                                    fabDowload.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            checkPermission();
-                                        }
-                                    });
-
                                 }
                                 else{
                                     Toast.makeText(
@@ -289,7 +305,10 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
 
 
                 }
-
+                break;
+            case R.id.fab_dowload:
+                fabMenu.collapse();
+                if (mChart != null) checkPermission();
                 break;
         }
     }
@@ -412,5 +431,43 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onMenuExpanded() {
+        animationButton(fabSearch, 1, 1);
+        animationButton(fabDowload, 1, 1);
+        fabSearch.setEnabled(true);
+        fabDowload.setEnabled(true);
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    @Override
+    public void onMenuCollapsed() {
+        fabSearch.setEnabled(false);
+        fabDowload.setEnabled(false);
+
+        animationButton(fabSearch, 0, 0);
+        animationButton(fabDowload, 0, 0);
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public void animationButton(FloatingActionButton fb, float x, float y) {
+        fb.animate()
+                .scaleX(x)
+                .scaleY(y)
+                .setInterpolator(interpolador)
+                .setDuration(10)
+                .setStartDelay(100);
     }
 }

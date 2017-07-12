@@ -382,9 +382,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                     }
                     else {
                         loading.dismiss();
-
-                        Log.e("Tag Subir", "dsdkfjsdklfj");
-
                         fragment = new MonitoringInfoFragment();
                         Bundle params = new Bundle();
                         params.putString("RESULT","ERROR");
@@ -400,9 +397,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                 @Override
                 public void onFailure(Call<Task> call, Throwable t) {
                     loading.dismiss();
-
-                    Log.e("Tag Subir", t.getMessage());
-
                     fragment = new MonitoringInfoFragment();
                     Bundle params = new Bundle();
                     params.putString("RESULT","ERROR");
