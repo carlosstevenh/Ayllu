@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import retrofit2.Response;
 
 public class EditMonitorActivity extends AppCompatActivity {
     private EditText id, nom, ape, con,con2;
-    private FloatingActionButton fabEdit;
+    private Button fabEdit;
     private int codigo ;
     private String pais;
     private String tipo,ide;
@@ -50,17 +51,17 @@ public class EditMonitorActivity extends AppCompatActivity {
         ide = bundle.getString("iden");
 
         //se instacian los elementos de la vista
-        id = (EditText) findViewById(R.id.et_id);
-        nom = (EditText) findViewById(R.id.et_nombre);
-        ape = (EditText) findViewById(R.id.et_ape);
-        con = (EditText) findViewById(R.id.et_psw);
-        con2 = (EditText) findViewById(R.id.et_conf_psw);
+        id = (EditText) findViewById(R.id.txtide);
+        nom = (EditText) findViewById(R.id.txtname);
+        ape = (EditText) findViewById(R.id.txtApe);
+        con = (EditText) findViewById(R.id.txtCon);
+        con2 = (EditText) findViewById(R.id.contraseña2);
 
-        tilIdentificacion = (TextInputLayout) findViewById(R.id.til_id);
-        tilNombre = (TextInputLayout) findViewById(R.id.til_nombre);
+        tilIdentificacion = (TextInputLayout) findViewById(R.id.til_ide);
+        tilNombre = (TextInputLayout) findViewById(R.id.til_nom);
         tilApellido = (TextInputLayout) findViewById(R.id.til_ape);
-        tilCon1 = (TextInputLayout) findViewById(R.id.til_psw);
-        tilCon2 = (TextInputLayout) findViewById(R.id.til_conf_psw);
+        tilCon1 = (TextInputLayout) findViewById(R.id.til_con);
+        tilCon2 = (TextInputLayout) findViewById(R.id.til_con1);
 
         //se llena los elementos de la vista con los paramentros recividos
         id.setText(bundle.getString("iden"));
@@ -69,7 +70,7 @@ public class EditMonitorActivity extends AppCompatActivity {
         //con.setText(bundle.getString("con"));
         contrasena = bundle.getString("con");
 
-        fabEdit = (FloatingActionButton) findViewById(R.id.fab_reg);
+        fabEdit = (Button) findViewById(R.id.btnReg);
         //se invoca al metodo click del boton para luego llamar al metodo encargado de editar el monitor
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,11 +205,9 @@ public class EditMonitorActivity extends AppCompatActivity {
     }
 
     private boolean esIdentificacionValido(String nombre,TextInputLayout til) {
-        Pattern patron = Pattern.compile("^.{1,}");
-        if (!patron.matcher(nombre).matches()) {
-            til.setError(getResources().getString(R.string.redit_form_alert_empty_field));
-            return false;
-        } else {
+        if(nombre.length()<=0) til.setError(getResources().getString(R.string.registration_form_alert_invalid_field));
+            //Pattern patron = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
+        else {
             til.setError(null);
         }
 

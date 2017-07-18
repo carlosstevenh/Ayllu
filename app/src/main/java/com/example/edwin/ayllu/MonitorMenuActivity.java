@@ -380,7 +380,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      **/
     @Override
     public void onBackPressed() {
-        createSimpleDialog("¿Quieres Salir?",
+        createSimpleDialog(getResources().getString(R.string.quieresSalir),
                 getResources().getString(R.string.titleDetailMonitoringDialog)).show();
     }
 

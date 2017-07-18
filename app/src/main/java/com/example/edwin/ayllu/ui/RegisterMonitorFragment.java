@@ -246,12 +246,9 @@ public class RegisterMonitorFragment extends Fragment {
     }
 
     private boolean esIdentificacionValido(String nombre,TextInputLayout til) {
-        Pattern patron = Pattern.compile("^.{1,}");
+        if(nombre.length()<=0) til.setError(getResources().getString(R.string.registration_form_alert_invalid_field));
         //Pattern patron = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
-        if (!patron.matcher(nombre).matches()) {
-            til.setError(getResources().getString(R.string.registration_form_alert_empty_field));
-            return false;
-        } else {
+        else {
             til.setError(null);
         }
 

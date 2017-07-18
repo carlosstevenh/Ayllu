@@ -47,7 +47,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
@@ -59,53 +60,55 @@
         </activity>
         <activity
             android:name=".MonitorMenuActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.AdministratorActivity"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".ui.EditMonitorActivity"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".SeleccionArea"
-            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".InstitutionalActivity"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".FormRespuesta"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".MonitoringActivity"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".MontoreosPuntosCriticos"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".InformacionPuntoCritico"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".FilterMonitoringActivity"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
         <activity
             android:name=".ActividadEstadisticaPuntoAfactacion"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ActivityPruebasMonitoreo"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".PrestentationActivity"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".GraficaRespuestaInstitucional"
@@ -120,14 +123,16 @@
             android:launchMode="singleTask"/>
         <activity
             android:name=".MenuGraficasEstadisticas"
-            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
-        >>>>>>> upstream/experimental
+
         <activity
             android:name=".SettingsAppActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".About"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity
             android:name=".GraficaAnalisisVariableTiempo"

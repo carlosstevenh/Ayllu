@@ -20,14 +20,13 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="@string/item_navbar_monitor_recoder"
+                android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView6"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp"
                 android:paddingLeft="80dp"
-                />
+                android:text="@string/item_navbar_monitor_recoder"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/area_ide"
@@ -50,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/registration_form_id"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

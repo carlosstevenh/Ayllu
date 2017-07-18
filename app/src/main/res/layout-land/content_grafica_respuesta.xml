@@ -23,27 +23,28 @@
                 android:background="?attr/colorPrimary"
                 android:layout_gravity="center_horizontal"
                 >
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/analisis"
-                    android:textSize="18sp"
-                    android:textColor="#fff"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="10dp"/>
+                    android:text="@string/graph_institutional_response_title"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
         <TextView
+            android:id="@+id/textView33"
             android:layout_width="291dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView33"
-            android:textStyle="normal|italic"
-            android:text="@string/fecha"
+            android:text="@string/graph_institutional_response_subtitle_horizontal"
+            android:textAlignment="center"
             android:textSize="12sp"
-            android:textAlignment="center" />
+            android:textStyle="normal|italic" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -115,41 +116,52 @@
                         android:id="@+id/grup"
                         android:checkedButton="@+id/radio_eval">
 
-                        <RadioButton android:id="@+id/radio_eval"
+                        <RadioButton
+                            android:id="@+id/radio_eval"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/evaluacion"
-                            android:onClick="onRadioButtonClicked"
                             android:checked="false"
-                            android:textSize="14sp" />
-                        <RadioButton android:id="@+id/radio_per"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/personal"
                             android:onClick="onRadioButtonClicked"
+                            android:text="@string/institutional_response_form_item_evaluacion"
                             android:textSize="14sp" />
-                        <RadioButton android:id="@+id/radio_tiempo"
+
+                        <RadioButton
+                            android:id="@+id/radio_per"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tiempo"
                             android:onClick="onRadioButtonClicked"
+                            android:text="@string/institutional_response_form_item_personal"
                             android:textSize="14sp" />
-                        <RadioButton android:id="@+id/radio_presu"
+
+                        <RadioButton
+                            android:id="@+id/radio_tiempo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/presupuesto"
                             android:onClick="onRadioButtonClicked"
+                            android:text="@string/institutional_response_form_item_tiempo"
                             android:textSize="14sp" />
-                        <RadioButton android:id="@+id/radio_rec"
+
+                        <RadioButton
+                            android:id="@+id/radio_presu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/recursos"
-                            android:onClick="onRadioButtonClicked"/>
-                        <RadioButton android:id="@+id/radio_con"
+                            android:onClick="onRadioButtonClicked"
+                            android:text="@string/institutional_response_form_item_presupuesto"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio_rec"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/conocimiento"
-                            android:onClick="onRadioButtonClicked"/>
+                            android:onClick="onRadioButtonClicked"
+                            android:text="@string/institutional_response_form_item_recursos" />
+
+                        <RadioButton
+                            android:id="@+id/radio_con"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="onRadioButtonClicked"
+                            android:text="@string/institutional_response_form_item_conocimiento" />
                     </RadioGroup>
 
                     <TextView
@@ -164,13 +176,13 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:text="@string/factor"
+                            android:id="@+id/textView21"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView21"
                             android:layout_weight="0.19"
-                            android:textStyle="normal|bold"
-                            android:textColor="@color/colorPrimaryText" />
+                            android:text="@string/info_critical_point_item_factor"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textStyle="normal|bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -185,13 +197,13 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:text="@string/variable"
+                            android:id="@+id/textView31"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView31"
                             android:layout_weight="0.24"
-                            android:textStyle="normal|bold"
-                            android:textColor="@color/colorPrimaryText" />
+                            android:text="@string/info_critical_point_item_variable"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textStyle="normal|bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
