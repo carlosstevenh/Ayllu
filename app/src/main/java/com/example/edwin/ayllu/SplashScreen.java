@@ -84,7 +84,6 @@ public class SplashScreen extends Activity {
                 AdminSQLite admin1 = new AdminSQLite(getApplicationContext(), "login", null, 1);
                 SQLiteDatabase bd1 = admin1.getWritableDatabase();
                 bd1.delete(admin1.TABLENAME, null, null);
-                //bd.execSQL("TRUNCATE TABLE "+admin.TABLENAME, null);
                 bd1.close();
 
             }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
+import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -40,6 +41,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
     private String pa,fac,var;
     private TextView fecha,puntaje,fact,vari,por,fre;
     private FloatingActionButton fabDowload;
+    private String[] items_porcentaje, items_frecuencia;
 
     // Códigos de petición
     private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
@@ -54,6 +56,27 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         fac = bundle.getString("fac");
         var = bundle.getString("var");
 
+        items_porcentaje = getResources().getStringArray(R.array.listPorcentaje);
+        items_frecuencia = getResources().getStringArray(R.array.listFrecuencia);
+
+        mChart = (LineChart) findViewById(R.id.linechart);
+        mChart.setDoubleTapToZoomEnabled(false);
+        mChart.setPinchZoom(false);
+        mChart.setScaleEnabled(false);
+
+        mChart.animateX(2000);
+        mChart.animateY(2000);
+        mChart.animateXY(2000, 2000);
+
+        fecha = (TextView) findViewById(R.id.tv_fecha);
+        puntaje = (TextView) findViewById(R.id.tv_puntaje);
+        fact = (TextView) findViewById(R.id.tv_factor);
+        vari = (TextView) findViewById(R.id.tv_variable);
+        por = (TextView) findViewById(R.id.tv_porcentaje);
+        fre = (TextView) findViewById(R.id.tv_frecuencia);
+        fact.setText(fac);
+        vari.setText(var);
+        fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
 
         final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
 
@@ -63,31 +86,25 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         requestUser.enqueue(new Callback<ArrayList<AnalisisPorcentajeFrecuencia>>() {
             @Override
             public void onResponse(Call<ArrayList<AnalisisPorcentajeFrecuencia>> call, Response<ArrayList<AnalisisPorcentajeFrecuencia>> response) {
-                setContentView(R.layout.activity_stadistic_pa);
-
-                mChart = (LineChart) findViewById(R.id.linechart);
-                mChart.setDoubleTapToZoomEnabled(false);
-                mChart.setPinchZoom(false);
-                mChart.setScaleEnabled(false);
-
-                mChart.animateX(2000);
-                mChart.animateY(2000);
-                mChart.animateXY(2000, 2000);
-                
-                fecha = (TextView) findViewById(R.id.tv_fecha);
-                puntaje = (TextView) findViewById(R.id.tv_puntaje);
-                fact = (TextView) findViewById(R.id.tv_factor);
-                vari = (TextView) findViewById(R.id.tv_variable);
-                por = (TextView) findViewById(R.id.tv_porcentaje);
-                fre = (TextView) findViewById(R.id.tv_frecuencia);
-                fact.setText(fac);
-                vari.setText(var);
-                fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
-
                 loading.dismiss();
                 if(response.isSuccessful()){
-
                     datos = response.body();
+
+                    if(datos.size()>0) {
+                        int por_num = Integer.parseInt(datos.get(0).getProcentaje());
+                        int fre_num = Integer.parseInt(datos.get(0).getFrecuencia());
+                        float pun_num = (por_num+fre_num)/2;
+
+                        String por_nom = items_porcentaje[por_num - 1] + "\nVALOR: "+ por_num;
+                        String fre_nom = items_frecuencia[fre_num - 1] + "\nVALOR: "+ fre_num;
+                        String pun_nom = "" + pun_num;
+
+                        fecha.setText(datos.get(0).getFecha());
+                        por.setText(por_nom);
+                        fre.setText(fre_nom);
+                        puntaje.setText(pun_nom);
+                    }
+
                     // add data
                     setData1(datos);
 
@@ -105,16 +122,22 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
 
                             int aux = e.getXIndex();
                             if(datos.size()>=0) {
+                                int por_num = Integer.parseInt(datos.get(aux).getProcentaje());
+                                int fre_num = Integer.parseInt(datos.get(aux).getFrecuencia());
+
+                                String por_nom = items_porcentaje[por_num - 1] + "\nVALOR: "+ por_num;
+                                String fre_nom = items_frecuencia[fre_num - 1] + "\nVALOR: "+ fre_num;
+
                                 fecha.setText(datos.get(aux).getFecha());
-                                por.setText(datos.get(aux).getProcentaje());
-                                fre.setText(datos.get(aux).getFrecuencia());
+                                por.setText(por_nom);
+                                fre.setText(fre_nom);
                             }
                             else {
                                 fecha.setText("");
                                 por.setText("");
                                 fre.setText("");
                             }
-                            puntaje.setText(""+e.getVal());
+                            puntaje.setText(e.getVal()+"");
 
                         }
 
@@ -228,7 +251,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         imagesFolder.mkdirs();
         mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
-        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.general_statistical_graph_alert_dowload) , Toast.LENGTH_LONG).show();
     }
     /**
      * =============================================================================================

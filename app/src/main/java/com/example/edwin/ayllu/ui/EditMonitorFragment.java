@@ -27,7 +27,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
-import com.example.edwin.ayllu.RestClient;
+import com.example.edwin.ayllu.io.RestClient;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.ui.adapter.UsuariosAdapter;
@@ -106,7 +106,7 @@ public class EditMonitorFragment extends Fragment  {
         Usuario aux = (Usuario) usuarios.getAdapter().getItem(info.position);
 
         menu.setHeaderTitle(
-                getResources().getString(R.string.user)+": " +aux.getNombre_usu() + " "+aux.getApellido_usu());
+                "MONITOR"+": " +aux.getNombre_usu() + " "+aux.getApellido_usu());
         inflater.inflate(R.menu.menu_edit_deshabilitar_monitor, menu);
     }
 
@@ -246,7 +246,7 @@ public class EditMonitorFragment extends Fragment  {
         final String dh = usuario;
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton(getResources().getString(R.string.confirmar),
+                .setPositiveButton("CONFIRMAR",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -288,7 +288,7 @@ public class EditMonitorFragment extends Fragment  {
                                 builder.create().dismiss();
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.cancelar),
+                .setNegativeButton("CANCELAR",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

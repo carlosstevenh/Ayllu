@@ -1,161 +1,393 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Ayllu</string>
-    <string name="longitud">Longitude</string>
-    <string name="login">Login</string>
-    <string name="contrasena">Password</string>
-    <string name="name">Name</string>
-    <string name="FILTRAR">Filter</string>
-    <string name="ResAdm">Institutional answer</string>
-    <string name="accionCompletada">Conmplete action</string>
-    <string name="actualizadoMonitor">Update monitor</string>
-    <string name="addMonitor">Record monitor</string>
-    <string name="administrador">Administrator</string>
-    <string name="advertencia">Warning</string>
-    <string name="alta">High capacity</string>
-    <string name="analisis">Analysis</string>
-    <string name="apellido">Last name</string>
-    <string name="baja">Low capacity</string>
-    <string name="campoInvalido">Invalid filed</string>
-    <string name="campoVacio">Empty field</string>
-    <string name="cancelar">Cancel</string>
-    <string name="confirmacionAccionEditar">Are you sure to update the information of monitor?</string>
-    <string name="confirmar">Confirm</string>
-    <string name="confirmarAccion">Are you sure to disable the monitor?</string>
-    <string name="conocimiento">Knowledge</string>
-    <string name="contrasenaError">Must contain lowercase, uppercase, digits and a size greater than 8 characteres</string>
-    <string name="contraseñasDiferentes">The password doesn\'t coincide</string>
-    <string name="coordenada">Coordenates</string>
-    <string name="deleteMonitor">Delete monitor</string>
-    <string name="desde">Since:</string>
-    <string name="deshabilitar">To disable</string>
-    <string name="dowloading">Dowloading</string>
-    <string name="drop">Eliminate</string>
-    <string name="edit">Edit</string>
-    <string name="editMonitor">Edit monitor</string>
-    <string name="esperar">Please wait ...</string>
-    <string name="evaluacion">Review</string>
-    <string name="factor">Factor</string>
-    <string name="fecha">Monitorning date</string>
-    <string name="getPruebas">Get evidence</string>
-    <string name="hasta">Ultil:</string>
-    <string name="identificacion">Identification</string>
-    <string name="iformacionMonitor">Monitor information</string>
-    <string name="informacionMonitoreo">Monitorning information</string>
-    <string name="iniciandoSesion">Loggen in</string>
-    <string name="inicio">Start</string>
-    <string name="insignificantes">Insignificant</string>
-    <string name="latitud">Latitude</string>
-    <string name="media">Average capacity</string>
-    <string name="menores">Minor</string>
-    <string name="monitor">To monitor</string>
-    <string name="monitorActualizado">Monitor updated</string>
-    <string name="monitoreos">Monitorning</string>
-    <string name="monitores">Monitors</string>
-    <string name="mostrarContrasena">Show password</string>
-    <string name="newMonitor">Add monitor</string>
-    <string name="next">NEXT</string>
-    <string name="ninuguna">No capacity</string>
-    <string name="noEcontroPrueba">There isn\'t evidence for this monitorning</string>
-    <string name="noSeEncontraronDatos">No data found</string>
-    <string name="noSePudoConectarServidor">No connect to server</string>
-    <string name="pais">Contry</string>
-    <string name="personal">Staff</string>
-    <string name="presupuesto">Budget</string>
-    <string name="procesando">Processing</string>
-    <string name="puntaje">Result</string>
-    <string name="puntos_criticos">Critical points</string>
-    <string name="recursos">Means</string>
-    <string name="registrandoMonitor">Recording monitor</string>
-    <string name="registrar">To register</string>
-    <string name="registroAdicionado">Additional registration</string>
-    <string name="salir">Get out</string>
-    <string name="seProdujoUnError">There was an error </string>
-    <string name="significativas">Significant</string>
-    <string name="skip">Select</string>
-    <string name="slide_1_desc">Walk, monitornig and get reports state of conservation of Qhapaq Ñan</string>
-    <string name="slide_1_title">RECORD MONITORING</string>
-    <string name="slide_2_desc">Report new data the institutional answer of the monitorning</string>
-    <string name="slide_2_title">INSTITUTIONAL ANSWER</string>
-    <string name="slide_3_title">STADISTICAL MAPS</string>
-    <string name="slide_4_desc">The Qhapaq Nañ observes through geographical maps</string>
-    <string name="slide_4_title">LOOK  THE QHAPAQ ÑAN</string>
-    <string name="spinner_title_seccion"></string>
-    <string name="start">START</string>
-    <string name="tiempo">Time</string>
-    <string name="title_activity_administrador_">Welcome to administrator</string>
-    <string name="ultimoMonitoreo">Last monitorning</string>
-    <string name="user">Monitor</string>
-    <string name="variable">Variable</string>
-    <string name="welcome">Welcome</string>
-    <string name="freYpor">Frequency and percentaje of occurrence</string>
-    <string name="nuevaContrasena">New password</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="app_name">XXXXXXX</string>
+    <!--============================================================================================
+        STRINGS: LOGIN DEL USUARIO
+        ============================================================================================-->
+    <string name="login">XXXXXXX</string>
+    <string name="identificacion">XXXXXXX</string>
+    <string name="contrasena">XXXXXXX</string>
+    <string name="mostrarContrasena">XXXXXXX</string>
 
-    <!--=========================================================================================-->
-    <!--MONITORING MODULE-->
-    <!--=========================================================================================-->
+    <!--============================================================================================
+        STRINGS: MENU DEL ADMINISTRADOR
+        ============================================================================================-->
+    <string name="item_navbar_monitor_recoder">XXXXXXX</string>
+    <string name="item_navbar_monitor_list">XXXXXXX</string>
+    <string name="item_menu_monitoring">XXXXXXX</string>
+    <string name="item_menu_exit">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT REGISTRAR MONITOR-->
+    <string name="registration_form_id">XXXXXXX</string>
+    <string name="registration_form_name">XXXXXXX</string>
+    <string name="registration_form_surname">XXXXXXX</string>
+    <string name="registration_form_password">XXXXXXX</string>
+    <string name="registration_form_confpassword">XXXXXXX</string>
+    <string name="registration_form_button_record">XXXXXXX</string>
+    <string name="registration_form_alert_invalid_field">XXXXXXX</string>
+    <string name="registration_form_alert_empty_field">XXXXXXX</string>
+    <string name="registration_form_alert_password">XXXXXXX</string>
+    <string name="registration_form_alert_different_passwords">XXXXXXX</string>
+    <string name="registration_form_process_shipping_status">XXXXXXX</string>
+    <string name="registration_form_process_message">XXXXXXX</string>
+    <string name="registration_form_process_successful_message">XXXXXXX</string>
+    <string name="registration_form_process_error_message">XXXXXXX</string>
+    <string name="registration_form_process_message_server">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT LISTA DE MONITORES -->
+    <string name="item_menu_edit_monitor">XXXXXXX</string>
+    <string name="item_menu_disable_monitor">XXXXXXX</string>
+    <string name="item_cardview_user_name">XXXXXXX</string>
+    <string name="item_cardview_user_surname">XXXXXXX</string>
+    <string name="item_cardview_user_id">XXXXXXX</string>
+    <string name="process_message_question">XXXXXXX</string>
+    <string name="process_message_title_alert">XXXXXXX</string>
+    <string name="process_message_disable_monitor">XXXXXXX</string>
+    <string name="process_message">XXXXXXX</string>
+    <string name="process_successful_message">XXXXXXX</string>
+    <string name="process_error_message">XXXXXXX</string>
+    <string name="process_message_server">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--ACTIVITY EDITAR MONITOR -->
+    <string name="title_activity_edit_monitor">XXXXXXX</string>
+    <string name="edit_form_id">XXXXXXX</string>
+    <string name="edit_form_name">XXXXXXX</string>
+    <string name="edit_form_surname">XXXXXXX</string>
+    <string name="edit_form_password">XXXXXXX</string>
+    <string name="edit_form_confpassword">XXXXXXX</string>
+    <string name="edit_form_alert_invalid_field">XXXXXXX</string>
+    <string name="redit_form_alert_empty_field">XXXXXXX</string>
+    <string name="edit_form_alert_password">XXXXXXX</string>
+    <string name="edit_form_alert_different_passwords">XXXXXXX</string>
+    <string name="edit_form_process_message_update_monitor">XXXXXXX</string>
+    <string name="edit_form_process_message">XXXXXXX</string>
+    <string name="edit_form_process_successful_message">XXXXXXX</string>
+    <string name="edit_form_process_error_message">XXXXXXX</string>
+    <string name="edit_form_process_message_server">XXXXXXX</string>
+
+    <!--============================================================================================
+        STRINGS: MENU DEL MONITOR
+        ============================================================================================-->
+    <string name="next">XXXXXXX</string>
+    <string name="skip">XXXXXXX</string>
+    <string name="start">XXXXXXX</string>
+
+    <!--============================================================================================
+        MONITORING MODULE
+        ============================================================================================-->
+    <!--.........................................................................................-->
+    <!--SLIDE REGISTRAR MONITOREO-->
+    <string name="slide_1_title">XXXXXXX</string>
+    <string name="slide_1_desc">XXXXXXX</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING LIST-->
-    <string name="titleListMonitoring">Monitoring Qhapaq Ñan</string>
-    <string name="descriptionInfoListMonitoring">No monitoring yet</string>
-    <string name="descriptionInfoListMonitoringNegative">No monitoring for the current selection</string>
-    <string name="descriptionTramo">SECTION</string>
-    <string name="descriptionSubtramo">SUBSECTION</string>
-    <string name="descriptionSeccion">SEGMENT</string>
-    <string name="descriptionPropiedad">PROPERTY NOMINATED</string>
-    <string name="itemCardViewFecha">DATE:</string>
-    <string name="itemCardViewLatitud">LATITUDE:</string>
-    <string name="itemCardViewLongitud">LENGTH:</string>
-    <string name="itemCardViewVariable">VARIABLE:</string>
-    <string name="itemCardViewDescriptionPrueba">Monitoring image</string>
-    <string name="titleListMonitoringDialog">INFORMATION</string>
-    <string name="descriptionListMonitoringDialog">Select an area to record a Monitoring</string>
+    <string name="titleListMonitoring">XXXXXXX</string>
+    <string name="descriptionInfoListMonitoring">XXXXXXX</string>
+    <string name="descriptionInfoListMonitoringNegative">XXXXXXX</string>
+    <string name="descriptionTramo">XXXXXXX</string>
+    <string name="descriptionSubtramo">XXXXXXX</string>
+    <string name="descriptionSeccion">XXXXXXX</string>
+    <string name="descriptionPropiedad">XXXXXXX</string>
+    <string name="itemCardViewFecha">XXXXXXX</string>
+    <string name="itemCardViewLatitud">XXXXXXX</string>
+    <string name="itemCardViewLongitud">XXXXXXX</string>
+    <string name="itemCardViewVariable">XXXXXXX</string>
+    <string name="itemCardViewFactor">XXXXXXX</string>
+    <string name="itemCardViewDescriptionPrueba">XXXXXXX</string>
+    <string name="titleListMonitoringDialog">XXXXXXX</string>
+    <string name="descriptionListMonitoringDialog">XXXXXXX</string>
+    <string name="opcionListMonitoringDialog">XXXXXXX</string>
+    <string name="opcion_list_monitoring_dialog_acept">XXXXXXX</string>
+    <string name="opcion_list_monitoring_dialog_cancel">XXXXXXX</string>
+    <string name="opcion_list_monitoring_dialog_ok">XXXXXXX</string>
+    <string name="list_monitoring_process_message_search">XXXXXXX</string>
+    <string name="list_monitoring_process_message">XXXXXXX</string>
+    <string name="list_monitoring_process_message_server">XXXXXXX</string>
+    <string name="list_monitoring_title_dialog_offline">XXXXXXX</string>
+    <string name="list_monitoring_description_dialog_offline">XXXXXXX</string>
+    <string name="list_monitoring_description_dialog_offline_question">XXXXXXX</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING DETAIL-->
-    <string name="titleDetailMonitoring">Monitoring</string>
-    <string name="itemCardViewArea">AREA:</string>
-    <string name="itemCardViewCoordenadas">COORDINATES:</string>
-    <string name="itemCardViewMonitor">MONITOR:</string>
-    <string name="itemCardViewRepercusiones">REPERCUSSIONS:</string>
-    <string name="itemCardViewOrigen">ORIGIN:</string>
-    <string name="itemCardViewPorcentaje">PERCENTAGE OF OCURRENCE:</string>
-    <string name="itemCardViewFrecuencia">FRECUENCY OF OCURRENCE:</string>
-    <string name="titleDetailMonitoringDialog">INFORMATION</string>
-    <string name="descriptionDetailMonitoringDialog">You can not see things on the same day</string>
+    <string name="titleDetailMonitoring">XXXXXXX</string>
+    <string name="itemCardViewPropiedad">XXXXXXX</string>
+    <string name="itemCardViewCoordenadas">XXXXXXX</string>
+    <string name="itemCardViewMonitor">XXXXXXX</string>
+    <string name="itemCardViewRepercusiones">XXXXXXX</string>
+    <string name="itemCardViewOrigen">XXXXXXX</string>
+    <string name="itemCardViewPorcentaje">XXXXXXX</string>
+    <string name="itemCardViewFrecuencia">XXXXXXX</string>
+    <string name="titleDetailMonitoringDialog">XXXXXXX</string>
+    <string name="descriptionDetailMonitoringDialog">XXXXXXX</string>
+    <string name="monitoring_detail_dialog_option_positive">XXXXXXX</string>
+    <string name="monitoring_detail_rep_positive">XXXXXXX</string>
+    <string name="monitoring_detail_rep_negative">XXXXXXX</string>
+    <string name="monitoring_detail_rep_current">XXXXXXX</string>
+    <string name="monitoring_detail_rep_potential">XXXXXXX</string>
+    <string name="monitoring_detail_org_internal">XXXXXXX</string>
+    <string name="monitoring_detail_org_external">XXXXXXX</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING REGISTRATION FORM-->
-    <string name="titleFormRegistrationMonitoring">Monitoring Form</string>
-    <string name="titleFormRepercusiones">REPERCUSSIONS:</string>
-    <string name="titleFormOrigen">ORIGIN:</string>
-    <string name="titleFormPorcentaje">PERCENTAGE OF OCURRENCE:</string>
-    <string name="titleFormFrecuencia">FRECUENCY OF OCURRENCE:</string>
-    <string name="descriptionFloatingButtonFactor">FACTOR</string>
-    <string name="descriptionFloatingButtonVariable">VARIABLE</string>
-    <string name="titlePointDialog">Sets the coordinates for the point of affect</string>
-    <string name="latitudePointDialog">LATITUDE</string>
-    <string name="lengthPointDialog">LENGTH</string>
-    <string name="optionPositivasRepercusiones">Positive</string>
-    <string name="optionNegativasRepercusiones">Negative</string>
-    <string name="optionActualesRepercusiones">Current</string>
-    <string name="optionPotencialesRepercusiones">Potential</string>
-    <string name="optionInternoOrigen">Internal</string>
-    <string name="optionExternoOrigen">External</string>
-    <string name="optionPorcentaje">[1%-10%] RESTRICTED</string>
-    <string name="optionFrecuencia">ONCE</string>
-    <string name="titleFormRegistrationMonitoringDialog">INFORMATION</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Please Select a Variable</string>
-    <string name="descriptionFormRegistrationMonitoringCameraDialog">You must take a photo of the point of affectation</string>
+    <string name="titleFormRegistrationMonitoring">XXXXXXX</string>
+    <string name="titleFormRepercusiones">XXXXXXX</string>
+    <string name="titleFormOrigen">XXXXXXX</string>
+    <string name="titleFormPorcentaje">XXXXXXX</string>
+    <string name="titleFormFrecuencia">XXXXXXX</string>
+    <string name="descriptionButtonFactor">XXXXXXX</string>
+    <string name="descriptionButtonVariable">XXXXXXX</string>
+    <string name="titlePointDialog">XXXXXXX</string>
+    <string name="latitudePointDialog">XXXXXXX</string>
+    <string name="lengthPointDialog">XXXXXXX</string>
+    <string name="optionPositivasRepercusiones">XXXXXXX</string>
+    <string name="optionNegativasRepercusiones">XXXXXXX</string>
+    <string name="optionActualesRepercusiones">XXXXXXX</string>
+    <string name="optionPotencialesRepercusiones">XXXXXXX</string>
+    <string name="optionInternoOrigen">XXXXXXX</string>
+    <string name="optionExternoOrigen">XXXXXXX</string>
+    <string name="optionPorcentaje">XXXXXXX</string>
+    <string name="optionFrecuencia">XXXXXXX</string>
+    <string name="titleFormRegistrationMonitoringDialog">XXXXXXX</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">XXXXXXX</string>
+    <string name="descriptionFormRegistrationMonitoringCameraDialog">XXXXXXX</string>
+    <string name="descriptionFormRegistrationMonitoringPorcentajeError">XXXXXXX</string>
+    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">XXXXXXX</string>
+    <string name="descriptionFormRegistrationMonitoringCoordenadasError">XXXXXXX</string>
+    <string name="titlebuttonCambiar">XXXXXXX</string>
+    <string name="titlebuttonElegir">XXXXXXX</string>
+    <string name="titlebuttonFijar">XXXXXXX</string>
+    <string name="registration_form_dialog_option_positive">XXXXXXX</string>
+    <string name="registration_form_dialog_option_ok">XXXXXXX</string>
+    <string name="registration_form_dialog_option_cancel">XXXXXXX</string>
+    <string name="registration_form_dialog_title_factors">XXXXXXX</string>
+    <string name="registration_form_dialog_title_variables">XXXXXXX</string>
+    <string name="registration_form_dialog_title_percentage">XXXXXXX</string>
+    <string name="registration_form_dialog_title_frequency">XXXXXXX</string>
+    <string name="registration_message_permissions">XXXXXXX</string>
 
     <string-array name="listPorcentaje">
-        <item>[1%-10%] RESTRICTED</item>
-        <item>[11%-50%] LOCATED</item>
-        <item>[51%-90%] EXTENSIVE</item>
-        <item>[91%-100%] EXTENDED</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
     </string-array>
 
     <string-array name="listFrecuencia">
-        <item>ONCE</item>
-        <item>INTERMITTENT APPEARANCE</item>
-        <item>FREQUENT PRESENCE</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
     </string-array>
+
+    <string-array name="registration_form_new">
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+    </string-array>
+
+    <string-array name="registration_form_monitoring">
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+    </string-array>
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING SUMMARY-->
+    <string name="summary_title">XXXXXXX</string>
+    <string name="summary_item_title_factor">XXXXXXX</string>
+    <string name="summary_item_title_variable">XXXXXXX</string>
+    <string name="summary_item_title_coodinates">XXXXXXX</string>
+    <string name="summary_item_title_percentage">XXXXXXX</string>
+    <string name="summary_item_title_frequency">XXXXXXX</string>
+    <string name="summary_item_title_origin">XXXXXXX</string>
+    <string name="summary_item_title_repercussions">XXXXXXX</string>
+    <string name="summary_item_description_rep_positive">XXXXXXX</string>
+    <string name="summary_item_description_rep_negative">XXXXXXX</string>
+    <string name="summary_item_description_rep_current">XXXXXXX</string>
+    <string name="summary_item_description_rep_potential">XXXXXXX</string>
+    <string name="summary_item_description_org_internal">XXXXXXX</string>
+    <string name="summary_item_description_org_external">XXXXXXX</string>
+    <string name="summary_process_message_upload">XXXXXXX</string>
+    <string name="summary_process_message">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: MONITORING INFO-->
+    <string name="successfulRecordTitle">XXXXXXX</string>
+    <string name="successfulRecordImageDescription">XXXXXXX</string>
+    <string name="successfulRecordMonitoringDescription">XXXXXXX</string>
+    <string name="successfulRecordResponseDescription">XXXXXXX</string>
+    <string name="offlineRecordTitle">XXXXXXX</string>
+    <string name="offlineRecordImageDescription">XXXXXXX</string>
+    <string name="offlineRecordMonitoringDescription">XXXXXXX</string>
+    <string name="failedRecordTitle">XXXXXXX</string>
+    <string name="failedRecordImageDescription">XXXXXXX</string>
+    <string name="failedRecordMonitoringDescription">XXXXXXX</string>
+    <string name="failedRecordResponseDescription">XXXXXXX</string>
+    <string name="info_dialog_title">XXXXXXX</string>
+    <string name="info_dialog_description">XXXXXXX</string>
+    <string name="info_dialog_option_accept">XXXXXXX</string>
+    <string name="info_dialog_option_cancel">XXXXXXX</string>
+
+    <!--============================================================================================
+        INSTITUTIONAL RESPONSE MODULE
+        ============================================================================================-->
+    <!--.........................................................................................-->
+    <!--SLIDE RESPUESTA INSTITUCIONAL-->
+    <string name="slide_2_title">XXXXXXX</string>
+    <string name="slide_2_desc">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: INSTITUTIONAL LIST-->
+    <string name="institutional_list_title">XXXXXXX</string>
+    <string name="institutional_list_button_tramo">XXXXXXX</string>
+    <string name="institutional_list_button_subtramo">XXXXXXX</string>
+    <string name="institutional_list_button_seccion">XXXXXXX</string>
+    <string name="institutional_list_button_propiedad">XXXXXXX</string>
+    <string name="institutioanl_list_dialog_title">XXXXXXX</string>
+    <string name="institutional_list_dialog_description">XXXXXXX</string>
+    <string name="institutional_list_dialog_option_ok">XXXXXXX</string>
+    <string name="institutional_list_process_message_search">XXXXXXX</string>
+    <string name="institutional_list_process_message">XXXXXXX</string>
+    <string name="institutional_list_process_message_negative">XXXXXXX</string>
+    <string name="institutional_list_process_message_server">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: INSTITUTIONAL RESPONSE FORM-->
+    <string name="institutional_response_form_title">XXXXXXX</string>
+    <string name="institutional_response_form_item_evaluacion">XXXXXXX</string>
+    <string name="institutional_response_form_item_personal">XXXXXXX</string>
+    <string name="institutional_response_form_item_tiempo">XXXXXXX</string>
+    <string name="institutional_response_form_item_presupuesto">XXXXXXX</string>
+    <string name="institutional_response_form_item_recursos">XXXXXXX</string>
+    <string name="institutional_response_form_item_conocimiento">XXXXXXX</string>
+    <string name="institutional_response_form_button_register">XXXXXXX</string>
+    <string name="institutional_response_form_process_message_upload">XXXXXXX</string>
+    <string name="institutional_response_form_process_message">XXXXXXX</string>
+    <string name="institutional_response_form_process_message_negative">XXXXXXX</string>
+    <string name="institutional_response_form_process_message_positive">XXXXXXX</string>
+    <string name="institutional_response_form_process_message_server">XXXXXXX</string>
+
+    <string-array name="list_general_evaluation">
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+    </string-array>
+
+    <string-array name="list_specific_evaluation">
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+        <item>XXXXXXX</item>
+    </string-array>
+
+    <!--============================================================================================
+       STATISTICAL GRAPHS MODULE
+       =============================================================================================-->
+    <!--.........................................................................................-->
+    <!--SLIDE GRAFICOS ESTADISTICOS-->
+    <string name="slide_3_title">XXXXXXX</string>
+    <string name="slide_3_desc">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: STATISTICAL GRAPHS MENU-->
+    <string name="statistical_graphs_menu_title">XXXXXXX</string>
+    <string name="statistical_graphs_menu_card_view_general">XXXXXXX</string>
+    <string name="statistical_graphs_menu_card_view_specific">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GENERAL STATISTICAL GRAPHS BY FACTOR-->
+    <string name="general_statistical_graph_title">XXXXXXX</string>
+    <string name="general_statistical_graph_button_pais">XXXXXXX</string>
+    <string name="general_statistical_graph_button_tramo">XXXXXXX</string>
+    <string name="general_statistical_graph_dialog_title_countries">XXXXXXX</string>
+    <string name="general_statistical_graph_dialog_title_tramos">XXXXXXX</string>
+    <string name="general_statistical_graph_process_message_analysis">XXXXXXX</string>
+    <string name="general_statistical_graph_process_message">XXXXXXX</string>
+    <string name="general_statistical_graph_process_message_negative">XXXXXXX</string>
+    <string name="general_statistical_graph_process_message_server">XXXXXXX</string>
+    <string name="general_statistical_graph_dialog_option_ok">XXXXXXX</string>
+    <string name="general_statistical_graph_alert_dowload">XXXXXXX</string>
+    <string name="general_statistical_graph_message_permissions">XXXXXXX</string>
+    <string name="general_statistical_graph_file_name">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GENERAL STATISTICAL GRAPHS BY VARIABLE-->
+    <string name="statistical_graph_variable_title">XXXXXXX</string>
+    <string name="statistical_graph_variable_process_message_analysis">XXXXXXX</string>
+    <string name="statistical_graph_variable_process_message">XXXXXXX</string>
+    <string name="statistical_graph_variable_process_message_negative">XXXXXXX</string>
+    <string name="statistical_graph_variable_process_message_server">XXXXXXX</string>
+    <string name="statistical_graph_variable_alert_dowload">XXXXXXX</string>
+    <string name="statistical_graph_variable_message_permissions">XXXXXXX</string>
+    <string name="statistical_graph_variable_file_name">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GENERAL STATISTICAL GRAPHS OF VARIABLE IN TIME-->
+    <string name="statistical_graph_variable_weather_title">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: SEARCH FORM-->
+    <string name="search_form_title">XXXXXXX</string>
+    <string name="search_form_item_title_country">XXXXXXX</string>
+    <string name="search_form_item_title_date">XXXXXXX</string>
+    <string name="search_form_item_title_factor">XXXXXXX</string>
+    <string name="search_form_item_description_date_enable">XXXXXXX</string>
+    <string name="search_form_item_description_date_since">XXXXXXX</string>
+    <string name="search_form_item_description_date_until">XXXXXXX</string>
+    <string name="search_form_item_description_factor">XXXXXXX</string>
+    <string name="search_form_item_description_variable">XXXXXXX</string>
+    <string name="search_form_item_title_button_filter">XXXXXXX</string>
+    <string name="search_form_alert_factor">XXXXXXX</string>
+    <string name="search_form_alert_variable">XXXXXXX</string>
+    <string name="search_form_alert_date">XXXXXXX</string>
+    <string name="search_form_alert_date_range">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: LIST OF CRITICAL POINTS-->
+    <string name="list_critical_points_title">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: INFO CRITICAL POINTS-->
+    <string name="info_critical_point_item_date">XXXXXXX</string>
+    <string name="info_critical_point_item_monitor">XXXXXXX</string>
+    <string name="info_critical_point_item_country">XXXXXXX</string>
+    <string name="info_critical_point_item_tramo">XXXXXXX</string>
+    <string name="info_critical_point_item_subtramo">XXXXXXX</string>
+    <string name="info_critical_point_item_seccion">XXXXXXX</string>
+    <string name="info_critical_point_item_propiedad">XXXXXXX</string>
+    <string name="info_critical_point_item_factor">XXXXXXX</string>
+    <string name="info_critical_point_item_variable">XXXXXXX</string>
+    <string name="info_critical_point_item_lenght">XXXXXXX</string>
+    <string name="info_critical_point_item_latitude">XXXXXXX</string>
+    <string name="info_critical_point_button_response">XXXXXXX</string>
+    <string name="info_critical_point_button_porfre">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GRAPH PERCENTAGE AND FREQUENCY-->
+    <string name="graph_percentage_frequency_title">XXXXXXX</string>
+    <string name="graph_percentage_frequency_subtitle_horizontal">XXXXXXX</string>
+    <string name="graph_percentage_frequency_subtitle_vertical">XXXXXXX</string>
+    <string name="graph_percentage_frequency_subtitle_info">XXXXXXX</string>
+    <string name="graph_percentage_frequency_item_Puntaje">XXXXXXX</string>
+    <string name="graph_percentage_frequency_description">XXXXXXX</string>
+    <string name="graph_percentage_frequency_file_name">XXXXXXX</string>
+    <!--.........................................................................................-->
+    <!--STRINGS: GRAPH INSTITUTIONAL RESPONSE-->
+    <string name="graph_institutional_response_title">XXXXXXX</string>
+    <string name="graph_institutional_response_subtitle_horizontal">XXXXXXX</string>
+    <string name="graph_institutional_response_subtitle_vertical">XXXXXXX</string>
+    <string name="graph_institutional_response_settings">XXXXXXX</string>
+    <string name="graph_institutional_response_evaluation">XXXXXXX</string>
+    <string name="graph_institutional_response_personal">XXXXXXX</string>
+    <string name="graph_institutional_response_time">XXXXXXX</string>
+    <string name="graph_institutional_response_budget">XXXXXXX</string>
+    <string name="graph_institutional_response_means">XXXXXXX</string>
+    <string name="graph_institutional_response_knowledge">XXXXXXX</string>
+    <string name="graph_institutional_response_file_name">XXXXXXX</string>
+
+    <!--============================================================================================
+       SETTINGS APP MODULE
+       =============================================================================================-->
+    <!--.........................................................................................-->
+    <!--SLIDE CONFIGURACIÓN DEL SISTEMA-->
+    <string name="slide_4_title">XXXXXXX</string>
+    <string name="slide_4_desc">XXXXXXX</string>
+    <string name="cerrarSesion">XXXXXXX</string>
+    <string name="title_warning">XXXXXXX</string>
+    <string name="noAdmin">XXXXXXX</string>
+    <string name="desarrolladoPor">XXXXXXX</string>
+    <string name="enColaboracion">XXXXXXX</string>
+    <string name="AcerceDe">XXXXXXX</string>
+    <string name="analisisVarTie">XXXXXXX</string>
+    <string name="graficaVariableTramo">XXXXXXX</string>
 </resources>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.edwin.ayllu.FormRespuesta;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.RestClient;
+import com.example.edwin.ayllu.io.RestClient;
 import com.example.edwin.ayllu.domain.AreaContract;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
 import com.example.edwin.ayllu.domain.Monitoreo;
@@ -50,6 +51,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
     private FloatingActionButton fab_tramo, fab_subtramo, fab_seccion, fab_area;
     private FloatingActionButton fab_search;
     private FloatingActionsMenu menu;
+    private TextView tvInfo;
 
     //VARIABLES DATOS TEMPORALES
     ArrayList<Monitoreo> monitoreos = new ArrayList<>();
@@ -112,6 +114,37 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_institutional_list, container, false);
+
+        fab_search = (FloatingActionButton) root.findViewById(R.id.fab_search);
+        fab_tramo = (FloatingActionButton) root.findViewById(R.id.fab_tramo);
+        fab_subtramo = (FloatingActionButton) root.findViewById(R.id.fab_subtramo);
+        fab_seccion = (FloatingActionButton) root.findViewById(R.id.fab_seccion);
+        fab_area = (FloatingActionButton) root.findViewById(R.id.fab_area);
+        menu = (FloatingActionsMenu) root.findViewById(R.id.menu_fab);
+
+        tvInfo = (TextView) root.findViewById(R.id.tv_info);
+
+        fab_search.setScaleX(0);
+        fab_search.setScaleY(0);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            interpolador = AnimationUtils.loadInterpolator(getActivity().getBaseContext(),
+                    android.R.interpolator.fast_out_slow_in);
+        }
+
+
+        fab_subtramo.setEnabled(false);
+        fab_seccion.setEnabled(false);
+        fab_area.setEnabled(false);
+        fab_search.setEnabled(false);
+
+        fab_tramo.setOnClickListener(this);
+        fab_subtramo.setOnClickListener(this);
+        fab_seccion.setOnClickListener(this);
+        fab_area.setOnClickListener(this);
+        menu.setOnFloatingActionsMenuUpdateListener(this);
+        fab_search.setOnClickListener(this);
+
         mReporteList = (RecyclerView) root.findViewById(R.id.institutional_list);
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,12 +170,6 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
         //return inflater.inflate(R.layout.fragment_institutional_list, container, false);
     }
 
-    /**=============================================================================================
-     * METODO: Encargado de de redirigir al usuario al Formulario de Registro con la información del
-     * punto seleccionado
-     **/
-
-
     /**
      * =============================================================================================
      * METODO:
@@ -150,34 +177,10 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-
-        fab_search = (FloatingActionButton) getActivity().findViewById(R.id.fab_search);
-        fab_tramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_tramo);
-        fab_subtramo = (FloatingActionButton) getActivity().findViewById(R.id.fab_subtramo);
-        fab_seccion = (FloatingActionButton) getActivity().findViewById(R.id.fab_seccion);
-        fab_area = (FloatingActionButton) getActivity().findViewById(R.id.fab_area);
-        menu = (FloatingActionsMenu) getActivity().findViewById(R.id.menu_fab);
-
-        fab_search.setScaleX(0);
-        fab_search.setScaleY(0);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            interpolador = AnimationUtils.loadInterpolator(getActivity().getBaseContext(),
-                    android.R.interpolator.fast_out_slow_in);
-        }
-
-
-        fab_subtramo.setEnabled(false);
-        fab_seccion.setEnabled(false);
-        fab_area.setEnabled(false);
-        fab_search.setEnabled(false);
-
-        fab_tramo.setOnClickListener(this);
-        fab_subtramo.setOnClickListener(this);
-        fab_seccion.setOnClickListener(this);
-        fab_area.setOnClickListener(this);
-        menu.setOnFloatingActionsMenuUpdateListener(this);
-        fab_search.setOnClickListener(this);
+        if (monitoreos.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
+        comprobarFiltros();
+        menu.collapse();
+        if (op[0] != 0) getListReports(op[0]+"",op[1]+"",op[2]+"",op[3]+"");
 
     }
 
@@ -312,9 +315,10 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                 createRadioListDialog(items_tipos, getResources().getString(R.string.institutional_list_button_propiedad), 4).show();
                 break;
             case R.id.fab_search:
-                menu.collapse();
-                Log.i("Datos:" , ""+ op[0] +":" +op[1]+":" +op[2]+":" +op[3]);
-                if (op[0] != 0) getListReports(op[0]+"",op[1]+"",op[2]+"",op[3]+"");
+                if (op[0] != 0) {
+                    menu.collapse();
+                    getListReports(op[0]+"",op[1]+"",op[2]+"",op[3]+"");
+                }
                 else
                     createSimpleDialog(getResources().getString(R.string.institutional_list_dialog_description), getResources().getString(R.string.institutioanl_list_dialog_title)).show();
                 break;
@@ -371,7 +375,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      **/
     private class HackingBackgroundTask extends AsyncTask<Void, Void, ArrayList<Monitoreo>> {
 
-        static final int DURACION = 2 * 1000; // 3 segundos de carga
+        static final int DURACION = 1;
 
         @Override
         protected ArrayList<Monitoreo> doInBackground(Void... params) {
@@ -487,19 +491,15 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
         requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
             @Override
             public void onResponse(Call<ArrayList<Monitoreo>> call, Response<ArrayList<Monitoreo>> response) {
-                loading.dismiss();
                 if (response.isSuccessful()) {
-
+                    monitoreos = response.body();
                     if(response.body().size()==0){
-                        Toast.makeText(
-                                getActivity(),
-                                getResources().getString(R.string.institutional_list_process_message_negative),
-                                Toast.LENGTH_LONG).show();
+                        tvInfo.setText(getResources().getString(R.string.institutional_list_message_negative));
+                        tvInfo.setVisibility(View.VISIBLE);
                     }
-                    else{
-                        monitoreos = response.body();
-                        new HackingBackgroundTask().execute();
-                    }
+                    else tvInfo.setVisibility(View.INVISIBLE);
+                    new HackingBackgroundTask().execute();
+                    loading.dismiss();
 
                 }
                 else{
@@ -521,5 +521,19 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                         Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    public void comprobarFiltros(){
+        if(pos[0] >= 0 ) fab_tramo.setEnabled(true);
+        if(pos[1] >= 0 ) fab_subtramo.setEnabled(true);
+        else fab_subtramo.setEnabled(false);
+        if(pos[2] >= 0 ) fab_seccion.setEnabled(true);
+        else fab_seccion.setEnabled(false);
+        if(pos[3] >= 0 ) fab_area.setEnabled(true);
+        else fab_area.setEnabled(false);
     }
 }

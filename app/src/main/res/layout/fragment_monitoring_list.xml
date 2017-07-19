@@ -32,80 +32,90 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_monitoring_list"
-        android:id="@+id/include2" />
+    <include layout="@layout/content_monitoring_list"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/menu_fab"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_labelStyle="@style/Etiquetas"
-        fab:fab_addButtonColorNormal="?attr/colorAccent"
-        fab:fab_addButtonSize="normal"
-        fab:fab_labelsPosition="left">
+        android:gravity="end|bottom">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_tramo"
+            android:id="@+id/fab_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/FloatingButtonDark"
-            fab:fab_icon="@drawable/ic_tramo"
-            fab:fab_size="mini"
-            fab:fab_title="@string/descriptionTramo" />
+            android:layout_gravity="bottom|end"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_search"
+            app:fab_size="normal"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            android:layout_marginRight="67dp"
+            android:layout_marginEnd="67dp"
+            android:layout_alignBottom="@+id/menu_fab"
+            android:layout_alignRight="@+id/menu_fab"
+            android:layout_alignEnd="@+id/menu_fab" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_subtramo"
+            android:id="@+id/fab_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/FloatingButtonDark"
-            fab:fab_icon="@drawable/ic_subtramos"
-            fab:fab_size="mini"
-            fab:fab_title="@string/descriptionSubtramo" />
+            android:layout_marginEnd="67dp"
+            android:layout_marginRight="67dp"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_registration"
+            app:fab_size="normal"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            android:layout_alignTop="@+id/fab_search"
+            android:layout_alignRight="@+id/fab_search"
+            android:layout_alignEnd="@+id/fab_search"/>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_seccion"
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/FloatingButtonDark"
-            app:fab_title="@string/descriptionSeccion"
-            fab:fab_icon="@drawable/ic_secciones"
-            fab:fab_size="mini" />
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            app:fab_labelStyle="@style/Etiquetas"
+            fab:fab_addButtonColorNormal="?attr/colorAccent"
+            fab:fab_addButtonSize="normal"
+            fab:fab_labelsPosition="left">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_title="@string/descriptionPropiedad"
-            android:theme="@style/FloatingButtonDark"
-            fab:fab_icon="@drawable/ic_area"
-            fab:fab_size="mini"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_tramo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatingButtonDark"
+                fab:fab_icon="@drawable/ic_tramo"
+                fab:fab_size="mini"
+                fab:fab_title="@string/descriptionTramo" />
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_subtramo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatingButtonDark"
+                fab:fab_icon="@drawable/ic_subtramos"
+                fab:fab_size="mini"
+                fab:fab_title="@string/descriptionSubtramo" />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_search"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include2"
-        app:layout_anchorGravity="bottom|center_horizontal" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_seccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatingButtonDark"
+                app:fab_title="@string/descriptionSeccion"
+                fab:fab_icon="@drawable/ic_secciones"
+                fab:fab_size="mini" />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_margin="@dimen/fab_margin"
-        app:fab_colorNormal="@color/colorAccent"
-        app:fab_icon="@drawable/ic_registration"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include2"
-        app:layout_anchorGravity="bottom|center_horizontal" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_title="@string/descriptionPropiedad"
+                android:theme="@style/FloatingButtonDark"
+                fab:fab_icon="@drawable/ic_area"
+                fab:fab_size="mini"/>
 
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -42,6 +42,7 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
     public void onBindViewHolder(ReporteViewHolder holder, int position) {
         Reporte currentReporte = reportes.get(position);
 
+        holder.setReportePropiedad(currentReporte.getArea());
         holder.setReporteVariable(currentReporte.getVariable());
         holder.setReporteLatitud(reverseCoordinates(currentReporte.getLatitud(),"LATITUD"));
         holder.setReporteLongitud(reverseCoordinates(currentReporte.getLongitud(),"LONGITUD"));
@@ -80,6 +81,7 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
     //----------------------------------------------------------------------------------------------
     class ReporteViewHolder extends RecyclerView.ViewHolder{
 
+        TextView propiedad;
         TextView variable;
         TextView latitud;
         TextView longitud;
@@ -89,6 +91,7 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
         ReporteViewHolder(View itemView) {
             super(itemView);
 
+            propiedad = (TextView) itemView.findViewById(R.id.tv_property);
             variable = (TextView) itemView.findViewById(R.id.tv_variable);
             latitud = (TextView) itemView.findViewById(R.id.tv_latitud);
             longitud = (TextView) itemView.findViewById(R.id.tv_longitud);
@@ -96,6 +99,9 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Re
             prueba = (ImageView) itemView.findViewById(R.id.iv_prueba);
         }
 
+        void setReportePropiedad(String cad){
+            propiedad.setText(cad);
+        }
         void setReporteVariable(String cad){
             variable.setText(cad);
         }

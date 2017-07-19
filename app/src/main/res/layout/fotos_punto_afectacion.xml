@@ -23,7 +23,7 @@
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"
-                android:text="@string/informacionMonitoreo" />
+                android:text="Información del Monitoreo" />
 
         </android.support.v7.widget.Toolbar>
 

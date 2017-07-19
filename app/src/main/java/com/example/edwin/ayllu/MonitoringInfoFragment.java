@@ -49,7 +49,10 @@ public class MonitoringInfoFragment extends Fragment {
                 ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_positive));
                 ivType.setContentDescription(getResources().getString(R.string.successfulRecordImageDescription));
                 tvTitle.setText(getResources().getString(R.string.successfulRecordTitle));
-                tvDescription.setText(getResources().getString(R.string.successfulRecordMonitoringDescription));
+                if(tipo != null){
+                    if(tipo.equals("EVALUATION")) tvDescription.setText(getResources().getString(R.string.successfulRecordResponseDescription));
+                    else tvDescription.setText(getResources().getString(R.string.successfulRecordMonitoringDescription));
+                }
                 break;
             case "OFFLINE":
                 lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackground));
@@ -63,7 +66,10 @@ public class MonitoringInfoFragment extends Fragment {
                 ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
                 ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
                 tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
-                tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));
+                if (tipo != null){
+                    if (tipo.equals("EVALUATION")) tvDescription.setText(getResources().getString(R.string.failedRecordResponseDescription));
+                    else tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));
+                }
                 break;
             default:
                 break;
@@ -86,15 +92,25 @@ public class MonitoringInfoFragment extends Fragment {
         }
         else {
             if (area.equals("")){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                },2000);
+                if(tipo.equals("EVALUATION")){
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().finish();
+                        }
+                    },2000);
+                }
+                else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
+                    },2000);
+                }
             } else  createSimpleDialog(getResources().getString(R.string.info_dialog_description),getResources().getString(R.string.info_dialog_title)).show();
         }
     }

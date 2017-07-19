@@ -417,42 +417,44 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     createSimpleDialog(getResources().getString(R.string.descriptionListMonitoringDialog), getResources().getString(R.string.titleListMonitoringDialog)).show();
                 break;
             case R.id.fab_search:
-                menu.collapse();
-
                 if(wifiConected()){
-                    final ProgressDialog loading = new ProgressDialog(getActivity());
-                    loading.setMessage(getResources().getString(R.string.list_monitoring_process_message));
-                    loading.setTitle(getResources().getString(R.string.list_monitoring_process_message_search));
-                    loading.setProgress(10);
-                    loading.setIndeterminate(true);
-                    loading.show();
+                    if (op[0] == 0) createSimpleDialog(getResources().getString(R.string.institutional_list_dialog_description), getResources().getString(R.string.institutioanl_list_dialog_title)).show();
+                    else {
+                        menu.collapse();
+                        final ProgressDialog loading = new ProgressDialog(getActivity());
+                        loading.setMessage(getResources().getString(R.string.list_monitoring_process_message));
+                        loading.setTitle(getResources().getString(R.string.list_monitoring_process_message_search));
+                        loading.setProgress(10);
+                        loading.setIndeterminate(true);
+                        loading.show();
 
-                    Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
-                    call.enqueue(new Callback<ReporteResponse>() {
-                        @Override
-                        public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
-                            if (response.isSuccessful()) {
-                                loading.dismiss();
-                                reportes = response.body().getReportes();
-                                if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
-                                new HackingBackgroundTask().execute();
-                                if (reportes.size() == 0) {
-                                    tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
-                                    tvInfo.setVisibility(View.VISIBLE);
+                        Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
+                        call.enqueue(new Callback<ReporteResponse>() {
+                            @Override
+                            public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
+                                if (response.isSuccessful()) {
+                                    reportes = response.body().getReportes();
+                                    if (reportes.size() > 0) tvInfo.setVisibility(View.INVISIBLE);
+                                    if (reportes.size() == 0) {
+                                        tvInfo.setText(getResources().getString(R.string.descriptionInfoListMonitoringNegative));
+                                        tvInfo.setVisibility(View.VISIBLE);
+                                    }
+                                    new HackingBackgroundTask().execute();
+                                    loading.dismiss();
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ReporteResponse> call, Throwable t) {
-                            loading.dismiss();
-                            Toast.makeText(
-                                    getActivity(),
-                                    getResources().getString(R.string.list_monitoring_process_message_server),
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<ReporteResponse> call, Throwable t) {
+                                loading.dismiss();
+                                Toast.makeText(
+                                        getActivity(),
+                                        getResources().getString(R.string.list_monitoring_process_message_server),
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+                    }
                 } else {
                     createOfflineMonitoringDialog(
                             getResources().getString(R.string.list_monitoring_description_dialog_offline)+
@@ -518,7 +520,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
      **/
     private class HackingBackgroundTask extends AsyncTask<Void, Void, ArrayList<Reporte>> {
 
-        static final int DURACION = 2 * 1000; // 3 segundos de carga
+        static final int DURACION = 100;
 
         @Override
         protected ArrayList<Reporte> doInBackground(Void... params) {

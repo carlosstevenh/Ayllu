@@ -36,6 +36,7 @@ import com.example.edwin.ayllu.domain.TaskContract;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiService;
+import com.example.edwin.ayllu.io.PostClient;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
     private int[] layouts;
     private Button btnSkip, btnNext;
 
+    Cursor cursor, cursor1, cursor2;
     String monitor = "", pais = "", tipo_usu = "A";
 
     //Progresbar
@@ -84,10 +86,11 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
         SQLiteDatabase bd = admin.getReadableDatabase();
         //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        final Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
+        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
         cursor.moveToFirst();
         monitor = cursor.getString(0);
         pais = cursor.getString(1);
+        cursor.close();
 
         //Aplicando transparencia sobre el Toolbar
         if (Build.VERSION.SDK_INT >= 21) {
@@ -123,137 +126,142 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         btnSkip.setOnClickListener(this);
         btnNext.setOnClickListener(this);
 
-        //------------------------------------------------------------------------------------------
-        //REGISTRA MONITOREOS QUE ESTAN ALMACENADOS EN EL MOVIL
+        //Consultar si existen monitoreos en el celular
         taskDbHelper = new TaskDbHelper(this);
         imagenDbHelper = new ImagenDbHelper(this);
 
-        Cursor cursor1 = taskDbHelper.generateQuery("SELECT * FROM ");
-        final Cursor cursorImg = imagenDbHelper.generateQuery("SELECT * FROM ");
+        cursor1 = taskDbHelper.generateQuery("SELECT * FROM ");
+        cursor2 = imagenDbHelper.generateQuery("SELECT * FROM ");
 
-        if (cursorImg.moveToFirst() && wifiConected()){
+        // prepare for a progress bar dialog
+        progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(true);
+        progressBar.setMessage("Subiendo Datos ...");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
+        progressBar.show();
 
-            // prepare for a progress bar dialog
-            progressBar = new ProgressDialog(this);
-            progressBar.setCancelable(true);
-            progressBar.setMessage("Subiendo Imagenes ...");
-            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressBar.setProgress(0);
-            progressBar.setMax(100);
-            progressBar.show();
+        if (cursor2.moveToFirst() && wifiConected()){
+            createSimpleDialog(getResources().getString(R.string.monitoring_menu_message_upload),
+                    getResources().getString(R.string.titleDetailMonitoringDialog), "UPLOAD").show();
 
-            //reset progress bar status
-            progressBarStatus = 0;
-            sizeImg  = cursorImg.getCount();
-            portj = 100/sizeImg;
+        }
+    }
+    /**
+     * =============================================================================================
+     * METODO: Registrar Monitoreos en estado Offline
+     */
+    private void uploadMonitoring (Cursor cur_info, final Cursor cur_img, View view){
+        //------------------------------------------------------------------------------------------
+        //REGISTRA MONITOREOS QUE ESTAN ALMACENADOS EN EL MOVIL
+        //reset progress bar status
+        progressBarStatus = 0;
+        sizeImg  = cur_img.getCount();
+        portj = 100/sizeImg;
 
-            new Thread(new Runnable() {
-                public void run() {
-                    do {
-                        progressBarStatus += uploadImages(cursorImg);
+        new Thread(new Runnable() {
+            public void run() {
+                do {
+                    progressBarStatus += uploadImages(cur_img);
 
-                        //Dormir por 1 segundo
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    //Dormir por 1 segundo
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Actualizar el progressBar
+                    progressBarHandler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setProgress(progressBarStatus);
                         }
+                    });
+                } while (progressBarStatus < 100 && cur_img.moveToNext());
 
-                        //Actualizar el progressBar
-                        progressBarHandler.post(new Runnable() {
-                            public void run() {
-                                progressBar.setProgress(progressBarStatus);
+                // Imagenes subidas
+                if (progressBarStatus >= 100) {
+
+                    //Dormir por dos segundos para mirar el 100%
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Cerrar el progresBar
+                    progressBar.dismiss();
+                }
+            }
+        }).start();
+
+        if (cur_info.moveToFirst()){
+            do {
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);
+                PostClient service1 = PostClient.retrofit.create(PostClient.class);
+
+                //Obtengo cada uno de los monitoreos de la tabla Task
+                Task tk = new Task(
+                        cur_info.getString(1), cur_info.getString(2), cur_info.getString(3),
+                        cur_info.getString(4), cur_info.getString(5),
+                        cur_info.getString(6), cur_info.getString(7), cur_info.getString(8),
+                        Integer.parseInt(cur_info.getString(9)),
+                        Integer.parseInt(cur_info.getString(10)),
+                        cur_info.getString(11), cur_info.getString(12),cur_info.getString(13),
+                        cur_info.getString(14));
+
+                final int numon1 = cur_info.getInt(0);
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(ApiConstants.URL_API_AYLLU)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+
+                if(!cur_info.getString(11).equals("null")) {
+                    if(tk.getTipo().equals("N")){
+                        AylluApiService service = retrofit.create(AylluApiService.class);
+                        Call<Task> call = service.registrarPunto(tk);
+                        call.enqueue(new Callback<Task>() {
+                            @Override
+                            public void onResponse(Call<Task> call, Response<Task> response) {
+                                if(response.isSuccessful()){
+                                    String[] cond = new String[]{numon1  + ""};
+                                    taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Task> call, Throwable t) {
+
                             }
                         });
-                    } while (progressBarStatus < 100 && cursorImg.moveToNext());
+                    }
+                    else if (tk.getTipo().equals("M")){
+                        AylluApiService service = retrofit.create(AylluApiService.class);
+                        Call<Task> call = service.monitorearPunto(tk);
+                        call.enqueue(new Callback<Task>() {
+                            @Override
+                            public void onResponse(Call<Task> call, Response<Task> response) {
+                                if (response.isSuccessful()){
+                                    String[] cond = new String[]{numon1  + ""};
+                                    taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
+                                }
+                            }
 
-                    // Imagenes subidas
-                    if (progressBarStatus >= 100) {
+                            @Override
+                            public void onFailure(Call<Task> call, Throwable t) {
 
-                        //Dormir por dos segundos para mirar el 100%
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Cerrar el progresBar
-                        progressBar.dismiss();
+                            }
+                        });
                     }
                 }
-            }).start();
-        }
-
-        if (cursor1.moveToFirst()) {
-            if (wifiConected()) {
-                do {
-                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                    httpClient.addInterceptor(logging);
-                    PostClient service1 = PostClient.retrofit.create(PostClient.class);
-
-                    //Obtengo cada uno de los monitoreos de la tabla Task
-                    Task tk = new Task(
-                            cursor1.getString(1), cursor1.getString(2), cursor1.getString(3),
-                            cursor1.getString(4), cursor1.getString(5),
-                            cursor1.getString(6), cursor1.getString(7), cursor1.getString(8),
-                            Integer.parseInt(cursor1.getString(9)),
-                            Integer.parseInt(cursor1.getString(10)),
-                            cursor1.getString(11),cursor1.getString(12),cursor1.getString(13),
-                            cursor1.getString(14));
-
-                    final int numon1 = cursor1.getInt(0);
-
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(ApiConstants.URL_API_AYLLU)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                            .client(httpClient.build())
-                            .build();
-
-                    if(!cursor1.getString(11).equals("null")) {
-                        if(tk.getTipo().equals("N")){
-                            AylluApiService service = retrofit.create(AylluApiService.class);
-                            Call<Task> call = service.registrarPunto(tk);
-                            call.enqueue(new Callback<Task>() {
-                                @Override
-                                public void onResponse(Call<Task> call, Response<Task> response) {
-                                    Toast.makeText(MonitorMenuActivity.this,
-                                            "Punto de afectación N°" + numon1 + " Registrado", Toast.LENGTH_SHORT).show();
-
-                                    String[] cond = new String[]{numon1  + ""};
-                                    taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
-                                }
-
-                                @Override
-                                public void onFailure(Call<Task> call, Throwable t) {
-
-                                }
-                            });
-                        }
-                        else if (tk.getTipo().equals("M")){
-                            AylluApiService service = retrofit.create(AylluApiService.class);
-                            Call<Task> call = service.monitorearPunto(tk);
-                            call.enqueue(new Callback<Task>() {
-                                @Override
-                                public void onResponse(Call<Task> call, Response<Task> response) {
-                                    Toast.makeText(MonitorMenuActivity.this,
-                                            "Monitoreo N°" + numon1 + " Registrado", Toast.LENGTH_SHORT).show();
-
-                                    String[] cond = new String[]{numon1  + ""};
-                                    taskDbHelper.generateConditionalUpdate(cond, new String[]{TaskContract.TaskEntry.NOMBRE, TaskContract.TaskEntry._ID});
-                                }
-
-                                @Override
-                                public void onFailure(Call<Task> call, Throwable t) {
-
-                                }
-                            });
-                        }
-                    }
-                } while (cursor1.moveToNext());
-            }
+            } while (cur_info.moveToNext());
         }
     }
 
@@ -261,10 +269,10 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      * =============================================================================================
      * METODO: Subir Fotografias
      * **/
-    private int uploadImages (Cursor cursor){
+    private int uploadImages (Cursor current_cursor){
         ArrayList<String> nameFiles = new ArrayList<>();
-        for (int j = 1; j < 4; j++) nameFiles.add(cursor.getString(j));
-        final int numon = cursor.getInt(0);
+        for (int j = 1; j < 4; j++) nameFiles.add(current_cursor.getString(j));
+        final int numon = current_cursor.getInt(0);
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -380,8 +388,8 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      **/
     @Override
     public void onBackPressed() {
-        createSimpleDialog("¿Quieres Salir?",
-                getResources().getString(R.string.titleDetailMonitoringDialog)).show();
+        createSimpleDialog(getResources().getString(R.string.monitoring_menu_message_exit),
+                getResources().getString(R.string.titleDetailMonitoringDialog), "EXIT").show();
     }
 
     /**
@@ -492,7 +500,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
      * =============================================================================================
      * METODO: Genera un Dialogo basico en pantalla
      **/
-    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
+    public AlertDialog createSimpleDialog(String mensaje, String titulo, final String type) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -507,20 +515,27 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         tvTitle.setCompoundDrawables(ContextCompat.getDrawable(v.getContext(), R.drawable.ic_question), null, null, null);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton("ACEPTAR",
+        builder.setPositiveButton(getResources().getString(R.string.opcion_list_monitoring_dialog_acept),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = getIntent();
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        finish();
+                        builder.create().dismiss();
+                        if (type.equals("EXIT")){
+                            Intent intent = getIntent();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            finish();
+                        }
+                        else {
+                            uploadMonitoring(cursor1, cursor2, getCurrentFocus());
+                        }
                     }
                 })
-                .setNegativeButton("CANCELAR",
+                .setNegativeButton(getResources().getString(R.string.opcion_list_monitoring_dialog_cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 builder.create().dismiss();
+                                progressBar.dismiss();
                             }
                         });
 

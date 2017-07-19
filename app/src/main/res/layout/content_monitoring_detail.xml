@@ -32,129 +32,92 @@
                 android:id="@+id/tv_title_propiedad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:drawableLeft="@drawable/ic_propiedad"
+                android:drawableStart="@drawable/ic_propiedad"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
                 android:text="@string/itemCardViewPropiedad"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/area_propiedad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewPropiedad"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_area"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_propiedad"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divisor10"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:alpha=".5"
-                android:background="@color/colorDivider"/>
 
             <TextView
-                android:id="@+id/tv_title_factor"
+                android:id="@+id/tv_propiedad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewFactor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/area_factor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewVariable"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_variable"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_factor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text=" Complejo Ceremonial Volcán Llullaillaco"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
                 android:id="@+id/divisor2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="8dp"
                 android:alpha=".5"
-                android:background="@color/colorDivider"/>
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_title_factor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_factor_small"
+                android:drawableStart="@drawable/ic_factor_small"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="start"
+                android:text="@string/summary_item_title_factor"
+                android:textColor="@color/colorIconCardView"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_factor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="condiciones locales que afectan la estructura fisica"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
+
+            <View
+                android:id="@+id/divisor3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"
+                android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/tv_title_variable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_variable_small"
+                android:drawableStart="@drawable/ic_variable_small"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewVariable"
+                android:text="@string/summary_item_title_variable"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_variable"
+            <TextView
+                android:id="@+id/tv_variable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewVariable"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_variable"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_variable"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="identidad, cohesion social, cambios en la poblacion y comunidades locales"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
                 android:id="@+id/divisor4"
@@ -168,68 +131,46 @@
                 android:id="@+id/tv_title_coordenadas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_coordinate"
+                android:drawableStart="@drawable/ic_coordinate"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewCoordenadas"
+                android:text="@string/summary_item_title_coodinates"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_latitud"
+            <TextView
+                android:id="@+id/tv_latitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
+                android:drawableLeft="@drawable/ic_latitude"
+                android:drawableStart="@drawable/ic_latitude"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="N-45°23'43''"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewLatitud"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_latitud"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_latitud"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/area_longitud"
+            <TextView
+                android:id="@+id/tv_longitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewLongitud"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_longitud"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_longitud"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:drawableLeft="@drawable/ic_length"
+                android:drawableStart="@drawable/ic_length"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="W-115°21'37''"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
-                android:id="@+id/divisor8"
+                android:id="@+id/divisor5"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
@@ -240,41 +181,30 @@
                 android:id="@+id/tv_title_porcentaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewPorcentaje"
+                android:text="@string/summary_item_title_percentage"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_porcentaje"
+            <TextView
+                android:id="@+id/tv_porcentaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewPorcentaje"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_selected"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_porcentaje"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="[91%-100%] EXTENDIDA"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
-                android:id="@+id/divisor9"
+                android:id="@+id/divisor6"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
@@ -285,38 +215,27 @@
                 android:id="@+id/tv_title_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewFrecuencia"
+                android:text="@string/summary_item_title_frequency"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_frecuencia"
+            <TextView
+                android:id="@+id/tv_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewFrecuencia"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_selected"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_frecuencia"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="APARICIÓN INTERMITENTE"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
                 android:id="@+id/divisor7"
@@ -330,114 +249,80 @@
                 android:id="@+id/tv_title_origen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:text="@string/itemCardViewOrigen"
+                android:text="@string/summary_item_title_origin"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_origen"
+            <TextView
+                android:id="@+id/tv_origen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewOrigen"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_selected"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_origen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="INTERNO"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
-                android:id="@+id/divisor6"
+                android:id="@+id/divisor8"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
-                android:background="@color/colorDivider"
-                android:layout_marginTop="8dp"/>
+                android:background="@color/colorDivider"/>
 
             <TextView
                 android:id="@+id/tv_title_repercuciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:text="@string/itemCardViewRepercusiones"
+                android:text="@string/summary_item_title_repercussions"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_repercuciones1"
+            <TextView
+                android:id="@+id/tv_repercuciones1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="POSITIVA"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewRepercusiones"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_selected"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_repercuciones1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/area_repercuciones2"
+            <TextView
+                android:id="@+id/tv_repercuciones2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewRepercusiones"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_selected"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_repercuciones2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="ACTUAL"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
-                android:id="@+id/divisor3"
+                android:id="@+id/divisor9"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
@@ -448,41 +333,30 @@
                 android:id="@+id/tv_title_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date_color"
+                android:drawableStart="@drawable/ic_date_color"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
                 android:text="@string/itemCardViewFecha"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/area_fecha"
+            <TextView
+                android:id="@+id/tv_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewFecha"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_date"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_fecha"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="09-03-2017"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
 
             <View
-                android:id="@+id/divisor5"
+                android:id="@+id/divisor10"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:alpha=".5"
@@ -493,39 +367,27 @@
                 android:id="@+id/tv_title_monitor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_monitor"
+                android:drawableStart="@drawable/ic_monitor"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
                 android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
                 android:text="@string/itemCardViewMonitor"
+                android:textColor="@color/colorIconCardView"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <LinearLayout
-                android:id="@+id/area_monitor"
+            <TextView
+                android:id="@+id/tv_monitor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/itemCardViewMonitor"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_monitor"
-                    android:tint="@color/colorPrimaryText" />
-
-                <TextView
-                    android:id="@+id/tv_monitor"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="Edwin"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

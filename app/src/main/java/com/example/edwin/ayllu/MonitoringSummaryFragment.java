@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,11 @@ import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiService;
+import com.example.edwin.ayllu.io.PostClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

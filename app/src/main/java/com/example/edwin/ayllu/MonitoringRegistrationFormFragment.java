@@ -1024,7 +1024,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         npSeconds.setValue(op_sec);
         tvTitle.setText(titulo);
 
-        builder.setPositiveButton("FIJAR",
+        builder.setPositiveButton(getResources().getString(R.string.titlebuttonFijar),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

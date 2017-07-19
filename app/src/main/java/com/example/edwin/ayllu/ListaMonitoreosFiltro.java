@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.PuntoCritico;
+import com.example.edwin.ayllu.io.RestClient;
+import com.example.edwin.ayllu.ui.adapter.PuntoCriticoAdapter;
 
 import java.util.ArrayList;
 

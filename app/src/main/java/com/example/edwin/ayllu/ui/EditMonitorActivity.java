@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.RestClient;
+import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public class EditMonitorActivity extends AppCompatActivity {
         }
         if(!con2.getText().toString().equals("") && !con.getText().toString().equals("") && c && c1) ci = esContrasenaIguales();
         if(i && n && a && c && c1 && ci) {
-            createSimpleDialog(getResources().getString(R.string.confirmacionAccionEditar), getResources().getString(R.string.advertencia)).show();
+            createSimpleDialog("Estas seguro que deseas actualizar el monitor", getResources().getString(R.string.title_warning)).show();
         }
     }
     //metodo encargado de crear los dialogos informativos y confirmacion de la edicion del monitor
@@ -106,7 +106,7 @@ public class EditMonitorActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(EditMonitorActivity.this);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton(getResources().getString(R.string.confirmar),
+                .setPositiveButton("CONFIRMAR",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -171,7 +171,7 @@ public class EditMonitorActivity extends AppCompatActivity {
                                 });
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.cancelar),
+                .setNegativeButton("CANCELAR",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

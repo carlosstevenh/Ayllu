@@ -6,12 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/colorBackgroundList"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/fragment_lista_monitoreos_filtro">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvpc"
-        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

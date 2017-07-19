@@ -31,8 +31,7 @@ tools:context="com.example.edwin.ayllu.ActivitySeleccionTramoFiltro">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_seleccion_tramo_filtro"
-        android:id="@+id/include3"/>
+    <include layout="@layout/content_seleccion_tramo_filtro"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

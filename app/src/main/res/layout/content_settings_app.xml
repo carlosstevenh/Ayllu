@@ -24,10 +24,10 @@
                 android:id="@+id/tv_title_monitoreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:background="@color/colorPrimaryLight"
                 android:padding="5dp"
-                android:text="MONITOREO SIN CONEXIÓN"
+                android:text="@string/settings_app_submodule_title_monitoring_offline"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Borrar listado de puntos"
+                    android:text="@string/settings_app_submodule_option_title_delete_list"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -50,7 +50,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Libera espacio de disco, de puntos que no necesites"
+                    android:text="@string/settings_app_submodule_option_description_delete_list"
                     android:textColor="@color/colorSecondaryText"
                     android:textStyle="normal" />
 
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Elegir listado de puntos"
+                    android:text="@string/settings_app_submodule_option_title_select_list"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Determina el lugar que quieres monitorear"
+                    android:text="@string/settings_app_submodule_option_description_select_list"
                     android:textColor="@color/colorSecondaryText"
                     android:textStyle="normal" />
 
@@ -98,10 +98,10 @@
                 android:id="@+id/tv_title_reporte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:background="@color/colorPrimaryLight"
                 android:padding="5dp"
-                android:text="REPORTE"
+                android:text="@string/settings_app_submodule_title_report"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -117,7 +117,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Elige los puntos a reportar"
+                    android:text="@string/settings_app_submodule_option_title_report"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -125,7 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Determina el lugar que quieres reportar"
+                    android:text="@string/settings_app_submodule_option_description_report"
                     android:textColor="@color/colorSecondaryText"
                     android:textStyle="normal" />
 
@@ -142,10 +142,10 @@
                 android:id="@+id/tv_title_general"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:background="@color/colorPrimaryLight"
                 android:padding="5dp"
-                android:text="GENERAL"
+                android:text="@string/settings_app_submodule_title_general"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -160,7 +160,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Cerrar Sesión"
+                    android:text="@string/settings_app_submodule_option_title_logout"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -168,7 +168,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Finalizar el uso de la aplicación para el usuario actual."
+                    android:text="@string/settings_app_submodule_option_description_logout"
                     android:textColor="@color/colorSecondaryText"
                     android:textStyle="normal" />
 
@@ -191,7 +191,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Acerca de la aplicación"
+                    android:text="@string/settings_app_submodule_option_title_about"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -199,7 +199,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Información general de la aplicación"
+                    android:text="@string/settings_app_submodule_option_description_about"
                     android:textColor="@color/colorSecondaryText"
                     android:textStyle="normal" />
 
@@ -223,7 +223,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Administrador"
+                    android:text="@string/settings_app_submodule_option_title_admin"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -231,7 +231,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Ingresa al modo Administrador"
+                    android:text="@string/settings_app_submodule_option_description_admin"
                     android:textColor="@color/colorSecondaryText"
                     android:textStyle="normal" />
 

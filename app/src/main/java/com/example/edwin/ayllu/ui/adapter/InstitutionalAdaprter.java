@@ -44,8 +44,8 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
 
     @Override
     public void onBindViewHolder(MonitoreoHolder holder, int position) {
-        holder.date.setText(""+monitoreos.get(position).getDate());
-        holder.variable.setText(""+monitoreos.get(position).getVariable());
+        holder.date.setText(monitoreos.get(position).getDate());
+        holder.variable.setText(monitoreos.get(position).getVariable());
         holder.latitud.setText(reverseCoordinates(monitoreos.get(position).getLatitud(),"LATITUD"));
         holder.longitud.setText(reverseCoordinates(monitoreos.get(position).getLongitud(),"LONGITUD"));
         holder.setPrueba(ApiConstants.URL_IMG+monitoreos.get(position).getPrueba());
@@ -68,15 +68,16 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
 
     public static class MonitoreoHolder extends RecyclerView.ViewHolder {
         TextView date;
+        TextView propiedad;
         TextView variable;
         TextView latitud;
         TextView longitud;
         ImageView prueba;
-        private String mItem;
 
         public MonitoreoHolder(View itemView) {
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.tv_fecha);
+            propiedad = (TextView) itemView.findViewById(R.id.tv_property);
             variable = (TextView) itemView.findViewById(R.id.tv_variable);
             latitud = (TextView) itemView.findViewById(R.id.tv_latitud);
             longitud = (TextView) itemView.findViewById(R.id.tv_longitud);

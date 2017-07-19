@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.RespuestaInstitucional;
+import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -48,8 +49,8 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_grafica_respuesta_institucional);
+
         grup = (RadioGroup) findViewById(R.id.grup);
         eva = (RadioButton) findViewById(R.id.radio_eval);
         per = (RadioButton) findViewById(R.id.radio_per);
@@ -57,7 +58,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         pre = (RadioButton) findViewById(R.id.radio_presu);
         rec = (RadioButton) findViewById(R.id.radio_rec);
         con = (RadioButton) findViewById(R.id.radio_con);
-        mChart = (BarChart) findViewById(R.id.linechart);
+        mChart = (BarChart) findViewById(R.id.barchart);
         fabDowload = (FloatingActionButton) findViewById(R.id.fab_dowload);
         fabDowload.setEnabled(false);
 
@@ -398,7 +399,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
         imagesFolder.mkdirs();
         mChart.saveToPath(grafica,"/Ayllu/Graficos");
 
-        Toast.makeText(this, getResources().getString(R.string.descargaGrafica) , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.general_statistical_graph_alert_dowload) , Toast.LENGTH_LONG).show();
     }
     /**
      * =============================================================================================

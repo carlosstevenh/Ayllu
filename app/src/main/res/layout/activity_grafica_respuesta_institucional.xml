@@ -4,24 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <include
-        layout="@layout/content_grafica_respuesta"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/include4" />
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:background="?attr/colorPrimary"
+            android:layout_gravity="center_horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_institutional_response_title"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_grafica_respuesta"/>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_dowload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
+        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_icon="@drawable/ic_download"
-        app:fab_size="normal"
-        app:layout_anchor="@+id/include4"
-        app:layout_anchorGravity="bottom|right" />
+        app:fab_size="normal" />
 
 
 </android.support.design.widget.CoordinatorLayout>

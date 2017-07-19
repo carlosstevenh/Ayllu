@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.RestClient;
+import com.example.edwin.ayllu.io.RestClient;
 
 import java.util.ArrayList;
 

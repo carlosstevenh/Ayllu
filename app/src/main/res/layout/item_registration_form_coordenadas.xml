@@ -18,13 +18,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:background="@drawable/edit_text_border"
+            android:background="@drawable/text_view_style_negative"
             android:drawableLeft="@drawable/ic_latitud"
             android:drawablePadding="16dp"
             android:drawableStart="@drawable/ic_latitud"
             android:gravity="center_vertical"
             android:padding="@dimen/edit_text_padding"
-            android:text="LATITUD"
+            android:text="@string/latitudePointDialog"
             android:textColor="@color/colorPrimaryText"
             android:textStyle="bold" />
 
@@ -52,13 +52,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:background="@drawable/edit_text_border"
+            android:background="@drawable/text_view_style_negative"
             android:drawableLeft="@drawable/ic_longitud"
             android:drawablePadding="16dp"
             android:drawableStart="@drawable/ic_longitud"
             android:gravity="center_vertical"
             android:padding="@dimen/edit_text_padding"
-            android:text="LONGITUD"
+            android:text="@string/lengthPointDialog"
             android:textColor="@color/colorPrimaryText"
             android:textStyle="bold" />
 

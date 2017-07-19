@@ -2,7 +2,6 @@ package com.example.edwin.ayllu;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,24 +10,21 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
+import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.mikephil.charting.charts.PieChart;
@@ -45,8 +41,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.crypto.AEADBadTagException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -208,17 +202,15 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_pais:
-                Log.e("Boton pais:", "Esta entrando");
                 createRadioListDialog(items_paises, getResources().getString(R.string.general_statistical_graph_dialog_title_countries), 1).show();
                 break;
             case R.id.fab_tramo:
-                Log.e("Boton tramo:", "Esta entrando");
                 createRadioListDialog(items_tramos, getResources().getString(R.string.general_statistical_graph_dialog_title_tramos), 2).show();
                 break;
             case R.id.fab_search:
-                fabMenu.collapse();
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
+                    fabMenu.collapse();
                     final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.general_statistical_graph_process_message_analysis),getResources().getString(R.string.general_statistical_graph_process_message),false,false);
                     RestClient service = RestClient.retrofit.create(RestClient.class);
                     Call<ArrayList<ConteoFactoresTramo>> requestUser = service.conteoFactorTramo(""+opTramo);
@@ -305,12 +297,43 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
 
 
                 }
+                else createSimpleDialog(getResources().getString(R.string.general_statistical_graph_message_info), getResources().getString(R.string.titleListMonitoringDialog)).show();
                 break;
             case R.id.fab_dowload:
                 fabMenu.collapse();
                 if (mChart != null) checkPermission();
+                else createSimpleDialog(getResources().getString(R.string.general_statistical_graph_message_download), getResources().getString(R.string.titleListMonitoringDialogError)).show();
                 break;
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Presenta en Interfaz un mensaje Tipo Dialog
+     **/
+    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
+        builder.setView(v);
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description_dialog);
+
+        tvTitle.setText(titulo);
+        tvDescription.setText(mensaje);
+
+        builder.setPositiveButton(getResources().getString(R.string.opcionListMonitoringDialog),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
+
+        return builder.create();
     }
 
     /**
@@ -390,7 +413,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     void dowload(){
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
-        String grafica = getResources().getString(R.string.graficaPorTramo)+format;
+        String grafica = getResources().getString(R.string.general_statistical_graph_file_name)+format;
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu/Graficos");
         imagesFolder.mkdirs();
         mChart.saveToPath(grafica,"/Ayllu/Graficos");
