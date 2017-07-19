@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.edwin.ayllu.domain.SHA1;
 import com.example.edwin.ayllu.ui.AdministratorActivity;
 import com.example.edwin.ayllu.domain.Usuario;
 
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.iniciandoSesion),getResources().getString(R.string.esperar),false,false);
 
         RestClient service = RestClient.retrofit.create(RestClient.class);
+        String pass = SHA1.getHash(et2.getText().toString(),"SHA1");
         Call<ArrayList<Usuario>> requestUser = service.getUsuario(et1.getText().toString(),et2.getText().toString());
         requestUser.enqueue(new Callback<ArrayList<Usuario>>() {
 

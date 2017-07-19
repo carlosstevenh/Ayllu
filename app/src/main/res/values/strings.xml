@@ -8,6 +8,7 @@
     <string name="identificacion">Identificación</string>
     <string name="contrasena">Contraseña</string>
     <string name="mostrarContrasena">Mostrar contraseña</string>
+    <string name="user">Monitor</string>
 
     <!--============================================================================================
         STRINGS: MENU DEL ADMINISTRADOR
@@ -78,7 +79,7 @@
     <!--.........................................................................................-->
     <!--SLIDE REGISTRAR MONITOREO-->
     <string name="slide_1_title">REGISTRA UN MONITOREO</string>
-    <string name="slide_1_desc">Recorre, monitorea y obtén reportes el estado de Conservación del QHAPAQ ÑAN</string>
+    <string name="slide_1_desc">Recorre, monitorea y obtén reportes del estado de Conservación del QHAPAQ ÑAN</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING LIST-->
     <string name="titleListMonitoring">Monitoreo Qhapaq Ñan</string>
@@ -146,10 +147,10 @@
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona una Variable</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
-    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona un Porcentaje</string>
-    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona una Frecuencia</string>
+    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona Porcentaje</string>
+    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona Frecuencia</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
@@ -393,9 +394,9 @@
     <string name="confirmarAccion">Está seguro de deshabilitar el monitor?</string>
     <string name="advertencia">Advertencia</string>
     <string name="accionCompletada">Acción completada</string>
-    <string name="confirmar">Confirmar</string>
-    <string name="cancelar">Cancelar</string>
-    <string name="confirmacionAccionEditar">Está seguro de actualizar la información del monitor?</string>
+    <string name="confirmar">CONFIRMAR</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="confirmacionAccionEditar">¿Está seguro de actualizar la información del monitor?</string>
     <string name="contraseñasDiferentes">Las contraseñas no coinciden</string>
     <string name="actualizadoMonitor">Actualizando monitor</string>
     <string name="monitorActualizado">Monitor actualizado</string>
@@ -435,7 +436,7 @@
     <string name="mapasGenerales">Gráficos estadísticos generales</string>
     <string name="mapasEspecificos">Gráficos estadíticos Especificos</string>
     <string name="graficaPorTramo">GraficaPorTramo</string>
-    <string name="descargaGrafica">Gráfica descarda</string>
+    <string name="descargaGrafica">Gráfica descargada</string>
     <string name="graficaPorVariable">GraficaPorVariable</string>
     <string name="analisisVariable">Análisis Variable</string>
     <string name="graficaPorcentajeFrecuencia">Grafica_porcentaje_frecuencia</string>
@@ -451,4 +452,16 @@
     <string name="AcerceDe">Acerca de</string>
     <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
+
+    <!--String agreagados el 11 de julio (Nuevos)-->
+    <string name="borrarDatos">¿Está seguro que desea borrar monitoreos descargados?</string>
+    <string name="continuar">CONTINUAR</string>
+    <string name="seleccionDescargar">SELECCIÓN A DESCARGAR</string>
+    <string name="dowload">DESCARGAR</string>
+    <string name="monitoreosDescargados">Monitoreos Descargados</string>
+    <string name="reporteGenerado">Reporte generado !Exitosamente¡"</string>
+    <string name = "quieresSalir">¿Quieres salir?</string>
+    <string name = "analisis">Análisis</string>
+    <string name="informacionMonitoreo">informacion monitoreo</string>
+    <string name="welcome">welcome</string>
 </resources>

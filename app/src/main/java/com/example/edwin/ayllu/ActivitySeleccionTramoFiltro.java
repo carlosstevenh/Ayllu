@@ -185,14 +185,14 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_pais:
-                Log.e("Boton pais:", "Esta entrando");
                 createRadioListDialog(items_paises, getResources().getString(R.string.general_statistical_graph_dialog_title_countries), 1).show();
                 break;
             case R.id.fab_tramo:
-                Log.e("Boton tramo:", "Esta entrando");
                 createRadioListDialog(items_tramos, getResources().getString(R.string.general_statistical_graph_dialog_title_tramos), 2).show();
                 break;
             case R.id.fab_search:
+                mChart = (PieChart) findViewById(R.id.piechart);
+                mChart.clear();
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
                     final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.general_statistical_graph_process_message_analysis),getResources().getString(R.string.general_statistical_graph_process_message),false,false);

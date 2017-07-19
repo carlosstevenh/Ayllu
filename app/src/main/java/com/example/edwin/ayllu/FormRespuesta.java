@@ -151,44 +151,23 @@ public class FormRespuesta extends AppCompatActivity {
                         Toast login = Toast.makeText(getApplicationContext(),
                                 getResources().getString(R.string.institutional_response_form_process_message_positive), Toast.LENGTH_LONG);
                         login.show();
-                        /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackground));
-                        ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_positive));
-                        ivType.setContentDescription(getResources().getString(R.string.successfulRecordImageDescription));
-                        tvTitle.setText(getResources().getString(R.string.successfulRecordTitle));
-                        tvDescription.setText(getResources().getString(R.string.successfulRecordMonitoringDescription));*/
                     }
                     else{
                         Toast login = Toast.makeText(getApplicationContext(),
                                 getResources().getString(R.string.institutional_response_form_process_message_negative), Toast.LENGTH_LONG);
                         login.show();
-                        /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackgroundFailed));
-                        ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
-                        ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
-                        tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
-                        tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));*/
                     }
                 }
 
-
-                /*Toast login = Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.registroAdicionado), Toast.LENGTH_LONG);
-                login.show();*/
-
-                //Intent intent = new Intent(FormRespuesta.this, MonitorMenuActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(FormRespuesta.this, MonitorMenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
             }
 
             @Override
             public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                 loading.dismiss();
-
-                /*lyPrincipal.setBackgroundColor(getResources().getColor(R.color.colorSplashBackgroundFailed));
-                ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_icono));
-                ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
-                tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
-                tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));*/
-
                 Toast login = Toast.makeText(getApplicationContext(),
                         getResources().getString(R.string.institutional_response_form_process_message_server), Toast.LENGTH_LONG);
                 login.show();

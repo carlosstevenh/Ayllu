@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.AdminSQLite;
+import com.example.edwin.ayllu.domain.SHA1;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.RestClient;
@@ -102,8 +103,9 @@ public class RegisterMonitorFragment extends Fragment {
                         //String encrip = new String(DigestUtils.md5Hex(etC.getText().toString()));
                         //se realiza la peticion al servidor para el registro del monitor
                         final ProgressDialog loading = ProgressDialog.show(getContext(),getResources().getString(R.string.registration_form_process_shipping_status),getResources().getString(R.string.registration_form_process_message),false,false);
+                        String pass = SHA1.getHash(etC.getText().toString(),"SHA1");
                         RestClient service = RestClient.retrofit.create(RestClient.class);
-                        Call<ArrayList<String>> requestAdd = service.addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",etC.getText().toString(),pais);
+                        Call<ArrayList<String>> requestAdd = service.addUsuario(etI.getText().toString(),etN.getText().toString(),etA.getText().toString(),"M",pass,pais);
                         requestAdd.enqueue(new Callback<ArrayList<String>>() {
                             @Override
                             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
@@ -244,12 +246,9 @@ public class RegisterMonitorFragment extends Fragment {
     }
 
     private boolean esIdentificacionValido(String nombre,TextInputLayout til) {
-        Pattern patron = Pattern.compile("^.{1,}");
+        if(nombre.length()<=0) til.setError(getResources().getString(R.string.registration_form_alert_invalid_field));
         //Pattern patron = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
-        if (!patron.matcher(nombre).matches()) {
-            til.setError(getResources().getString(R.string.registration_form_alert_empty_field));
-            return false;
-        } else {
+        else {
             til.setError(null);
         }
 

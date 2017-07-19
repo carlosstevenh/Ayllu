@@ -70,7 +70,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.61"
                     android:scrollbars="horizontal"
-                    android:text="@string/graph_percentage_frequency_subtitle_vertical"
+                    android:text="@string/valor"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="normal|italic" />

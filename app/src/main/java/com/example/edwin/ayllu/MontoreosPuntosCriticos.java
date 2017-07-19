@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,6 +22,9 @@ public class MontoreosPuntosCriticos extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        Intent intent = new Intent(MontoreosPuntosCriticos.this,FilterMonitoringActivity.class);
+        startActivity(intent);
         finish();
     }
 }
