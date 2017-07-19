@@ -14,7 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.example.edwin.ayllu.io.RestClient;
 import com.example.edwin.ayllu.domain.SHA1;
 import com.example.edwin.ayllu.ui.AdministratorActivity;
 import com.example.edwin.ayllu.domain.Usuario;
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View v) {
 
         //peticcion que se le realiza al servidor para el inicio de sesión
-        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.iniciandoSesion),getResources().getString(R.string.esperar),false,false);
+        final ProgressDialog loading = ProgressDialog.show(this,getResources().getString(R.string.login_user_process_authenticate),getResources().getString(R.string.login_user_process_message),false,false);
 
         RestClient service = RestClient.retrofit.create(RestClient.class);
         String pass = SHA1.getHash(et2.getText().toString(),"SHA1");
@@ -83,16 +83,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     ContentValues registro = new ContentValues();
 
-                    registro.put(admin.COD_USU, user.getCodigo_usu());
-                    registro.put(admin.IDE_USU, user.getIdentificacion_usu());
-                    registro.put(admin.NOM_USU, user.getNombre_usu());
-                    registro.put(admin.APE_USU, user.getApellido_usu());
-                    registro.put(admin.TIP_USU, user.getTipo_usu());
-                    registro.put(admin.CON_USU, user.getContrasena_usu());
-                    registro.put(admin.CLA_API, user.getClave_api());
-                    registro.put(admin.PAI_USU, user.getPais_usu());
+                    registro.put(AdminSQLite.COD_USU, user.getCodigo_usu());
+                    registro.put(AdminSQLite.IDE_USU, user.getIdentificacion_usu());
+                    registro.put(AdminSQLite.NOM_USU, user.getNombre_usu());
+                    registro.put(AdminSQLite.APE_USU, user.getApellido_usu());
+                    registro.put(AdminSQLite.TIP_USU, user.getTipo_usu());
+                    registro.put(AdminSQLite.CON_USU, user.getContrasena_usu());
+                    registro.put(AdminSQLite.CLA_API, user.getClave_api());
+                    registro.put(AdminSQLite.PAI_USU, user.getPais_usu());
 
-                    bd.insert(admin.TABLENAME,null,registro);
+                    bd.insert(AdminSQLite.TABLENAME,null,registro);
                     bd.close();
 
                     String tipo = user.getTipo_usu();
@@ -116,11 +116,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 } else {
-                    int statusCode = response.code();
-                    Log.i("TAG", "error " + response.code());
-
-                    // handle request errors yourself
-                    //ResponseBody errorBody = response.errorBody();
+                    Toast login = Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.general_statistical_graph_process_message_server), Toast.LENGTH_SHORT);
+                    login.show();
                 }
 
 
@@ -130,11 +128,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
 
                 loading.dismiss();
-                Log.e(TAG,"Error al iniciar sesión!!!!"+ t.getMessage());
                 Toast login = Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.noSePudoConectarServidor), Toast.LENGTH_SHORT);
+                        getResources().getString(R.string.general_statistical_graph_process_message_server), Toast.LENGTH_SHORT);
                 login.show();
-                //et3.setText("xxxxxx");
             }
 
         });
@@ -157,26 +153,19 @@ public class LoginActivity extends AppCompatActivity {
                     ContentValues monitores = new ContentValues();
                     for(int i = 0; i < lista.size(); i++){
                         Log.i("TAG", "entra ciclo: "+ lista.size());
-                        monitores.put(al.COD_USU, lista.get(i).getCodigo_usu());
-                        monitores.put(al.IDE_USU, lista.get(i).getIdentificacion_usu());
-                        monitores.put(al.NOM_USU, lista.get(i).getNombre_usu());
-                        monitores.put(al.APE_USU, lista.get(i).getApellido_usu());
-                        monitores.put(al.TIP_USU, lista.get(i).getTipo_usu());
-                        monitores.put(al.CON_USU, lista.get(i).getContrasena_usu());
-                        monitores.put(al.CLA_API,lista.get(i).getClave_api());
-                        monitores.put(al.PAI_USU, lista.get(i).getPais_usu());
-                        bd1.insert(al.TABLENAME, null, monitores);
+                        monitores.put(AdminSQLite.COD_USU, lista.get(i).getCodigo_usu());
+                        monitores.put(AdminSQLite.IDE_USU, lista.get(i).getIdentificacion_usu());
+                        monitores.put(AdminSQLite.NOM_USU, lista.get(i).getNombre_usu());
+                        monitores.put(AdminSQLite.APE_USU, lista.get(i).getApellido_usu());
+                        monitores.put(AdminSQLite.TIP_USU, lista.get(i).getTipo_usu());
+                        monitores.put(AdminSQLite.CON_USU, lista.get(i).getContrasena_usu());
+                        monitores.put(AdminSQLite.CLA_API,lista.get(i).getClave_api());
+                        monitores.put(AdminSQLite.PAI_USU, lista.get(i).getPais_usu());
+                        bd1.insert(AdminSQLite.TABLENAME, null, monitores);
                         //bd1.close();
 
                     }
                     Log.i("TAG", "Numero de monitores: "+ lista.size() );
-
-                } else {
-                    int statusCode = response.code();
-                    Log.i("TAG", "error " + response.code());
-
-                    // handle request errors yourself
-                    //ResponseBody errorBody = response.errorBody();
                 }
             }
 

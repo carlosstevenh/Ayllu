@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,9 +59,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     //VARIABLES: Componetes del Formulario de Registro
     Button btnVar, btnFac, btnPor, btnFre;
     RadioGroup rgRep1, rgRep2, rgOrg;
-    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong;
-    ImageButton ibImg1, ibImg2, ibImg3;
-    FloatingActionButton fabLat, fabLong;
+    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3;
+    FloatingActionButton fabLat, fabLong, fabCamera1, fabCamera2, fabCamera3;
     private TextView tvInfo;
 
     MonitoringSummaryFragment fragment;
@@ -181,9 +182,13 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         return view;
     }
 
+    /**
+     * =============================================================================================
+     * METODO: Restauramos los datos del formulario al regresar al fragmento
+     **/
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
         //------------------------------------------------------------------------------------------
         //Cargamos el Factor y la Variable
@@ -199,17 +204,18 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         }
 
         //------------------------------------------------------------------------------------------
-        //Cargamos las fotografias
+        //Cargamos los estados de las fotografias
+        Uri fileUriFoto;
 
-        if (files.size() == 1) {
-            Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
-        } else if (files.size() == 2) {
-            Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
-            Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(ibImg2);
-        } else if (files.size() == 3) {
-            Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
-            Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(ibImg2);
-            Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(ibImg3);
+        if (files.size() == 1) changeStateImage(tvImage1);
+        else if (files.size() == 2) {
+            changeStateImage(tvImage1);
+            changeStateImage(tvImage2);
+        }
+        else if (files.size() == 3) {
+            changeStateImage(tvImage1);
+            changeStateImage(tvImage2);
+            changeStateImage(tvImage3);
         }
 
         //------------------------------------------------------------------------------------------
@@ -234,6 +240,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         if (origen.charAt(0) == '1') rgOrg.check(R.id.rb_interno);
         else rgOrg.check(R.id.rb_externo);
     }
+
 
     /**
      * =============================================================================================
@@ -280,28 +287,25 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 fotos.set(0, foto);
                 files.set(0, file);
                 f1 = false;
-                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
+                changeStateImage(tvImage1);
             } else if (f2) {
                 fotos.set(1, foto);
                 files.set(1, file);
                 f2 = false;
-                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg2);
+                changeStateImage(tvImage2);
             } else if (f3) {
                 fotos.set(2, foto);
                 files.set(2, file);
                 f3 = false;
-                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg3);
+                changeStateImage(tvImage3);
             } else {
                 fotos.add(foto);
                 files.add(file);
             }
 
-            if (files.size() == 1)
-                Picasso.with(getActivity()).load(files.get(0)).fit().centerCrop().into(ibImg1);
-            else if (files.size() == 2)
-                Picasso.with(getActivity()).load(files.get(1)).fit().centerCrop().into(ibImg2);
-            else if (files.size() == 3)
-                Picasso.with(getActivity()).load(files.get(2)).fit().centerCrop().into(ibImg3);
+            if (files.size() == 1) changeStateImage(tvImage1);
+            else if (files.size() == 2) changeStateImage(tvImage2);
+            else if (files.size() == 3) changeStateImage(tvImage3);
 
             if (op_reg.equals("M")) onStepOpening(0);
             else onStepOpening(2);
@@ -817,11 +821,15 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
         LinearLayout pruebasLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_pruebas, null, false);
 
-        ibImg1 = (ImageButton) pruebasLayoutContent.findViewById(R.id.ib_img1);
-        ibImg2 = (ImageButton) pruebasLayoutContent.findViewById(R.id.ib_img2);
-        ibImg3 = (ImageButton) pruebasLayoutContent.findViewById(R.id.ib_img3);
+        fabCamera1 = (FloatingActionButton) pruebasLayoutContent.findViewById(R.id.fab_camera1);
+        fabCamera2 = (FloatingActionButton) pruebasLayoutContent.findViewById(R.id.fab_camera2);
+        fabCamera3 = (FloatingActionButton) pruebasLayoutContent.findViewById(R.id.fab_camera3);
 
-        ibImg1.setOnClickListener(new View.OnClickListener() {
+        tvImage1 = (TextView) pruebasLayoutContent.findViewById(R.id.tv_image1);
+        tvImage2 = (TextView) pruebasLayoutContent.findViewById(R.id.tv_image2);
+        tvImage3 = (TextView) pruebasLayoutContent.findViewById(R.id.tv_image3);
+
+        fabCamera1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (files.size() == 0) checkPermission();
@@ -831,7 +839,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             }
         });
 
-        ibImg2.setOnClickListener(new View.OnClickListener() {
+        fabCamera2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (files.size() == 1) getCamara1();
@@ -841,7 +849,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             }
         });
 
-        ibImg3.setOnClickListener(new View.OnClickListener() {
+        fabCamera3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (files.size() == 2) getCamara1();
@@ -1016,7 +1024,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         npSeconds.setValue(op_sec);
         tvTitle.setText(titulo);
 
-        builder.setPositiveButton("FIJAR",
+        builder.setPositiveButton(getResources().getString(R.string.titlebuttonFijar),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1123,6 +1131,14 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         return coordinate;
     }
 
+    /**
+     * =============================================================================================
+     * METODO:
+     **/
+    private void changeStateImage(TextView textView){
+        textView.setBackgroundColor(getResources().getColor(R.color.colorBackgroundStatePositive));
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_registration, 0, 0, 0);
+    }
 
 }
 

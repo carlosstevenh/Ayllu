@@ -36,7 +36,6 @@ import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
 import com.example.edwin.ayllu.ui.AdministratorActivity;
-import com.example.edwin.ayllu.ui.MonitoringListFragment;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -145,16 +144,16 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.opcion_borrar:
-                createSimpleDialogBorrar(getResources().getString(R.string.borrarDatos),getResources().getString(R.string.advertencia)).show();
+                createSimpleDialogBorrar(getResources().getString(R.string.borrarDatos),getResources().getString(R.string.title_warning)).show();
                 break;
             case R.id.opcion_elegir:
                 createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1, "OFFLINE").show();
                 break;
             case R.id.opcion_salir:
-                createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.advertencia)).show();
+                createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.title_warning)).show();
                 break;
             case R.id.opcion_acerca:
-                Intent in = new Intent(getApplicationContext(), About.class);
+                Intent in = new Intent(getApplicationContext(), AboutAppActivity.class);
                 startActivity(in);
                 finish();
                 break;
@@ -212,8 +211,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor = subtramoDbHelper.generateConditionalQuery(new String[]{item}, SubtramoContract.SubtramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[1] = cursor.getInt(1);
-                                opciones += "\n\n "+getResources().getString(R.string.info_critical_point_item_subtramo)+"\n(" + item + ")";
-
+                                opciones += "\n\n" + getResources().getString(R.string.info_critical_point_item_subtramo) + "\n(" + item + ")";
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{op[1] + ""}, SeccionContract.SeccionEntry.SUBTRAMO);
                                 items_secciones = dataFilter(cursor, 2);
                                 break;
@@ -239,7 +237,8 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{item}, AreaContract.AreaEntry.PROPIEDAD_NOMINADA);
                                 cursor.moveToFirst();
                                 op[3] = cursor.getInt(1);
-                                opciones += "\n\n "+getResources().getString(R.string.info_critical_point_item_propiedad)+"\n("+ items_tipos[which].toString() + ")";
+                                opciones += "\n\n" + getResources().getString(R.string.info_critical_point_item_propiedad) + "\n("+ items_tipos[which].toString() + ")";
+
                                 break;
                             //----------------------------------------------------------------------
                             default:
@@ -248,7 +247,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
                     }
                 })
-                .setPositiveButton(getResources().getString(R.string.continuar),
+                .setPositiveButton(getResources().getString(R.string.settings_app_dialog_option_continue),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -268,16 +267,16 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                     case 4:
-                                        if(op[3] != 0) createSimpleDialog(opciones, getResources().getString(R.string.seleccionDescargar), type).show();
+                                        if(op[3] != 0) createSimpleDialog(opciones, getResources().getString(R.string.settings_app_dialog_title), type).show();
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                 }
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.confirmar), new DialogInterface.OnClickListener(){
+                .setNegativeButton(getResources().getString(R.string.settings_app_dialog_option_confirm), new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        createSimpleDialog(opciones, getResources().getString(R.string.seleccionDescargar), type).show();
+                        createSimpleDialog(opciones, getResources().getString(R.string.settings_app_dialog_title), type).show();
                     }
                 });
         return builder.create();
@@ -288,7 +287,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton(getResources().getString(R.string.confirmar),
+                .setPositiveButton(getResources().getString(R.string.settings_app_dialog_option_confirm),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -305,7 +304,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 builder.create().dismiss();
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.cancelar),
+                .setNegativeButton(getResources().getString(R.string.info_dialog_option_cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -321,7 +320,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton(getResources().getString(R.string.confirmar),
+                .setPositiveButton(getResources().getString(R.string.settings_app_dialog_option_confirm),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -331,7 +330,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 builder.create().dismiss();
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.cancelar),
+                .setNegativeButton(getResources().getString(R.string.settings_app_dialog_option_cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -359,12 +358,12 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         tvTitle.setText(titulo);
         tvDescription.setText(mensaje);
 
-        builder.setPositiveButton(getResources().getString(R.string.dowload),
+        builder.setPositiveButton(getResources().getString(R.string.settings_app_dialog_option_download),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final ProgressDialog loading = new ProgressDialog(SettingsAppActivity.this);
-                        loading.setMessage(getResources().getString(R.string.registration_form_process_message));
+                        loading.setMessage(getResources().getString(R.string.list_monitoring_process_message));
                         loading.setTitle(getResources().getString(R.string.list_monitoring_process_message_search));
                         loading.setProgress(10);
                         loading.setIndeterminate(true);
@@ -393,13 +392,12 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
                                             //Descargar Imagenes del Servidor
                                             for (int i = 0; i<reportes.size(); i++) downloadZipFile(reportes.get(i).getPrueba1());
-
-                                            Toast.makeText(SettingsAppActivity.this,getResources().getString(R.string.monitoreosDescargados), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SettingsAppActivity.this,getResources().getString(R.string.settings_app_process_message_search_positive), Toast.LENGTH_SHORT).show();
                                         }
                                         else checkPermission();
                                     }
                                     if (reportes.size() == 0) {
-                                        Toast.makeText(SettingsAppActivity.this,getResources().getString(R.string.descriptionInfoListMonitoringNegative), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingsAppActivity.this,getResources().getString(R.string.settings_app_process_message_search_negative), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -409,7 +407,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 loading.dismiss();
                                 Toast.makeText(
                                         SettingsAppActivity.this,
-                                        getResources().getString(R.string.noSePudoConectarServidor),
+                                        getResources().getString(R.string.general_statistical_graph_process_message_server),
                                         Toast.LENGTH_SHORT)
                                         .show();
                             }
@@ -480,8 +478,6 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                         }
                     }.execute();
 
-                } else {
-                    Log.d("ERROR", "Conexión Fallida " + response.errorBody());
                 }
             }
 
@@ -517,25 +513,16 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 while ((count = is.read(data)) != -1) {
                     os.write(data, 0, count);
                     progress +=count;
-                    Log.d("", "Progress: " + progress + "/" + body.contentLength() + " >>>> " + (float) progress/body.contentLength());
                 }
-
                 os.flush();
-
-                Log.d("", "File saved successfully!");
-                return;
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.d("", "Failed to save the file!");
-                return;
             } finally {
                 if (is != null) is.close();
                 if (os != null) os.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("", "Failed to save the file!");
-            return;
         }
     }
 
@@ -580,7 +567,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
             Toast.makeText(
                     SettingsAppActivity.this,
-                    getResources().getString(R.string.reporteGenerado),
+                    getResources().getString(R.string.settings_app_process_message_report_positive),
                     Toast.LENGTH_SHORT)
                     .show();
 

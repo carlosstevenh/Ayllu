@@ -45,9 +45,8 @@
             android:layout_marginRight="@dimen/fab_elevation"
             android:layout_marginTop="@dimen/fab_elevation"
             android:layout_weight="1"
-            android:elevation="0dp"
             android:onClick="graficasGenerales"
-            app:cardBackgroundColor="@color/colorPrimaryLight"
+            app:cardBackgroundColor="@color/colorBackgroundStatePositive"
             app:contentPadding="@dimen/button_padding">
 
             <LinearLayout
@@ -85,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/fab_elevation"
-
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="graficasEspecificas"

@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_seleccion_tramo_filtro">
 
     <include
-        layout="@layout/diagrama_torta"
+        layout="@layout/pie_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

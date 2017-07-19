@@ -26,7 +26,7 @@
     <color name="colorTextCardView">#000000</color>
     <color name="colorBackgroundCardView">#ffffff</color>
     <color name="colorIconCardView">#1f2549</color>
-    <color name="colorBackgroundList">#bcbcbc</color>
+    <color name="colorBackgroundList">#ededed</color>
     <!--.........................................................................................-->
     <!--Colores para el dialogo de coordenadasw-->
     <color name="colorTitleBackground">#0e2a3d</color>
@@ -34,4 +34,8 @@
     <!--COLORS: SplashScreen de información del registro-->
     <color name="colorSplashBackground">#143a48</color>
     <color name="colorSplashBackgroundFailed">#541616</color>
+    <!--.........................................................................................-->
+    <!--COLORS: Images state-->
+    <color name="colorBackgroundStatePositive">#298964</color>
+    <color name="colorBackgroundStateNegative">#4b4b4b</color>
 </resources>

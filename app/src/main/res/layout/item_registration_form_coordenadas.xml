@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content_coordenadas"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,24 +18,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:layout_margin="8dp"
-            android:background="@drawable/edit_text_border"
-            android:text="@string/latitudePointDialog"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:background="@drawable/text_view_style_negative"
+            android:drawableLeft="@drawable/ic_latitud"
+            android:drawablePadding="16dp"
+            android:drawableStart="@drawable/ic_latitud"
+            android:gravity="center_vertical"
             android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:text="@string/latitudePointDialog"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_latitud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
             android:layout_weight="0.2"
-            android:layout_margin="@dimen/fab_margin"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_icon="@drawable/ic_point"
-            app:fab_size="mini"/>
+            app:fab_size="mini" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,23 +52,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:layout_margin="8dp"
-            android:background="@drawable/edit_text_border"
-            android:text="@string/lengthPointDialog"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:background="@drawable/text_view_style_negative"
+            android:drawableLeft="@drawable/ic_longitud"
+            android:drawablePadding="16dp"
+            android:drawableStart="@drawable/ic_longitud"
+            android:gravity="center_vertical"
             android:padding="@dimen/edit_text_padding"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:text="@string/lengthPointDialog"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_longitud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
             android:layout_weight="0.2"
             app:fab_colorNormal="@color/colorAccent"
-            android:layout_margin="@dimen/fab_margin"
             app:fab_icon="@drawable/ic_point"
-            app:fab_size="mini"/>
+            app:fab_size="mini" />
     </LinearLayout>
 </LinearLayout>

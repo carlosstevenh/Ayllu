@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Promedio;
+import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -57,8 +58,6 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
         monitor = cursor.getString(0);
         cursor.close();
 
-        Log.i("Codigo",""+monitor);
-
         final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
         //peticion al servidor de los datos necesarios para realizar la grafica estadistica.
         RestClient service = RestClient.retrofit.create(RestClient.class);
@@ -69,8 +68,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
                 loading.dismiss();
                 if(response.isSuccessful()){
                     if(response.body().size()>0){
-                        setContentView(R.layout.activity_grafica_analisis_variable_tiempo);
-                        mChart = (BarChart) findViewById(R.id.variableTiempo);
+                        mChart = (BarChart) findViewById(R.id.barchart);
                         promedios = response.body();
 
                         BarData data= new BarData(valoresX(), valoresY());

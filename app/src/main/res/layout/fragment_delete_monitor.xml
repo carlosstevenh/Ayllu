@@ -21,7 +21,7 @@
         android:id="@+id/imageView2" />
 
     <TextView
-        android:text="@string/welcome"
+        android:text="Bienvenido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView7"

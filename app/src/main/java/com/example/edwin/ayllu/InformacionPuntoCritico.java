@@ -1,31 +1,22 @@
 package com.example.edwin.ayllu;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.Prueba;
-import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.example.edwin.ayllu.io.ApiConstants;
+import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -67,6 +58,16 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
         var = (TextView) findViewById(R.id.variable);
         lon = (TextView) findViewById(R.id.longitud);
         lat = (TextView) findViewById(R.id.latitud);
+
+        //se define un variable de tipo button el cual sera la encargada de manejar los eventos del boton analisis
+        fab_graficas = (FloatingActionButton) findViewById(R.id.fab_graficas);
+        fab_res = (FloatingActionButton) findViewById(R.id.fab_resp);
+
+        fab_graficas.setOnClickListener(this);
+        fab_res.setOnClickListener(this);
+
+        fab_graficas.setEnabled(false);
+        fab_res.setEnabled(false);
 
         vpMonitoring = (ViewPager) findViewById(R.id.vp_monitoring);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -134,6 +135,9 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
                     lon.setText(reverseCoordinates(aux.getLongitud(),"LONGITUD"));
                     lat.setText(reverseCoordinates(aux.getLatitud(),"LATITUD"));
 
+                    fab_graficas.setEnabled(true);
+                    fab_res.setEnabled(true);
+
                 }
                 else{
                     Toast.makeText(
@@ -153,13 +157,6 @@ public class InformacionPuntoCritico extends AppCompatActivity implements View.O
                         .show();
             }
         });
-
-        //se define un variable de tipo button el cual sera la encargada de manejar los eventos del boton analisis
-        fab_graficas = (FloatingActionButton) findViewById(R.id.fab_graficas);
-        fab_res = (FloatingActionButton) findViewById(R.id.fab_resp);
-
-        fab_graficas.setOnClickListener(this);
-        fab_res.setOnClickListener(this);
     }
 
     /**

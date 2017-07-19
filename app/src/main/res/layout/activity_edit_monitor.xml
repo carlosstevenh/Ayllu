@@ -168,7 +168,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:ems="10"
-                                        android:hint="@string/nuevaContrasena"
+                                        android:hint="@string/edit_form_password"
                                         android:singleLine="true"
                                         android:inputType="textPassword" />
 
@@ -194,7 +194,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:ems="10"
-                                        android:hint="@string/nuevaContrasena"
+                                        android:hint="@string/edit_form_confpassword"
                                         android:singleLine="true"
                                         android:inputType="textPassword" />
                                 </android.support.design.widget.TextInputLayout>
@@ -209,7 +209,7 @@
                     android:id="@+id/btnReg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/registrar"
+                    android:text="@string/titlebuttonCambiar"
                     android:textColor="@android:color/white"
                     android:layout_marginTop="30dp"
                     android:textStyle="bold"

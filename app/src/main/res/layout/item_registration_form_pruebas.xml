@@ -1,40 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/content_pruebas"
-    android:gravity="center_horizontal"
-    android:weightSum="3"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/ib_img1"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@color/colorTextIcons"
-        android:src="@drawable/ic_prueba"
-        android:scaleType="centerCrop"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-    <ImageButton
-        android:id="@+id/ib_img2"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@color/colorTextIcons"
-        android:src="@drawable/ic_prueba"
-        android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/tv_image1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:background="@color/colorBackgroundStateNegative"
+            android:drawableLeft="@drawable/ic_add_photo"
+            android:drawableStart="@drawable/ic_add_photo"
+            android:drawablePadding="8dp"
+            android:text="@string/registration_form_photo_evidence_one"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:padding="@dimen/edit_text_padding" />
 
-    <ImageButton
-        android:id="@+id/ib_img3"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_camera1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_camera"
+            app:fab_size="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@color/colorTextIcons"
-        android:src="@drawable/ic_prueba"
-        android:scaleType="centerCrop"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_image2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:background="@color/colorBackgroundStateNegative"
+            android:drawableLeft="@drawable/ic_add_photo"
+            android:drawableStart="@drawable/ic_add_photo"
+            android:drawablePadding="8dp"
+            android:text="@string/registration_form_photo_evidence_two"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:padding="@dimen/edit_text_padding" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_camera2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_camera"
+            app:fab_size="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_image3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:background="@color/colorBackgroundStateNegative"
+            android:drawableLeft="@drawable/ic_add_photo"
+            android:drawableStart="@drawable/ic_add_photo"
+            android:drawablePadding="8dp"
+            android:text="@string/registration_form_photo_evidence_three"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:padding="@dimen/edit_text_padding" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_camera3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_icon="@drawable/ic_camera"
+            app:fab_size="mini"/>
+    </LinearLayout>
 
 </LinearLayout>

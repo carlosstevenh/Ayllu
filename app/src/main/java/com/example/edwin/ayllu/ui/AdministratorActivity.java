@@ -80,7 +80,7 @@ public class AdministratorActivity extends AppCompatActivity implements Register
 
             //opcion de cerrar sesion
             case R.id.salir:
-                createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.advertencia)).show();
+                createSimpleDialogSalir(getResources().getString(R.string.cerrarSesion),getResources().getString(R.string.title_warning)).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -127,7 +127,7 @@ public class AdministratorActivity extends AppCompatActivity implements Register
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton(getResources().getString(R.string.confirmar),
+                .setPositiveButton("CONFIRMAR",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -143,7 +143,7 @@ public class AdministratorActivity extends AppCompatActivity implements Register
                                 builder.create().dismiss();
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.cancelar),
+                .setNegativeButton("CANCELAR",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

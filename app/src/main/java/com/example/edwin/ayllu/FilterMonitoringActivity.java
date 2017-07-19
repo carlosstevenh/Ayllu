@@ -24,15 +24,13 @@ import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
 import com.example.edwin.ayllu.domain.VariableContract;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 public class FilterMonitoringActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CheckBox fecha,factor,variable,arg,bol,chi,col,ecu,per;
-    private Button bt;
-    private DatePicker dp;
-    private ImageView desde,hasta;
-    private CardView cvf;
-    private TextView inicio,fin;
+    private FloatingActionButton fabFilter, fabDesde, fabHasta;
+    private TextView inicio,fin, tvFactor, tvVariable;
     int año, mes, dia;
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
@@ -72,12 +70,13 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_filter_monitoring);
         inicio = (TextView)findViewById(R.id.inicio);
         fin = (TextView) findViewById(R.id.fin);
+        tvFactor = (TextView) findViewById(R.id.tv_factor);
+        tvVariable = (TextView) findViewById(R.id.tv_variable);
 
-        desde = (ImageView) findViewById(R.id.imgViewDesde);
-        hasta = (ImageView) findViewById(R.id.hasta);
-        desde.setEnabled(false);
-        hasta.setEnabled(false);
-        cvf = (CardView) findViewById(R.id.CardViewFecha);
+        fabDesde = (FloatingActionButton) findViewById(R.id.fab_desde);
+        fabHasta = (FloatingActionButton) findViewById(R.id.fab_hasta);
+        fabDesde.setEnabled(false);
+        fabHasta.setEnabled(false);
 
         fecha = (CheckBox) findViewById(R.id.fechaMonitoreo);
         factor = (CheckBox) findViewById(R.id.factor);
@@ -94,12 +93,18 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    desde.setEnabled(true);
-                    hasta.setEnabled(true);
+                    fabDesde.setEnabled(true);
+                    fabHasta.setEnabled(true);
                 }
                 else{
-                    desde.setEnabled(false);
-                    hasta.setEnabled(false);
+                    fabDesde.setEnabled(false);
+                    fabHasta.setEnabled(false);
+                    inicio.setText("");
+                    fin.setText("");
+                    inicio.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
+                    fin.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
+                    fcDesde = 0;
+                    fcHasta = 0;
                 }
             }
         });
@@ -115,6 +120,10 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
                     opciones[0] = "0";
                     variable.setEnabled(false);
                     variable.setChecked(false);
+                    tvVariable.setText("");
+                    tvFactor.setText("");
+                    tvVariable.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
+                    tvFactor.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
                 }
             }
         });
@@ -127,12 +136,14 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
                 }
                 else {
                     opciones[1] = "0";
+                    tvVariable.setText("");
+                    tvVariable.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
                 }
             }
         });
 
-        desde.setOnClickListener(this);
-        hasta.setOnClickListener(this);
+        fabDesde.setOnClickListener(this);
+        fabHasta.setOnClickListener(this);
 
         final Calendar calendar = Calendar.getInstance();
         año = calendar.get(Calendar.YEAR);
@@ -141,8 +152,8 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
 
         fcActual = convertirFecha(dia,mes,año);
 
-        bt = (Button) findViewById(R.id.button);
-        bt.setOnClickListener(this);
+        fabFilter = (FloatingActionButton) findViewById(R.id.fab_filter);
+        fabFilter.setOnClickListener(this);
 
     }
 
@@ -156,12 +167,14 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
                     getResources().getString(R.string.search_form_alert_date),
                     Toast.LENGTH_SHORT)
                     .show();
+            inicio.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
         }
         else{
             inicio.setText(new StringBuilder()
                     .append(mes +1).append("-")
                     .append(dia).append("-")
                     .append(año));
+            inicio.setBackground(getResources().getDrawable(R.drawable.text_view_style_positive));
         }
     }
 
@@ -175,12 +188,14 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
                     getResources().getString(R.string.search_form_alert_date),
                     Toast.LENGTH_SHORT)
                     .show();
+            fin.setBackground(getResources().getDrawable(R.drawable.text_view_style_negative));
         }
         else{
             fin.setText(new StringBuilder()
                     .append(mes +1).append("-")
                     .append(dia).append("-")
                     .append(año));
+            fin.setBackground(getResources().getDrawable(R.drawable.text_view_style_positive));
         }
     }
 
@@ -193,13 +208,13 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.imgViewDesde:
+            case R.id.fab_desde:
                 this.showDialog(DATE_DIALOG_ID);
                 break;
-            case R.id.hasta:
+            case R.id.fab_hasta:
                 this.showDialog(TIME_DIALOG_ID);
                 break;
-            case R.id.button:
+            case R.id.fab_filter:
                 this.filtrar();
                 break;
         }
@@ -331,6 +346,8 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
                         cursor = factorDbHelper.generateConditionalQuery(new String[]{item}, FactorContract.FactorEntry.NOMBRE);
                         cursor.moveToFirst();
 
+                        tvFactor.setText(item);
+                        tvFactor.setBackground(getResources().getDrawable(R.drawable.text_view_style_positive));
                         opciones[0] = cursor.getString(1);
                         pos[0] = which;
                         opciones[1] = "0";
@@ -355,6 +372,8 @@ public class FilterMonitoringActivity extends AppCompatActivity implements View.
                         cursor = variableDbHelper.generateConditionalQuery(new String[]{item}, VariableContract.VariableEntry.NOMBRE);
                         cursor.moveToFirst();
 
+                        tvVariable.setText(item);
+                        tvVariable.setBackground(getResources().getDrawable(R.drawable.text_view_style_positive));
                         opciones[1] = cursor.getString(1);
                         pos[1] = which;
                         break;

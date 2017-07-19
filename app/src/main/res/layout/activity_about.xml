@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.edwin.ayllu.About">
+    tools:context="com.example.edwin.ayllu.AboutAppActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_height="wrap_content"
@@ -51,7 +51,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:text="@string/desarrolladoPor"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryText"
@@ -74,7 +73,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:text="Carlos Steven Hurtado Rivera"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryText"
@@ -87,7 +85,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:text="Edwin Yovanny Orbes Villacorte"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryText"
@@ -107,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:text="@string/enColaboracion"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryText"
