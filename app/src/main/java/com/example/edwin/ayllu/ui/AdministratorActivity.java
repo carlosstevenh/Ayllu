@@ -73,6 +73,7 @@ public class AdministratorActivity extends AppCompatActivity implements Register
             //si eligio la opcion e monitorear lo dirige a la actividad de monitorear
             case R.id.moni:
                 Intent intent = new Intent(AdministratorActivity.this, MonitorMenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
                 return true;

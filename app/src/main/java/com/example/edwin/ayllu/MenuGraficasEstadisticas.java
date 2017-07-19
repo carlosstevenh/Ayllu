@@ -26,4 +26,12 @@ public class MenuGraficasEstadisticas extends AppCompatActivity {
         Intent intent = new Intent(MenuGraficasEstadisticas.this, FilterMonitoringActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(MenuGraficasEstadisticas.this,MonitorMenuActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        finish();
+    }
 }

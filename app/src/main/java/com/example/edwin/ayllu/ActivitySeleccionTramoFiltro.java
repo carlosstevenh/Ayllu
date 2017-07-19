@@ -208,6 +208,8 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
                 createRadioListDialog(items_tramos, getResources().getString(R.string.general_statistical_graph_dialog_title_tramos), 2).show();
                 break;
             case R.id.fab_search:
+                mChart = (PieChart) findViewById(R.id.piechart);
+                mChart.clear();
                 //ID del boton que realiza la peticion al servidor de los datos para porsteriormente ser graficados
                 if(opTramo != -1){
                     fabMenu.collapse();

@@ -10,6 +10,7 @@
     <string name="login_user_process_authenticate">Iniciando Sesión</string>
     <string name="login_user_process_message">Por favor espere…</string>
 
+
     <!--============================================================================================
         STRINGS: MENU DEL ADMINISTRADOR
         ============================================================================================-->
@@ -155,10 +156,10 @@
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona una Variable</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
-    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona un Porcentaje</string>
-    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona una Frecuencia</string>
+    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona Porcentaje</string>
+    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona Frecuencia</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
@@ -443,7 +444,5 @@
     <string name="AcerceDe">Acerca de</string>
     <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="borrarDatos">¿Está seguro que desea borrar monitoreos descargados?</string>
 </resources>

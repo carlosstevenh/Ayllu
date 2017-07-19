@@ -125,7 +125,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         }
         cursor.close();
 
-        opHabilitar = (LinearLayout) findViewById(R.id.opcion_habilitar);
+        opHabilitar = (LinearLayout) findViewById(R.id.opcion_borrar);
         opElegir = (LinearLayout) findViewById(R.id.opcion_elegir);
         opSalir = (LinearLayout) findViewById(R.id.opcion_salir);
         opAcerca = (LinearLayout) findViewById(R.id.opcion_acerca);
@@ -143,6 +143,9 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.opcion_borrar:
+                createSimpleDialogBorrar(getResources().getString(R.string.borrarDatos),getResources().getString(R.string.title_warning)).show();
+                break;
             case R.id.opcion_elegir:
                 createRadioListDialog(items_tramos, getResources().getString(R.string.descriptionTramo), 1, "OFFLINE").show();
                 break;
@@ -157,7 +160,9 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
             case R.id.opcion_administrar:
                 if(tipo.equals("A")){
                     Intent i = new Intent(getApplicationContext(), AdministratorActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    finish();
                 }
                 else{
                     Toast login = Toast.makeText(getApplicationContext(),
@@ -207,7 +212,6 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor.moveToFirst();
                                 op[1] = cursor.getInt(1);
                                 opciones += "\n\n" + getResources().getString(R.string.info_critical_point_item_subtramo) + "\n(" + item + ")";
-
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{op[1] + ""}, SeccionContract.SeccionEntry.SUBTRAMO);
                                 items_secciones = dataFilter(cursor, 2);
                                 break;
@@ -219,7 +223,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{item}, SeccionContract.SeccionEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[2] = cursor.getInt(1);
-                                opciones += " \n\n" + getResources().getString(R.string.info_critical_point_item_seccion) + "\n(" + item + ")";
+                                opciones += " \n\n"+ getResources().getString(R.string.info_critical_point_item_seccion)+"\n(" + item + ")";
 
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaContract.AreaEntry.SECCION);
                                 items_areas = dataFilter(cursor, 3);
@@ -234,6 +238,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor.moveToFirst();
                                 op[3] = cursor.getInt(1);
                                 opciones += "\n\n" + getResources().getString(R.string.info_critical_point_item_propiedad) + "\n("+ items_tipos[which].toString() + ")";
+
                                 break;
                             //----------------------------------------------------------------------
                             default:
@@ -293,12 +298,39 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 bd.close();
 
                                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
                                 finish();
                                 builder.create().dismiss();
                             }
                         })
                 .setNegativeButton(getResources().getString(R.string.info_dialog_option_cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().dismiss();
+                            }
+                        });
+
+        return builder.create();
+    }
+
+    //metodo encargado de crear los dialogos informativos
+    public AlertDialog createSimpleDialogBorrar(String mensaje, String titulo) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo)
+                .setMessage(mensaje)
+                .setPositiveButton(getResources().getString(R.string.settings_app_dialog_option_confirm),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                monitoreoDbHelper.deleteDataBase();
+                                monitoreoDbHelper.close();
+                                builder.create().dismiss();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.settings_app_dialog_option_cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -360,7 +392,6 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
                                             //Descargar Imagenes del Servidor
                                             for (int i = 0; i<reportes.size(); i++) downloadZipFile(reportes.get(i).getPrueba1());
-
                                             Toast.makeText(SettingsAppActivity.this,getResources().getString(R.string.settings_app_process_message_search_positive), Toast.LENGTH_SHORT).show();
                                         }
                                         else checkPermission();
@@ -499,8 +530,8 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     public void generateReport(ArrayList<Reporte> rp) {
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         String name = "Reporte-"+s.format(new Date());
-        s = new SimpleDateFormat("HH:mm:ss");
-        name += "-"+s.format(new Date())+".xls";
+        //s = new SimpleDateFormat("HH:mm:ss");
+        //name += "-"+s.format(new Date())+".xls";
         name = "reporte.xls";
         //------------------------------------------------------------------------------------------
         //Escribiendo en el archivo Excel

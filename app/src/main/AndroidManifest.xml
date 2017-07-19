@@ -15,7 +15,10 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait"
@@ -28,50 +31,79 @@
         </activity>
         <activity
             android:name=".MonitorMenuActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.AdministratorActivity"
-            android:configChanges="screenSize|orientation" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.EditMonitorActivity"
-            android:configChanges="screenSize|orientation" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".SeleccionArea"
-            android:configChanges="screenSize|orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".InstitutionalActivity"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".FormRespuesta" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".FormRespuesta"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MonitoringActivity"
-            android:configChanges="screenSize|orientation" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MontoreosPuntosCriticos"
-            android:configChanges="screenSize|orientation" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".InformacionPuntoCritico"
-            android:configChanges="screenSize|orientation" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".FilterMonitoringActivity"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".ActividadEstadisticaPuntoAfactacion" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".ActividadEstadisticaPuntoAfactacion"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".PrestentationActivity"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".GraficaRespuestaInstitucional" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".GraficaRespuestaInstitucional"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ActivitySeleccionTramoFiltro"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".GraficaTortaVariables"
-            android:configChanges="screenSize|orientation" />
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MenuGraficasEstadisticas"
-            android:configChanges="screenSize|orientation" />
-        <activity android:name=".SettingsAppActivity" />
-        <activity android:name=".AboutAppActivity" />
-        <activity android:name=".GraficaAnalisisVariableTiempo" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+
+        <activity
+            android:name=".SettingsAppActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".AboutAppActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".GraficaAnalisisVariableTiempo"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>

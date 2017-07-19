@@ -33,7 +33,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/opcion_habilitar"
+                android:id="@+id/opcion_borrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
