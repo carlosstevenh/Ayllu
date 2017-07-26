@@ -45,7 +45,6 @@ public class AylluApiAdapter {
         Gson gsonConf;
         switch (op) {
             case "REPORTE":
-                Log.e("INFO","DESERIALIZER REPORTE");
                 gsonConf = new GsonBuilder()
                         .registerTypeAdapter(ReporteResponse.class, new ReporteDeserializer())
                         .create();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import static com.example.edwin.ayllu.domain.ImagenContract.ImagenEntry;
 
@@ -53,11 +54,35 @@ public class ImagenDbHelper extends SQLiteOpenHelper {
      * METODO: Obtiene el tamaño de la tabla Imagenes
      **/
     public int getSizeDatabase() {
+        int size1 = 0;
+        int size2 = 0;
+        int size3 = 0;
+
+        size1 = processSize(ImagenEntry.FOTOGRAFIA1);
+        size2 = processSize(ImagenEntry.FOTOGRAFIA2);
+        size3 = processSize(ImagenEntry.FOTOGRAFIA3);
+
+        return size1 + size2 + size3;
+    }
+
+    private int processSize(String fotografia){
+        int current_size;
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor cursor;
-        cursor = sqLiteDatabase.rawQuery("SELECT COUNT(*) FROM " + ImagenEntry.TABLE_NAME, null);
-        if(cursor.moveToFirst()) return cursor.getInt(0);
-        else return 0;
+        cursor = sqLiteDatabase.rawQuery("SELECT COUNT(*) FROM " + ImagenEntry.TABLE_NAME +
+                " WHERE " + fotografia +
+                " NOT LIKE 'null'", null);
+
+        if(cursor.moveToFirst()){
+            current_size = cursor.getInt(0);
+            Log.e("Tamaño de "+fotografia, ""+current_size);
+            cursor.close();
+            return current_size;
+        }
+        else {
+            cursor.close();
+            return 0;
+        }
     }
 
     /**
@@ -100,5 +125,15 @@ public class ImagenDbHelper extends SQLiteOpenHelper {
         valores.put(atributo[0], "null");
 
         sqLiteDatabase.update(ImagenEntry.TABLE_NAME, valores, atributo[1]+"="+condition[0], null);
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Eliminar los elemento que cumplan con una condición
+     */
+    public void generateConditionalDelete (String[] condition, String[] atributo){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete(ImagenEntry.TABLE_NAME, atributo[0] + "=? AND "+
+                atributo[1] + "=? AND "+ atributo[2] + "=?", condition);
     }
 }

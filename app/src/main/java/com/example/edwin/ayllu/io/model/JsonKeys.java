@@ -57,6 +57,10 @@ public class JsonKeys {
     public static final String CODIGO_VARIABLE = "codigo_var";
     public static final String NOMBRE_VARIABLE = "nombre_var";
     public static final String FACTOR = "factor";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para los mensajes
+    public static final String ESTADO = "estado";
+    public static final String MENSAJE = "mensaje";
 
     //==============================================================================================
     //CONSTANTES PARA EL REPORTE

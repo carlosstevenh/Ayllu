@@ -456,10 +456,12 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                         });
                     }
                 } else {
-                    createOfflineMonitoringDialog(
-                            getResources().getString(R.string.list_monitoring_description_dialog_offline)+
-                            "\n"+getResources().getString(R.string.list_monitoring_description_dialog_offline_question),
-                            getResources().getString(R.string.list_monitoring_title_dialog_offline)).show();
+                    if (!monitoreoDbHelper.getMonitoreos().isEmpty()){
+                        createOfflineMonitoringDialog(
+                                getResources().getString(R.string.list_monitoring_description_dialog_offline)+
+                                        "\n"+getResources().getString(R.string.list_monitoring_description_dialog_offline_question),
+                                getResources().getString(R.string.list_monitoring_title_dialog_offline)).show();
+                    }
                 }
                 break;
             default:

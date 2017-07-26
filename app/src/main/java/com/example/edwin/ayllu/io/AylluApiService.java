@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu.io;
 
+import com.example.edwin.ayllu.domain.Mensaje;
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
@@ -21,13 +22,13 @@ public interface AylluApiService {
      * METODO: Registrar un nuevo punto de afectación con monitoreo
      **/
     @POST("monitoreos/registrar/")
-    Call<Task> registrarPunto(@Body Task datos);
+    Call<Mensaje> registrarPunto(@Body Task datos);
     /**
      * =============================================================================================
      * METODO: Registra un monitoreo sobre un punto de afectación existente
      **/
     @POST("monitoreos/monitorear/")
-    Call<Task> monitorearPunto(@Body Task datos);
+    Call<Mensaje> monitorearPunto(@Body Task datos);
     /**
      * =============================================================================================
      * METODO: Consultar Monitoreos

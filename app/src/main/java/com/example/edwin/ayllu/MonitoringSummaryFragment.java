@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.edwin.ayllu.domain.Imagen;
 import com.example.edwin.ayllu.domain.ImagenDbHelper;
+import com.example.edwin.ayllu.domain.Mensaje;
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
@@ -361,10 +362,10 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
 
         if (tip_upload.equals("NEW")) {
             //Creamos un Objeto tipo task con los datos del formulario
-            Call<Task> call = service.registrarPunto(task);
-            call.enqueue(new retrofit2.Callback<Task>() {
+            Call<Mensaje> call = service.registrarPunto(task);
+            call.enqueue(new retrofit2.Callback<Mensaje>() {
                 @Override
-                public void onResponse(Call<Task> call, Response<Task> response) {
+                public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
                     if(response.isSuccessful()) {
                         loading.dismiss();
                         fragment = new MonitoringInfoFragment();
@@ -394,7 +395,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                     }
                 }
                 @Override
-                public void onFailure(Call<Task> call, Throwable t) {
+                public void onFailure(Call<Mensaje> call, Throwable t) {
                     loading.dismiss();
                     fragment = new MonitoringInfoFragment();
                     Bundle params = new Bundle();
@@ -409,10 +410,10 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                 }
             });
         } else if (tip_upload.equals("MONITORING")) {
-            Call<Task> call = service.monitorearPunto(task);
-            call.enqueue(new retrofit2.Callback<Task>() {
+            Call<Mensaje> call = service.monitorearPunto(task);
+            call.enqueue(new retrofit2.Callback<Mensaje>() {
                 @Override
-                public void onResponse(Call<Task> call, Response<Task> response) {
+                public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
                     if(response.isSuccessful()){
                         loading.dismiss();
                         fragment = new MonitoringInfoFragment();
@@ -441,7 +442,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
                 }
 
                 @Override
-                public void onFailure(Call<Task> call, Throwable t) {
+                public void onFailure(Call<Mensaje> call, Throwable t) {
                     loading.dismiss();
                     fragment = new MonitoringInfoFragment();
                     Bundle params = new Bundle();

@@ -2,6 +2,7 @@ package com.example.edwin.ayllu;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.edwin.ayllu.domain.AreaContract;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
+import com.example.edwin.ayllu.domain.FactorDbHelper;
+import com.example.edwin.ayllu.domain.ImagenDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.Reporte;
@@ -29,8 +32,10 @@ import com.example.edwin.ayllu.domain.SeccionContract;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
 import com.example.edwin.ayllu.domain.SubtramoContract;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
+import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.domain.TramoContract;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
+import com.example.edwin.ayllu.domain.VariableDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.AylluApiService;
@@ -291,11 +296,26 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                //Borramos los datos del usuario logueado
                                 AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
                                 SQLiteDatabase bd = admin.getWritableDatabase();
                                 bd.delete(admin.TABLENAME, null, null);
                                 bd.close();
+
+                                //Borramos los datos de funcionamiento
+                                paisDbHelper.deleteDataBase();
+                                tramoDbHelper.deleteDataBase();
+                                subtramoDbHelper.deleteDataBase();
+                                seccionDbHelper.deleteDataBase();
+                                areaDbHelper.deleteDataBase();
+
+                                paisDbHelper.close();
+                                tramoDbHelper.close();
+                                subtramoDbHelper.close();
+                                seccionDbHelper.close();
+                                areaDbHelper.close();
+
+                                deleteCache(SettingsAppActivity.this);
 
                                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -324,7 +344,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                //Borramos el paquete de datos descargado
                                 monitoreoDbHelper.deleteDataBase();
                                 monitoreoDbHelper.close();
                                 builder.create().dismiss();
@@ -667,5 +687,36 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: ELIMINA LOS DATOS ALMACENADOS EN CACHE
+     **/
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: ELIMINA EL DIRECTORIO DE CACHE
+     **/
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        }
+        else if(dir!= null && dir.isFile()) return dir.delete();
+        else return false;
     }
 }

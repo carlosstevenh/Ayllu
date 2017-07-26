@@ -122,16 +122,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/galeras" />
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:id="@+id/imageView13"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/griniseta" />
+                    android:layout_weight="1" />
 
             </LinearLayout>
         </LinearLayout>

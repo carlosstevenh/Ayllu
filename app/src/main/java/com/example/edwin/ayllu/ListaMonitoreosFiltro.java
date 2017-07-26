@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.PuntoCritico;
@@ -28,6 +29,7 @@ public class ListaMonitoreosFiltro extends Fragment {
 
     private RecyclerView mReporteList;
     private ArrayList<PuntoCritico> monitoreos = new ArrayList<>();
+    private TextView tvInfo;
 
 
     @Override
@@ -40,7 +42,9 @@ public class ListaMonitoreosFiltro extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_lista_monitoreos_filtro, container, false);
+
         mReporteList = (RecyclerView) root.findViewById(R.id.rvpc);
+        tvInfo = (TextView) root.findViewById(R.id.tv_info);
 
         //parametros que se obtienene cuando se llama a esta clase
         Bundle bundle = getActivity().getIntent().getExtras();
@@ -58,34 +62,32 @@ public class ListaMonitoreosFiltro extends Fragment {
                 loading.dismiss();
                 if (response.isSuccessful()) {
                     monitoreos = response.body();
+                    if (!monitoreos.isEmpty()){
+                        tvInfo.setVisibility(View.INVISIBLE);
 
-                    //invocacion al metodo setOnclickListener cuando el usuario clickea un elementod de la lista
-                    PuntoCriticoAdapter ma = new PuntoCriticoAdapter(monitoreos);
-                    ma.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            PuntoCritico m = monitoreos.get(mReporteList.getChildAdapterPosition(view));
-                            Bundle parametro = new Bundle();
-                            parametro.putString("pa", m.getCodigo_paf());
-                            parametro.putString("fm", m.getFecha());
+                        //invocacion al metodo setOnclickListener cuando el usuario clickea un elementod de la lista
+                        PuntoCriticoAdapter ma = new PuntoCriticoAdapter(monitoreos);
+                        ma.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                PuntoCritico m = monitoreos.get(mReporteList.getChildAdapterPosition(view));
+                                Bundle parametro = new Bundle();
+                                parametro.putString("pa", m.getCodigo_paf());
+                                parametro.putString("fm", m.getFecha());
 
-                            Intent intent = new Intent(getActivity(), InformacionPuntoCritico.class);
-                            intent.putExtras(parametro);
-                            startActivity(intent);
-                            Log.i("DemoRecView", "Pulsado el elemento " + m.getCodigo_paf());
-                        }
-                    });
-                    LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-                    mReporteList.setLayoutManager(llm);
-                    mReporteList.setAdapter(ma);
+                                Intent intent = new Intent(getActivity(), InformacionPuntoCritico.class);
+                                intent.putExtras(parametro);
+                                startActivity(intent);
+                                Log.i("DemoRecView", "Pulsado el elemento " + m.getCodigo_paf());
+                            }
+                        });
+                        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                        mReporteList.setLayoutManager(llm);
+                        mReporteList.setAdapter(ma);
+                    }
+                    else tvInfo.setVisibility(View.VISIBLE);
                 }
-                else{
-                    Toast.makeText(
-                            getActivity(),
-                            getResources().getString(R.string.institutional_response_form_process_message_negative),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
+                else tvInfo.setVisibility(View.VISIBLE);
             }
 
             @Override

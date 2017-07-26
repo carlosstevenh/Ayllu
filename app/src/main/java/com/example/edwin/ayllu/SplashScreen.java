@@ -100,122 +100,14 @@ public class SplashScreen extends Activity {
         }
         bd.close();
     }
-    //==============================================================================================
-    //METODO: OBTIENE Y PROCESA DATOS DE (ZONAS/CATEGORIAS) Y MONITOREOS ALMACENADOS EN EL MOVIL
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //------------------------------------------------------------------------------------------
-        //OBTIENE TODOS LOS DATOS DE ZONAS (PAISES/TRAMOS/SUBTRAMOS/SECCIONES/AREAS)
-        final PaisDbHelper paisDbHelper = new PaisDbHelper(this);
-        final TramoDbHelper tramoDbHelper = new TramoDbHelper(this);
-        final SubtramoDbHelper subtramoDbHelper = new SubtramoDbHelper(this);
-        final SeccionDbHelper seccionDbHelper = new SeccionDbHelper(this);
-        final AreaDbHelper areaDbHelper = new AreaDbHelper(this);
-
-        int sizePais = paisDbHelper.getSizeDatabase();
-        int sizeTramo = tramoDbHelper.getSizeDatabase();
-        int sizeSubtramo = subtramoDbHelper.getSizeDatabase();
-        int sizeSeccion = seccionDbHelper.getSizeDatabase();
-        int sizeArea = areaDbHelper.getSizeDatabase();
-
-        if(sizePais == 0 && sizeTramo == 0 && sizeSubtramo == 0 && sizeSeccion == 0 && sizeArea == 0){
-            deleteCache(this);
-            Log.e("INFO","TABLAS DE ZONAS VACIAS :( - ESCRIBIENDO... :)");
-            //--------------------------------------------------------------------------------------
-            //OBTIENE LAS ZONAS
-            Call<ZonaResponse> call2 = AylluApiAdapter.getApiService("ZONAS").getZona();
-            call2.enqueue(new Callback<ZonaResponse>() {
-                @Override
-                public void onResponse(Call<ZonaResponse> call, Response<ZonaResponse> response) {
-                    if (response.isSuccessful()) {
-                        zonas = response.body().getZonas();
-                        Log.e("INFO:","Se cargo toda la información de zonas");
-
-                        paisDbHelper.savePaisList(zonas.get(0).getPaises());
-                        tramoDbHelper.saveTramoList(zonas.get(0).getTramos());
-                        subtramoDbHelper.saveSubtramoList(zonas.get(0).getSubtramos());
-                        seccionDbHelper.saveSeccionList(zonas.get(0).getSecciones());
-                        areaDbHelper.saveAreaList(zonas.get(0).getAreas());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ZonaResponse> call, Throwable t) {
-                    Log.e("ERROR",""+t.getMessage());
-                }
-            });
-        }
-        else Log.e("INFO","TABLAS DE ZONAS CON DATOS :)");
-
-        //------------------------------------------------------------------------------------------
-        //OBTIENE TODOS LOS DATOS DE CATEGORIAS (FACTORES/VARIABLES)
-        final FactorDbHelper factorDbHelper = new FactorDbHelper(this);
-        final VariableDbHelper variableDbHelper = new VariableDbHelper(this);
-
-        int sizeFactor = factorDbHelper.getSizeDatabase();
-        int sizeVariable = variableDbHelper.getSizeDatabase();
-
-        if(sizeFactor == 0 && sizeVariable == 0){
-            Log.e("INFO","TABLAS DE CATEGORIAS VACIAS :( - ESCRIBIENDO... :)");
-            //--------------------------------------------------------------------------------------
-            //OBTIENE LAS CATEGORIAS
-            Call<CategoriaResponse> call3 = AylluApiAdapter.getApiService("CATEGORIAS").getCategoria();
-            call3.enqueue(new Callback<CategoriaResponse>() {
-                @Override
-                public void onResponse(Call<CategoriaResponse> call, Response<CategoriaResponse> response) {
-                    if (response.isSuccessful()) {
-                        categorias = response.body().getCategorias();
-                        Log.e("INFO:","Se cargo toda la información de las categorias");
-
-                        factorDbHelper.saveFactorList(categorias.get(0).getFactores());
-                        variableDbHelper.saveVariableList(categorias.get(0).getVariables());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<CategoriaResponse> call, Throwable t) {
-                    Log.e("ERROR",""+t.getMessage());
-                }
-            });
-        }
-        else Log.e("INFO","TABLAS DE CATEGORIAS CON DATOS :)");
-    }
-    /**
-     * =============================================================================================
-     * METODO:
-     **/
-
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
 
     /**
      * =============================================================================================
-     * METODO:
+     * METODO: BLOQUEA EL EVENTO DE RETROCESO DEL USUARIO
      **/
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        }
-        else if(dir!= null && dir.isFile()) return dir.delete();
-        else return false;
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-
             return true;
         }
         return super.onKeyDown(keyCode, event);

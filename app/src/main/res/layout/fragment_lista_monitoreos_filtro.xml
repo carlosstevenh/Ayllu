@@ -24,7 +24,6 @@
                 android:text="@string/list_critical_points_title"
                 android:textSize="18sp"
                 android:textColor="#fff"
-                android:layout_marginLeft="20dp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"/>
 

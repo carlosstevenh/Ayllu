@@ -55,9 +55,14 @@ public class TaskDbHelper extends SQLiteOpenHelper {
      * =============================================================================================
      * METODO: Obtiene el tamaño de la tabla Subtramos
      **/
-    public Cursor getSizeDatabase() {
+    public int getSizeDatabase() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        return sqLiteDatabase.rawQuery("SELECT COUNT(*) FROM " + TaskEntry.TABLE_NAME, null);
+        Cursor cursor_task;
+        cursor_task = sqLiteDatabase.rawQuery("SELECT COUNT(*) FROM " + TaskEntry.TABLE_NAME +
+                " WHERE " + TaskEntry.NOMBRE + " NOT LIKE 'null'", null);
+
+        if (cursor_task.moveToFirst()) return cursor_task.getInt(0);
+        else return 0;
     }
 
     /**
@@ -83,9 +88,9 @@ public class TaskDbHelper extends SQLiteOpenHelper {
      * =============================================================================================
      * METODO: Borrar un Elemento de la base de datos
      **/
-    public void generateConditionalDelete(String[] condition, String atributo) {
+    public void generateConditionalDelete(String[] condition, String[] atributo) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.delete(TaskEntry.TABLE_NAME, atributo+"="+condition[0], null);
+        sqLiteDatabase.delete(TaskEntry.TABLE_NAME, atributo[0] + "=?", condition);
     }
 
     /**
