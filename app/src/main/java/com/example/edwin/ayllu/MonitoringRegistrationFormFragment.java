@@ -59,7 +59,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     //VARIABLES: Componetes del Formulario de Registro
     Button btnVar, btnFac, btnPor, btnFre;
     RadioGroup rgRep1, rgRep2, rgOrg;
-    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3;
+    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3, tvTitle;
     FloatingActionButton fabLat, fabLong, fabCamera1, fabCamera2, fabCamera3;
     private TextView tvInfo;
 
@@ -115,7 +115,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monitoring_registration_form, container, false);
 
-        tvInfo = (TextView) view.findViewById(R.id.tv_info);
+        tvTitle = (TextView) view.findViewById(R.id.tv_title);
 
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
         fecha = s.format(new Date());
@@ -143,6 +143,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             variable = getArguments().getString("VAR_NAME");
             lat = getArguments().getString("LATITUD");
             logt = getArguments().getString("LONGITUD");
+            tvTitle.setText(getResources().getString(R.string.titleFormMonitoring));
 
             punto_afectacion = getArguments().getString("PUNTO");
             mySteps = getResources().getStringArray(R.array.registration_form_monitoring);
