@@ -49,6 +49,7 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
         holder.latitud.setText(reverseCoordinates(monitoreos.get(position).getLatitud(),"LATITUD"));
         holder.longitud.setText(reverseCoordinates(monitoreos.get(position).getLongitud(),"LONGITUD"));
         holder.setPrueba(ApiConstants.URL_IMG+monitoreos.get(position).getPrueba());
+        holder.propiedad.setText(monitoreos.get(position).getPropiedad());
     }
 
     @Override
@@ -73,6 +74,7 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
         TextView latitud;
         TextView longitud;
         ImageView prueba;
+        TextView pripiedad;
 
         public MonitoreoHolder(View itemView) {
             super(itemView);
@@ -82,6 +84,7 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
             latitud = (TextView) itemView.findViewById(R.id.tv_latitud);
             longitud = (TextView) itemView.findViewById(R.id.tv_longitud);
             prueba = (ImageView) itemView.findViewById(R.id.iv_prueba);
+            propiedad = (TextView) itemView.findViewById(R.id.tv_property);
         }
 
         void setPrueba(String cad) { Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);}
