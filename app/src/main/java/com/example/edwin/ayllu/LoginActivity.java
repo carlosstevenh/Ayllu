@@ -29,7 +29,7 @@ import com.example.edwin.ayllu.io.RestClient;
 import com.example.edwin.ayllu.domain.SHA1;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
-import com.example.edwin.ayllu.ui.AdministratorActivity;
+import com.example.edwin.ayllu.ui.AdminActivity;
 import com.example.edwin.ayllu.domain.Usuario;
 
 import java.util.ArrayList;
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     //metodo que se encarga de redireccionar al menu del administrador 
     void menuAdministrador(){
 
-        Intent i=new Intent(this, AdministratorActivity.class);
+        Intent i=new Intent(this, AdminActivity.class);
         startActivity(i);
         finish();
 

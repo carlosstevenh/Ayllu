@@ -18,7 +18,6 @@ import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.io.RestClient;
 import com.example.edwin.ayllu.domain.SHA1;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -141,7 +140,7 @@ public class EditMonitorActivity extends AppCompatActivity {
                                                 Toast login = Toast.makeText(getApplicationContext(),
                                                         getResources().getString(R.string.edit_form_process_successful_message), Toast.LENGTH_LONG);
                                                 login.show();
-                                                Intent intent = new Intent(getApplicationContext(),AdministratorActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(),AdminActivity.class);
                                                 startActivity(intent);
                                                 finish();
 

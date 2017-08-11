@@ -40,7 +40,6 @@ import retrofit2.Response;
 
 public class EditMonitorFragment extends Fragment  {
 
-    private OnFragmentInteractionListener mListener;
     private ArrayList<Usuario> listaUsuarios;
     private Usuario user;
     private ListView usuarios;
@@ -120,10 +119,6 @@ public class EditMonitorFragment extends Fragment  {
 
         UsuariosAdapter ua = cargarLista();
 
-        usuarios = (ListView)view.findViewById(R.id.listUser);
-        usuarios.setFastScrollEnabled(true);
-        usuarios.setAdapter(ua);
-
         registerForContextMenu(usuarios);
 
         //metodo encargado de recargar la informacion de la lista
@@ -137,7 +132,6 @@ public class EditMonitorFragment extends Fragment  {
                         UsuariosAdapter ua = cargarLista();
                         usuarios = (ListView)view.findViewById(R.id.listUser);
                         usuarios.setFastScrollEnabled(true);
-                        usuarios.setAdapter(ua);
                         swipeContainer.setRefreshing(false);
                     }
                 }, 3000);
@@ -156,11 +150,9 @@ public class EditMonitorFragment extends Fragment  {
         Cursor datos = bd.rawQuery(
                 "select * from "+ admin.TABLENAME + " where "+ admin.TIP_USU + "='M'", null);
 
-        Log.i("TAG", "registro=> " + datos.getCount());
         String[] nombres = new String[datos.getCount()];
-        listaUsuarios = new ArrayList<Usuario>(datos.getCount());
+        listaUsuarios = new ArrayList<>(datos.getCount());
         int i = 0;
-        String pais = "";
         if (datos.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
@@ -180,7 +172,6 @@ public class EditMonitorFragment extends Fragment  {
                 String nombre = datos.getString(0)+" "+datos.getString(1);
                 nombres[i] = nombre;
                 i++;
-                pais = datos.getString(2);
 
             } while(datos.moveToNext());
         }
@@ -189,57 +180,7 @@ public class EditMonitorFragment extends Fragment  {
         UsuariosAdapter ua = new UsuariosAdapter(getActivity(),listaUsuarios);
         return ua;
     }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-    @Override
-    public void onStop() {
-        Log.i("TAG", "Esta en stop> " );
-        super.onStop();
-
-    }
-
-    @Override
-    public void onPause() {
-        Log.i("TAG", "Esta en pause> " );
-        super.onPause();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
     //metodo encargado de crear los dialogos informativos dependiendo de lo que suceda durante la ejecucion de la actividad
     public AlertDialog createSimpleDialog(String mensaje, String titulo,String usuario) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -267,7 +208,7 @@ public class EditMonitorFragment extends Fragment  {
                                             SQLiteDatabase bd1 = admin1.getWritableDatabase();
                                             bd1.delete(admin1.TABLENAME, admin1.IDE_USU +"='"+ dh +"'", null);
                                             bd1.close();
-                                            Intent intent = new Intent(getContext(),AdministratorActivity.class);
+                                            Intent intent = new Intent(getContext(),AdminActivity.class);
                                             startActivity(intent);
                                             Toast login = Toast.makeText(getContext(),
                                                     getResources().getString(R.string.process_successful_message), Toast.LENGTH_LONG);

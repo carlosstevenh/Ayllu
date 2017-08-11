@@ -23,8 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.edwin.ayllu.domain.AreaContract;
 import com.example.edwin.ayllu.domain.AreaDbHelper;
-import com.example.edwin.ayllu.domain.FactorDbHelper;
-import com.example.edwin.ayllu.domain.ImagenDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.Reporte;
@@ -32,15 +30,13 @@ import com.example.edwin.ayllu.domain.SeccionContract;
 import com.example.edwin.ayllu.domain.SeccionDbHelper;
 import com.example.edwin.ayllu.domain.SubtramoContract;
 import com.example.edwin.ayllu.domain.SubtramoDbHelper;
-import com.example.edwin.ayllu.domain.TaskDbHelper;
 import com.example.edwin.ayllu.domain.TramoContract;
 import com.example.edwin.ayllu.domain.TramoDbHelper;
-import com.example.edwin.ayllu.domain.VariableDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
-import com.example.edwin.ayllu.ui.AdministratorActivity;
+import com.example.edwin.ayllu.ui.AdminActivity;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -164,7 +160,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.opcion_administrar:
                 if(tipo.equals("A")){
-                    Intent i = new Intent(getApplicationContext(), AdministratorActivity.class);
+                    Intent i = new Intent(getApplicationContext(), AdminActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     finish();

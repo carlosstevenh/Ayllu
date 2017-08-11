@@ -16,19 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_horizontal"
-            android:background="?attr/colorPrimary">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/titleListMonitoring"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </android.support.v7.widget.Toolbar>
+            app:title="@string/titleListMonitoring" />
 
     </android.support.design.widget.AppBarLayout>
 

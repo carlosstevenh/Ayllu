@@ -204,10 +204,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             btnVar.setBackgroundColor(getActivity().getResources().getColor(R.color.colorAccent));
         }
 
-        //------------------------------------------------------------------------------------------
-        //Cargamos los estados de las fotografias
-        Uri fileUriFoto;
-
         if (files.size() == 1) changeStateImage(tvImage1);
         else if (files.size() == 2) {
             changeStateImage(tvImage1);

@@ -1,7 +1,6 @@
 package com.example.edwin.ayllu;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,26 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.example.edwin.ayllu.ui.AdministratorActivity;
-import com.example.edwin.ayllu.domain.AreaDbHelper;
+import com.example.edwin.ayllu.ui.AdminActivity;
 import com.example.edwin.ayllu.domain.Categoria;
-import com.example.edwin.ayllu.domain.FactorDbHelper;
-import com.example.edwin.ayllu.domain.PaisDbHelper;
-import com.example.edwin.ayllu.domain.SeccionDbHelper;
-import com.example.edwin.ayllu.domain.SubtramoDbHelper;
-import com.example.edwin.ayllu.domain.TramoDbHelper;
-import com.example.edwin.ayllu.domain.VariableDbHelper;
 import com.example.edwin.ayllu.domain.Zona;
-import com.example.edwin.ayllu.io.AylluApiAdapter;
-import com.example.edwin.ayllu.io.model.CategoriaResponse;
-import com.example.edwin.ayllu.io.model.ZonaResponse;
 
-import java.io.File;
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SplashScreen extends Activity {
     String tipo;
@@ -60,7 +44,7 @@ public class SplashScreen extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(SplashScreen.this, AdministratorActivity.class);
+                        Intent intent = new Intent(SplashScreen.this, AdminActivity.class);
                         startActivity(intent);
                         finish();
                     }

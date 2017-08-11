@@ -38,4 +38,9 @@
     <!--COLORS: Images state-->
     <color name="colorBackgroundStatePositive">#298964</color>
     <color name="colorBackgroundStateNegative">#4b4b4b</color>
+
+    <color name="s1">#ffa7a8</color>
+    <color name="s2">#ff6464</color>
+    <color name="s3">#e91d1d</color>
+    <color name="s4">#bf0000</color>
 </resources>
