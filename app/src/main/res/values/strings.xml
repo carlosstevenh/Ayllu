@@ -28,7 +28,7 @@
     <string name="registration_form_button_record">Registrar</string>
     <string name="registration_form_alert_invalid_field">Campo inválido</string>
     <string name="registration_form_alert_empty_field">Campo vacío</string>
-    <string name="registration_form_alert_password">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="registration_form_alert_password">Debe contener máyusculas, minúsulas, dígitos y un tamaño mayor a 8 caracteres</string>
     <string name="registration_form_alert_different_passwords">Las contraseñas no coinciden</string>
     <string name="registration_form_process_shipping_status">Registrando monitor</string>
     <string name="registration_form_process_message">Por favor espere …</string>
@@ -59,7 +59,7 @@
     <string name="edit_form_confpassword">Confirmar contraseña</string>
     <string name="edit_form_alert_invalid_field">Campo inválido</string>
     <string name="redit_form_alert_empty_field">Campo vacío</string>
-    <string name="edit_form_alert_password">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="edit_form_alert_password">Debe contener máyusculas, minúsulas, dígitos y un tamaño mayor a 8 caracteres</string>
     <string name="edit_form_alert_different_passwords">Las contraseñas no coinciden</string>
     <string name="edit_form_process_message_update_monitor">Actualizando monitor</string>
     <string name="edit_form_process_message">Por favor espere …</string>
@@ -87,7 +87,7 @@
     <!--STRINGS: MONITORING LIST-->
     <string name="titleListMonitoring">Monitoreo Qhapaq Ñan</string>
     <string name="descriptionInfoListMonitoring">Por el momento, no hay monitoreos</string>
-    <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la seleción actual</string>
+    <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la selección actual</string>
     <string name="descriptionTramo">TRAMO</string>
     <string name="descriptionSubtramo">SUBTRAMO</string>
     <string name="descriptionSeccion">SECCIÓN</string>
@@ -100,7 +100,7 @@
     <string name="itemCardViewDescriptionPrueba">Imagen del monitoreo</string>
     <string name="titleListMonitoringDialog">INFORMACIÓN</string>
     <string name="titleListMonitoringDialogError">ERROR</string>
-    <string name="descriptionListMonitoringDialog">Seleciona un área para registrar un monitoreo</string>
+    <string name="descriptionListMonitoringDialog">Selecciona un área para registrar un monitoreo</string>
     <string name="opcionListMonitoringDialog">HECHO</string>
     <string name="opcion_list_monitoring_dialog_acept">ACEPTAR</string>
     <string name="opcion_list_monitoring_dialog_cancel">CANCELAR</string>
@@ -144,7 +144,7 @@
     <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
     <string name="descriptionButtonFactor">FACTOR</string>
     <string name="descriptionButtonVariable">VARIABLE</string>
-    <string name="titlePointDialog">Establece las coordenadas para el punto de afetación</string>
+    <string name="titlePointDialog">Establece las coordenadas para el punto de afectación</string>
     <string name="latitudePointDialog">LATITUD</string>
     <string name="lengthPointDialog">LONGITUD</string>
     <string name="optionPositivasRepercusiones">Positiva</string>
@@ -156,10 +156,10 @@
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona Variable</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Selecciona Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
-    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona Porcentaje</string>
-    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona Frecuencia</string>
+    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor selecciona Porcentaje</string>
+    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor selecciona Frecuencia</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
@@ -251,17 +251,17 @@
     <!--.........................................................................................-->
     <!--SLIDE RESPUESTA INSTITUCIONAL-->
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
-    <string name="slide_2_desc">Evalua la respuesta institucional de un monitoreo con repercusiones negativas</string>
+    <string name="slide_2_desc">Evalúa la respuesta institucional de un monitoreo con repercusiones negativas</string>
     <!--.........................................................................................-->
     <!--STRINGS: INSTITUTIONAL LIST-->
     <string name="institutional_list_title">Respuesta Institucional</string>
-    <string name="institutional_list_message_negative">No hay monitoreos con repercusiones negativas para la seleción actual</string>
+    <string name="institutional_list_message_negative">No hay monitoreos con repercusiones negativas para la selección actual</string>
     <string name="institutional_list_button_tramo">TRAMO</string>
     <string name="institutional_list_button_subtramo">SUBTRAMO</string>
     <string name="institutional_list_button_seccion">SECCIÓN</string>
     <string name="institutional_list_button_propiedad">PROPIEDAD NOMINADA</string>
     <string name="institutioanl_list_dialog_title">INFORMACIÓN</string>
-    <string name="institutional_list_dialog_description">Seleciona un tramo para buscar los monitoreos</string>
+    <string name="institutional_list_dialog_description">Selecciona un tramo para buscar los monitoreos</string>
     <string name="institutional_list_dialog_option_ok">OK</string>
     <string name="institutional_list_process_message_search">Buscando monitoreos</string>
     <string name="institutional_list_process_message">Por favor espere …</string>
@@ -308,7 +308,7 @@
     <!--STRINGS: STATISTICAL GRAPHS MENU-->
     <string name="statistical_graphs_menu_title">Menú gráficos estadísticos</string>
     <string name="statistical_graphs_menu_card_view_general">Gráficos estadísticos generales</string>
-    <string name="statistical_graphs_menu_card_view_specific">Gráficos estadísticos especificos</string>
+    <string name="statistical_graphs_menu_card_view_specific">Gráficos estadísticos específicos</string>
     <!--.........................................................................................-->
     <!--STRINGS: GENERAL STATISTICAL GRAPHS BY FACTOR-->
     <string name="general_statistical_graph_title">Análisis por factor</string>
@@ -371,7 +371,7 @@
     <string name="info_critical_point_item_tramo">TRAMO:</string>
     <string name="info_critical_point_item_subtramo">SUBTRAMO:</string>
     <string name="info_critical_point_item_seccion">SECCIÓN:</string>
-    <string name="info_critical_point_item_propiedad">PRO. NOMINADA:</string>
+    <string name="info_critical_point_item_propiedad">P. NOMINADA:</string>
     <string name="info_critical_point_item_factor">FACTOR:</string>
     <string name="info_critical_point_item_variable">VARIABLE:</string>
     <string name="info_critical_point_item_lenght">LONGITUD:</string>
@@ -386,7 +386,7 @@
     <string name="graph_percentage_frequency_subtitle_info">INFORMACIÓN POR PUNTO</string>
     <string name="graph_percentage_frequency_item_Puntaje">PUNTAJE:</string>
     <string name="graph_percentage_frequency_description">Porcentaje y frecuencia de aparición</string>
-    <string name="graph_percentage_frequency_file_name">Grafica_porcentaje_frecuencia</string>
+    <string name="graph_percentage_frequency_file_name">GraficaPorcentajeFrecuencia</string>
     <!--.........................................................................................-->
     <!--STRINGS: GRAPH INSTITUTIONAL RESPONSE-->
     <string name="graph_institutional_response_title">Análisis respuesta institucional</string>
@@ -415,7 +415,7 @@
     <string name="settings_app_title">Configuración</string>
     <string name="settings_app_submodule_title_monitoring_offline">MONITOREO SIN CONEXIÓN</string>
     <string name="settings_app_submodule_option_title_delete_list">Borrar listado de puntos</string>
-    <string name="settings_app_submodule_option_description_delete_list">Libera espacio del disco, de puntos que no necesites.</string>
+    <string name="settings_app_submodule_option_description_delete_list">Libera memoria eliminando de puntos que no necesites.</string>
     <string name="settings_app_submodule_option_title_select_list">Elegir listado de puntos</string>
     <string name="settings_app_submodule_option_description_select_list">Determina el lugar que quieres monitorear.</string>
     <string name="settings_app_submodule_title_report">REPORTE</string>
@@ -434,7 +434,7 @@
     <string name="settings_app_dialog_option_download">DESCARGAR</string>
     <string name="settings_app_dialog_title">SELECCIÓN ESTABLECIDA</string>
     <string name="settings_app_process_message_search_positive">Monitoreos descargados\n!Exitosamente¡</string>
-    <string name="settings_app_process_message_search_negative">No hay monitoreos para la seleción actual</string>
+    <string name="settings_app_process_message_search_negative">No hay monitoreos para la selección actual</string>
     <string name="settings_app_process_message_report_positive">Reporte generado\n!Exitosamente¡</string>
     <string name="cerrarSesion">¿Está seguro de cerrar sesión?</string>
     <string name="title_warning">Advertencia</string>
