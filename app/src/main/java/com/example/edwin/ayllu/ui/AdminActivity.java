@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,11 +17,12 @@ import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.LoginActivity;
 import com.example.edwin.ayllu.R;
 import android.content.Intent;
+import android.view.MenuItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminActivity extends AppCompatActivity implements
-        DeleteMonitorFragment.OnFragmentInteractionListener {
+public class AdminActivity extends AppCompatActivity {
     private BottomNavigationView bnvAdmin;
 
     @Override
@@ -32,6 +34,33 @@ public class AdminActivity extends AppCompatActivity implements
             loadListEnabledFragment();
         }
 
+        bnvAdmin = (BottomNavigationView) findViewById(R.id.bnv_admin);
+
+        bnvAdmin.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Fragment fragment = null;
+                Bundle bundle = new Bundle();
+
+                switch (item.getItemId()){
+                    case R.id.action_enabled:
+                        bundle.putString("ESTADO","H");
+                        fragment = new AdminListUsersFragment();
+                        fragment.setArguments(bundle);
+                        break;
+                    case R.id.action_disabled:
+                        bundle.putString("ESTADO","D");
+                        fragment = new AdminListUsersFragment();
+                        fragment.setArguments(bundle);
+                        break;
+                }
+
+                replaceFragment(fragment);
+                return true;
+            }
+        });
+
     }
 
     /**
@@ -40,83 +69,23 @@ public class AdminActivity extends AppCompatActivity implements
      **/
 
     private void loadListEnabledFragment (){
-        AdminListEnabledFragment fragmentEnabled = new AdminListEnabledFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("ESTADO","H");
+
+        AdminListUsersFragment fragmentEnabled = new AdminListUsersFragment();
+        fragmentEnabled.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_fragment, fragmentEnabled);
+        transaction.add(R.id.fl_fragment, fragmentEnabled);
         transaction.commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_administrador, menu);
-        return true;
-    }
-
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
-    //metodo encargado de crear los dialogos informativos
-    public AlertDialog createSimpleDialogSalir(String mensaje, String titulo) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(titulo)
-                .setMessage(mensaje)
-                .setPositiveButton("CONFIRMAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-                                SQLiteDatabase bd = admin.getWritableDatabase();
-                                bd.delete(admin.TABLENAME, null, null);
-                                bd.close();
-
-                                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                                builder.create().dismiss();
-                            }
-                        })
-                .setNegativeButton("CANCELAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                builder.create().dismiss();
-                            }
-                        });
-
-        return builder.create();
+    /**
+     * =============================================================================================
+     * METODO: INICIA EL FRAGMENTO SELECCIONADO
+     **/
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fl_fragment, fragment);
+        fragmentTransaction.commit();
     }
 }

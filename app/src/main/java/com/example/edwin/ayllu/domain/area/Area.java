@@ -1,10 +1,10 @@
-package com.example.edwin.ayllu.domain;
+package com.example.edwin.ayllu.domain.area;
 
 import android.content.ContentValues;
 
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
-import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
+import static com.example.edwin.ayllu.domain.area.AreaContract.AreaEntry;
 
 public class Area {
     //----------------------------------------------------------------------------------------------

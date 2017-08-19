@@ -1,11 +1,10 @@
 package com.example.edwin.ayllu.ui;
 
-
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,26 +13,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.domain.Usuario;
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
+import com.example.edwin.ayllu.io.AylluApiAdapter;
+import com.example.edwin.ayllu.io.model.UsuarioResponse;
 import com.example.edwin.ayllu.ui.adapter.UsuariosAdapter;
-
 import java.util.ArrayList;
 
-public class AdminListEnabledFragment extends Fragment implements View.OnClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    //Variables globales para el listado de usuarios
-    private RecyclerView recycler;
+public class AdminListUsersFragment extends Fragment implements View.OnClickListener {
+    //Definimos las variables globales
     private UsuariosAdapter adapter;
-    private RecyclerView.LayoutManager lManager;
     private SwipeRefreshLayout refreshLayout;
-    private ArrayList<Usuario> users;
-    private Usuario user;
-    private ImageButton ibNew;
-    AdminSQLite admin;
-    SQLiteDatabase bd;
+    private ArrayList<Usuario> users = new ArrayList<>();
+    private UsuarioDbHelper usuarioDbHelper;
+    private RecyclerView recycler;
+    private TextView tvTitle;
+    String estado;
+
+    /**
+     * =============================================================================================
+     * METODO:
+     */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        usuarioDbHelper = new UsuarioDbHelper(getActivity());
+        estado = getArguments() != null ? getArguments().getString("ESTADO") : "E";
+        adapter = new UsuariosAdapter(getActivity(), estado);
+    }
 
     /**
      * =============================================================================================
@@ -43,7 +58,7 @@ public class AdminListEnabledFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_admin_list_enabled, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_list_users, container, false);
 
         //Obentemos el Recycler y el RefreshLayout
         recycler = (RecyclerView) view.findViewById(R.id.rv_users);
@@ -58,26 +73,35 @@ public class AdminListEnabledFragment extends Fragment implements View.OnClickLi
         );
 
         // Usar un administrador para LinearLayout
-        lManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager lManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(lManager);
-
-        // Crear un nuevo adaptador
-        adapter = new UsuariosAdapter(getActivity(), cargarLista());
-        recycler.setAdapter(adapter);
 
         // Iniciar la tarea asíncrona al revelar el indicador
         refreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        new HackingBackgroundTask().execute();
+                        cargarLista();
                     }
                 }
         );
 
-        ibNew = (ImageButton) view.findViewById(R.id.ib_new);
-        ibNew.setOnClickListener(this);
+        ImageButton ibNew = (ImageButton) view.findViewById(R.id.ib_new);
+        tvTitle = (TextView) view.findViewById(R.id.tv_title);
 
+        if (estado.equals("D")){
+            ibNew.setScaleX(0);
+            ibNew.setScaleY(0);
+            ibNew.setEnabled(false);
+
+            tvTitle.setText("Monitores Deshabilitados");
+        }
+        else {
+            ibNew.setOnClickListener(this);
+            tvTitle.setText("Monitores Habilitados");
+        }
+
+        recycler.setAdapter(adapter);
         return view;
     }
 
@@ -85,39 +109,31 @@ public class AdminListEnabledFragment extends Fragment implements View.OnClickLi
      * =============================================================================================
      * METODO: CARGAR LA LISTA DE USUARIOS
      */
-    public ArrayList<Usuario> cargarLista(){
+    public void cargarLista(){
+        String pais = "";
 
-        //se realiza la consulta a la base de datos del movil de los monitores
-        admin = new AdminSQLite(getActivity(), "login", null, 1);
-        bd = admin.getWritableDatabase();
-        Cursor datos = bd.rawQuery(
-                "select * from "+ admin.TABLENAME + " where "+ admin.TIP_USU + "='M'", null);
+        //Obtenemos el pais del administrador actual
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst() && !estado.equals("E")){
+            pais = "0" + cursor.getString(7);
 
-        users = new ArrayList<>(datos.getCount());
+            Call<UsuarioResponse> callUser = AylluApiAdapter.getApiService("USUARIOS").getUsuarios(pais, estado);
+            callUser.enqueue(new Callback<UsuarioResponse>() {
+                @Override
+                public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
+                    if (response.isSuccessful()){
+                        users = response.body().getUsuarios();
+                    }
+                    new HackingBackgroundTask().execute();
+                }
 
-        if (datos.moveToFirst()) {
-            //Recorremos el cursor hasta que no haya más registros
-            do {
-                user = new Usuario();
-
-                user.setCodigo_usu(datos.getInt(1));
-                user.setIdentificacion_usu(datos.getString(2));
-                user.setNombre_usu(datos.getString(3));
-                user.setApellido_usu(datos.getString(4));
-                user.setTipo_usu(datos.getString(5));
-                user.setContrasena_usu(datos.getString(6));
-                user.setClave_api(datos.getString(7));
-                user.setPais_usu(datos.getString(8));
-
-                users.add(user);
-
-            } while(datos.moveToNext());
+                @Override
+                public void onFailure(Call<UsuarioResponse> call, Throwable t) {
+                    new HackingBackgroundTask().execute();
+                }
+            });
         }
-
-        bd.close();
-        return users;
     }
-
     /**
      * =============================================================================================
      * METODO:
@@ -136,7 +152,7 @@ public class AdminListEnabledFragment extends Fragment implements View.OnClickLi
             }
 
             // Retornar en nuevos elementos para el adaptador
-            return cargarLista();
+            return users;
         }
 
         @Override

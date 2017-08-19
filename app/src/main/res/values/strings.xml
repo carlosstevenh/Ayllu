@@ -28,7 +28,7 @@
     <string name="registration_form_button_record">Registrar</string>
     <string name="registration_form_alert_invalid_field">Campo inválido</string>
     <string name="registration_form_alert_empty_field">Campo vacío</string>
-    <string name="registration_form_alert_password">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="registration_form_alert_password">Debe contener máyusculas, minúsulas, dígitos y un tamaño mayor a 8 caracteres</string>
     <string name="registration_form_alert_different_passwords">Las contraseñas no coinciden</string>
     <string name="registration_form_process_shipping_status">Registrando monitor</string>
     <string name="registration_form_process_message">Por favor espere …</string>
@@ -59,7 +59,7 @@
     <string name="edit_form_confpassword">Confirmar contraseña</string>
     <string name="edit_form_alert_invalid_field">Campo inválido</string>
     <string name="redit_form_alert_empty_field">Campo vacío</string>
-    <string name="edit_form_alert_password">Debe contener máyusculas, minúsulas, díjitos y un tamaño mayor a 8 caracteres</string>
+    <string name="edit_form_alert_password">Debe contener máyusculas, minúsulas, dígitos y un tamaño mayor a 8 caracteres</string>
     <string name="edit_form_alert_different_passwords">Las contraseñas no coinciden</string>
     <string name="edit_form_process_message_update_monitor">Actualizando monitor</string>
     <string name="edit_form_process_message">Por favor espere …</string>
@@ -145,7 +145,7 @@
     <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
     <string name="descriptionButtonFactor">FACTOR</string>
     <string name="descriptionButtonVariable">VARIABLE</string>
-    <string name="titlePointDialog">Establece las coordenadas para el punto de afetación</string>
+    <string name="titlePointDialog">Establece las coordenadas para el punto de afectación</string>
     <string name="latitudePointDialog">LATITUD</string>
     <string name="lengthPointDialog">LONGITUD</string>
     <string name="optionPositivasRepercusiones">Positiva</string>
@@ -157,10 +157,10 @@
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleciona Variable</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Selecciona Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
-    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor seleciona Porcentaje</string>
-    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor seleciona Frecuencia</string>
+    <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor selecciona Porcentaje</string>
+    <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor selecciona Frecuencia</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
@@ -309,7 +309,7 @@
     <!--STRINGS: STATISTICAL GRAPHS MENU-->
     <string name="statistical_graphs_menu_title">Menú gráficos estadísticos</string>
     <string name="statistical_graphs_menu_card_view_general">Gráficos estadísticos generales</string>
-    <string name="statistical_graphs_menu_card_view_specific">Gráficos estadísticos especificos</string>
+    <string name="statistical_graphs_menu_card_view_specific">Gráficos estadísticos específicos</string>
     <!--.........................................................................................-->
     <!--STRINGS: GENERAL STATISTICAL GRAPHS BY FACTOR-->
     <string name="general_statistical_graph_title">Análisis por factor</string>
@@ -372,7 +372,7 @@
     <string name="info_critical_point_item_tramo">TRAMO:</string>
     <string name="info_critical_point_item_subtramo">SUBTRAMO:</string>
     <string name="info_critical_point_item_seccion">SECCIÓN:</string>
-    <string name="info_critical_point_item_propiedad">PRO. NOMINADA:</string>
+    <string name="info_critical_point_item_propiedad">P. NOMINADA:</string>
     <string name="info_critical_point_item_factor">FACTOR:</string>
     <string name="info_critical_point_item_variable">VARIABLE:</string>
     <string name="info_critical_point_item_lenght">LONGITUD:</string>
@@ -387,7 +387,7 @@
     <string name="graph_percentage_frequency_subtitle_info">INFORMACIÓN POR AFECTACIÓN</string>
     <string name="graph_percentage_frequency_item_Puntaje">PUNTAJE:</string>
     <string name="graph_percentage_frequency_description">Porcentaje y frecuencia de aparición</string>
-    <string name="graph_percentage_frequency_file_name">Grafica_porcentaje_frecuencia</string>
+    <string name="graph_percentage_frequency_file_name">GraficaPorcentajeFrecuencia</string>
     <!--.........................................................................................-->
     <!--STRINGS: GRAPH INSTITUTIONAL RESPONSE-->
     <string name="graph_institutional_response_title">Análisis respuesta institucional</string>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundList"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/fragment_admin_list_enabled">
+    tools:showIn="@layout/fragment_admin_list_users">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_users"

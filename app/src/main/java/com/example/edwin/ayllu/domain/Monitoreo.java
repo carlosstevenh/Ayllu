@@ -19,14 +19,17 @@ public class Monitoreo {
     private String longitud;
     @SerializedName("nombre_pru1")
     private String prueba;
+    @SerializedName("propiedad_nominada")
+    private  String propiedad;
 
-    public Monitoreo(String date, String variable, String codigo, String latitud, String longitud, String prueba) {
+    public Monitoreo(String date, String variable, String codigo, String latitud, String longitud, String prueba, String propiedad) {
         this.date = date;
         this.variable = variable;
         this.codigo = codigo;
         this.latitud = latitud;
         this.longitud = longitud;
         this.prueba = prueba;
+        this.propiedad = propiedad;
     }
 
     public String getDate() {
@@ -75,5 +78,13 @@ public class Monitoreo {
 
     public void setPrueba(String prueba) {
         this.prueba = prueba;
+    }
+
+    public String getPropiedad() {
+        return propiedad;
+    }
+
+    public void setPropiedad(String propiedad) {
+        this.propiedad = propiedad;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.edwin.ayllu.domain;
 
+import com.example.edwin.ayllu.domain.area.Area;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 

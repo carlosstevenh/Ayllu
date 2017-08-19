@@ -2,12 +2,15 @@ package com.example.edwin.ayllu.io;
 
 import android.util.Log;
 
+import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.domain.Zona;
 import com.example.edwin.ayllu.io.deserializer.CategoriaDeserializer;
+import com.example.edwin.ayllu.io.deserializer.UsuarioDeserializer;
 import com.example.edwin.ayllu.io.deserializer.ZonaDeserializer;
 import com.example.edwin.ayllu.io.deserializer.ReporteDeserializer;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
+import com.example.edwin.ayllu.io.model.UsuarioResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -62,6 +65,12 @@ public class AylluApiAdapter {
                         .create();
 
                 return gsonConf;
+            case "USUARIOS":
+                gsonConf = new GsonBuilder()
+                        .registerTypeAdapter(UsuarioResponse.class, new UsuarioDeserializer())
+                        .create();
+                return gsonConf;
+
             default:
                 return null;
         }

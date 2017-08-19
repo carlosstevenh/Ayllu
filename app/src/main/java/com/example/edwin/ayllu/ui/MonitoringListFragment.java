@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +25,7 @@ import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.MonitoringDetailFragment;
 import com.example.edwin.ayllu.MonitoringRegistrationFormFragment;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.domain.AreaDbHelper;
+import com.example.edwin.ayllu.domain.area.AreaDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
 import com.example.edwin.ayllu.domain.Reporte;
@@ -40,28 +38,12 @@ import com.example.edwin.ayllu.ui.adapter.MonitoringAdapter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-
 import static com.example.edwin.ayllu.domain.TramoContract.TramoEntry;
 import static com.example.edwin.ayllu.domain.SubtramoContract.SubtramoEntry;
 import static com.example.edwin.ayllu.domain.SeccionContract.SeccionEntry;
-import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
+import static com.example.edwin.ayllu.domain.area.AreaContract.AreaEntry;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;

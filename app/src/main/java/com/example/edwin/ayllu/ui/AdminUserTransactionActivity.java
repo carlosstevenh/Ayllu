@@ -1,6 +1,5 @@
 package com.example.edwin.ayllu.ui;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.edwin.ayllu.R;

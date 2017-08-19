@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.edwin.ayllu.domain.Area;
+import com.example.edwin.ayllu.domain.area.Area;
 import com.example.edwin.ayllu.domain.Seccion;
 import com.example.edwin.ayllu.domain.Subtramo;
 import com.example.edwin.ayllu.domain.Tramo;

@@ -36,6 +36,7 @@ import com.example.edwin.ayllu.domain.Mensaje;
 import com.example.edwin.ayllu.domain.Task;
 import com.example.edwin.ayllu.domain.TaskContract;
 import com.example.edwin.ayllu.domain.TaskDbHelper;
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.io.PostClient;
@@ -81,6 +82,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
     //Bases de Datos
     private TaskDbHelper taskDbHelper;
     private ImagenDbHelper imagenDbHelper;
+    private UsuarioDbHelper usuarioDbHelper;
 
     /**
      * =============================================================================================
@@ -91,13 +93,14 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
 
         //Obtiene el codigo y pais del monitor que ha ingresado
-        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
-        cursor.moveToFirst();
-        monitor = cursor.getString(0);
-        pais = cursor.getString(1);
+        usuarioDbHelper = new UsuarioDbHelper(this);
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()){
+            monitor = cursor.getString(1);
+            pais = cursor.getString(7);
+        }
+
+        usuarioDbHelper.close();
         cursor.close();
 
         //Aplicando transparencia sobre el Toolbar
@@ -141,9 +144,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         cursor1 = taskDbHelper.generateQuery("SELECT * FROM ");
         cursor2 = imagenDbHelper.generateQuery("SELECT * FROM ");
 
-        Log.e("TAMAÑO TABLA IMAGENES", cursor2.getCount()+"");
-        Log.e("TAMAÑO TABLA TASK", cursor1.getCount()+"");
-
         // prepare for a progress bar dialog
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);
@@ -152,9 +152,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         progressBar.setProgress(0);
         progressBar.setMax(100);
         progressBar.show();
-
-        Log.e("TOTAL IMG",imagenDbHelper.getSizeDatabase()+"");
-        Log.e("TOTAL DATOS",taskDbHelper.getSizeDatabase()+"");
 
         if (taskDbHelper.getSizeDatabase() > 0 && imagenDbHelper.getSizeDatabase() > 0 && wifiConected()){
             createSimpleDialog(getResources().getString(R.string.monitoring_menu_message_upload),
@@ -176,8 +173,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         sizeImg  = imagenDbHelper.getSizeDatabase();
         sizeData = taskDbHelper.getSizeDatabase();
         sizeImg += sizeData;
-
-        Log.e("TAMAÑO", sizeImg+"");
 
         portj = 100/sizeImg;
         dif = 100 - (portj * sizeImg);
@@ -332,7 +327,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
             try {
                 Mensaje mensaje;
                 mensaje = call.execute().body();
-                Log.e("MENSAJE REGISTRO",mensaje.getDescripcion());
 
                 if (mensaje.getEstado().equals("1")){
                     String[] cond = new String[]{numon1  + ""};

@@ -1,13 +1,15 @@
-package com.example.edwin.ayllu.domain;
+package com.example.edwin.ayllu.domain.area;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.edwin.ayllu.domain.area.Area;
+
 import java.util.ArrayList;
 
-import static com.example.edwin.ayllu.domain.AreaContract.AreaEntry;
+import static com.example.edwin.ayllu.domain.area.AreaContract.AreaEntry;
 
 public class AreaDbHelper extends SQLiteOpenHelper {
 

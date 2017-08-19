@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_normal"
+        android:drawableStart="@drawable/ic_normal"
+        android:drawablePadding="8dp"
+        android:padding="@dimen/title_padding"
+        android:textSize="18sp"
+        android:text="OPCIONES"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorTextIcons" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:id="@+id/option_edit"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="@color/colorIconCardView"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/normal_padding"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:padding="@dimen/normal_padding">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normal_padding"
+                android:src="@drawable/ic_menu_refresh"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normal_padding"
+                android:text="EDITAR MONITOR"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextIcons"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/option_disabled"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="@color/colorIconCardView"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/normal_padding"
+            android:layout_marginStart="@dimen/normal_padding"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:padding="@dimen/normal_padding">
+
+            <ImageView
+                android:id="@+id/iv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normal_padding"
+                android:src="@drawable/ic_menu_user_disabled"/>
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normal_padding"
+                android:text="DESHABILITAR MONITOR"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextIcons"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

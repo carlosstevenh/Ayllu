@@ -89,4 +89,21 @@ public class JsonKeys {
     public static final String PRUEBA1 = "nombre_pru1";
     public static final String PRUEBA2 = "nombre_pru2";
     public static final String PRUEBA3 = "nombre_pru3";
+
+    //==============================================================================================
+    //CONSTANTES PARA EL MANEJO DE USUARIOS
+    //----------------------------------------------------------------------------------------------
+    //Llave general para la consulta de usuarios
+    public static final String USUARIOS_RESULTS = "DATOS";
+    public static final String USUARIOS_ARRAY = "Usuarios";
+    //----------------------------------------------------------------------------------------------
+    //Llaves para los usuarios
+    public static final String COD_USU = "codigo_usu";
+    public static final String ID_USU = "identificacion_usu";
+    public static final String NOM_USU = "nombre_usu";
+    public static final String APE_USU = "apellido_usu";
+    public static final String TIPO_USU = "tipo_usu";
+    public static final String ESTADO_USU = "estado_usu";
+    public static final String PAIS_USU = "pais_usu";
+    public static final String API_USU = "claveapi";
 }

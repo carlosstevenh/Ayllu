@@ -15,6 +15,7 @@
             android:background="?attr/colorPrimary">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -26,8 +27,8 @@
             <ImageButton
                 android:id="@+id/ib_new"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/title_padding"
+                android:layout_height="match_parent"
+                android:padding="@dimen/title_padding"
                 android:layout_gravity="end"
                 android:background="@color/colorPrimary"
                 android:src="@drawable/ic_new" />
@@ -36,6 +37,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_admin_list_enabled" />
+    <include layout="@layout/content_admin_list_users" />
 
 </android.support.design.widget.CoordinatorLayout>

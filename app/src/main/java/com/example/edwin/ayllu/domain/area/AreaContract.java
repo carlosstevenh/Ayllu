@@ -1,4 +1,4 @@
-package com.example.edwin.ayllu.domain;
+package com.example.edwin.ayllu.domain.area;
 
 import android.provider.BaseColumns;
 

@@ -133,7 +133,7 @@ public class ImagenDbHelper extends SQLiteOpenHelper {
      */
     public void generateConditionalDelete (String[] condition, String[] atributo){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.delete(ImagenEntry.TABLE_NAME, atributo[0] + "=? AND "+
-                atributo[1] + "=? AND "+ atributo[2] + "=?", condition);
+        String consult = atributo[0] + "=? AND " + atributo[1] + "=? AND " + atributo[2] + "=?";
+        sqLiteDatabase.delete(ImagenEntry.TABLE_NAME, consult , condition);
     }
 }

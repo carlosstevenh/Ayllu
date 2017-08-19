@@ -1,34 +1,87 @@
 package com.example.edwin.ayllu.domain;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+
+import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by steven on 5/11/16.
- */
+import static com.example.edwin.ayllu.domain.UsuarioContract.UsuarioEntry;
 
 public class Usuario {
-    @SerializedName("codigo_usu")
-    private  int codigo_usu;
-    @SerializedName("identificacion_usu")
+    //----------------------------------------------------------------------------------------------
+    //Atributos de la clase Usuario
+    @SerializedName(JsonKeys.COD_USU)
+    private String codigo_usu;
+    @SerializedName(JsonKeys.ID_USU)
     private String identificacion_usu;
-    @SerializedName("nombre_usu")
+    @SerializedName(JsonKeys.NOM_USU)
     private String nombre_usu;
-    @SerializedName("apellido_usu")
+    @SerializedName(JsonKeys.APE_USU)
     private String apellido_usu;
-    @SerializedName("tipo_usu")
+    @SerializedName(JsonKeys.TIPO_USU)
     private String tipo_usu;
-    @SerializedName("contrasena_usu")
-    private String contrasena_usu;
-    @SerializedName("claveapi")
+    @SerializedName(JsonKeys.ESTADO_USU)
+    private String estado_usu;
+    @SerializedName(JsonKeys.API_USU)
     private String clave_api;
-    @SerializedName("pais_usu")
+    @SerializedName(JsonKeys.PAIS_USU)
     private String pais_usu;
 
-    public int getCodigo_usu() {
+    /**
+     * =============================================================================================
+     * METODO: Constructor de la clase Usuario
+     */
+    public Usuario(String codigo_usu, String identificacion_usu, String nombre_usu, String apellido_usu, String tipo_usu, String estado_usu, String clave_api, String pais_usu) {
+        this.codigo_usu = codigo_usu;
+        this.identificacion_usu = identificacion_usu;
+        this.nombre_usu = nombre_usu;
+        this.apellido_usu = apellido_usu;
+        this.tipo_usu = tipo_usu;
+        this.estado_usu = estado_usu;
+        this.clave_api = clave_api;
+        this.pais_usu = pais_usu;
+    }
+
+    public Usuario (String identificacion_usu, String clave_api){
+        this.codigo_usu = "";
+        this.identificacion_usu = identificacion_usu;
+        this.nombre_usu = "";
+        this.apellido_usu = "";
+        this.tipo_usu = "";
+        this.estado_usu = "";
+        this.clave_api = clave_api;
+        this.pais_usu = "";
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Procesa datos para la tabla Usuarios
+     */
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(UsuarioEntry.CODIGO, this.codigo_usu);
+        values.put(UsuarioEntry.IDENTIFICACION, this.identificacion_usu);
+        values.put(UsuarioEntry.NOMBRE, this.nombre_usu);
+        values.put(UsuarioEntry.APELLIDO, this.apellido_usu);
+        values.put(UsuarioEntry.TIPO, this.tipo_usu);
+        values.put(UsuarioEntry.ESTADO, this.estado_usu);
+        values.put(UsuarioEntry.PAIS, this.pais_usu);
+        values.put(UsuarioEntry.CLAVE_API, this.clave_api);
+        return values;
+    }
+
+    /**
+     * =============================================================================================
+     * METODOS GETTER Y SETTER DE LA CLASE USUARIO
+     * =============================================================================================
+     */
+
+    public String getCodigo_usu() {
         return codigo_usu;
     }
 
-    public void setCodigo_usu(int codigo_usu) {
+    public void setCodigo_usu(String codigo_usu) {
         this.codigo_usu = codigo_usu;
     }
 
@@ -39,6 +92,7 @@ public class Usuario {
     public void setIdentificacion_usu(String identificacion_usu) {
         this.identificacion_usu = identificacion_usu;
     }
+
     public String getNombre_usu() {
         return nombre_usu;
     }
@@ -63,20 +117,12 @@ public class Usuario {
         this.tipo_usu = tipo_usu;
     }
 
-    public String getContrasena_usu() {
-        return contrasena_usu;
-    }
-
     public String getClave_api() {
         return clave_api;
     }
 
     public void setClave_api(String clave_api) {
         this.clave_api = clave_api;
-    }
-
-    public void setContrasena_usu(String contrasena_usu) {
-        this.contrasena_usu = contrasena_usu;
     }
 
     public String getPais_usu() {
@@ -87,17 +133,11 @@ public class Usuario {
         this.pais_usu = pais_usu;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "codigo_usu=" + codigo_usu +
-                ", identificacion_usu='" + identificacion_usu + '\'' +
-                ", nombre_usu='" + nombre_usu + '\'' +
-                ", apellido_usu='" + apellido_usu + '\'' +
-                ", tipo_usu='" + tipo_usu + '\'' +
-                ", contrasena_usu='" + contrasena_usu + '\'' +
-                ", clave_api='" + clave_api + '\'' +
-                ", pais_usu='" + pais_usu + '\'' +
-                '}';
+    public String getEstado_usu() {
+        return estado_usu;
+    }
+
+    public void setEstado_usu(String estado_usu) {
+        this.estado_usu = estado_usu;
     }
 }

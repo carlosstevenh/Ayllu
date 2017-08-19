@@ -63,12 +63,11 @@ public class EditMonitorFragment extends Fragment  {
             case R.id.edit:
                 //parametro que se envia con la informacion del monitor
                 Bundle parametro = new Bundle();
-                parametro.putInt("codigo", aux.getCodigo_usu());
+                parametro.putString("codigo", aux.getCodigo_usu());
                 parametro.putString("iden", aux.getIdentificacion_usu());
                 parametro.putString("nombre", aux.getNombre_usu());
                 parametro.putString("apellido", aux.getApellido_usu());
                 parametro.putString("tipo", aux.getTipo_usu());
-                parametro.putString("con", aux.getContrasena_usu());
                 parametro.putString("cla" , aux.getClave_api());
                 parametro.putString("pais", aux.getPais_usu());
 
@@ -156,6 +155,7 @@ public class EditMonitorFragment extends Fragment  {
         if (datos.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
+                /*
                 user = new Usuario();
                 Log.i("TAG", "cpdigo::> " + datos.getInt(1));
                 user.setCodigo_usu(datos.getInt(1));
@@ -163,7 +163,6 @@ public class EditMonitorFragment extends Fragment  {
                 user.setNombre_usu(datos.getString(3));
                 user.setApellido_usu(datos.getString(4));
                 user.setTipo_usu(datos.getString(5));
-                user.setContrasena_usu(datos.getString(6));
                 user.setClave_api(datos.getString(7));
                 user.setPais_usu(datos.getString(8));
 
@@ -171,13 +170,13 @@ public class EditMonitorFragment extends Fragment  {
 
                 String nombre = datos.getString(0)+" "+datos.getString(1);
                 nombres[i] = nombre;
-                i++;
+                i++;*/
 
             } while(datos.moveToNext());
         }
 
         bd.close();
-        UsuariosAdapter ua = new UsuariosAdapter(getActivity(),listaUsuarios);
+        UsuariosAdapter ua = new UsuariosAdapter(getActivity(), "H");
         return ua;
     }
 

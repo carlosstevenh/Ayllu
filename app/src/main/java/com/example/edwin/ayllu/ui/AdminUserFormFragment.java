@@ -1,10 +1,9 @@
 package com.example.edwin.ayllu.ui;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -14,28 +13,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
-import com.example.edwin.ayllu.AdminSQLite;
-import com.example.edwin.ayllu.domain.SHA1;
+import com.example.edwin.ayllu.domain.Mensaje;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.io.RestClient;
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
+import com.example.edwin.ayllu.io.ApiConstants;
+import com.example.edwin.ayllu.io.AylluApiService;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.regex.Pattern;
 
 public class AdminUserFormFragment extends Fragment implements View.OnClickListener {
+    //Views del Formulario
     private EditText etID, etName, etSurname, etPassword, etConfirmation;
     private TextInputLayout tilID, tilName, tilSurname, tilPassword, tilConfirmation;
+    private TextView tvToolbar;
 
+    //Variables globales
     private String transaction_type;
+    private UsuarioDbHelper usuarioDbHelper;
+    private String id, name, surname, pais = "";
 
     /**
      * =============================================================================================
@@ -47,6 +59,19 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
 
         Intent intent = getActivity().getIntent();
         transaction_type = intent.getExtras().getString("TYPE");
+        usuarioDbHelper = new UsuarioDbHelper(getActivity());
+
+        if (transaction_type.equals("UPDATE")){
+            id = intent.getExtras().getString("ID");
+            name = intent.getExtras().getString("NAME");
+            surname = intent.getExtras().getString("SURNAME");
+        }
+
+        //--------------------------------------------------------------------------------------
+        //Obtenemos el pais del administrador
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()) pais = "0" + cursor.getString(7);
+        cursor.close();
     }
 
     /**
@@ -58,6 +83,8 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_admin_user_form, container, false);
+
+        tvToolbar = (TextView) view.findViewById(R.id.tv_toolbar);
 
         etID = (EditText) view.findViewById(R.id.et_id);
         etName = (EditText) view.findViewById(R.id.et_name);
@@ -72,7 +99,14 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         tilConfirmation = (TextInputLayout) view.findViewById(R.id.til_conf_psw);
 
         FloatingActionButton fbTransaction = (FloatingActionButton) view.findViewById(R.id.fab_transaction);
-        if (transaction_type.equals("UPDATE")) fbTransaction.setIcon(R.drawable.ic_refresh);
+        if (transaction_type.equals("UPDATE")) {
+            fbTransaction.setIcon(R.drawable.ic_refresh);
+            tvToolbar.setText("Editar Monitor");
+
+            etID.setText(id);
+            etName.setText(name);
+            etSurname.setText(surname);
+        }
         fbTransaction.setOnClickListener(this);
 
         return view;
@@ -86,7 +120,7 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_transaction:
-                if (!transaction_type.equals("UPDATE")) registerUser();
+                processTransaction();
                 break;
         }
     }
@@ -95,116 +129,117 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
      * =============================================================================================
      * METODO:
      */
-    private void registerUser() {
-        if (isValidFields()) {
-            //--------------------------------------------------------------------------------------
-            //se realiza una consulta a la base de datos del movil para obtener el pais del
-            //administrador
-            String pais = "";
-            AdminSQLite admin = new AdminSQLite(getActivity(), "login", null, 1);
-            SQLiteDatabase bd = admin.getReadableDatabase();
-            Cursor datos = bd.rawQuery(
-                    "select " + AdminSQLite.PAI_USU + " from " + AdminSQLite.TABLENAME + " where " + AdminSQLite.TIP_USU + "='A'", null);
-
-            if (datos.moveToFirst()) {
-                //Recorremos el cursor hasta que no haya más registros
-                do {
-                    pais = datos.getString(0);
-
-                } while (datos.moveToNext());
+    private void processTransaction() {
+        if (isValidFields() || transaction_type.equals("UPDATE")) {
+            boolean ban_next = false;
+            if (transaction_type.equals("UPDATE")){
+                if (etPassword.getText().toString().equals("") && etConfirmation.getText().toString().equals(""))
+                    ban_next = true;
             }
-            bd.close();
-            datos.close();
-            //--------------------------------------------------------------------------------------
-            //se realiza la peticion al servidor para el registro del monitor
-            final ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.registration_form_process_shipping_status), getResources().getString(R.string.registration_form_process_message), false, false);
-            String pass = SHA1.getHash(etPassword.getText().toString(), "SHA1");
+            else ban_next = true;
 
-            RestClient service = RestClient.retrofit.create(RestClient.class);
-            Call<ArrayList<String>> requestAdd = service.addUsuario(
-                    etID.getText().toString(),
-                    etName.getText().toString(),
-                    etSurname.getText().toString(),
-                    "M", pass, pais);
-            final String finalPais = pais;
-            requestAdd.enqueue(new Callback<ArrayList<String>>() {
-                @Override
-                public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                    loading.dismiss();
-                    if (response.isSuccessful()) {
-                        ArrayList<String> res = response.body();
-                        if (res.get(0).equals("1")) {
-                            Toast login = Toast.makeText(getActivity(),
-                                    getResources().getString(R.string.registration_form_process_successful_message), Toast.LENGTH_LONG);
-                            login.show();
+            if (ban_next){
+                //Creamos el Usuario y preparamos el servicio
+                //String pass = SHA1.getHash(etPassword.getText().toString(), "SHA1");
+                Usuario new_user = new Usuario(
+                        "", etID.getText().toString(), etName.getText().toString(),
+                        etSurname.getText().toString(), "M", "", etPassword.getText().toString(), pais
+                );
 
-                            //peticion al servidor que se encarga de obtener el monitor registrado para actualizar la base de datos del movil
-                            RestClient service = RestClient.retrofit.create(RestClient.class);
-                            Call<ArrayList<Usuario>> requestAdd = service.update(etID.getText().toString());
-                            requestAdd.enqueue(new Callback<ArrayList<Usuario>>() {
-                                @Override
-                                public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
-                                    ArrayList<Usuario> up = response.body();
-                                    AdminSQLite al = new AdminSQLite(getActivity(), "login", null, 1);
-                                    SQLiteDatabase bd1 = al.getWritableDatabase();
-                                    ContentValues monitores = new ContentValues();
+                if (transaction_type.equals("UPDATE")) {
+                    ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.edit_form_process_message_update_monitor), getResources().getString(R.string.registration_form_process_message), false, false);
+                    updateUser(loading, new_user);
+                }
+                else{
+                    ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.registration_form_process_shipping_status), getResources().getString(R.string.registration_form_process_message), false, false);
+                    registerUser(loading, new_user);
+                }
+            }
+        }
+    }
 
-                                    monitores.put(AdminSQLite.COD_USU, up.get(0).getCodigo_usu());
-                                    monitores.put(AdminSQLite.IDE_USU, etID.getText().toString());
-                                    monitores.put(AdminSQLite.NOM_USU, etName.getText().toString());
-                                    monitores.put(AdminSQLite.APE_USU, etSurname.getText().toString());
-                                    monitores.put(AdminSQLite.TIP_USU, "M");
-                                    monitores.put(AdminSQLite.CON_USU, etPassword.getText().toString());
-                                    monitores.put(AdminSQLite.CLA_API, up.get(0).getClave_api());
-                                    monitores.put(AdminSQLite.PAI_USU, finalPais);
-                                    bd1.insert(AdminSQLite.TABLENAME, null, monitores);
-
-                                    bd1.close();
-
-                                    etID.setText("");
-                                    etName.setText("");
-                                    etSurname.setText("");
-                                    etPassword.setText("");
-                                    etConfirmation.setText("");
-
-                                }
-
-                                @Override
-                                public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
-
-                                }
-                            });
-                            Log.i("TAG", "error " + res.get(0));
-                        } else {
-                            Toast login = Toast.makeText(getActivity(),
-                                    getResources().getString(R.string.registration_form_process_error_message), Toast.LENGTH_SHORT);
-                            login.show();
-                        }
-
-                    } else {
+    private void registerUser(final ProgressDialog progressDialog, Usuario new_user) {
+        Retrofit retrofit = prepareRetrofit();
+        AylluApiService service = retrofit.create(AylluApiService.class);
+        Call<Mensaje> call = service.registrarUsuario(new_user);
+        call.enqueue(new Callback<Mensaje>() {
+            @Override
+            public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()){
+                    Mensaje mensaje = response.body();
+                    if(mensaje.getEstado().equals("1")){
                         Toast login = Toast.makeText(getActivity(),
-                                getResources().getString(R.string.registration_form_process_error_message), Toast.LENGTH_SHORT);
+                                getResources().getString(R.string.registration_form_process_successful_message), Toast.LENGTH_LONG);
                         login.show();
 
+                        //Limpiar los datos del formulario
+                        etID.setText("");
+                        etName.setText("");
+                        etSurname.setText("");
+                        etPassword.setText("");
+                        etConfirmation.setText("");
                     }
                 }
-
-                @Override
-                public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-                    loading.dismiss();
-                    Toast prueba = Toast.makeText(getActivity(), getResources().getString(R.string.registration_form_process_message_server), Toast.LENGTH_LONG);
-                    prueba.show();
+                else {
+                    Toast login = Toast.makeText(getActivity(),
+                            getResources().getString(R.string.registration_form_process_error_message), Toast.LENGTH_LONG);
+                    login.show();
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<Mensaje> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast login = Toast.makeText(getActivity(),
+                        getResources().getString(R.string.registration_form_process_message_server), Toast.LENGTH_LONG);
+                login.show();
+            }
+        });
     }
 
     /**
      * =============================================================================================
      * METODO:
      */
-    private void updateUser() {
+    private void updateUser(final ProgressDialog progressDialog, Usuario new_user) {
+        Retrofit retrofit = prepareRetrofit();
+        AylluApiService service = retrofit.create(AylluApiService.class);
+        Call<Mensaje> call = service.actualizarUsuario(new_user);
+        call.enqueue(new Callback<Mensaje>() {
+            @Override
+            public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()){
+                    Mensaje mensaje = response.body();
+                    if(mensaje.getEstado().equals("1")){
+                        Toast login = Toast.makeText(getActivity(),
+                                getResources().getString(R.string.edit_form_process_successful_message), Toast.LENGTH_LONG);
+                        login.show();
 
+                        //Limpiar los datos del formulario
+                        etID.setText("");
+                        etName.setText("");
+                        etSurname.setText("");
+                        etPassword.setText("");
+                        etConfirmation.setText("");
+                    }
+                }
+                else {
+                    Toast login = Toast.makeText(getActivity(),
+                            getResources().getString(R.string.edit_form_process_error_message), Toast.LENGTH_LONG);
+                    login.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Mensaje> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast login = Toast.makeText(getActivity(),
+                        getResources().getString(R.string.registration_form_process_message_server), Toast.LENGTH_LONG);
+                login.show();
+            }
+        });
     }
 
     /**
@@ -288,5 +323,21 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         }
 
         return true;
+    }
+
+    private Retrofit prepareRetrofit() {
+        //------------------------------------------------------------------------------------------
+        //Preparamos el servicio de Retrofit
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        return new Retrofit.Builder()
+                .baseUrl(ApiConstants.URL_API_AYLLU)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(httpClient.build())
+                .build();
     }
 }

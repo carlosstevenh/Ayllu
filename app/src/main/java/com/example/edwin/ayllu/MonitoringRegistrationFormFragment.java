@@ -246,16 +246,30 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     public void getCamara1() {
 
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Ayllu");
+
+        //File photo = new File(Environment.getExternalStorageDirectory(), "imagen.jpg");
+
 
         imagesFolder.mkdirs();
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
         foto = format + ".jpg";
         file = new File(imagesFolder, foto);
+        String filePath = Environment.getExternalStorageDirectory() +  "Ayllu" + foto;
+        Uri imageUri;
 
-        Uri uriSavedImage = Uri.fromFile(file);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+        //Validación de acuerdo al OS.
+        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.N) {
+            imageUri = Uri.parse(filePath);
+        } else{
+            imageUri = Uri.fromFile(file);
+        }
+
+
+        //Uri uriSavedImage = Uri.fromFile(file);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(cameraIntent, 1);
     }
 

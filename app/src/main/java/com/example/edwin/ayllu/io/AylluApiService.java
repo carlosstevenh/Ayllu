@@ -2,9 +2,13 @@ package com.example.edwin.ayllu.io;
 
 import com.example.edwin.ayllu.domain.Mensaje;
 import com.example.edwin.ayllu.domain.Task;
+import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
+import com.example.edwin.ayllu.io.model.UsuarioResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
+
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,6 +21,36 @@ import retrofit2.http.Url;
 
 
 public interface AylluApiService {
+
+    /**
+     * =============================================================================================
+     * METODO: Consultar Usuarios
+     **/
+    @GET("usuarios/consultar/{pais}/{estado}")
+    Call<UsuarioResponse> getUsuarios(@Path("pais") String pais,
+                                      @Path("estado") String estado);
+
+    /**
+     * =============================================================================================
+     * METODO: Loguear un Usuario
+     **/
+    @POST("usuarios/login/")
+    Call<UsuarioResponse> loginUsuario(@Body Usuario datos);
+
+    /**
+     * =============================================================================================
+     * METODO: Registrar un Usuario
+     **/
+    @POST("usuarios/registrar/")
+    Call<Mensaje> registrarUsuario(@Body Usuario datos);
+
+    /**
+     * =============================================================================================
+     * METODO: Actualizar un Usuario
+     **/
+    @POST("usuarios/actualizar/")
+    Call<Mensaje> actualizarUsuario(@Body Usuario datos);
+
     /**
      * =============================================================================================
      * METODO: Registrar un nuevo punto de afectación con monitoreo
