@@ -54,6 +54,9 @@ public class AdminActivity extends AppCompatActivity {
                         fragment = new AdminListUsersFragment();
                         fragment.setArguments(bundle);
                         break;
+                    case R.id.action_options:
+                        fragment = new AdminMenuFragment();
+                        break;
                 }
 
                 replaceFragment(fragment);

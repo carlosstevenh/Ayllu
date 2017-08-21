@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
 import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -36,6 +37,8 @@ public class InstitutionalEvaluationFormFragment extends Fragment implements Vie
     FloatingActionButton fabReg;
     MonitoringInfoFragment fragment;
 
+    UsuarioDbHelper usuarioDbHelper;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +50,9 @@ public class InstitutionalEvaluationFormFragment extends Fragment implements Vie
 
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor del usuario en sesión
-        AdminSQLite admin = new AdminSQLite(getActivity().getApplicationContext(), "login", null, 1);
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
-        cursor.moveToFirst();
-        cod_mon = cursor.getString(0);
+        usuarioDbHelper = new UsuarioDbHelper(getActivity());
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()) cod_mon = cursor.getString(1);
         cursor.close();
     }
 

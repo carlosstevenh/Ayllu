@@ -424,7 +424,7 @@
     <string name="settings_app_submodule_option_description_report">Determina el lugar que quieres reportar.</string>
     <string name="settings_app_submodule_title_general">GENERAL</string>
     <string name="settings_app_submodule_option_title_logout">Cerrar Sesión</string>
-    <string name="settings_app_submodule_option_description_logout">Finalizar el uso de la aplicación para el usuario actual.</string>
+    <string name="settings_app_submodule_option_description_logout">Finaliza el uso de la aplicación para el usuario actual.</string>
     <string name="settings_app_submodule_option_title_about">Acerca de la aplicación</string>
     <string name="settings_app_submodule_option_description_about">Información general de la aplicación.</string>
     <string name="settings_app_submodule_option_title_admin">Administrador</string>

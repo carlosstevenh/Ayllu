@@ -42,10 +42,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SeleccionArea"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".InstitutionalActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

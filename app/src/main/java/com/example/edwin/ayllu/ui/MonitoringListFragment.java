@@ -25,6 +25,7 @@ import com.example.edwin.ayllu.AdminSQLite;
 import com.example.edwin.ayllu.MonitoringDetailFragment;
 import com.example.edwin.ayllu.MonitoringRegistrationFormFragment;
 import com.example.edwin.ayllu.R;
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
 import com.example.edwin.ayllu.domain.area.AreaDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
 import com.example.edwin.ayllu.domain.PaisDbHelper;
@@ -79,6 +80,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
     SeccionDbHelper seccionDbHelper;
     AreaDbHelper areaDbHelper;
     MonitoreoDbHelper monitoreoDbHelper;
+    UsuarioDbHelper usuarioDbHelper;
     Cursor cursor;
 
     /**
@@ -98,16 +100,15 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         seccionDbHelper = new SeccionDbHelper(getActivity());
         areaDbHelper = new AreaDbHelper(getActivity());
         monitoreoDbHelper = new MonitoreoDbHelper(getActivity());
+        usuarioDbHelper = new UsuarioDbHelper(getActivity());
         int i = 0;
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
-        AdminSQLite admin = new AdminSQLite(getActivity().getApplicationContext(), "login", null, 1);
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
-        cursor.moveToFirst();
-        monitor = cursor.getString(0);
-        pais = cursor.getString(1);
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()){
+            monitor = cursor.getString(1);
+            pais = "0"+cursor.getString(7);
+        }
         cursor.close();
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual

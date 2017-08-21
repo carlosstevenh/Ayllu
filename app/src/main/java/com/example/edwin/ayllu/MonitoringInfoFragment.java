@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.edwin.ayllu.ui.AdminUserFormFragment;
+
 public class MonitoringInfoFragment extends Fragment {
     LinearLayout lyPrincipal;
     ImageView ivType;
@@ -50,8 +52,20 @@ public class MonitoringInfoFragment extends Fragment {
                 ivType.setContentDescription(getResources().getString(R.string.successfulRecordImageDescription));
                 tvTitle.setText(getResources().getString(R.string.successfulRecordTitle));
                 if(tipo != null){
-                    if(tipo.equals("EVALUATION")) tvDescription.setText(getResources().getString(R.string.successfulRecordResponseDescription));
-                    else tvDescription.setText(getResources().getString(R.string.successfulRecordMonitoringDescription));
+                    switch (tipo) {
+                        case "EVALUATION":
+                            tvDescription.setText(getResources().getString(R.string.successfulRecordResponseDescription));
+                            break;
+                        case "USER":
+                            tvDescription.setText("El usuario se ha registrado sin ningún inconveniente");
+                            break;
+                        case "EDIT":
+                            tvDescription.setText("El usuario se ha actualizado sin ningún inconveniente");
+                            break;
+                        default:
+                            tvDescription.setText(getResources().getString(R.string.successfulRecordMonitoringDescription));
+                            break;
+                    }
                 }
                 break;
             case "OFFLINE":
@@ -67,8 +81,20 @@ public class MonitoringInfoFragment extends Fragment {
                 ivType.setContentDescription(getResources().getString(R.string.failedRecordImageDescription));
                 tvTitle.setText(getResources().getString(R.string.failedRecordTitle));
                 if (tipo != null){
-                    if (tipo.equals("EVALUATION")) tvDescription.setText(getResources().getString(R.string.failedRecordResponseDescription));
-                    else tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));
+                    switch (tipo) {
+                        case "EVALUATION":
+                            tvDescription.setText(getResources().getString(R.string.failedRecordResponseDescription));
+                            break;
+                        case "USER":
+                            tvDescription.setText("El usuario no se ha podido registrar, por favor intentelo de nuevo");
+                            break;
+                        case "EDIT":
+                            tvDescription.setText("El usuario no se ha podido actualizar, por favor intentelo de nuevo");
+                            break;
+                        default:
+                            tvDescription.setText(getResources().getString(R.string.failedRecordMonitoringDescription));
+                            break;
+                    }
                 }
                 break;
             default:
@@ -92,26 +118,32 @@ public class MonitoringInfoFragment extends Fragment {
         }
         else {
             if (area.equals("")){
-                if(tipo.equals("EVALUATION")){
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            getActivity().finish();
-                        }
-                    },2000);
+                switch (tipo) {
+                    case "EVALUATION":
+                    case "EDIT":
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getActivity().finish();
+                            }
+                        }, 2000);
+                        break;
+                    case "USER":
+                        createSimpleDialog("¿Desea registrar otro usuario?", "INFORMACIÓN", "USER").show();
+                        break;
+                    default:
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                        }, 2000);
+                        break;
                 }
-                else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            startActivity(intent);
-                            getActivity().finish();
-                        }
-                    },2000);
-                }
-            } else  createSimpleDialog(getResources().getString(R.string.info_dialog_description),getResources().getString(R.string.info_dialog_title)).show();
+            } else  createSimpleDialog(getResources().getString(R.string.info_dialog_description),getResources().getString(R.string.info_dialog_title),"REGIST").show();
         }
     }
 
@@ -119,7 +151,7 @@ public class MonitoringInfoFragment extends Fragment {
      * =============================================================================================
      * METODO: Genera un Dialogo basico en pantalla
      **/
-    public AlertDialog createSimpleDialog(String mensaje, String titulo) {
+    public AlertDialog createSimpleDialog(String mensaje, String titulo, final String typ) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -141,17 +173,26 @@ public class MonitoringInfoFragment extends Fragment {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                MonitoringRegistrationFormFragment fragment = new MonitoringRegistrationFormFragment();
-                                Bundle params = new Bundle();
-                                params.putString("AREA", area);
-                                params.putString("OPCION", "N");
-                                fragment.setArguments(params);
+                                if (typ.equals("REGIST")){
+                                    MonitoringRegistrationFormFragment fragment = new MonitoringRegistrationFormFragment();
+                                    Bundle params = new Bundle();
+                                    params.putString("AREA", area);
+                                    params.putString("OPCION", "N");
+                                    fragment.setArguments(params);
 
-                                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.monitoring_principal_context, fragment)
-                                        .commit();
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.monitoring_principal_context, fragment)
+                                            .commit();
+                                }
+                                else {
+                                    AdminUserFormFragment fragment = new AdminUserFormFragment();
+                                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.transaction_principal_context, fragment)
+                                            .commit();
+                                }
                             }
                         },1000);
                     }
@@ -161,15 +202,20 @@ public class MonitoringInfoFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 builder.create().dismiss();
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                        startActivity(intent);
-                                        getActivity().finish();
-                                    }
-                                },1000);
+                                if (typ.equals("REGIST")){
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(getActivity(), MonitorMenuActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                            startActivity(intent);
+                                            getActivity().finish();
+                                        }
+                                    },1000);
+                                }
+                                else {
+                                    getActivity().finish();
+                                }
                             }
                         });
 

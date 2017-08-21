@@ -97,7 +97,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
         Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
         if (cursor.moveToFirst()){
             monitor = cursor.getString(1);
-            pais = cursor.getString(7);
+            pais = "0"+cursor.getString(7);
         }
 
         usuarioDbHelper.close();

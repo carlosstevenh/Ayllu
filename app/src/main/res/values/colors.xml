@@ -27,6 +27,7 @@
     <color name="colorBackgroundCardView">#ffffff</color>
     <color name="colorIconCardView">#1f2549</color>
     <color name="colorBackgroundList">#ededed</color>
+    <color name="colorBackgroundIcon">#3e3e3e</color>
     <!--.........................................................................................-->
     <!--Colores para el dialogo de coordenadasw-->
     <color name="colorTitleBackground">#0e2a3d</color>

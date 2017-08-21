@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.edwin.ayllu.MonitoringInfoFragment;
 import com.example.edwin.ayllu.domain.Mensaje;
 import com.example.edwin.ayllu.domain.Usuario;
 import com.example.edwin.ayllu.R;
@@ -47,7 +48,7 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
     //Variables globales
     private String transaction_type;
     private UsuarioDbHelper usuarioDbHelper;
-    private String id, name, surname, pais = "";
+    private String id, name, surname, pais = "", codigo = "";
 
     /**
      * =============================================================================================
@@ -65,6 +66,7 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
             id = intent.getExtras().getString("ID");
             name = intent.getExtras().getString("NAME");
             surname = intent.getExtras().getString("SURNAME");
+            codigo = intent.getExtras().getString("CODIGO");
         }
 
         //--------------------------------------------------------------------------------------
@@ -130,35 +132,45 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
      * METODO:
      */
     private void processTransaction() {
-        if (isValidFields() || transaction_type.equals("UPDATE")) {
-            boolean ban_next = false;
-            if (transaction_type.equals("UPDATE")){
-                if (etPassword.getText().toString().equals("") && etConfirmation.getText().toString().equals(""))
-                    ban_next = true;
+        boolean band = false;
+        if (transaction_type.equals("UPDATE")){
+            if(etPassword.getText().toString().equals("") && etConfirmation.getText().toString().equals("")){
+                tilPassword.setError(null);
+                tilConfirmation.setError(null);
+                if (isValidFields("PARCIAL")) band = true;
             }
-            else ban_next = true;
+            else{
+                if (isValidFields("TOTAL")) band = true;
+            }
+        }
+        else {
+            if (isValidFields("TOTAL")) band = true;
+        }
 
-            if (ban_next){
-                //Creamos el Usuario y preparamos el servicio
-                //String pass = SHA1.getHash(etPassword.getText().toString(), "SHA1");
-                Usuario new_user = new Usuario(
-                        "", etID.getText().toString(), etName.getText().toString(),
-                        etSurname.getText().toString(), "M", "", etPassword.getText().toString(), pais
-                );
+        if(band){
+            //Creamos el Usuario y preparamos el servicio
+            //String pass = SHA1.getHash(etPassword.getText().toString(), "SHA1");
+            Usuario new_user = new Usuario(
+                    codigo, etID.getText().toString(), etName.getText().toString(),
+                    etSurname.getText().toString(), "M", "", etPassword.getText().toString(), pais
+            );
 
-                if (transaction_type.equals("UPDATE")) {
-                    ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.edit_form_process_message_update_monitor), getResources().getString(R.string.registration_form_process_message), false, false);
-                    updateUser(loading, new_user);
-                }
-                else{
-                    ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.registration_form_process_shipping_status), getResources().getString(R.string.registration_form_process_message), false, false);
-                    registerUser(loading, new_user);
-                }
+            if (transaction_type.equals("UPDATE")) {
+                ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.edit_form_process_message_update_monitor), getResources().getString(R.string.registration_form_process_message), false, false);
+                updateUser(loading, new_user);
+            }
+            else{
+                ProgressDialog loading = ProgressDialog.show(getActivity(), getResources().getString(R.string.registration_form_process_shipping_status), getResources().getString(R.string.registration_form_process_message), false, false);
+                registerUser(loading, new_user);
             }
         }
     }
 
     private void registerUser(final ProgressDialog progressDialog, Usuario new_user) {
+        final Fragment fragment = new MonitoringInfoFragment();
+        final Bundle params = new Bundle();
+        params.putString("TIPO","USER");
+
         Retrofit retrofit = prepareRetrofit();
         AylluApiService service = retrofit.create(AylluApiService.class);
         Call<Mensaje> call = service.registrarUsuario(new_user);
@@ -179,21 +191,37 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
                         etSurname.setText("");
                         etPassword.setText("");
                         etConfirmation.setText("");
+
+                        params.putString("RESULT","OK");
+                        fragment.setArguments(params);
+
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
+                                .add(R.id.transaction_principal_context, fragment)
+                                .commit();
                     }
                 }
                 else {
-                    Toast login = Toast.makeText(getActivity(),
-                            getResources().getString(R.string.registration_form_process_error_message), Toast.LENGTH_LONG);
-                    login.show();
+                    params.putString("RESULT","ERROR");
+                    fragment.setArguments(params);
+
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .add(R.id.transaction_principal_context, fragment)
+                            .commit();
                 }
             }
 
             @Override
             public void onFailure(Call<Mensaje> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast login = Toast.makeText(getActivity(),
-                        getResources().getString(R.string.registration_form_process_message_server), Toast.LENGTH_LONG);
-                login.show();
+                params.putString("RESULT","ERROR");
+                fragment.setArguments(params);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .addToBackStack(null)
+                        .add(R.id.transaction_principal_context, fragment)
+                        .commit();
             }
         });
     }
@@ -203,6 +231,10 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
      * METODO:
      */
     private void updateUser(final ProgressDialog progressDialog, Usuario new_user) {
+        final Fragment fragment = new MonitoringInfoFragment();
+        final Bundle params = new Bundle();
+        params.putString("TIPO","EDIT");
+
         Retrofit retrofit = prepareRetrofit();
         AylluApiService service = retrofit.create(AylluApiService.class);
         Call<Mensaje> call = service.actualizarUsuario(new_user);
@@ -213,31 +245,43 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
                 if (response.isSuccessful()){
                     Mensaje mensaje = response.body();
                     if(mensaje.getEstado().equals("1")){
-                        Toast login = Toast.makeText(getActivity(),
-                                getResources().getString(R.string.edit_form_process_successful_message), Toast.LENGTH_LONG);
-                        login.show();
-
                         //Limpiar los datos del formulario
                         etID.setText("");
                         etName.setText("");
                         etSurname.setText("");
                         etPassword.setText("");
                         etConfirmation.setText("");
+
+                        params.putString("RESULT","Ok");
+                        fragment.setArguments(params);
+
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
+                                .add(R.id.transaction_principal_context, fragment)
+                                .commit();
                     }
                 }
                 else {
-                    Toast login = Toast.makeText(getActivity(),
-                            getResources().getString(R.string.edit_form_process_error_message), Toast.LENGTH_LONG);
-                    login.show();
+                    params.putString("RESULT","ERROR");
+                    fragment.setArguments(params);
+
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .addToBackStack(null)
+                            .add(R.id.transaction_principal_context, fragment)
+                            .commit();
                 }
             }
 
             @Override
             public void onFailure(Call<Mensaje> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast login = Toast.makeText(getActivity(),
-                        getResources().getString(R.string.registration_form_process_message_server), Toast.LENGTH_LONG);
-                login.show();
+                params.putString("RESULT","ERROR");
+                fragment.setArguments(params);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .addToBackStack(null)
+                        .add(R.id.transaction_principal_context, fragment)
+                        .commit();
             }
         });
     }
@@ -246,18 +290,23 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
      * =============================================================================================
      * METODO:
      */
-    private boolean isValidFields() {
+    private boolean isValidFields(String type) {
         boolean equals_passwords = false;
         boolean id, name, surname, password, confirmation;
 
         id = isValidID(etID.getText().toString(), tilID);
         name = isValidText(etName.getText().toString(), tilName);
         surname = isValidText(etSurname.getText().toString(), tilSurname);
-        password = isValidPassword(etPassword.getText().toString(), tilPassword);
-        confirmation = isValidPassword(etConfirmation.getText().toString(), tilConfirmation);
 
-        if (password && confirmation) equals_passwords = isSamePasswords();
-        return id && name && surname && equals_passwords;
+        if (type.equals("TOTAL")){
+            password = isValidPassword(etPassword.getText().toString(), tilPassword);
+            confirmation = isValidPassword(etConfirmation.getText().toString(), tilConfirmation);
+
+            if (password && confirmation) equals_passwords = isSamePasswords();
+            return id && name && surname && equals_passwords;
+        }
+
+        return id && name && surname;
     }
 
     /**

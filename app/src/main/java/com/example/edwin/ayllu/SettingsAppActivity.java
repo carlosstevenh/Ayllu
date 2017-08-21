@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
 import com.example.edwin.ayllu.domain.area.AreaContract;
 import com.example.edwin.ayllu.domain.area.AreaDbHelper;
 import com.example.edwin.ayllu.domain.MonitoreoDbHelper;
@@ -88,6 +90,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     SeccionDbHelper seccionDbHelper;
     AreaDbHelper areaDbHelper;
     MonitoreoDbHelper monitoreoDbHelper;
+    UsuarioDbHelper usuarioDbHelper;
     Cursor cursor;
 
     @Override
@@ -101,18 +104,17 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         seccionDbHelper = new SeccionDbHelper(this);
         areaDbHelper = new AreaDbHelper(this);
         monitoreoDbHelper = new MonitoreoDbHelper(this);
+        usuarioDbHelper = new UsuarioDbHelper(this);
 
         int i = 0;
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
-        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, tipo, pais FROM login LIMIT 1", null);
-        cursor.moveToFirst();
-        monitor = cursor.getString(0);
-        tipo = cursor.getString(1);
-        pais = cursor.getString(2);
+        cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()){
+            monitor = cursor.getString(1);
+            tipo = cursor.getString(5);
+            pais = cursor.getString(7);
+        }
         cursor.close();
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual
@@ -293,10 +295,8 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Borramos los datos del usuario logueado
-                                AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-                                SQLiteDatabase bd = admin.getWritableDatabase();
-                                bd.delete(admin.TABLENAME, null, null);
-                                bd.close();
+                                usuarioDbHelper.deleteDataBase();
+                                usuarioDbHelper.close();
 
                                 //Borramos los datos de funcionamiento
                                 paisDbHelper.deleteDataBase();
@@ -304,12 +304,14 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 subtramoDbHelper.deleteDataBase();
                                 seccionDbHelper.deleteDataBase();
                                 areaDbHelper.deleteDataBase();
+                                monitoreoDbHelper.deleteDataBase();
 
                                 paisDbHelper.close();
                                 tramoDbHelper.close();
                                 subtramoDbHelper.close();
                                 seccionDbHelper.close();
                                 areaDbHelper.close();
+                                monitoreoDbHelper.close();
 
                                 deleteCache(SettingsAppActivity.this);
 

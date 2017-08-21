@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.FactorContract;
 import com.example.edwin.ayllu.domain.FactorDbHelper;
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
 import com.example.edwin.ayllu.domain.VariableContract;
 import com.example.edwin.ayllu.domain.VariableDbHelper;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -66,7 +67,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     MonitoringSummaryFragment fragment;
 
     //VARIABLES: Control y Procesamiento de datos del formulario
-    String punto_afectacion = "", area = "", monitor = "", op_reg, pais = "";
+    String punto_afectacion = "", area = "", monitor = "", op_reg;
     String origen = "10";
     String fecha = "";
     String longitud = "", latitud = "";
@@ -92,6 +93,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     //VARIABLES: Control de datos fijos
     private FactorDbHelper factorDbHelper;
     private VariableDbHelper variableDbHelper;
+    private UsuarioDbHelper usuarioDbHelper;
     Cursor cursor;
 
     //VARIABLES: Control de datos para el (PORCENTAJE DE APARICIÓN) y (FRECUENCIA DE APARICIÓN)
@@ -122,14 +124,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
-        AdminSQLite admin = new AdminSQLite(getActivity().getApplicationContext(), "login", null, 1);
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo, pais FROM login LIMIT 1", null);
-        cursor.moveToFirst();
-        monitor = cursor.getString(0);
-        pais = cursor.getString(1);
-        cursor.close();
+        usuarioDbHelper = new UsuarioDbHelper(getActivity());
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()) monitor = cursor.getString(1);
 
         //------------------------------------------------------------------------------------------
         //Se obtiene los parametros enviados por el Motor de busqueda basico

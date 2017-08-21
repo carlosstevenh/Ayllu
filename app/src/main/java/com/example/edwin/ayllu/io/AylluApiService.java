@@ -53,6 +53,13 @@ public interface AylluApiService {
 
     /**
      * =============================================================================================
+     * METODO: Cambiar el estado de un Usuario
+     **/
+    @POST("usuarios/cambiar/")
+    Call<Mensaje> estadoUsuario(@Body Usuario datos);
+
+    /**
+     * =============================================================================================
      * METODO: Registrar un nuevo punto de afectación con monitoreo
      **/
     @POST("monitoreos/registrar/")

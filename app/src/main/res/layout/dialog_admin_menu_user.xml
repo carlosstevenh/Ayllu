@@ -34,24 +34,24 @@
             android:orientation="vertical"
             android:background="@color/colorIconCardView"
             android:gravity="center"
+            android:weightSum="100"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/normal_padding"
-            android:layout_marginEnd="@dimen/activity_vertical_margin"
-            android:padding="@dimen/normal_padding">
+            android:layout_marginStart="@dimen/activity_vertical_margin">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_padding"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="70"
+                android:padding="@dimen/normal_padding"
                 android:src="@drawable/ic_menu_refresh"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_padding"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:background="@color/colorBackgroundIcon"
                 android:text="EDITAR MONITOR"
                 android:textSize="12sp"
                 android:textColor="@color/colorTextIcons"
@@ -61,33 +61,30 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/option_disabled"
+            android:id="@+id/option_state"
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:layout_weight="0.5"
             android:orientation="vertical"
             android:background="@color/colorIconCardView"
             android:gravity="center"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/normal_padding"
-            android:layout_marginStart="@dimen/normal_padding"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:layout_marginEnd="@dimen/activity_vertical_margin"
-            android:padding="@dimen/normal_padding">
+            android:weightSum="100"
+            android:layout_margin="@dimen/activity_vertical_margin">
 
             <ImageView
                 android:id="@+id/iv_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_padding"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="70"
+                android:padding="@dimen/activity_vertical_margin"
                 android:src="@drawable/ic_menu_user_disabled"/>
 
             <TextView
                 android:id="@+id/tv_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_padding"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:background="@color/colorBackgroundIcon"
                 android:text="DESHABILITAR MONITOR"
                 android:textSize="12sp"
                 android:textColor="@color/colorTextIcons"

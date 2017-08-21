@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Promedio;
+import com.example.edwin.ayllu.domain.UsuarioDbHelper;
 import com.example.edwin.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mikephil.charting.charts.BarChart;
@@ -38,6 +39,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
     private ArrayList<Promedio> promedios;
     private String tramo, variable, monitor;
     private FloatingActionButton fabDowload;
+    private UsuarioDbHelper usuarioDbHelper;
     // Códigos de petición
     private static final int MY_WRITE_EXTERNAL_STORAGE = 123;
     @Override
@@ -50,12 +52,9 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
         variable = bundle.getString("variable");
 
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
-        AdminSQLite admin = new AdminSQLite(getApplicationContext(), "login", null, 1);
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        //Prepara la sentencia SQL para la consulta en la Tabla de usuarios
-        Cursor cursor = bd.rawQuery("SELECT codigo FROM login LIMIT 1", null);
-        cursor.moveToFirst();
-        monitor = cursor.getString(0);
+        usuarioDbHelper = new UsuarioDbHelper(this);
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()) monitor = cursor.getString(1);
         cursor.close();
 
         final ProgressDialog loading = ProgressDialog.show(this, getResources().getString(R.string.statistical_graph_variable_process_message_analysis),getResources().getString(R.string.statistical_graph_variable_process_message),false,false);
