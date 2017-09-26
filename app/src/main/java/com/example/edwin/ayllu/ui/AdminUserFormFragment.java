@@ -3,30 +3,24 @@ package com.example.edwin.ayllu.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.example.edwin.ayllu.MonitoringInfoFragment;
 import com.example.edwin.ayllu.domain.Mensaje;
-import com.example.edwin.ayllu.domain.Usuario;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.domain.UsuarioDbHelper;
+import com.example.edwin.ayllu.domain.usuario.UsuarioDbHelper;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiService;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-
-import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

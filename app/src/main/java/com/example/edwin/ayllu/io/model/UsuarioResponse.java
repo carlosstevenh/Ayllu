@@ -1,6 +1,6 @@
 package com.example.edwin.ayllu.io.model;
 
-import com.example.edwin.ayllu.domain.Usuario;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

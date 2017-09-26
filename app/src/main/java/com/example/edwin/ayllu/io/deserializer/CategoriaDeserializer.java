@@ -1,8 +1,8 @@
 package com.example.edwin.ayllu.io.deserializer;
 
-import com.example.edwin.ayllu.domain.Factor;
+import com.example.edwin.ayllu.domain.factor.Factor;
 import com.example.edwin.ayllu.domain.Categoria;
-import com.example.edwin.ayllu.domain.Variable;
+import com.example.edwin.ayllu.domain.variable.Variable;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.Gson;

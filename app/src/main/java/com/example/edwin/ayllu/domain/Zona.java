@@ -1,6 +1,10 @@
 package com.example.edwin.ayllu.domain;
 
 import com.example.edwin.ayllu.domain.area.Area;
+import com.example.edwin.ayllu.domain.pais.Pais;
+import com.example.edwin.ayllu.domain.seccion.Seccion;
+import com.example.edwin.ayllu.domain.subtramo.Subtramo;
+import com.example.edwin.ayllu.domain.tramo.Tramo;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 

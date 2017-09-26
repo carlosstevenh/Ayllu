@@ -16,8 +16,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.domain.Usuario;
-import com.example.edwin.ayllu.domain.UsuarioDbHelper;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
+import com.example.edwin.ayllu.domain.usuario.UsuarioDbHelper;
 import com.example.edwin.ayllu.io.AylluApiAdapter;
 import com.example.edwin.ayllu.io.model.UsuarioResponse;
 import com.example.edwin.ayllu.ui.adapter.UsuariosAdapter;

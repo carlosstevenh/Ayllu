@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.edwin.ayllu.R;
-import com.example.edwin.ayllu.domain.Monitoreo;
+import com.example.edwin.ayllu.domain.monitoreo.Monitoreo;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.squareup.picasso.Picasso;
 

@@ -2,14 +2,12 @@ package com.example.edwin.ayllu.ui.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,14 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edwin.ayllu.domain.Mensaje;
-import com.example.edwin.ayllu.domain.Usuario;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
 import com.example.edwin.ayllu.R;
 import com.example.edwin.ayllu.io.ApiConstants;
 import com.example.edwin.ayllu.io.AylluApiService;
 import com.example.edwin.ayllu.ui.AdminUserTransactionActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -35,8 +32,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static java.security.AccessController.getContext;
 
 public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.UsuarioViewHolder> {
 

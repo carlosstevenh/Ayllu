@@ -5,7 +5,7 @@
     android:id="@+id/graficaVariablesTiempo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.GraficaAnalisisVariableTiempo"
+    tools:context="com.example.edwin.ayllu.ui.GraficaAnalisisVariableTiempo"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout

@@ -3,14 +3,13 @@ package com.example.edwin.ayllu.io;
 import com.example.edwin.ayllu.domain.AnalisisPorcentajeFrecuencia;
 import com.example.edwin.ayllu.domain.ConteoFactoresTramo;
 import com.example.edwin.ayllu.domain.ConteoVariableFactorTramo;
-import com.example.edwin.ayllu.domain.Monitoreo;
+import com.example.edwin.ayllu.domain.monitoreo.Monitoreo;
 import com.example.edwin.ayllu.domain.MonitoreoGeneral;
 import com.example.edwin.ayllu.domain.Promedio;
 import com.example.edwin.ayllu.domain.Prueba;
 import com.example.edwin.ayllu.domain.PuntoCritico;
 import com.example.edwin.ayllu.domain.RespuestaInstitucional;
-import com.example.edwin.ayllu.domain.Usuario;
-import com.example.edwin.ayllu.io.ApiConstants;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
 
 import java.util.ArrayList;
 
@@ -68,40 +67,6 @@ public interface RestClient {
     @GET ("descripcionPC/{paf}/{fecha}")
     Call<ArrayList<MonitoreoGeneral>> informacion (@Path("paf") String paf,
                                                    @Path("fecha") String fec);
-
-    //peticion que realiza el inicio de sesion de la app
-    @GET("login/{ide_usu}/{pw_usu}")
-    Call<ArrayList<Usuario>> getUsuario(@Path("ide_usu") String identificacion_usu,
-                                        @Path("pw_usu") String contrasena_usu);
-
-    //peticion que agreaga un nuevo monitor al servidor
-    @GET("add/{ide}/{nom}/{ape}/{tipo}/{con}/{pais}")
-    Call<ArrayList<String>> addUsuario(@Path("ide") String ide,
-                                       @Path("nom") String nom,
-                                       @Path("ape") String ape,
-                                       @Path("tipo") String tipo,
-                                       @Path("con") String con,
-                                       @Path("pais") String pais);
-
-    //peticion que actualiza la informacion de un monitor
-    @GET("edit/{ide}/{nom}/{ape}/{con}/{clave}")
-    Call<ArrayList<String>> editUsuario(@Path("ide") String ide,
-                                       @Path("nom") String nom,
-                                       @Path("ape") String ape,
-                                       @Path("con") String con,
-                                       @Path("clave") String pais);
-
-    //peticion que trae todos los monitores del pais del administrador
-    @GET("getMonitores/{pais}")
-    Call<ArrayList<Usuario>> getUsuarios(@Path("pais") String pais);
-
-    //
-    @GET("update/{ide}")
-    Call<ArrayList<Usuario>>update(@Path("ide") String ide);
-
-    //peticion que deshabilita un usuario
-    @GET("deshabilitar/{ide}")
-    Call<ArrayList<String>> deleteUsuario(@Path("ide") String ide);
 
     //peticion que trae todos los monitoreos de un area especifica
     @GET("monitoreos/{tramo}/{subtramo}/{seccion}/{area}")

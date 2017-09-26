@@ -1,26 +1,15 @@
 package com.example.edwin.ayllu.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.support.v4.app.FragmentManager;
-import com.example.edwin.ayllu.AdminSQLite;
-import com.example.edwin.ayllu.LoginActivity;
-import com.example.edwin.ayllu.R;
-import android.content.Intent;
-import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.edwin.ayllu.R;
+
+import android.view.MenuItem;
 
 public class AdminActivity extends AppCompatActivity {
     private BottomNavigationView bnvAdmin;

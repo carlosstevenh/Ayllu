@@ -1,9 +1,5 @@
 package com.example.edwin.ayllu.io;
 
-import android.util.Log;
-
-import com.example.edwin.ayllu.domain.Usuario;
-import com.example.edwin.ayllu.domain.Zona;
 import com.example.edwin.ayllu.io.deserializer.CategoriaDeserializer;
 import com.example.edwin.ayllu.io.deserializer.UsuarioDeserializer;
 import com.example.edwin.ayllu.io.deserializer.ZonaDeserializer;

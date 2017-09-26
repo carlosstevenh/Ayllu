@@ -1,5 +1,7 @@
 package com.example.edwin.ayllu.domain;
 
+import com.example.edwin.ayllu.domain.factor.Factor;
+import com.example.edwin.ayllu.domain.variable.Variable;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 

@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.example.edwin.ayllu.domain.area.Area;
-
 import java.util.ArrayList;
 
 import static com.example.edwin.ayllu.domain.area.AreaContract.AreaEntry;

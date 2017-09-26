@@ -1,8 +1,6 @@
 package com.example.edwin.ayllu.io.deserializer;
 
-import android.util.Log;
-
-import com.example.edwin.ayllu.domain.Usuario;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.example.edwin.ayllu.io.model.UsuarioResponse;
 import com.google.gson.Gson;

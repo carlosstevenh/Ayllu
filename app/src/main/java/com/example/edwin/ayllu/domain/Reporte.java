@@ -5,7 +5,7 @@ import android.content.ContentValues;
 import com.example.edwin.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
-import static com.example.edwin.ayllu.domain.MonitoreoContract.MonitoreoEntry;
+import static com.example.edwin.ayllu.domain.monitoreo.MonitoreoContract.MonitoreoEntry;
 
 import java.util.ArrayList;
 

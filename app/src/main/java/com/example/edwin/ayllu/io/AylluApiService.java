@@ -1,14 +1,12 @@
 package com.example.edwin.ayllu.io;
 
 import com.example.edwin.ayllu.domain.Mensaje;
-import com.example.edwin.ayllu.domain.Task;
-import com.example.edwin.ayllu.domain.Usuario;
+import com.example.edwin.ayllu.domain.task.Task;
+import com.example.edwin.ayllu.domain.usuario.Usuario;
 import com.example.edwin.ayllu.io.model.CategoriaResponse;
 import com.example.edwin.ayllu.io.model.ReporteResponse;
 import com.example.edwin.ayllu.io.model.UsuarioResponse;
 import com.example.edwin.ayllu.io.model.ZonaResponse;
-
-import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
