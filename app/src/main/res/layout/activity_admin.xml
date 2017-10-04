@@ -5,7 +5,7 @@
     android:id="@+id/admin_principal_context"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.ui.AdminActivity">
+    tools:context="com.qhapaq.nan.ayllu.ui.AdminActivity">
 
     <include layout="@layout/content_admin"/>
 

@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true"
-tools:context="com.example.edwin.ayllu.ui.ActividadEstadisticaPuntoAfactacion">
+tools:context="com.qhapaq.nan.ayllu.ui.ActividadEstadisticaPuntoAfactacion">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.edwin.ayllu.ui.AboutAppActivity">
+    tools:context="com.qhapaq.nan.ayllu.ui.AboutAppActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

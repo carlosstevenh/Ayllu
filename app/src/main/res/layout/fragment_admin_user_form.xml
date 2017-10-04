@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.edwin.ayllu.ui.AdminUserTransactionActivity">
+    tools:context="com.qhapaq.nan.ayllu.ui.AdminUserTransactionActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Registrar Monitor"
+                android:text="@string/form_admin_title_register"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />

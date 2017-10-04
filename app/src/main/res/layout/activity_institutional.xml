@@ -4,6 +4,6 @@
     android:id="@+id/institutional_principal_context"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.ui.InstitutionalActivity">
+    tools:context="com.qhapaq.nan.ayllu.ui.InstitutionalActivity">
 
 </FrameLayout>

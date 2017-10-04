@@ -5,7 +5,7 @@
     android:id="@+id/activity_grafica_torta_variables"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.ui.GraficaTortaVariables"
+    tools:context="com.qhapaq.nan.ayllu.ui.GraficaTortaVariables"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.edwin.ayllu">
+    package="com.qhapaq.nan.ayllu"
+    android:installLocation="internalOnly">
+
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="false"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,11 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SplashScreen"
+            android:name="com.qhapaq.nan.ayllu.ui.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -30,72 +36,72 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MonitorMenuActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.MonitorMenuActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.AdminActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.AdminActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.InstitutionalActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.InstitutionalActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FormRespuesta"
+            android:name="com.qhapaq.nan.ayllu.ui.FormRespuesta"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MonitoringActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.MonitoringActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MontoreosPuntosCriticos"
+            android:name="com.qhapaq.nan.ayllu.ui.MontoreosPuntosCriticos"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.InformacionPuntoCritico"
+            android:name="com.qhapaq.nan.ayllu.ui.InformacionPuntoCritico"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FilterMonitoringActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.FilterMonitoringActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ActividadEstadisticaPuntoAfactacion"
+            android:name="com.qhapaq.nan.ayllu.ui.ActividadEstadisticaPuntoAfactacion"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.PrestentationActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.PrestentationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.GraficaRespuestaInstitucional"
+            android:name="com.qhapaq.nan.ayllu.ui.GraficaRespuestaInstitucional"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.ActivitySeleccionTramoFiltro"
+            android:name="com.qhapaq.nan.ayllu.ui.ActivitySeleccionTramoFiltro"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.GraficaTortaVariables"
+            android:name="com.qhapaq.nan.ayllu.ui.GraficaTortaVariables"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.MenuGraficasEstadisticas"
+            android:name="com.qhapaq.nan.ayllu.ui.MenuGraficasEstadisticas"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SettingsAppActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.SettingsAppActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.AboutAppActivity"
+            android:name="com.qhapaq.nan.ayllu.ui.AboutAppActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.GraficaAnalisisVariableTiempo"
+            android:name="com.qhapaq.nan.ayllu.ui.GraficaAnalisisVariableTiempo"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.AdminUserTransactionActivity"></activity>
+        <activity android:name="com.qhapaq.nan.ayllu.ui.AdminUserTransactionActivity"></activity>
     </application>
 
 </manifest>

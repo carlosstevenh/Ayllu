@@ -3,21 +3,21 @@
     <item
         android:id="@+id/action_enabled"
         android:enabled="true"
-        android:title="Habilitados"
+        android:title="@string/list_admin_item_enabled"
         android:icon="@drawable/ic_user_enabled"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_disabled"
         android:enabled="true"
-        android:title="Deshabilitados"
+        android:title="@string/list_admin_item_disabled"
         android:icon="@drawable/ic_user_disabled"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_options"
         android:enabled="true"
-        android:title="Opciones"
+        android:title="@string/list_admin_item_options"
         android:icon="@drawable/ic_options"
         app:showAsAction="ifRoom" />
 </menu>

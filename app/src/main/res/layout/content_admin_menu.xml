@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="center"
-                android:text="MENU MONITOR"
+                android:text="@string/menu_admin_option_title_monitoring"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="center"
-                android:text="Ingresa a todas las funcionalidades del monitor"
+                android:text="@string/menu_admin_option_description_monitoring"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="17sp"
                 android:textStyle="italic" />
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="center"
-                android:text="CERRAR SESIÓN"
+                android:text="@string/menu_admin_option_title_session"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="24sp"
                 android:textStyle="bold" />

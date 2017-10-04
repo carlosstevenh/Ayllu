@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Monitores Habilitados"
+                android:text="@string/list_admin_monitors_title_enabled"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />
