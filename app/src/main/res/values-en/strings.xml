@@ -210,6 +210,7 @@
     <string name="vertical_form_stepper_form_last_step">CONFIRMATION</string>
     <string name="vertical_form_stepper_form_continue">CONTINUE</string>
     <string name="vertical_form_stepper_form_confirm_button">CONFIRM DATA</string>
+    <string name="monitoring_registration_form_camera_message">turn the camera please…</string>
 
     <string-array name="listPorcentaje">
         <item>[1%-10%] RESTRICTED</item>

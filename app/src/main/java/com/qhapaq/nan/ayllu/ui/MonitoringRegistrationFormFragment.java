@@ -18,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.xml.datatype.Duration;
+
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
@@ -61,7 +64,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     RadioGroup rgRep1, rgRep2, rgOrg;
     TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3, tvTitle;
     FloatingActionButton fabLat, fabLong, fabCamera1, fabCamera2, fabCamera3;
-    private TextView tvInfo;
 
     MonitoringSummaryFragment fragment;
 
@@ -88,6 +90,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     private boolean f1 = false;
     private boolean f2 = false;
     private boolean f3 = false;
+    private boolean state = false;
+    private int position = 0;
+    private String name_change = "";
 
     //VARIABLES: Control de datos fijos
     private FactorDbHelper factorDbHelper;
@@ -204,8 +209,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         else if (files.size() == 2) {
             changeStateImage(tvImage1);
             changeStateImage(tvImage2);
-        }
-        else if (files.size() == 3) {
+        } else if (files.size() == 3) {
             changeStateImage(tvImage1);
             changeStateImage(tvImage2);
             changeStateImage(tvImage3);
@@ -249,15 +253,16 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new Date());
         foto = format + ".jpg";
+        if (state) foto = name_change;
         file = new File(imagesFolder, foto);
 
-        String filePath = Environment.getExternalStorageDirectory() +  "Ayllu" + foto;
+        String filePath = Environment.getExternalStorageDirectory() + "Ayllu" + foto;
         Uri imageUri;
 
         //Validación de acuerdo al OS.
-        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             imageUri = Uri.parse(filePath);
-        } else{
+        } else {
             imageUri = Uri.fromFile(file);
         }
 
@@ -275,26 +280,39 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 10;
         Bitmap bMap;
-        bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/Ayllu/" + file.getName(),options);
+        bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/Ayllu/" + file.getName(), options);
 
         img.setImageBitmap(bMap);
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
-    public boolean resizeImage(File file, int pos, TextView tvState){
+    public boolean resizeImage(File file, String name_file, TextView tvState) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 10;
         Bitmap mBitmap = BitmapFactory.decodeFile(file.getPath(), options);
 
         if (mBitmap.getHeight() > mBitmap.getWidth()){
-            createSimpleDialog("Por favor toma la fotografia en modo horizontal","INFORMACIÓN");
-            return true;
+            Toast.makeText(getActivity(), getResources().getString(R.string.monitoring_registration_form_camera_message), Toast.LENGTH_LONG).show();
+            return state;
+        }
+
+        if (mBitmap.getWidth() <= 2048) {
+            if (state) {
+                files.set(position, file);
+                fotos.set(position, name_file);
+                return false;
+            } else {
+                files.add(file);
+                fotos.add(name_file);
+                changeStateImage(tvState);
+                return true;
+            }
         }
 
         float newWidth = 2048;
         float newHeigth;
         //calculamos el alto ideal
-        newHeigth = (newWidth*mBitmap.getHeight())/mBitmap.getWidth();
+        newHeigth = (newWidth * mBitmap.getHeight()) / mBitmap.getWidth();
 
         //Redimensionamos
         int width = mBitmap.getWidth();
@@ -319,12 +337,19 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             os.flush();
             os.close();
 
-            files.set(pos, imageFile);
-            changeStateImage(tvState);
-            return false;
+            if (state) {
+                files.set(position, imageFile);
+                fotos.set(position, name_file);
+                return false;
+            } else {
+                files.add(imageFile);
+                fotos.add(name_file);
+                changeStateImage(tvState);
+                return true;
+            }
 
         } catch (Exception e) {
-            return true;
+            return state;
         }
     }
 
@@ -337,29 +362,18 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         super.onActivityResult(requestCode, resultCode, data);
         //Comprovamos que la foto se a realizado
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            if (f1) {
-                fotos.set(0, foto);
-                files.set(0, file);
-                f1 = false;
-                changeStateImage(tvImage1);
-            } else if (f2) {
-                fotos.set(1, foto);
-                files.set(1, file);
-                f2 = false;
-                changeStateImage(tvImage2);
-            } else if (f3) {
-                fotos.set(2, foto);
-                files.set(2, file);
-                f3 = false;
-                changeStateImage(tvImage3);
+            if (!state) {
+                if (!f1) {
+                    f1 = resizeImage(file, foto, tvImage1);
+                } else if (!f2) {
+                    f2 = resizeImage(file, foto, tvImage2);
+                } else {
+                    f3 = resizeImage(file, foto, tvImage3);
+                }
             } else {
-                fotos.add(foto);
-                files.add(file);
+                state = resizeImage(file, foto, tvImage1);
+                if (!state) position = 0;
             }
-
-            if (files.size() == 1) changeStateImage(tvImage1);
-            else if (files.size() == 2) changeStateImage(tvImage2);
-            else if (files.size() == 3) changeStateImage(tvImage3);
 
             if (op_reg.equals("M")) onStepOpening(0);
             else onStepOpening(2);
@@ -521,7 +535,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * =============================================================================================
      * METODO: Mostrar imagenes ampliadas
      **/
-    public AlertDialog createDialogImage(File file, int pos) {
+    public AlertDialog createDialogImage(final File file, int pos) {
         final int aux = pos;
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -539,9 +553,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (aux == 1) f1 = true;
-                        else if (aux == 2) f2 = true;
-                        else if (aux == 3) f3 = true;
+                        state = true;
+                        position = aux;
+                        name_change = file.getName();
                         getCamara1();
                         builder.create().dismiss();
                     }
@@ -731,7 +745,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 params.putString("LATITUD", latitud);
                 params.putString("LATITUD_NUMBER", processCoordinate(latitud, "LATITUD"));
                 params.putString("LONGITUD", longitud);
-                params.putString("LONGITUD_NUMBER", processCoordinate(longitud , "LONGITUD"));
+                params.putString("LONGITUD_NUMBER", processCoordinate(longitud, "LONGITUD"));
                 params.putString("TYPE_UPLOAD", "NEW");
 
                 fragment.setArguments(params);
@@ -749,9 +763,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             params.putString("VAR_NAME", variable);
             params.putString("FACTOR_NAME", factor);
             params.putString("LATITUD", lat);
-            params.putString("LATITUD_NUMBER","0");
+            params.putString("LATITUD_NUMBER", "0");
             params.putString("LONGITUD", logt);
-            params.putString("LONGITUD_NUMBER","0");
+            params.putString("LONGITUD_NUMBER", "0");
             params.putString("PUNTO_AFECTACION", punto_afectacion);
             params.putString("TYPE_UPLOAD", "MONITORING");
 
@@ -818,17 +832,17 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 int opmin = 0;
                 int opsec = 0;
 
-                if (!latitud.equals("")){
+                if (!latitud.equals("")) {
                     String cadLat = processCoordinate(latitud, "LATITUD");
-                    if(cadLat.charAt(0) == 'S') opcard1 = "01";
+                    if (cadLat.charAt(0) == 'S') opcard1 = "01";
                     //Obtenemos los grados
-                    cadnum = cadLat.charAt(1) + "" +cadLat.charAt(2);
+                    cadnum = cadLat.charAt(1) + "" + cadLat.charAt(2);
                     opdeg = Integer.parseInt(cadnum);
                     //Obtenemos los minutos
-                    cadnum = cadLat.charAt(3) + "" +cadLat.charAt(4);
+                    cadnum = cadLat.charAt(3) + "" + cadLat.charAt(4);
                     opmin = Integer.parseInt(cadnum);
                     //Obtenemos los segundos
-                    cadnum = cadLat.charAt(5) + "" +cadLat.charAt(6);
+                    cadnum = cadLat.charAt(5) + "" + cadLat.charAt(6);
                     opsec = Integer.parseInt(cadnum);
                 }
 
@@ -845,17 +859,17 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 int opmin = 0;
                 int opsec = 0;
 
-                if (!longitud.equals("")){
+                if (!longitud.equals("")) {
                     String cadLong = processCoordinate(longitud, "LONGITUD");
-                    if(cadLong.charAt(0) == 'W') opcard2 = "01";
+                    if (cadLong.charAt(0) == 'W') opcard2 = "01";
                     //Obtenemos los grados
-                    cadnum = cadLong.charAt(1) + "" +cadLong.charAt(2) + "" + cadLong.charAt(3);
+                    cadnum = cadLong.charAt(1) + "" + cadLong.charAt(2) + "" + cadLong.charAt(3);
                     opdeg = Integer.parseInt(cadnum);
                     //Obtenemos los minutos
-                    cadnum = cadLong.charAt(4) + "" +cadLong.charAt(5);
+                    cadnum = cadLong.charAt(4) + "" + cadLong.charAt(5);
                     opmin = Integer.parseInt(cadnum);
                     //Obtenemos los segundos
-                    cadnum = cadLong.charAt(6) + "" +cadLong.charAt(7);
+                    cadnum = cadLong.charAt(6) + "" + cadLong.charAt(7);
                     opsec = Integer.parseInt(cadnum);
                 }
 
@@ -888,7 +902,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             public void onClick(View v) {
                 if (files.size() == 0) checkPermission();
                 else if (files.size() > 0) {
-                    createDialogImage(files.get(0), 1).show();
+                    createDialogImage(files.get(0), 0).show();
                 }
             }
         });
@@ -898,7 +912,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             public void onClick(View v) {
                 if (files.size() == 1) getCamara1();
                 else if (files.size() > 1) {
-                    createDialogImage(files.get(1), 2).show();
+                    createDialogImage(files.get(1), 1).show();
                 }
             }
         });
@@ -908,7 +922,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             public void onClick(View v) {
                 if (files.size() == 2) getCamara1();
                 else if (files.size() > 2) {
-                    createDialogImage(files.get(2), 3).show();
+                    createDialogImage(files.get(2), 2).show();
                 }
             }
         });
@@ -1107,7 +1121,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                             else punto_card = "W-";
                             //Completamos los grados para valores de una cifra
                             if (npDegrees.getValue() < 10) degrees = "00" + npDegrees.getValue();
-                            else if (npDegrees.getValue() < 100) degrees = "0" + npDegrees.getValue();
+                            else if (npDegrees.getValue() < 100)
+                                degrees = "0" + npDegrees.getValue();
                             else degrees = "" + npDegrees.getValue();
                             //Completamos los minutos para valores de una cifra
                             if (npMinutes.getValue() < 10) minutes = "0" + npMinutes.getValue();
@@ -1171,12 +1186,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         String pc, minu, sec, deg, coordinate;
         pc = "" + cad.charAt(0);
 
-        if (opc_coord.equals("LATITUD")){
+        if (opc_coord.equals("LATITUD")) {
             deg = "" + cad.charAt(2) + "" + cad.charAt(3);
             minu = "" + cad.charAt(5) + "" + cad.charAt(6);
             sec = "" + cad.charAt(8) + "" + cad.charAt(9);
-        }
-        else {
+        } else {
             deg = "" + cad.charAt(2) + "" + cad.charAt(3) + "" + cad.charAt(4);
             minu = "" + cad.charAt(6) + "" + cad.charAt(7);
             sec = "" + cad.charAt(9) + "" + cad.charAt(10);
@@ -1190,7 +1204,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * =============================================================================================
      * METODO:
      **/
-    private void changeStateImage(TextView textView){
+    private void changeStateImage(TextView textView) {
         textView.setBackgroundColor(getResources().getColor(R.color.colorBackgroundStatePositive));
         textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_registration, 0, 0, 0);
     }
