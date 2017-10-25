@@ -188,7 +188,7 @@
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Selecciona Variable</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleccione una Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
     <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor selecciona Porcentaje</string>
     <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor selecciona Frecuencia</string>
@@ -268,7 +268,7 @@
     <string name="successfulRecordResponseDescription">La evaluación se ha registrado sin ningún inconveniente</string>
     <string name="offlineRecordTitle">REGISTRO SIN CONEXIÓN A INTERNET</string>
     <string name="offlineRecordImageDescription">OFFLINE</string>
-    <string name="offlineRecordMonitoringDescription">Los datos se han registrado parcialmente en el dispositivo, una vez se conecté a internet los datos se subiran automáticamente</string>
+    <string name="offlineRecordMonitoringDescription">Los datos se han registrado parcialmente en el dispositivo, una vez se conecte a internet los datos se subiran automáticamente</string>
     <string name="failedRecordTitle">REGISTRO FALLIDO</string>
     <string name="failedRecordImageDescription">ERROR</string>
     <string name="failedRecordMonitoringDescription">Los datos no se han podido registrar, por favor intentelo de nuevo</string>

@@ -2,6 +2,7 @@ package com.qhapaq.nan.ayllu.domain;
 
 import android.content.ContentValues;
 
+import com.qhapaq.nan.ayllu.R;
 import com.qhapaq.nan.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
@@ -49,7 +50,7 @@ public class Reporte {
     @SerializedName(JsonKeys.CONOCIMIENTO)
     String conocimiento;
     @SerializedName(JsonKeys.MONITOR_RES)
-    int monitor_res;
+    String monitor_res;
     @SerializedName(JsonKeys.PRUEBA1)
     String prueba1;
     @SerializedName(JsonKeys.PRUEBA2)
@@ -60,7 +61,7 @@ public class Reporte {
 
     //==============================================================================================
     //CONSTRUCTOR DE LA CLASE REPORTE
-    public Reporte(int cod_paf, int monitor_res, String conocimiento, String recursos,
+    public Reporte(int cod_paf, String monitor_res, String conocimiento, String recursos,
                    String variable, String latitud, String area, String fecha_mon,
                    String repercusiones, String presupuesto, String tiempo, String personal,
                    String evaluacion, String fecha_res, int frecuencia, int porcentaje,
@@ -117,7 +118,7 @@ public class Reporte {
     //CONSTRUCTOR VACIO
     public Reporte() {
         this.cod_paf = 0;
-        this.monitor_res = 0;
+        this.monitor_res = "";
         this.conocimiento = "";
         this.recursos = "";
         this.variable = "";
@@ -161,7 +162,7 @@ public class Reporte {
 
     //==============================================================================================
     //METODO: GENERA INFORMACIÓN PARA LAS TRES PLANTILLAS DEL REPORTE
-    public ArrayList<String> generarInfoPlantilla(int cod_plantilla) {
+    public ArrayList<String> generarInfoPlantilla(int cod_plantilla, String[] list_por, String[] list_freq) {
         ArrayList<String> info = new ArrayList<>();
         info.add(this.cod_paf + "");
 
@@ -172,8 +173,9 @@ public class Reporte {
                 info.add(this.usuario);
                 info.add(this.area);
                 info.add(this.variable);
-                info.add(this.latitud);
-                info.add(this.longitud);
+
+                info.add(reverseCoordinates(this.latitud, "LATITUD"));
+                info.add(reverseCoordinates(this.longitud, "LONGITUD"));
 
                 info.add(this.repercusiones.charAt(0) + "");
                 info.add(this.repercusiones.charAt(1) + "");
@@ -185,31 +187,51 @@ public class Reporte {
                 break;
             case 2:
                 //Datos de la segunda plantilla
-                info.add(this.porcentaje + "");
-                info.add(this.frecuencia + "");
+                info.add(list_por[this.porcentaje-1]);
+                info.add(list_freq[this.frecuencia-1]);
                 break;
             case 3:
                 //Datos de la tercera plantilla
-                info.add(this.fecha_res);
-                info.add(this.monitor_res + "");
-                info.add(this.evaluacion);
-                info.add(this.personal);
-                info.add(this.tiempo);
-                info.add(this.presupuesto);
-                info.add(this.recursos);
-                info.add(this.conocimiento);
+                if (!this.fecha_res.equals("1111-11-11")) {
+                    info.add(this.fecha_res);
+                    info.add(this.monitor_res);
+
+                    info.add(list_por[Integer.parseInt(this.evaluacion)-1]);
+                    info.add(list_freq[Integer.parseInt(this.personal)-1]);
+                    info.add(list_freq[Integer.parseInt(this.tiempo)-1]);
+                    info.add(list_freq[Integer.parseInt(this.presupuesto)-1]);
+                    info.add(list_freq[Integer.parseInt(this.recursos)-1]);
+                    info.add(list_freq[Integer.parseInt(this.conocimiento)-1]);
+                }
+                else info.clear();
         }
 
         return info;
     }
 
+    private String reverseCoordinates(String cad, String opc){
+        String reverseCad;
+        if (opc.equals("LATITUD")){
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + "°" +
+                    cad.charAt(3) + cad.charAt(4) + "'" +
+                    cad.charAt(5) + cad.charAt(6) + "''";
+        }
+        else {
+            reverseCad =    cad.charAt(0) +  "-" + cad.charAt(1) + cad.charAt(2) + cad.charAt(3) + "°" +
+                    cad.charAt(4) + cad.charAt(5) + "'" +
+                    cad.charAt(6) + cad.charAt(7) + "''";
+        }
+
+        return reverseCad;
+    }
+
     //==============================================================================================
     //GETTER Y SETTER DE LOS ATRIBUTOS DE LA CLASE REPORTE
-    public int getMonitor_res() {
+    public String getMonitor_res() {
         return monitor_res;
     }
 
-    public void setMonitor_res(int monitor_res) {
+    public void setMonitor_res(String monitor_res) {
         this.monitor_res = monitor_res;
     }
 

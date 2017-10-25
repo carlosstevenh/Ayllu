@@ -55,7 +55,7 @@ public class ReporteDeserializer implements JsonDeserializer<ReporteResponse>{
             String presupuesto = reporteData.get(JsonKeys.PRESUPUESTO).getAsString();
             String recursos = reporteData.get(JsonKeys.RECURSOS).getAsString();
             String conocimiento = reporteData.get(JsonKeys.CONOCIMIENTO).getAsString();
-            int monitor_res = reporteData.get(JsonKeys.MONITOR_RES).getAsInt();
+            String monitor_res = reporteData.get(JsonKeys.MONITOR_RES).getAsString();
             String prueba1 = reporteData.get(JsonKeys.PRUEBA1).getAsString();
             String prueba2 = reporteData.get(JsonKeys.PRUEBA2).getAsString();
             String prueba3 = reporteData.get(JsonKeys.PRUEBA3).getAsString();

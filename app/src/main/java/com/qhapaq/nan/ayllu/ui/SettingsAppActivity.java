@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qhapaq.nan.ayllu.R;
+import com.qhapaq.nan.ayllu.domain.pais.PaisContract;
 import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.domain.area.AreaContract;
 import com.qhapaq.nan.ayllu.domain.area.AreaDbHelper;
@@ -74,12 +75,13 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     //VARIABLES DATOS TEMPORALES
     ArrayList<Reporte> reportes = new ArrayList<>();
     CharSequence[] items_tramos, items_subtramos, items_secciones, items_areas, items_tipos;
-    ;
     int[] op = {0, 0, 0, 0};
     String opciones = "";
+    String[] list_titles = new String[]{};
+    ArrayList<String> list_zon = new ArrayList<>();
 
     String item = "";
-    String monitor = "", pais = "", tipo = "";
+    String monitor = "", pais = "", tipo = "", nombre_mon = "", nombre_pais = "";
     int i = 0;
 
     //VARIABLES CONTROL DE DATOS FIJOS
@@ -105,16 +107,31 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         monitoreoDbHelper = new MonitoreoDbHelper(this);
         usuarioDbHelper = new UsuarioDbHelper(this);
 
+        list_titles = new String[]{
+                getResources().getString(R.string.info_critical_point_item_tramo),
+                getResources().getString(R.string.info_critical_point_item_subtramo),
+                getResources().getString(R.string.info_critical_point_item_seccion),
+                getResources().getString(R.string.info_critical_point_item_propiedad)
+        };
+
         int i = 0;
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
         cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
         if (cursor.moveToFirst()) {
             monitor = cursor.getString(1);
+            nombre_mon = cursor.getString(3);
             tipo = cursor.getString(5);
             pais = "0" + cursor.getString(7);
         }
         cursor.close();
+
+        //------------------------------------------------------------------------------------------
+        //Obtenemos el nombre del pais del monitor
+        cursor = paisDbHelper.generateConditionalQuery(new String[]{pais}, PaisContract.PaisEntry.CODIGO);
+        if (cursor.moveToFirst()) nombre_pais = cursor.getString(2);
+        cursor.close();
+
         //------------------------------------------------------------------------------------------
         //Obtenemos los tramos correspondientes al pais del usuario actual
         cursor = tramoDbHelper.generateConditionalQuery(new String[]{pais}, TramoContract.TramoEntry.PAIS);
@@ -193,13 +210,15 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                             //----------------------------------------------------------------------
                             case 1:
                                 for (i = 0; i < 4; i++) op[i] = 0;
+                                opciones = "";
+                                list_zon.clear();
 
                                 item = items_tramos[which].toString();
                                 cursor = tramoDbHelper.generateConditionalQuery(new String[]{item}, TramoContract.TramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[0] = cursor.getInt(1);
-                                opciones = "";
-                                opciones += getResources().getString(R.string.info_critical_point_item_tramo) + "\n(" + item + ")";
+                                if (list_zon.size() == 1) list_zon.set(0, item);
+                                else list_zon.add(item);
 
                                 cursor = subtramoDbHelper.generateConditionalQuery(new String[]{op[0] + ""}, SubtramoContract.SubtramoEntry.TRAMO);
                                 items_subtramos = dataFilter(cursor, 2);
@@ -212,7 +231,9 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor = subtramoDbHelper.generateConditionalQuery(new String[]{item}, SubtramoContract.SubtramoEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[1] = cursor.getInt(1);
-                                opciones += "\n\n" + getResources().getString(R.string.info_critical_point_item_subtramo) + "\n(" + item + ")";
+                                if (list_zon.size() == 2) list_zon.set(1, item);
+                                else list_zon.add(item);
+
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{op[1] + ""}, SeccionContract.SeccionEntry.SUBTRAMO);
                                 items_secciones = dataFilter(cursor, 2);
                                 break;
@@ -224,7 +245,8 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor = seccionDbHelper.generateConditionalQuery(new String[]{item}, SeccionContract.SeccionEntry.DESCRIPCION);
                                 cursor.moveToFirst();
                                 op[2] = cursor.getInt(1);
-                                opciones += " \n\n" + getResources().getString(R.string.info_critical_point_item_seccion) + "\n(" + item + ")";
+                                if (list_zon.size() == 3) list_zon.set(2, item);
+                                else list_zon.add(item);
 
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{op[2] + ""}, AreaContract.AreaEntry.SECCION);
                                 items_areas = dataFilter(cursor, 3);
@@ -238,7 +260,8 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                 cursor = areaDbHelper.generateConditionalQuery(new String[]{item}, AreaContract.AreaEntry.PROPIEDAD_NOMINADA);
                                 cursor.moveToFirst();
                                 op[3] = cursor.getInt(1);
-                                opciones += "\n\n" + getResources().getString(R.string.info_critical_point_item_propiedad) + "\n(" + items_tipos[which].toString() + ")";
+                                if (list_zon.size() == 4) list_zon.set(3, item);
+                                else list_zon.add(item);
 
                                 break;
                             //----------------------------------------------------------------------
@@ -271,9 +294,12 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                         else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                     case 4:
-                                        if (op[3] != 0)
+                                        if (op[3] != 0) {
+                                            opciones = "";
+                                            for (int k = 0; k < list_zon.size(); k++)
+                                                opciones += list_titles[k] + "\n(" + list_zon.get(k) + ")\n\n";
                                             createSimpleDialog(opciones, getResources().getString(R.string.settings_app_dialog_title), type).show();
-                                        else for (i = 0; i < 4; i++) op[i] = 0;
+                                        } else for (i = 0; i < 4; i++) op[i] = 0;
                                         break;
                                 }
                             }
@@ -281,6 +307,9 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 .setNegativeButton(getResources().getString(R.string.settings_app_dialog_option_confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        opciones = "";
+                        for (int k = 0; k < list_zon.size(); k++)
+                            opciones += list_titles[k] + "\n(" + list_zon.get(k) + ")\n\n";
                         createSimpleDialog(opciones, getResources().getString(R.string.settings_app_dialog_title), type).show();
                     }
                 });
@@ -549,11 +578,22 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
     //==============================================================================================
     public void generateReport(ArrayList<Reporte> rp) {
-        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
-        String name = "Reporte-" + s.format(new Date());
-        //s = new SimpleDateFormat("HH:mm:ss");
-        //name += "-"+s.format(new Date())+".xls";
-        name = "reporte.xls";
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String name = "Reporte-" + s.format(new Date()) + ".xls";
+
+        int dif = 4-list_zon.size();
+        if (dif > 0) {
+            for (int i=0; i < dif; i++) list_zon.add("");
+        }
+
+        s = new SimpleDateFormat("dd-MM-yyyy");
+        ArrayList<String> data_doc = new ArrayList<>();
+
+        data_doc.add(nombre_pais);
+        for (int i = 0; i < list_zon.size(); i++) data_doc.add(list_zon.get(i));
+        data_doc.add(nombre_mon);
+        data_doc.add(s.format(new Date()));
+
         //------------------------------------------------------------------------------------------
         //Escribiendo en el archivo Excel
         try {
@@ -570,17 +610,18 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
             //1. Obtenemos la primera hoja del Excel
             //2. Llenamos la primera hoja del Excel
             HSSFSheet sheet = workbook.getSheetAt(0);
-            escribirExcel(1, 12, sheet);
+            editExcel(2, sheet, data_doc);
+            escribirExcel(1, 12, sheet, rp);
 
             //1. Obtenemos la segunda hoja del Excel
             //2. Llenamos la segunda hoja del Excel
             sheet = workbook.getSheetAt(1);
-            escribirExcel(2, 6, sheet);
+            escribirExcel(2, 6, sheet, rp);
 
             //1. Obtenemos la tercera hoja del Excel
             //2. Llenamos la tercera hoja del Excel
             sheet = workbook.getSheetAt(2);
-            escribirExcel(3, 6, sheet);
+            escribirExcel(3, 6, sheet, rp);
 
             workbook.write(result);
             result.close();
@@ -599,7 +640,20 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     }
 
     //==============================================================================================
-    private void escribirExcel(int cod_plan, int pf, HSSFSheet sheet) {
+    //EDITAR EL ARCHIVO EXCELL
+    private void editExcel(int pi, HSSFSheet sheet, ArrayList<String> dt_doc){
+        for (int i = 0; i < dt_doc.size(); i++) {
+            HSSFRow fila = sheet.getRow(pi);
+            HSSFCell celda = fila.getCell(1);
+
+            celda.setCellValue(dt_doc.get(i));
+            pi++;
+        }
+
+    }
+
+    //==============================================================================================
+    private void escribirExcel(int cod_plan, int pf, HSSFSheet sheet, ArrayList<Reporte> rp) {
         //Estilo de celda basico
         CellStyle style = sheet.getWorkbook().createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
@@ -608,7 +662,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         style.setBorderRight(BorderStyle.DASHED);
         style.setBorderLeft(BorderStyle.DASHED);
 
-        //Estilo de celda para Repercusiones y Origenes
+        //Estilo de celda para las Repercusiones
         CellStyle style2 = sheet.getWorkbook().createCellStyle();
         style2.setAlignment(HorizontalAlignment.CENTER);
         style2.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
@@ -618,7 +672,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         style2.setBorderRight(BorderStyle.DASHED);
         style2.setBorderLeft(BorderStyle.DASHED);
 
-        //Estilo de celda para Repercusiones y Origenes
+        //Estilo de celda para el Origen
         CellStyle style3 = sheet.getWorkbook().createCellStyle();
         style3.setAlignment(HorizontalAlignment.CENTER);
         style3.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
@@ -631,11 +685,25 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         //Variable para el punto de escritura
         int punto = pf;
 
+        if (cod_plan == 3) rp = cleanNulls(rp);
+
         //------------------------------------------------------------------------------------------
-        for (int i = 0; i < reportes.size(); i++) {
+        for (int i = 0; i < rp.size(); i++) {
             HSSFRow fila = sheet.createRow(punto);
             HSSFCell celda;
-            ArrayList<String> info = reportes.get(i).generarInfoPlantilla(cod_plan);
+
+            String[] list_p = new String[]{};
+            String[] list_f = new String[]{};
+
+            if (cod_plan == 2) {
+                list_p = getResources().getStringArray(R.array.listPorcentaje);
+                list_f = getResources().getStringArray(R.array.listFrecuencia);
+            } else if (cod_plan == 3) {
+                list_p = getResources().getStringArray(R.array.list_general_evaluation);
+                list_f = getResources().getStringArray(R.array.list_specific_evaluation);
+            }
+
+            ArrayList<String> info = rp.get(i).generarInfoPlantilla(cod_plan, list_p, list_f);
             punto++;
             //--------------------------------------------------------------------------------------
             for (int j = 0; j < info.size(); j++) {
@@ -652,6 +720,15 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         }
+    }
+
+    private ArrayList<Reporte> cleanNulls(ArrayList<Reporte> rpts) {
+        ArrayList<Reporte> list_new = new ArrayList<>();
+        for (int i = 0; i < rpts.size(); i++) {
+            if (!rpts.get(i).getFecha_res().equals("1111-11-11")) list_new.add(rpts.get(i));
+        }
+
+        return list_new;
     }
 
     /**

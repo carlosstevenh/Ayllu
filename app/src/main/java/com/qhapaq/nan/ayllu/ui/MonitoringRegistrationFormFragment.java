@@ -296,7 +296,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             return state;
         }
 
-        if (mBitmap.getWidth() <= 2048) {
+        Log.e("Tamaño Imagen-1",""+mBitmap.getHeight());
+        Log.e("Tamaño Imagen-2",""+Float.toString(mBitmap.getWidth()));
+
+        if (mBitmap.getWidth() <= 1024) {
+            Log.e("Imagen","Pequeña");
             if (state) {
                 files.set(position, file);
                 fotos.set(position, name_file);
@@ -309,7 +313,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             }
         }
 
-        float newWidth = 2048;
+        Log.e("Imagen","Grande");
+        float newWidth = 1024;
         float newHeigth;
         //calculamos el alto ideal
         newHeigth = (newWidth * mBitmap.getHeight()) / mBitmap.getWidth();
