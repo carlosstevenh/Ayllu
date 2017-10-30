@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_principal_context"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qhapaq.nan.ayllu.ui.AdminActivity">
+
+    <include layout="@layout/content_admin"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bnv_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/menu_administrador"/>
+
+</android.support.design.widget.CoordinatorLayout>

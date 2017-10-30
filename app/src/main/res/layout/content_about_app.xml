@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_about">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="CARACTERISTICAS"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:weightSum="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/img_ayllu_icon" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:drawableLeft="@drawable/ic_select_small"
+                        android:drawablePadding="4dp"
+                        android:drawableStart="@drawable/ic_select_small"
+                        android:gravity="center_vertical"
+                        android:text="NOMBRE:"
+                        android:textColor="@color/colorIconCardView"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:text="AYLLU"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:drawableLeft="@drawable/ic_select_small"
+                        android:drawablePadding="4dp"
+                        android:drawableStart="@drawable/ic_select_small"
+                        android:gravity="center_vertical"
+                        android:text="VERSIÓN:"
+                        android:textColor="@color/colorIconCardView"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:text="1.0"
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:drawableLeft="@drawable/ic_select_small"
+                        android:drawablePadding="4dp"
+                        android:drawableStart="@drawable/ic_select_small"
+                        android:gravity="center_vertical"
+                        android:text="DESCRIPCIÓN:"
+                        android:textColor="@color/colorIconCardView"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:paddingRight="@dimen/normal_padding"
+                        android:paddingEnd="@dimen/normal_padding"
+                        android:paddingLeft="0dp"
+                        android:paddingStart="0dp"
+                        android:text="Herramienta de apoyo para la gestión de la información del estado de conservación del Qhapaq Ñan Sistema vial andino patrimonio cultural de la humanidad."
+                        android:textColor="@color/colorTextCardView"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="@dimen/normal_padding"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="DESARROLLADORES"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:alpha=".5"
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_user"
+                android:gravity="center_vertical"
+                android:text="Edwin Yovany Orbes Villacorte"
+                android:textColor="@color/colorIconCardView"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Estudiante de la Universidad de Nariño."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Investigador del grupo Galeras.NET."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Desarrollador Android."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:alpha=".5"
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_user"
+                android:gravity="center_vertical"
+                android:text="Carlos Steven Hurtado Rivera"
+                android:textColor="@color/colorIconCardView"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Estudiante de la Universidad de Nariño."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Investigador del grupo Galeras.NET."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Desarrollador Android."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:alpha=".5"
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_user"
+                android:gravity="center_vertical"
+                android:text="Sandra Marleni Vallejo Chamorro"
+                android:textColor="@color/colorIconCardView"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Magister - Docente tiempo completo de la Universidad de Nariño."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Lider del grupo de investigación Galeras.NET."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
+                android:text="Asesora del proyecto."
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="@dimen/normal_padding"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="GRUPOS DE INVESTIGACIÓN"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="0.5"
+                    app:srcCompat="@drawable/img_galeras" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="0.5"
+                    app:srcCompat="@drawable/img_griniseta" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="@dimen/normal_padding"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:background="@color/colorPrimaryLight"
+                android:padding="5dp"
+                android:text="INSTITUCIÓN DE EDUACIÓN SUPERIOR"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="0.5"
+                    android:tint="@color/colorPrimaryText"
+                    app:srcCompat="@drawable/img_udenar" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
-    <string name="app_name">Ayllu</string>
+    <string name="app_name" translatable="true">Ayllu</string>
     <!--============================================================================================
         STRINGS: LOGIN DEL USUARIO
         ============================================================================================-->
@@ -37,6 +37,37 @@
     <string name="registration_form_process_message_server">No se pudo conectar al servidor</string>
     <!--.........................................................................................-->
     <!--FRAGMENT LISTA DE MONITORES -->
+    <string name="list_admin_monitors_title_enabled">Monitores Habilitados</string>
+    <string name="list_admin_monitors_title_disabled">Monitores Deshabilitados</string>
+    <string name="list_admin_item_enabled">Habilitados</string>
+    <string name="list_admin_item_disabled">Deshabilitados</string>
+    <string name="list_admin_item_options">Opciones</string>
+    <string name="list_admin_dialog_title">OPCIONES</string>
+    <string name="list_admin_dialog_option_edit">EDITAR MONITOR</string>
+    <string name="list_admin_dialog_option_disabled">DESHABILITAR MONITOR</string>
+    <string name="list_admin_dialog_option_enabled">HABILITAR MONITOR</string>
+    <string name="list_admin_message_title">MONITOR EDITADO</string>
+    <string name="list_admin_message_edit">El monitor ya se ha intentado editar, si se edito recargue el listado para actualizar la información, de lo contrario elija continuar.</string>
+    <string name="list_admin_disabled_text">¿Esta seguro que quiere deshabilitar a </string>
+    <string name="list_admin_disabled_title">DESHABILITAR MONITOR</string>
+    <string name="list_admin_disabled">Monitor deshabilitado</string>
+    <string name="list_admin_enabled_text">¿Esta seguro que quiere habilitar a </string>
+    <string name="list_admin_enabled_title">HABILITAR MONITOR</string>
+    <string name="list_admin_enabled">Monitor habilitado</string>
+    <string name="list_admin_dialog_option_continue">CONTINUAR</string>
+    <string name="list_admin_dialog_option_cancel">CANCELAR</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT MENU ADMIN -->
+    <string name="menu_admin_title">Opciones del administrador</string>
+    <string name="menu_admin_option_title_monitoring">MENÚ MONITOR</string>
+    <string name="menu_admin_option_description_monitoring">Ingresa a todas las funcionalidades del monitor</string>
+    <string name="menu_admin_option_title_session">CERRAR SESIÓN</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT ADMIN USER FORM -->
+    <string name="form_admin_title_register">Registrar monitor</string>
+    <string name="form_admin_title_edit">Editar monitor</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT -->
     <string name="item_menu_edit_monitor">Editar monitor</string>
     <string name="item_menu_disable_monitor">Deshabilitar monitor</string>
     <string name="item_cardview_user_name">Nombre</string>
@@ -74,20 +105,20 @@
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
     <string name="monitoring_menu_message_exit">¿Quieres Salir?</string>
-    <string name="monitoring_menu_message_upload">Hay monitoreos registrados sin conexión a internet, ¿Desea subirlos ahora?</string>
+    <string name="monitoring_menu_message_upload">Hay datosx registrados sin conexión a internet, ¿Desea subirlos ahora?</string>
 
     <!--============================================================================================
         MONITORING MODULE
         ============================================================================================-->
     <!--.........................................................................................-->
     <!--SLIDE REGISTRAR MONITOREO-->
-    <string name="slide_1_title">REGISTRA UN MONITOREO</string>
-    <string name="slide_1_desc">Recorre, registra y monitorea el estado de Conservación del QHAPAQ ÑAN</string>
+    <string name="slide_1_title">REGISTRA O MONITOREA UNA AFECTACIÓN</string>
+    <string name="slide_1_desc">Recorre, registra o monitorea el estado de Conservación del QHAPAQ ÑAN</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING LIST-->
-    <string name="titleListMonitoring">Monitoreo Qhapaq Ñan</string>
-    <string name="descriptionInfoListMonitoring">Por el momento, no hay monitoreos</string>
-    <string name="descriptionInfoListMonitoringNegative">No hay monitoreos para la selección actual</string>
+    <string name="titleListMonitoring">Listado de afectaciones</string>
+    <string name="descriptionInfoListMonitoring">Por el momento, no hay afectaciones</string>
+    <string name="descriptionInfoListMonitoringNegative">No hay afectaciones para la zona actual</string>
     <string name="descriptionTramo">TRAMO</string>
     <string name="descriptionSubtramo">SUBTRAMO</string>
     <string name="descriptionSeccion">SECCIÓN</string>
@@ -100,12 +131,12 @@
     <string name="itemCardViewDescriptionPrueba">Imagen del monitoreo</string>
     <string name="titleListMonitoringDialog">INFORMACIÓN</string>
     <string name="titleListMonitoringDialogError">ERROR</string>
-    <string name="descriptionListMonitoringDialog">Selecciona un área para registrar un monitoreo</string>
+    <string name="descriptionListMonitoringDialog">Seleciona una propiedad nominada para registrar la afectación</string>
     <string name="opcionListMonitoringDialog">HECHO</string>
     <string name="opcion_list_monitoring_dialog_acept">ACEPTAR</string>
     <string name="opcion_list_monitoring_dialog_cancel">CANCELAR</string>
     <string name="opcion_list_monitoring_dialog_ok">OK</string>
-    <string name="list_monitoring_process_message_search">Buscando monitoreos</string>
+    <string name="list_monitoring_process_message_search">Buscando afectaciones</string>
     <string name="list_monitoring_process_message">Por favor espere …</string>
     <string name="list_monitoring_process_message_server">No se pudo conectar al servidor</string>
     <string name="list_monitoring_title_dialog_offline">Monitoreo sin conexión a internet</string>
@@ -127,7 +158,7 @@
     <string name="itemCardViewPorcentaje">PORCENTAJE DE APARICIÓN:</string>
     <string name="itemCardViewFrecuencia">FRECUENCIA DE APARICIÓN:</string>
     <string name="titleDetailMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionDetailMonitoringDialog">No puedes monitorear el punto dos veces en el mismo día</string>
+    <string name="descriptionDetailMonitoringDialog">No puedes monitorear la afectación dos veces en el mismo día</string>
     <string name="monitoring_detail_dialog_option_positive">HECHO</string>
     <string name="monitoring_detail_rep_positive">Positiva</string>
     <string name="monitoring_detail_rep_negative">Negativa</string>
@@ -137,7 +168,8 @@
     <string name="monitoring_detail_org_external">Externo</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING REGISTRATION FORM-->
-    <string name="titleFormRegistrationMonitoring">Formulario del Monitoreo</string>
+    <string name="titleFormRegistrationMonitoring">Formulario de registro</string>
+    <string name="titleFormMonitoring">Formulario de monitoreo</string>
     <string name="titleFormRepercusiones">REPERCUSIONES:</string>
     <string name="titleFormOrigen">ORIGEN:</string>
     <string name="titleFormPorcentaje">PORCENTAJE DE APARICIÓN:</string>
@@ -156,7 +188,7 @@
     <string name="optionPorcentaje">[1%-10%] RESTRINGIDA</string>
     <string name="optionFrecuencia">UNA ÚNICA VEZ</string>
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
-    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Selecciona Variable</string>
+    <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleccione una Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
     <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor selecciona Porcentaje</string>
     <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor selecciona Frecuencia</string>
@@ -178,6 +210,7 @@
     <string name="vertical_form_stepper_form_last_step">CONFIRMACIÓN</string>
     <string name="vertical_form_stepper_form_continue">CONTINUAR</string>
     <string name="vertical_form_stepper_form_confirm_button">CONFIRMAR DATOS</string>
+    <string name="monitoring_registration_form_camera_message">Gire la cámara por favor…</string>
 
     <string-array name="listPorcentaje">
         <item>[1%-10%] RESTRINGIDA</item>
@@ -231,17 +264,17 @@
     <!--STRINGS: MONITORING INFO-->
     <string name="successfulRecordTitle">REGISTRO EXITOSO</string>
     <string name="successfulRecordImageDescription">OK</string>
-    <string name="successfulRecordMonitoringDescription">El monitoreo se ha registrado sin ningún inconveniente</string>
+    <string name="successfulRecordMonitoringDescription">Los datos se han registrado sin ningún inconveniente</string>
     <string name="successfulRecordResponseDescription">La evaluación se ha registrado sin ningún inconveniente</string>
     <string name="offlineRecordTitle">REGISTRO SIN CONEXIÓN A INTERNET</string>
     <string name="offlineRecordImageDescription">OFFLINE</string>
-    <string name="offlineRecordMonitoringDescription">El monitoreo se ha registrado parcialmente en el dispositivo, una vez se conecté a internet el monitoreo se subirá automáticamente</string>
+    <string name="offlineRecordMonitoringDescription">Los datos se han registrado parcialmente en el dispositivo, una vez se conecte a internet los datos se subiran automáticamente</string>
     <string name="failedRecordTitle">REGISTRO FALLIDO</string>
     <string name="failedRecordImageDescription">ERROR</string>
-    <string name="failedRecordMonitoringDescription">El monitoreo no se ha podido registrar, por favor intentelo de nuevo</string>
+    <string name="failedRecordMonitoringDescription">Los datos no se han podido registrar, por favor intentelo de nuevo</string>
     <string name="failedRecordResponseDescription">La evaluación no se ha podido registrar, por favor intentelo de nuevo</string>
     <string name="info_dialog_title">INFORMACIÓN</string>
-    <string name="info_dialog_description">¿Desea registrar otros puntos en la sección actual?</string>
+    <string name="info_dialog_description">¿Desea registrar otras afectaciones en la zona actual?</string>
     <string name="info_dialog_option_accept">ACEPTAR</string>
     <string name="info_dialog_option_cancel">CANCELAR</string>
 
@@ -251,19 +284,19 @@
     <!--.........................................................................................-->
     <!--SLIDE RESPUESTA INSTITUCIONAL-->
     <string name="slide_2_title">RESPUESTA INSTITUCIONAL</string>
-    <string name="slide_2_desc">Evalúa la respuesta institucional de un monitoreo con repercusiones negativas</string>
+    <string name="slide_2_desc">Evalua la respuesta institucional de una afectación con repercusiones negativas</string>
     <!--.........................................................................................-->
     <!--STRINGS: INSTITUTIONAL LIST-->
-    <string name="institutional_list_title">Respuesta Institucional</string>
-    <string name="institutional_list_message_negative">No hay monitoreos con repercusiones negativas para la selección actual</string>
+    <string name="institutional_list_title">Listado de afectaciones</string>
+    <string name="institutional_list_message_negative">No hay afectaciones con repercusiones negativas para la seleción actual</string>
     <string name="institutional_list_button_tramo">TRAMO</string>
     <string name="institutional_list_button_subtramo">SUBTRAMO</string>
     <string name="institutional_list_button_seccion">SECCIÓN</string>
     <string name="institutional_list_button_propiedad">PROPIEDAD NOMINADA</string>
     <string name="institutioanl_list_dialog_title">INFORMACIÓN</string>
-    <string name="institutional_list_dialog_description">Selecciona un tramo para buscar los monitoreos</string>
+    <string name="institutional_list_dialog_description">Seleciona un tramo para iniciar la busqueda</string>
     <string name="institutional_list_dialog_option_ok">OK</string>
-    <string name="institutional_list_process_message_search">Buscando monitoreos</string>
+    <string name="institutional_list_process_message_search">Buscando afectaciones</string>
     <string name="institutional_list_process_message">Por favor espere …</string>
     <string name="institutional_list_process_message_negative">No se encontraron datos</string>
     <string name="institutional_list_process_message_server">No se pudo conectar al servidor</string>
@@ -381,16 +414,16 @@
     <!--.........................................................................................-->
     <!--STRINGS: GRAPH PERCENTAGE AND FREQUENCY-->
     <string name="graph_percentage_frequency_title">Análisis porcentaje/frecuencia</string>
-    <string name="graph_percentage_frequency_subtitle_horizontal">Fecha del monitoreo</string>
+    <string name="graph_percentage_frequency_subtitle_horizontal">Fecha</string>
     <string name="graph_percentage_frequency_subtitle_vertical">P\nu\nn\nt\na\nj\ne</string>
-    <string name="graph_percentage_frequency_subtitle_info">INFORMACIÓN POR PUNTO</string>
+    <string name="graph_percentage_frequency_subtitle_info">INFORMACIÓN POR AFECTACIÓN</string>
     <string name="graph_percentage_frequency_item_Puntaje">PUNTAJE:</string>
     <string name="graph_percentage_frequency_description">Porcentaje y frecuencia de aparición</string>
     <string name="graph_percentage_frequency_file_name">GraficaPorcentajeFrecuencia</string>
     <!--.........................................................................................-->
     <!--STRINGS: GRAPH INSTITUTIONAL RESPONSE-->
     <string name="graph_institutional_response_title">Análisis respuesta institucional</string>
-    <string name="graph_institutional_response_subtitle_horizontal">FECHA DEL MONITOREO</string>
+    <string name="graph_institutional_response_subtitle_horizontal">Fecha de la Evaluación</string>
     <string name="graph_institutional_response_subtitle_vertical">V\nA\nL\nO\nR</string>
     <string name="graph_institutional_response_settings">Opciones</string>
     <string name="graph_institutional_response_evaluation">Evaluación</string>
@@ -401,7 +434,7 @@
     <string name="graph_institutional_response_knowledge">Conocimiento</string>
     <string name="graph_institutional_response_file_name">GraficaRespuestaInstitucional</string>
     <string name="graph_institutional_response_options_title">OPCIONES</string>
-    <string name="graph_institutional_response_info_title">INFORMACIÓN DEL MONITOREO</string>
+    <string name="graph_institutional_response_info_title">INFORMACIÓN DE LA AFECTACIÓN</string>
 
     <!--============================================================================================
        SETTINGS APP MODULE
@@ -414,16 +447,16 @@
     <!--STRINGS: SETTINGS APP-->
     <string name="settings_app_title">Configuración</string>
     <string name="settings_app_submodule_title_monitoring_offline">MONITOREO SIN CONEXIÓN</string>
-    <string name="settings_app_submodule_option_title_delete_list">Borrar listado de puntos</string>
-    <string name="settings_app_submodule_option_description_delete_list">Libera memoria eliminando de puntos que no necesites.</string>
-    <string name="settings_app_submodule_option_title_select_list">Elegir listado de puntos</string>
-    <string name="settings_app_submodule_option_description_select_list">Determina el lugar que quieres monitorear.</string>
+    <string name="settings_app_submodule_option_title_delete_list">Borrar el paquete de datos actual</string>
+    <string name="settings_app_submodule_option_description_delete_list">Libera espacio del disco, de puntos que no necesites.</string>
+    <string name="settings_app_submodule_option_title_select_list">Determina la zona que quieres monitorear</string>
+    <string name="settings_app_submodule_option_description_select_list">Descarga un paquete de datos del lugar que quieres monitorear.</string>
     <string name="settings_app_submodule_title_report">REPORTE</string>
-    <string name="settings_app_submodule_option_title_report">Elige los puntos a reportar</string>
+    <string name="settings_app_submodule_option_title_report">Elige la zona a reportar</string>
     <string name="settings_app_submodule_option_description_report">Determina el lugar que quieres reportar.</string>
     <string name="settings_app_submodule_title_general">GENERAL</string>
     <string name="settings_app_submodule_option_title_logout">Cerrar Sesión</string>
-    <string name="settings_app_submodule_option_description_logout">Finalizar el uso de la aplicación para el usuario actual.</string>
+    <string name="settings_app_submodule_option_description_logout">Finaliza el uso de la aplicación para el usuario actual.</string>
     <string name="settings_app_submodule_option_title_about">Acerca de la aplicación</string>
     <string name="settings_app_submodule_option_description_about">Información general de la aplicación.</string>
     <string name="settings_app_submodule_option_title_admin">Administrador</string>
@@ -433,8 +466,8 @@
     <string name="settings_app_dialog_option_cancel">CANCELAR</string>
     <string name="settings_app_dialog_option_download">DESCARGAR</string>
     <string name="settings_app_dialog_title">SELECCIÓN ESTABLECIDA</string>
-    <string name="settings_app_process_message_search_positive">Monitoreos descargados\n!Exitosamente¡</string>
-    <string name="settings_app_process_message_search_negative">No hay monitoreos para la selección actual</string>
+    <string name="settings_app_process_message_search_positive">Datos descargados\n!Exitosamente¡</string>
+    <string name="settings_app_process_message_search_negative">No hay datos para la seleción actual</string>
     <string name="settings_app_process_message_report_positive">Reporte generado\n!Exitosamente¡</string>
     <string name="cerrarSesion">¿Está seguro de cerrar sesión?</string>
     <string name="title_warning">Advertencia</string>
@@ -444,5 +477,5 @@
     <string name="AcerceDe">Acerca de</string>
     <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
-    <string name="borrarDatos">¿Está seguro que desea borrar monitoreos descargados?</string>
+    <string name="borrarDatos">¿Está seguro que desea borrar el paquete de datos descargado?</string>
 </resources>

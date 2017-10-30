@@ -1,139 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.edwin.ayllu.AboutAppActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.qhapaq.nan.ayllu.ui.AboutAppActivity">
+
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:background="?attr/colorPrimary"
+            android:layout_height="?attr/actionBarSize"
             android:layout_gravity="center_horizontal"
-            >
+            android:background="?attr/colorPrimary">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/AcerceDe"
-                android:textColor="#fff"
+                android:textColor="@color/colorTextIcons"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="6">
+    <include layout="@layout/content_about_app"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="@string/desarrolladoPor"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                app:srcCompat="@drawable/img_udenar"
-                android:tint="@color/colorPrimaryText"/>
-
-            <TextView
-                android:id="@+id/editText2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="Carlos Steven Hurtado Rivera"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="18sp"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/editText3"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="Edwin Yovanny Orbes Villacorte"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="18sp"
-                android:gravity="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/editText4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:text="@string/enColaboracion"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/galeras" />
-
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/griniseta" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en" tools:ignore="ExtraTranslation">
     <string name="app_name">Ayllu</string>
     <!--============================================================================================
         STRINGS: LOGIN DEL USUARIO
@@ -37,6 +37,37 @@
     <string name="registration_form_process_message_server">Could not connect to server</string>
     <!--.........................................................................................-->
     <!--FRAGMENT LISTA DE MONITORES -->
+    <string name="list_admin_monitors_title_enabled">Enabled Monitors</string>
+    <string name="list_admin_monitors_title_disabled">Disabled Monitors</string>
+    <string name="list_admin_item_enabled">Enabled</string>
+    <string name="list_admin_item_disabled">Disabled</string>
+    <string name="list_admin_item_options">Options</string>
+    <string name="list_admin_dialog_title">OPTIONS</string>
+    <string name="list_admin_dialog_option_edit">EDIT MONITOR</string>
+    <string name="list_admin_dialog_option_disabled">DISABLE MONITOR</string>
+    <string name="list_admin_dialog_option_enabled">ENABLE MONITOR</string>
+    <string name="list_admin_message_title">EDITED MONITOR</string>
+    <string name="list_admin_message_edit">The monitor has already been tried to edit, if you edit reload the list to update the information, otherwise choose continue.</string>
+    <string name="list_admin_disabled_text">¿Are you sure you want to disable</string>
+    <string name="list_admin_disabled_title">DISABLE MONITOR</string>
+    <string name="list_admin_disabled">Monitor disabled</string>
+    <string name="list_admin_enabled_text">¿Are you sure you want to enable</string>
+    <string name="list_admin_enabled_title">ENABLE MONITOR</string>
+    <string name="list_admin_enabled">Monitor enabled</string>
+    <string name="list_admin_dialog_option_continue">CONTINUE</string>
+    <string name="list_admin_dialog_option_cancel">CANCEL</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT MENU ADMIN -->
+    <string name="menu_admin_title">Administrator options</string>
+    <string name="menu_admin_option_title_monitoring">MONITOR MENU</string>
+    <string name="menu_admin_option_description_monitoring">Enter all the features of the monitor</string>
+    <string name="menu_admin_option_title_session">SIGN OFF</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT ADMIN USER FORM -->
+    <string name="form_admin_title_register">Register monitor</string>
+    <string name="form_admin_title_edit">Edit monitor</string>
+    <!--.........................................................................................-->
+    <!--FRAGMENT -->
     <string name="item_menu_edit_monitor">Edit monitor</string>
     <string name="item_menu_disable_monitor">Disable monitor</string>
     <string name="item_cardview_user_name">First name</string>
@@ -137,7 +168,8 @@
     <string name="monitoring_detail_org_external">External</string>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING REGISTRATION FORM-->
-    <string name="titleFormRegistrationMonitoring">Monitoring form</string>
+    <string name="titleFormRegistrationMonitoring">Registration form</string>
+    <string name="titleFormMonitoring">Monitoring form</string>
     <string name="titleFormRepercusiones">REPERCUSSIONS:</string>
     <string name="titleFormOrigen">ORIGIN:</string>
     <string name="titleFormPorcentaje">PERCENTAGE OF APPEARANCE:</string>
@@ -178,6 +210,7 @@
     <string name="vertical_form_stepper_form_last_step">CONFIRMATION</string>
     <string name="vertical_form_stepper_form_continue">CONTINUE</string>
     <string name="vertical_form_stepper_form_confirm_button">CONFIRM DATA</string>
+    <string name="monitoring_registration_form_camera_message">turn the camera please…</string>
 
     <string-array name="listPorcentaje">
         <item>[1%-10%] RESTRICTED</item>

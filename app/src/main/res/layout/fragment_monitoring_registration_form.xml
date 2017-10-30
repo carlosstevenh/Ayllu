@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.edwin.ayllu.MonitoringActivity">
+    tools:context="com.qhapaq.nan.ayllu.ui.MonitoringActivity">
 
     <include layout="@layout/content_monitoring_registration_form"/>
 
@@ -24,6 +24,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

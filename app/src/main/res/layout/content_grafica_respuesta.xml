@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/graph_percentage_frequency_subtitle_horizontal"
+                android:text="@string/graph_institutional_response_subtitle_horizontal"
                 android:textAlignment="center"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp"

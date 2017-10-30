@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ayllu_inicio"
-    tools:context="com.example.edwin.ayllu.SplashScreen" />
+    tools:context="com.qhapaq.nan.ayllu.ui.SplashScreen" />

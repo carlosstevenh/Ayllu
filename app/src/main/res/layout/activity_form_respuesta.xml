@@ -4,4 +4,4 @@
     android:id="@+id/institutional_form_principal_context"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.edwin.ayllu.FormRespuesta"/>
+    tools:context="com.qhapaq.nan.ayllu.ui.FormRespuesta"/>
