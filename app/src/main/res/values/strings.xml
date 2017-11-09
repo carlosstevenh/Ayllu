@@ -90,7 +90,7 @@
     <string name="edit_form_confpassword">Confirmar contraseña</string>
     <string name="edit_form_alert_invalid_field">Campo inválido</string>
     <string name="redit_form_alert_empty_field">Campo vacío</string>
-    <string name="edit_form_alert_password">Debe contener máyusculas, minúsulas, dígitos y un tamaño mayor a 8 caracteres</string>
+    <string name="edit_form_alert_password">Debe contener máyusculas, minúsculas, dígitos y un tamaño mayor a 8 caracteres</string>
     <string name="edit_form_alert_different_passwords">Las contraseñas no coinciden</string>
     <string name="edit_form_process_message_update_monitor">Actualizando monitor</string>
     <string name="edit_form_process_message">Por favor espere …</string>
@@ -105,7 +105,7 @@
     <string name="skip">ELEGIR</string>
     <string name="start">INICIO</string>
     <string name="monitoring_menu_message_exit">¿Quieres Salir?</string>
-    <string name="monitoring_menu_message_upload">Hay datosx registrados sin conexión a internet, ¿Desea subirlos ahora?</string>
+    <string name="monitoring_menu_message_upload">Hay datos registrados sin conexión a internet, ¿Desea subirlos ahora?</string>
 
     <!--============================================================================================
         MONITORING MODULE

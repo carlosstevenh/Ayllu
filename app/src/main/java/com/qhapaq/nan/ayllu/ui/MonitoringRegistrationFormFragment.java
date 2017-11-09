@@ -39,6 +39,7 @@ import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.domain.variable.VariableContract;
 import com.qhapaq.nan.ayllu.domain.variable.VariableDbHelper;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -83,8 +84,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     int i = 0;
 
     //VARIABLES: Control y Procesamiento de datos de la camara
-    private String foto;
-    private File file = null;
+    String foto = "";
+    File file = null;
     private ArrayList<String> fotos = new ArrayList<>();
     private ArrayList<File> files = new ArrayList<>();
     private boolean f1 = false;
@@ -266,7 +267,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             imageUri = Uri.fromFile(file);
         }
 
-
         //Uri uriSavedImage = Uri.fromFile(file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(cameraIntent, 1);
@@ -277,30 +277,21 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: Muestra la Imagen en pantalla
      **/
     protected void bitMapImg(File file, ImageView img) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 10;
-        Bitmap bMap;
-        bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/Ayllu/" + file.getName(), options);
+        int heightDp = getActivity().getResources().getDisplayMetrics().heightPixels/2;
+        int widthDp = getActivity().getResources().getDisplayMetrics().widthPixels;
 
-        img.setImageBitmap(bMap);
-        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        Picasso.with(getActivity())
+                .load(file)
+                .resize(widthDp,heightDp)
+                .into(img);
     }
 
     public boolean resizeImage(File file, String name_file, TextView tvState) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 10;
-        Bitmap mBitmap = BitmapFactory.decodeFile(file.getPath(), options);
-
-        if (mBitmap.getHeight() > mBitmap.getWidth()){
-            Toast.makeText(getActivity(), getResources().getString(R.string.monitoring_registration_form_camera_message), Toast.LENGTH_LONG).show();
-            return state;
-        }
-
-        Log.e("Tamaño Imagen-1",""+mBitmap.getHeight());
-        Log.e("Tamaño Imagen-2",""+Float.toString(mBitmap.getWidth()));
+        //BitmapFactory.Options options = new BitmapFactory.Options();
+        //options.inSampleSize = 10;
+        Bitmap mBitmap = BitmapFactory.decodeFile(file.getPath());
 
         if (mBitmap.getWidth() <= 1024) {
-            Log.e("Imagen","Pequeña");
             if (state) {
                 files.set(position, file);
                 fotos.set(position, name_file);
@@ -313,7 +304,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             }
         }
 
-        Log.e("Imagen","Grande");
         float newWidth = 1024;
         float newHeigth;
         //calculamos el alto ideal
@@ -718,7 +708,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     public void sendData() {
         fragment = new MonitoringSummaryFragment();
         Bundle params = new Bundle();
-        String cad;
 
         comprobarOrigen();
         comprobarRepercusiones1();
@@ -736,6 +725,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]]);
         params.putString("FRE_NUMBER", seleccion_items[1] + "");
         params.putString("FILES_NUMBER", files.size() + "");
+
 
         if (files.size() >= 1) params.putString("PRUEBA1", files.get(0).getName());
         if (files.size() >= 2) params.putString("PRUEBA2", files.get(1).getName());

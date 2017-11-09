@@ -48,11 +48,21 @@ public class MonitoringImageSwipeAdapter extends PagerAdapter{
         View item_view = layoutInflater.inflate(R.layout.slide_image_monitoring, container, false);
         ImageView ivMonitoring = (ImageView) item_view.findViewById(R.id.iv_monitoring);
 
+        int heightDp = ctx.getResources().getDisplayMetrics().heightPixels/2;
+        int widthDp = ctx.getResources().getDisplayMetrics().widthPixels;
+
         if(this.imagenesFiles != null){
-            Picasso.with(ctx).load(imagenesFiles.get(position)).fit().centerCrop().into(ivMonitoring);
+            Picasso.with(ctx)
+                    .load(imagenesFiles.get(position))
+                    .resize(widthDp,heightDp)
+                    .into(ivMonitoring);
         }
-        else
-            Picasso.with(ctx).load(imagenesRutas[position]).fit().centerCrop().into(ivMonitoring);
+        else{
+            Picasso.with(ctx)
+                    .load(imagenesRutas[position])
+                    .resize(widthDp, heightDp)
+                    .into(ivMonitoring);
+        }
 
         container.addView(item_view);
         return item_view;

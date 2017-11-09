@@ -5,9 +5,13 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,6 +180,11 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         tvFrecuencia.setText(items_frecuencia[reporte.getFrecuencia()-1]);
 
         addBottomDots(0);
+
+        AppBarLayout appbar = (AppBarLayout) view.findViewById(R.id.app_bar);
+        float heightDp = getResources().getDisplayMetrics().heightPixels / 2;
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams)appbar.getLayoutParams();
+        lp.height = (int)heightDp;
 
         return view;
     }
