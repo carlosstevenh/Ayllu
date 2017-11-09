@@ -1,5 +1,6 @@
 package com.qhapaq.nan.ayllu.ui;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -57,9 +59,11 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,6 +97,14 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     MonitoreoDbHelper monitoreoDbHelper;
     UsuarioDbHelper usuarioDbHelper;
     Cursor cursor;
+
+    //Progresbar
+    ProgressDialog loading;
+    private int progressBarStatus = 0;
+    private int sizeImg = 0;
+    private int portj = 0;
+    private int dif = 0;
+    private Handler progressBarHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -408,23 +420,26 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         tvTitle.setText(titulo);
         tvDescription.setText(mensaje);
 
+        if( tipo.equals("OFFLINE")) {
+            loading = new ProgressDialog(SettingsAppActivity.this);
+            loading.setMessage(getResources().getString(R.string.list_monitoring_process_message));
+            loading.setTitle(getResources().getString(R.string.list_monitoring_process_message_search));
+            loading.setProgress(0);
+            loading.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            loading.setMax(100);
+            loading.setCancelable(false);
+        }
+
         builder.setPositiveButton(getResources().getString(R.string.settings_app_dialog_option_download),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        final ProgressDialog loading = new ProgressDialog(SettingsAppActivity.this);
-                        loading.setMessage(getResources().getString(R.string.list_monitoring_process_message));
-                        loading.setTitle(getResources().getString(R.string.list_monitoring_process_message_search));
-                        loading.setProgress(10);
-                        loading.setIndeterminate(true);
-                        loading.show();
-
+                        if(tipo.equals("OFFLINE")) loading.show();
                         Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
                         call.enqueue(new Callback<ReporteResponse>() {
                             @Override
                             public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
                                 if (response.isSuccessful()) {
-                                    loading.dismiss();
                                     builder.create().dismiss();
 
                                     reportes = response.body().getReportes();
@@ -442,9 +457,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
                                             monitoreoDbHelper.close();
 
                                             //Descargar Imagenes del Servidor
-                                            for (int i = 0; i < reportes.size(); i++)
-                                                downloadZipFile(reportes.get(i).getPrueba1());
-                                            Toast.makeText(SettingsAppActivity.this, getResources().getString(R.string.settings_app_process_message_search_positive), Toast.LENGTH_SHORT).show();
+                                            downloadImages();
                                         } else checkPermission();
                                     }
                                     if (reportes.size() == 0) {
@@ -455,7 +468,6 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
                             @Override
                             public void onFailure(Call<ReporteResponse> call, Throwable t) {
-                                loading.dismiss();
                                 Toast.makeText(
                                         SettingsAppActivity.this,
                                         getResources().getString(R.string.general_statistical_graph_process_message_server),
@@ -468,6 +480,8 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
 
         return builder.create();
     }
+
+
 
     /**
      * =============================================================================================
@@ -511,32 +525,81 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
      * METODO:
      **/
 
-    public void downloadZipFile(final String img) {
+    @SuppressLint("StaticFieldLeak")
+    public int downloadZipFile(final String img) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.readTimeout(60, TimeUnit.SECONDS);
+        httpClient.addInterceptor(logging);
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(ApiConstants.URL_IMG);
         Retrofit retrofit = builder.client(httpClient.build()).build();
         AylluApiService downloadService = retrofit.create(AylluApiService.class);
         Call<ResponseBody> call = downloadService.downloadImageByUrl(img);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    new AsyncTask<Void, Long, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            saveToDisk(response.body(), img);
-                            return null;
-                        }
-                    }.execute();
+        final ResponseBody res;
 
+        try {
+            res = call.execute().body();
+            new AsyncTask<Void, Long, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    saveToDisk(res, img);
+                    return null;
+                }
+            }.execute();
+
+            return portj;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return portj;
+        }
+
+    }
+
+    /**
+     * =============================================================================================
+     * METODO: Registrar Monitoreos en estado Offline
+     */
+    private void downloadImages (){
+        //------------------------------------------------------------------------------------------
+        //DESCARGA IMAGENES DEL PAQUETE DE DATOS
+        //reset progress bar status
+        progressBarStatus = 0;
+        sizeImg = reportes.size();
+
+        portj = 100/sizeImg;
+        dif = 100 - (portj * sizeImg);
+
+        new Thread(new Runnable() {
+            public void run() {
+                //----------------------------------------------------------------------------------
+                //DESCARGAMOS LAS IMAGENES
+                for (int i = 0; i < reportes.size(); i++){
+                    progressBarStatus += downloadZipFile(reportes.get(i).getPrueba1());
+                    if (i == reportes.size()-1) progressBarStatus += dif;
+                    //Actualizar el progressBar
+                    progressBarHandler.post(new Runnable() {
+                        public void run() {
+                            loading.setProgress(progressBarStatus);
+                        }
+                    });
+                }
+                //----------------------------------------------------------------------------------
+                // Terminamos el dialogo del progresbar
+                if (progressBarStatus >= 100) {
+                    //Dormir por dos segundos para mirar el 100%
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Cerrar el progresBar
+                    loading.dismiss();
+                    //Toast.makeText(SettingsAppActivity.this, getResources().getString(R.string.settings_app_process_message_search_positive), Toast.LENGTH_SHORT).show();
                 }
             }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        }).start();
     }
 
     /**
@@ -775,7 +838,7 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -786,14 +849,14 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+            for (String aChildren : children) {
+                boolean success = deleteDir(new File(dir, aChildren));
                 if (!success) {
                     return false;
                 }
             }
             return dir.delete();
-        } else if (dir != null && dir.isFile()) return dir.delete();
-        else return false;
+        } else
+            return dir != null && dir.isFile() && dir.delete();
     }
 }

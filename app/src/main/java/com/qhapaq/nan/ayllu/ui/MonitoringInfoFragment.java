@@ -114,7 +114,7 @@ public class MonitoringInfoFragment extends Fragment {
                 public void run() {
                     getFragmentManager().popBackStack();
                 }
-            },2000);
+            },300);
         }
         else {
             if (area.equals("")){
@@ -126,7 +126,7 @@ public class MonitoringInfoFragment extends Fragment {
                             public void run() {
                                 getActivity().finish();
                             }
-                        }, 2000);
+                        }, 300);
                         break;
                     case "USER":
                         createSimpleDialog("¿Desea registrar otro usuario?", "INFORMACIÓN", "USER").show();
@@ -140,7 +140,7 @@ public class MonitoringInfoFragment extends Fragment {
                                 startActivity(intent);
                                 getActivity().finish();
                             }
-                        }, 2000);
+                        }, 300);
                         break;
                 }
             } else  createSimpleDialog(getResources().getString(R.string.info_dialog_description),getResources().getString(R.string.info_dialog_title),"REGIST").show();
@@ -194,7 +194,7 @@ public class MonitoringInfoFragment extends Fragment {
                                             .commit();
                                 }
                             }
-                        },1000);
+                        },300);
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.info_dialog_option_cancel),
@@ -211,7 +211,7 @@ public class MonitoringInfoFragment extends Fragment {
                                             startActivity(intent);
                                             getActivity().finish();
                                         }
-                                    },1000);
+                                    },300);
                                 }
                                 else {
                                     getActivity().finish();

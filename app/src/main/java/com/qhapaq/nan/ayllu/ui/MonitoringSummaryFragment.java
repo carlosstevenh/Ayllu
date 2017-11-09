@@ -6,9 +6,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +64,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             rep1_name = "", rep2_name = "", orig_name = "", lat_name = "", long_name = "";
 
     private ArrayList<File> files;
+    float heightDp, widthDp;
 
     /**
      * =============================================================================================
@@ -112,7 +116,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             files.add(new File(PATH_IMG));
         }
 
-
         por_name = getArguments().getString("POR_NAME");
         fre_name = getArguments().getString("FRE_NAME");
 
@@ -163,6 +166,9 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         fabRegist = (FloatingActionButton) view.findViewById(R.id.fab_reg);
         fabRegist.setOnClickListener(this);
 
+heightDp = getResources().getDisplayMetrics().heightPixels;
+        widthDp = getResources().getDisplayMetrics().widthPixels;
+
         //Cargamos las Imagenes
         adapter = new MonitoringImageSwipeAdapter(getActivity(), files);
         vpMonitoring.setAdapter(adapter);
@@ -179,6 +185,10 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         tvFactor.setText(factor_name);
 
         addBottomDots(0);
+
+        AppBarLayout appbar = (AppBarLayout) view.findViewById(R.id.app_bar);
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams)appbar.getLayoutParams();
+        lp.height = (int)heightDp/2;
 
         return view;
     }

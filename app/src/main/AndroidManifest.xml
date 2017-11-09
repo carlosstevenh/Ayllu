@@ -54,7 +54,8 @@
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.MonitoringActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.MontoreosPuntosCriticos"
             android:launchMode="singleTask"
@@ -77,15 +78,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.GraficaRespuestaInstitucional"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.ActivitySeleccionTramoFiltro"
-            android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.GraficaTortaVariables"
-            android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|orientation" />
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.MenuGraficasEstadisticas"
             android:launchMode="singleTask"
@@ -100,8 +104,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qhapaq.nan.ayllu.ui.GraficaAnalisisVariableTiempo"
-            android:launchMode="singleTask" />
-        <activity android:name="com.qhapaq.nan.ayllu.ui.AdminUserTransactionActivity"></activity>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qhapaq.nan.ayllu.ui.AdminUserTransactionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
