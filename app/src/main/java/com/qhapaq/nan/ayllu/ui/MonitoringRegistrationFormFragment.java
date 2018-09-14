@@ -43,6 +43,7 @@ import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.domain.variable.VariableContract;
 import com.qhapaq.nan.ayllu.domain.variable.VariableDbHelper;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.qhapaq.nan.ayllu.ui.utilities.DialogUtility;
 import com.qhapaq.nan.ayllu.ui.utilities.ToolbarUtility;
 import com.squareup.picasso.Picasso;
 
@@ -80,6 +81,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     String longitud = "", latitud = "";
     int[] repercusiones = {1, 0, 0, 1};
     String factor = "", variable = "", lat = "", logt = "";
+    String technicalConcept = "";
 
     //VARIABLES: Control de la selección de opciones
     CharSequence[] items_factores, items_variables;
@@ -593,22 +595,25 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > tilTechnicalConcept.getCounterMaxLength())
-                    tilTechnicalConcept.setError("Ha excedido el maximo numero de caracteres");
+                    tilTechnicalConcept.setError(getResources().getString(R.string.technicalConceptStepError2));
                 else tilTechnicalConcept.setError(null);
             }
         });
 
         String tvText = tvTechnicalConcept.getText().toString();
-        if (!tvText.equals(getResources().getString(R.string.technical_concept_text)))
-            etTechnicalConcept.setText(tvText);
-        
+        etTechnicalConcept.setText(tvText);
+
 
         builder.setPositiveButton(getResources().getString(R.string.info_dialog_option_accept),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String concept = etTechnicalConcept.getText().toString();
-                        if (!concept.equals("")) tvTechnicalConcept.setText(concept);
+                        technicalConcept = etTechnicalConcept.getText().toString();
+                        tvTechnicalConcept.setText(technicalConcept);
+
+                        if (op_reg.equals("M")) onStepOpening(5);
+                        else onStepOpening(7);
+
                         builder.create().dismiss();
                     }
                 });
@@ -720,6 +725,16 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 case 4:
                     verticalStepperForm.setStepAsCompleted(4);
                     break;
+                case 5:
+                    int sizeText = technicalConcept.length();
+                    String errorMessage = getResources().getString(R.string.technicalConceptStepError1);
+
+                    if (sizeText > 0 && sizeText < 250) verticalStepperForm.setStepAsCompleted(5);
+                    else {
+                        if (sizeText > 250) errorMessage = getResources().getString(R.string.technicalConceptStepError2);
+                        verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
+                    }
+                    break;
             }
         } else {
             switch (stepNumber) {
@@ -765,6 +780,16 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 case 6:
                     verticalStepperForm.setStepAsCompleted(6);
                     break;
+                case 7:
+                    int sizeText = technicalConcept.length();
+                    String errorMessage = getResources().getString(R.string.technicalConceptStepError1);
+
+                    if (sizeText > 0 && sizeText < 250) verticalStepperForm.setStepAsCompleted(7);
+                    else {
+                        if (sizeText > 250) errorMessage = getResources().getString(R.string.technicalConceptStepError2);
+                        verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
+                    }
+                    break;
             }
         }
     }
@@ -790,6 +815,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]]);
         params.putString("FRE_NUMBER", seleccion_items[1] + "");
         params.putString("FILES_NUMBER", files.size() + "");
+        params.putString("CONCEPT", technicalConcept);
 
 
         if (files.size() >= 1) params.putString("PRUEBA1", files.get(0).getName());
@@ -844,7 +870,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: CREA LA INTERFAZ PARA EL FACTOR Y LA VARIABLE EN EL FORMULARIO
      **/
     private View createFactorVariable() {
-        LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
         LinearLayout factorVariableLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_factor_variable, null, false);
 
         btnFac = factorVariableLayoutContent.findViewById(R.id.btn_factor);

@@ -190,12 +190,17 @@
     <string name="titleFormRegistrationMonitoringDialog">INFORMATION</string>
     <string name="descriptionFormRegistrationMonitoringVariableDialog">Please select variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">You must take at least one photo</string>
+
     <string name="descriptionFormRegistrationMonitoringPorcentajeError">Please select percentage</string>
     <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Please select frequency</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Please register the coordinates</string>
+    <string name="technicalConceptStepError1">Por favor escriba un concepto de la afectación</string>
+    <string name="technicalConceptStepError2">Ha excedido el máximo numero de caracteres</string>
+
     <string name="titlebuttonCambiar">CHANGE</string>
     <string name="titlebuttonElegir">TO CHOOSE</string>
     <string name="titlebuttonFijar">PIN UP</string>
+
     <string name="registration_form_dialog_option_positive">COMPLETE</string>
     <string name="registration_form_dialog_option_ok">OK</string>
     <string name="registration_form_dialog_option_cancel">CANCEL</string>

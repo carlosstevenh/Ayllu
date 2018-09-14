@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +9,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/fragment_monitoring_summary">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -279,6 +280,40 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/colorTextCardView"
                 android:textSize="12sp"/>
+
+            <View
+                android:id="@+id/divisor8"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:alpha=".5"
+                android:background="@color/colorDivider"/>
+
+            <TextView
+                android:id="@+id/tvTitleConcept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:tint="@color/colorPrimaryText"
+                android:gravity="center_vertical"
+                android:layout_gravity="start"
+                android:textAllCaps="true"
+                android:text="@string/technical_concept_hint"
+                android:textColor="@color/colorIconCardView"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvConcept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

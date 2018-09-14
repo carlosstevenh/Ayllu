@@ -12,6 +12,7 @@ public class Task {
     private String fecha;
     private String repercusiones;
     private String origen;
+    private String concepto;
 
     private int porcentaje;
     private int frecuencia;
@@ -24,7 +25,7 @@ public class Task {
 
     public Task(String monitor, String variable, String area, String latitud, String longitud,
                 String fecha, String repercusiones, String origen, int porcentaje,
-                int frecuencia, String nombre, String nombre2, String nombre3, String tipo) {
+                int frecuencia, String nombre, String nombre2, String nombre3, String tipo, String concepto) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -39,6 +40,7 @@ public class Task {
         this.nombre2 = nombre2;
         this.nombre3 = nombre3;
         this.tipo = tipo;
+        this.concepto = concepto;
     }
 
     public Task() {
@@ -56,8 +58,10 @@ public class Task {
         this.nombre2 = "null";
         this.nombre3 = "null";
         this.tipo = "N";
+        this.concepto = "";
     }
 
+    //TODO: Integrar el Concepto en el almacenamiento interno
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.MONITOR, monitor);
@@ -83,7 +87,7 @@ public class Task {
     }
 
     public void setMonitor(String monitor) {
-        this.monitor = monitor;
+        this.monitor = monitor != null ? monitor : "";
     }
 
     public String getArea() {
@@ -185,4 +189,12 @@ public class Task {
     public String getTipo() {return tipo;}
 
     public void setTipo(String tipo) {this.tipo = tipo;}
+
+    public String getTechnicalConcept() {
+        return concepto;
+    }
+
+    public void setTechnicalConcept(String concepto) {
+        this.concepto = concepto;
+    }
 }

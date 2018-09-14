@@ -19,7 +19,7 @@
     <!--=========================================================================================-->
     <!-- Tema para el Boton Flotante -->
     <style name="FloatingButtonDark" parent="Theme.AppCompat.Light">
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccentLight</item>
         <item name="android:textColor">@color/colorTextIcons</item>
     </style>
