@@ -69,7 +69,7 @@ public class GraficaAnalisisVariableTiempo extends AppCompatActivity {
                         mChart = (BarChart) findViewById(R.id.barchart);
                         promedios = response.body();
 
-                        BarData data= new BarData(valoresX(), valoresY());
+                        BarData data= new BarData(valoresY());
                         //data.setGroupSpace(0);
 
                         mChart.setData(data);

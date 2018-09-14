@@ -233,6 +233,7 @@
         <item>FRECUENCIA DE APARICIÓN</item>
         <item>ORIGEN</item>
         <item>REPERCUSIONES</item>
+        <item>CONCEPTO DEL MONITOR</item>
     </string-array>
 
     <string-array name="registration_form_monitoring">
@@ -241,6 +242,7 @@
         <item>FRECUENCIA DE APARICIÓN</item>
         <item>ORIGEN</item>
         <item>REPERCUSIONES</item>
+        <item>CONCEPTO DEL MONITOR</item>
     </string-array>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING SUMMARY-->
@@ -478,4 +480,8 @@
     <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
     <string name="borrarDatos">¿Está seguro que desea borrar el paquete de datos descargado?</string>
+
+    <string name="technical_concept_hint">Concepto técnico</string>
+    <string name="technical_concept_text">Escriba una descripción de la afectación</string>
+    <string name="btn_edit_text">EDITAR</string>
 </resources>

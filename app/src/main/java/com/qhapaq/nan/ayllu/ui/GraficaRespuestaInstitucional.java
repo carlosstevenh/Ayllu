@@ -87,8 +87,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                     ban = true;
                     save = "E";
                     ArrayList<BarDataSet> aux = valoresYq(evaluacion());
-                    BarData data= new BarData(valoresX(), aux);
-                    data.setGroupSpace(0);
+                    BarData data= new BarData(evaluacion());
 
                     mChart.setData(data);
                     mChart.invalidate();
@@ -127,8 +126,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                 if (marcado) {
                     if(ban){
                         ArrayList<BarDataSet> aux = valoresYq(evaluacion());
-                        BarData data= new BarData(valoresX(), aux);
-                        data.setGroupSpace(0);
+                        BarData data= new BarData(evaluacion());
                         save = "E";
                         mChart.setData(data);
                         mChart.invalidate();
@@ -153,8 +151,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                 if (marcado) {
                     if(ban){
                         ArrayList<BarDataSet> aux = valoresYq(personal());
-                        BarData data= new BarData(valoresX(), aux);
-                        data.setGroupSpace(0);
+                        BarData data= new BarData(personal());
                         save = "P";
                         mChart.setData(data);
                         mChart.invalidate();
@@ -178,8 +175,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                 if (marcado) {
                     if(ban){
                         ArrayList<BarDataSet> aux = valoresYq(tiempo());
-                        BarData data= new BarData(valoresX(), aux);
-                        data.setGroupSpace(0);
+                        BarData data= new BarData(tiempo());
                         save = "T";
                         mChart.setData(data);
                         mChart.invalidate();
@@ -202,8 +198,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                 if (marcado) {
                     if(ban){
                         ArrayList<BarDataSet> aux = valoresYq(presupuesto());
-                        BarData data= new BarData(valoresX(), aux);
-                        data.setGroupSpace(0);
+                        BarData data= new BarData(presupuesto());
                         save = "PR";
                         mChart.setData(data);
                         mChart.invalidate();
@@ -226,8 +221,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                 if (marcado) {
                     if(ban){
                         ArrayList<BarDataSet> aux = valoresYq(recursos());
-                        BarData data= new BarData(valoresX(), aux);
-                        data.setGroupSpace(0);
+                        BarData data= new BarData(recursos());
                         save = "R";
                         mChart.setData(data);
                         mChart.invalidate();
@@ -250,8 +244,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                 if (marcado) {
                     if(ban){
                         ArrayList<BarDataSet> aux = valoresYq(conocimiento());
-                        BarData data= new BarData(valoresX(), aux);
-                        data.setGroupSpace(0);
+                        BarData data= new BarData(conocimiento());
                         save = "C";
                         mChart.setData(data);
                         mChart.invalidate();

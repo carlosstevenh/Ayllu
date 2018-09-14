@@ -29,14 +29,12 @@
                 android:id="@+id/rb_positive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rb_background_positive"
                 android:button="@drawable/rb_background_positive" />
 
             <RadioButton
                 android:id="@+id/rb_negative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rb_background_negative"
                 android:button="@drawable/rb_background_negative" />
 
         </RadioGroup>
@@ -94,14 +92,12 @@
                 android:id="@+id/rb_current"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rb_background_positive"
                 android:button="@drawable/rb_background_positive" />
 
             <RadioButton
                 android:id="@+id/rb_potencial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rb_background_negative"
                 android:button="@drawable/rb_background_negative" />
 
         </RadioGroup>

@@ -233,6 +233,7 @@
         <item>FREQUENCY OF APPEARANCE</item>
         <item>ORIGIN</item>
         <item>REPERCUSSIONS</item>
+        <item>TECHNICAL CONCEPT</item>
     </string-array>
 
     <string-array name="registration_form_monitoring">
@@ -241,6 +242,7 @@
         <item>FREQUENCY OF APPEARANCE</item>
         <item>ORIGIN</item>
         <item>REPERCUSSIONS</item>
+        <item>TECHNICAL CONCEPT</item>
     </string-array>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING SUMMARY-->
@@ -478,5 +480,8 @@
     <string name="analisisVarTie">Variable time analysis</string>
     <string name="graficaVariableTramo">VariableTimeGraph</string>
     <string name="borrarDatos">¿Are you sure you want to delete downloaded monitors?</string>
+
+    <string name="technical_concept_hint">Concepto técnico</string>
+    <string name="technical_concept_text">Escriba una descripción de la afectación</string>
 
 </resources>

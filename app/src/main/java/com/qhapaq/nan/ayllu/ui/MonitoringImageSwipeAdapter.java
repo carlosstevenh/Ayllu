@@ -52,13 +52,13 @@ public class MonitoringImageSwipeAdapter extends PagerAdapter{
         int widthDp = ctx.getResources().getDisplayMetrics().widthPixels;
 
         if(this.imagenesFiles != null){
-            Picasso.with(ctx)
+            Picasso.get()
                     .load(imagenesFiles.get(position))
-                    .resize(widthDp,heightDp)
+                    .resize(widthDp, heightDp)
                     .into(ivMonitoring);
         }
         else{
-            Picasso.with(ctx)
+            Picasso.get()
                     .load(imagenesRutas[position])
                     .resize(widthDp, heightDp)
                     .into(ivMonitoring);

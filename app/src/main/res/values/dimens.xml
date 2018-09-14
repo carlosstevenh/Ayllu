@@ -35,5 +35,8 @@
     <dimen name="edit_text_padding">16dp</dimen>
     <dimen name="normal_padding">8dp</dimen>
     <dimen name="title_padding">16dp</dimen>
-    <dimen name="button_padding">24dp</dimen>
+    <dimen name="button_padding">16dp</dimen>
+    <dimen name="step_height_200">200dp</dimen>
+    <dimen name="normal_margin">8dp</dimen>
+    <dimen name="layout_margin">16dp</dimen>
 </resources>

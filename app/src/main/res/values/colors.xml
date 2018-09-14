@@ -44,4 +44,5 @@
     <color name="s2">#ff6464</color>
     <color name="s3">#e91d1d</color>
     <color name="s4">#bf0000</color>
+    <color name="colorEditTextBlack">#000000</color>
 </resources>

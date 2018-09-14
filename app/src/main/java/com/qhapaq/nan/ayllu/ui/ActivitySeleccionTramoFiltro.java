@@ -20,6 +20,7 @@ import android.view.animation.Interpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.data.PieEntry;
 import com.qhapaq.nan.ayllu.R;
 import com.qhapaq.nan.ayllu.domain.ConteoFactoresTramo;
 import com.qhapaq.nan.ayllu.domain.pais.PaisDbHelper;
@@ -149,12 +150,12 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
     //Metodo encargado de obtener tanto los porcentajes como las etiquetas para posteriormente ser representados
     //en el diagra de torta
     private void addData() {
-        ArrayList<Entry> yVals1 = new ArrayList<>();
+        ArrayList<PieEntry> yVals1 = new ArrayList<>();
         ArrayList<String> xValores = xDatas();
         ArrayList<Float> yValores = yDatas();
         //tableRow.add
         for (int i = 0; i < yValores.size(); i++)
-            yVals1.add(new Entry(yValores.get(i), i));
+            yVals1.add(new PieEntry(yValores.get(i), i));
 
         // create pie data set
         PieDataSet dataSet = new PieDataSet(yVals1, "");
@@ -183,7 +184,7 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
         dataSet.setColors(colors);
 
         // instantiate pie data object now
-        PieData data = new PieData(xValores, dataSet);
+        PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.GRAY);
@@ -228,7 +229,6 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
 
                                     mChart.setUsePercentValues(true);
                                     mChart.setDrawHoleEnabled(true);
-                                    mChart.setHoleColorTransparent(true);
                                     mChart.setHoleRadius(7);
                                     mChart.setTransparentCircleRadius(10);
 
@@ -239,13 +239,13 @@ public class ActivitySeleccionTramoFiltro extends AppCompatActivity implements V
 
                                         //Metodo que se encarga de obtener el elemento que fue clickeado en la grafica estadistica
                                         @Override
-                                        public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                                        public void onValueSelected(Entry e, Highlight h) {
                                             // display msg when value selected
                                             if (e == null)
                                                 return;
                                             Bundle parametro = new Bundle();
                                             parametro.putString("tramo",""+opTramo);
-                                            parametro.putString("factor",facTram.get(e.getXIndex()).getCodigo());
+                                            parametro.putString("factor",facTram.get(h.getDataSetIndex()).getCodigo());
                                             Intent intent = new Intent(ActivitySeleccionTramoFiltro.this,GraficaTortaVariables.class);
                                             intent.putExtras(parametro);
                                             startActivity(intent);
