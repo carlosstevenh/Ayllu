@@ -140,7 +140,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         if (tipo_upload.equals("NEW")) {
             task.setVariable(getArguments().getString("VAR_COD"));
             task.setArea(getArguments().getString("AREA"));
-
+            task.setAltitud(getArguments().getString("ALTITUD"));
         } else task.setTipo("M");
     }
 
@@ -337,6 +337,9 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             //Registramos el Monitoreo en el dispositivo en caso de Desconección
             TaskDbHelper taskDbHelper = new TaskDbHelper(getActivity());
             ImagenDbHelper imagenDbHelper = new ImagenDbHelper(getActivity());
+
+            //TODO: Quitar el cambio
+            task.setAltitud("1030.34");
 
             taskDbHelper.saveTask(task);
             imagenDbHelper.saveImagen(imagen);

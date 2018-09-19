@@ -304,7 +304,6 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                 .client(httpClient.build())
                 .build();
         //------------------------------------------------------------------------------------------
-        //TODO: Corregir el Concepto
         //Obtengo cada uno de los monitoreos de la tabla Task
         Task tk = new Task(
                 current_data.getString(1), current_data.getString(2), current_data.getString(3),
@@ -313,7 +312,7 @@ public class MonitorMenuActivity extends AppCompatActivity implements View.OnCli
                 Integer.parseInt(current_data.getString(9)),
                 Integer.parseInt(current_data.getString(10)),
                 current_data.getString(11), current_data.getString(12),current_data.getString(13),
-                current_data.getString(14),"");
+                current_data.getString(14),current_data.getString(15), current_data.getString(16));
 
         final int numon1 = current_data.getInt(0);
         //------------------------------------------------------------------------------------------

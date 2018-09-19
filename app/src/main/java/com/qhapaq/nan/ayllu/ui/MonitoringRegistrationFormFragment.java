@@ -78,7 +78,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     String punto_afectacion = "", area = "", monitor = "", op_reg;
     String origen = "10";
     String fecha = "";
-    String longitud = "", latitud = "";
+    String longitud = "", latitud = "", altitud = "0.0";
     int[] repercusiones = {1, 0, 0, 1};
     String factor = "", variable = "", lat = "", logt = "";
     String technicalConcept = "";
@@ -737,11 +737,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     break;
             }
         } else {
+            String errorMessage;
             switch (stepNumber) {
                 case 0:
                     if (!opciones[1].equals("")) verticalStepperForm.setStepAsCompleted(0);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringVariableDialog);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringVariableDialog);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
@@ -749,28 +750,28 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     if (!latitud.equals("") && !longitud.equals(""))
                         verticalStepperForm.setStepAsCompleted(1);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 2:
                     if (files.size() > 0) verticalStepperForm.setStepAsCompleted(2);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCameraDialog);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCameraDialog);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 3:
                     if (seleccion_items[0] != 0) verticalStepperForm.setStepAsCompleted(3);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringPorcentajeError);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringPorcentajeError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 4:
                     if (seleccion_items[1] != 0) verticalStepperForm.setStepAsCompleted(4);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringFrecuenciaError);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringFrecuenciaError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
@@ -782,7 +783,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     break;
                 case 7:
                     int sizeText = technicalConcept.length();
-                    String errorMessage = getResources().getString(R.string.technicalConceptStepError1);
+                    errorMessage = getResources().getString(R.string.technicalConceptStepError1);
 
                     if (sizeText > 0 && sizeText < 250) verticalStepperForm.setStepAsCompleted(7);
                     else {
@@ -832,6 +833,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 params.putString("LATITUD_NUMBER", processCoordinate(latitud, "LATITUD"));
                 params.putString("LONGITUD", longitud);
                 params.putString("LONGITUD_NUMBER", processCoordinate(longitud, "LONGITUD"));
+                params.putString("ALTITUD", altitud);
                 params.putString("TYPE_UPLOAD", "NEW");
 
                 fragment.setArguments(params);

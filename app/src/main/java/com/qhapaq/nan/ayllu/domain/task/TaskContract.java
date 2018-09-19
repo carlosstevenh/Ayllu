@@ -20,5 +20,7 @@ public class TaskContract {
         public static final String NOMBRE2 = "nombre2";
         public static final String NOMBRE3 = "nombre3";
         public static final String TIPO = "tipo";
+        public static final String CONCEPTO = "concepto";
+        public static final String ALTITUD = "altitud";
     }
 }

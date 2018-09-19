@@ -34,7 +34,9 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 + TaskEntry.NOMBRE + " TEXT NOT NULL, "
                 + TaskEntry.NOMBRE2 + " TEXT NOT NULL, "
                 + TaskEntry.NOMBRE3 + " TEXT NOT NULL, "
-                + TaskEntry.TIPO + " TEXT NOT NULL)"
+                + TaskEntry.TIPO + " TEXT NOT NULL,"
+                + TaskEntry.CONCEPTO + " TEXT NOT NULL,"
+                + TaskEntry.ALTITUD + " TEXT NOT NULL)"
         );
     }
 

@@ -1,6 +1,7 @@
 package com.qhapaq.nan.ayllu.domain.task;
 
 import android.content.ContentValues;
+import com.qhapaq.nan.ayllu.domain.task.TaskContract.TaskEntry;
 
 public class Task {
     private String monitor;
@@ -8,6 +9,7 @@ public class Task {
     private String variable;
     private String latitud;
     private String longitud;
+    private String altitud;
 
     private String fecha;
     private String repercusiones;
@@ -25,7 +27,8 @@ public class Task {
 
     public Task(String monitor, String variable, String area, String latitud, String longitud,
                 String fecha, String repercusiones, String origen, int porcentaje,
-                int frecuencia, String nombre, String nombre2, String nombre3, String tipo, String concepto) {
+                int frecuencia, String nombre, String nombre2, String nombre3, String tipo,
+                String concepto, String altitud) {
         this.monitor = monitor;
         this.variable = variable;
         this.area = area;
@@ -41,6 +44,7 @@ public class Task {
         this.nombre3 = nombre3;
         this.tipo = tipo;
         this.concepto = concepto;
+        this.altitud = altitud;
     }
 
     public Task() {
@@ -59,25 +63,27 @@ public class Task {
         this.nombre3 = "null";
         this.tipo = "N";
         this.concepto = "";
+        this.altitud = "0";
     }
 
-    //TODO: Integrar el Concepto en el almacenamiento interno
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(TaskContract.TaskEntry.MONITOR, monitor);
-        values.put(TaskContract.TaskEntry.VARIABLE, variable);
-        values.put(TaskContract.TaskEntry.AREA, area);
-        values.put(TaskContract.TaskEntry.LATITUD, latitud);
-        values.put(TaskContract.TaskEntry.LONGITUD, longitud);
-        values.put(TaskContract.TaskEntry.FECHA, fecha);
-        values.put(TaskContract.TaskEntry.REPERCUSIONES, repercusiones);
-        values.put(TaskContract.TaskEntry.ORIGEN, origen);
-        values.put(TaskContract.TaskEntry.PORCENTAJE, porcentaje);
-        values.put(TaskContract.TaskEntry.FRECUENCIA, frecuencia);
-        values.put(TaskContract.TaskEntry.NOMBRE, nombre);
-        values.put(TaskContract.TaskEntry.NOMBRE2, nombre2);
-        values.put(TaskContract.TaskEntry.NOMBRE3, nombre3);
-        values.put(TaskContract.TaskEntry.TIPO, tipo);
+        values.put(TaskEntry.MONITOR, monitor);
+        values.put(TaskEntry.VARIABLE, variable);
+        values.put(TaskEntry.AREA, area);
+        values.put(TaskEntry.LATITUD, latitud);
+        values.put(TaskEntry.LONGITUD, longitud);
+        values.put(TaskEntry.FECHA, fecha);
+        values.put(TaskEntry.REPERCUSIONES, repercusiones);
+        values.put(TaskEntry.ORIGEN, origen);
+        values.put(TaskEntry.PORCENTAJE, porcentaje);
+        values.put(TaskEntry.FRECUENCIA, frecuencia);
+        values.put(TaskEntry.NOMBRE, nombre);
+        values.put(TaskEntry.NOMBRE2, nombre2);
+        values.put(TaskEntry.NOMBRE3, nombre3);
+        values.put(TaskEntry.TIPO, tipo);
+        values.put(TaskEntry.CONCEPTO, concepto);
+        values.put(TaskEntry.ALTITUD, altitud);
 
         return values;
     }
@@ -195,6 +201,22 @@ public class Task {
     }
 
     public void setTechnicalConcept(String concepto) {
+        this.concepto = concepto;
+    }
+
+    public String getAltitud() {
+        return altitud;
+    }
+
+    public void setAltitud(String altitud) {
+        this.altitud = altitud;
+    }
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
         this.concepto = concepto;
     }
 }
