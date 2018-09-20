@@ -1,4 +1,5 @@
 package com.qhapaq.nan.ayllu.ui;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -7,11 +8,10 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,7 @@ import com.qhapaq.nan.ayllu.domain.factor.FactorDbHelper;
 import com.qhapaq.nan.ayllu.domain.Reporte;
 import com.qhapaq.nan.ayllu.domain.variable.VariableDbHelper;
 import com.qhapaq.nan.ayllu.io.ApiConstants;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.qhapaq.nan.ayllu.ui.utilities.ToolbarUtility;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -36,14 +36,17 @@ import static com.qhapaq.nan.ayllu.domain.variable.VariableContract.VariableEntr
 
 public class MonitoringDetailFragment extends Fragment implements View.OnClickListener{
 
+    Activity activity;
+
     Reporte reporte;
     String [] imgs;
     String estado = "", factor;
     int sizeimgs = 0;
     private ArrayList<File> files = new ArrayList<>();
 
-    TextView    tvPropiedad, tvFactor, tvVariable, tvFecha, tvLatitud, tvLongitud, tvMonitor,
-            tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia;
+    TextView    tvPropiedad, tvFactor, tvVariable, tvFecha, tvLatitud, tvLongitud, tvAltitude,
+                tvMonitor, tvRepercuciones1, tvRepercuciones2, tvOrigen, tvPorcentaje, tvFrecuencia,
+                tvTechnicalConcept;
 
     FloatingActionButton fabMonitoring;
 
@@ -78,6 +81,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         reporte.setFecha_mon(getArguments().getString("FECHA"));
         reporte.setLatitud(getArguments().getString("LATITUD"));
         reporte.setLongitud(getArguments().getString("LONGITUD"));
+        reporte.setAltitud(getArguments().getString("ALTITUD"));
         reporte.setUsuario(getArguments().getString("MONITOR"));
         reporte.setRepercusiones(getArguments().getString("REPERCUSIONES"));
         reporte.setOrigen(getArguments().getString("ORIGEN"));
@@ -86,6 +90,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         reporte.setPrueba1(getArguments().getString("PRUEBA1"));
         reporte.setPrueba2(getArguments().getString("PRUEBA2"));
         reporte.setPrueba3(getArguments().getString("PRUEBA3"));
+        reporte.setConcepto(getArguments().getString("CONCEPTO"));
 
         //Obtiene el codigo del factor a través del nombre de la variable
         cursor = variableDbHelper.generateConditionalQuery(new String[]{reporte.getVariable()},VariableEntry.NOMBRE);
@@ -127,22 +132,27 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monitoring_detail, container, false);
 
-        vpMonitoring = (ViewPager) view.findViewById(R.id.vp_monitoring);
-        dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
+        activity = getActivity();
+        ToolbarUtility.showToolbar(activity, view, getResources().getString(R.string.titleDetailMonitoring),false);
 
-        tvPropiedad = (TextView) view.findViewById(R.id.tv_propiedad);
-        tvFactor = (TextView) view.findViewById(R.id.tv_factor);
-        tvVariable = (TextView) view.findViewById(R.id.tv_variable);
-        tvFecha = (TextView) view.findViewById(R.id.tv_fecha);
-        tvLatitud = (TextView) view.findViewById(R.id.tv_latitud);
-        tvLongitud = (TextView) view.findViewById(R.id.tv_longitud);
-        tvMonitor = (TextView) view.findViewById(R.id.tv_monitor);
-        tvRepercuciones1 = (TextView) view.findViewById(R.id.tv_repercuciones1);
-        tvRepercuciones2 = (TextView) view.findViewById(R.id.tv_repercuciones2);
-        tvOrigen = (TextView) view.findViewById(R.id.tv_origen);
-        tvPorcentaje = (TextView) view.findViewById(R.id.tv_porcentaje);
-        tvFrecuencia = (TextView) view.findViewById(R.id.tv_frecuencia);
-        fabMonitoring = (FloatingActionButton) view.findViewById(R.id.fab_monitoring);
+        vpMonitoring = view.findViewById(R.id.vp_monitoring);
+        dotsLayout = view.findViewById(R.id.layoutDots);
+
+        tvPropiedad = view.findViewById(R.id.tv_propiedad);
+        tvFactor = view.findViewById(R.id.tv_factor);
+        tvVariable = view.findViewById(R.id.tv_variable);
+        tvFecha = view.findViewById(R.id.tv_fecha);
+        tvLatitud = view.findViewById(R.id.tv_latitud);
+        tvLongitud = view.findViewById(R.id.tv_longitud);
+        tvAltitude = view.findViewById(R.id.tvAltidude);
+        tvMonitor = view.findViewById(R.id.tv_monitor);
+        tvRepercuciones1 = view.findViewById(R.id.tv_repercuciones1);
+        tvRepercuciones2 = view.findViewById(R.id.tv_repercuciones2);
+        tvOrigen = view.findViewById(R.id.tv_origen);
+        tvPorcentaje = view.findViewById(R.id.tv_porcentaje);
+        tvFrecuencia = view.findViewById(R.id.tv_frecuencia);
+        tvTechnicalConcept = view.findViewById(R.id.tvConcept);
+        fabMonitoring = view.findViewById(R.id.fab_monitoring);
 
         fabMonitoring.setOnClickListener(this);
 
@@ -172,16 +182,18 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
         tvFecha.setText(reporte.getFecha_mon());
         tvLatitud.setText(reverseCoordinates(reporte.getLatitud(),"LATITUD"));
         tvLongitud.setText(reverseCoordinates(reporte.getLongitud(),"LONGITUD"));
+        tvAltitude.setText(reporte.getAltitud());
         tvMonitor.setText(reporte.getUsuario());
         tvRepercuciones1.setText(rep1);
         tvRepercuciones2.setText(rep2);
         tvOrigen.setText(org);
         tvPorcentaje.setText(items_porcentaje[reporte.getPorcentaje()-1]);
         tvFrecuencia.setText(items_frecuencia[reporte.getFrecuencia()-1]);
+        tvTechnicalConcept.setText(reporte.getConcepto());
 
         addBottomDots(0);
 
-        AppBarLayout appbar = (AppBarLayout) view.findViewById(R.id.app_bar);
+        AppBarLayout appbar = view.findViewById(R.id.app_bar);
         float heightDp = getResources().getDisplayMetrics().heightPixels / 2;
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams)appbar.getLayoutParams();
         lp.height = (int)heightDp;
@@ -215,6 +227,7 @@ public class MonitoringDetailFragment extends Fragment implements View.OnClickLi
                     params.putString("VAR_NAME", reporte.getVariable());
                     params.putString("LATITUD", reporte.getLatitud());
                     params.putString("LONGITUD", reporte.getLongitud());
+                    params.putString("ALTITUD", reporte.getAltitud());
                     fragment.setArguments(params);
 
                     //Inflamos el layout para el Fragmento MonitoringListFragment

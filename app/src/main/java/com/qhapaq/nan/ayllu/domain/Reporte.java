@@ -27,6 +27,8 @@ public class Reporte {
     String latitud;
     @SerializedName(JsonKeys.LONGITUD_COO)
     String longitud;
+    @SerializedName(JsonKeys.ALTITUD)
+    String altitud;
     @SerializedName(JsonKeys.REPERCUSIONES)
     String repercusiones;
     @SerializedName(JsonKeys.ORIGEN)
@@ -57,22 +59,25 @@ public class Reporte {
     String prueba2;
     @SerializedName(JsonKeys.PRUEBA3)
     String prueba3;
+    @SerializedName(JsonKeys.CONCEPTO)
+    String concepto;
     String estado;
 
     //==============================================================================================
     //CONSTRUCTOR DE LA CLASE REPORTE
     public Reporte(int cod_paf, String monitor_res, String conocimiento, String recursos,
-                   String variable, String latitud, String area, String fecha_mon,
+                   String variable, String latitud, String altitud, String area, String fecha_mon,
                    String repercusiones, String presupuesto, String tiempo, String personal,
                    String evaluacion, String fecha_res, int frecuencia, int porcentaje,
                    String origen, String usuario, String longitud,
-                   String prueba1, String prueba2, String prueba3) {
+                   String prueba1, String prueba2, String prueba3, String concepto) {
         this.cod_paf = cod_paf;
         this.monitor_res = monitor_res;
         this.conocimiento = conocimiento;
         this.recursos = recursos;
         this.variable = variable;
         this.latitud = latitud;
+        this.altitud = altitud;
         this.area = area;
         this.fecha_mon = fecha_mon;
         this.repercusiones = repercusiones;
@@ -89,6 +94,7 @@ public class Reporte {
         this.prueba1 = prueba1;
         this.prueba2 = prueba2;
         this.prueba3 = prueba3;
+        this.concepto = concepto;
         this.estado = "ONLINE";
     }
 
@@ -102,6 +108,7 @@ public class Reporte {
         values.put(MonitoreoEntry.FECHA, fecha_mon);
         values.put(MonitoreoEntry.LATITUD, latitud);
         values.put(MonitoreoEntry.LONGITUD, longitud);
+        values.put(MonitoreoEntry.ALTITUD, altitud);
         values.put(MonitoreoEntry.REPERCUSIONES, repercusiones);
         values.put(MonitoreoEntry.ORIGEN, origen);
         values.put(MonitoreoEntry.PORCENTAJE, porcentaje);
@@ -110,6 +117,7 @@ public class Reporte {
         values.put(MonitoreoEntry.NOMBRE2, prueba2);
         values.put(MonitoreoEntry.NOMBRE3, prueba3);
         values.put(MonitoreoEntry.ESTADO, estado);
+        values.put(MonitoreoEntry.CONCEPTO, concepto);
 
         return values;
     }
@@ -123,6 +131,7 @@ public class Reporte {
         this.recursos = "";
         this.variable = "";
         this.latitud = "";
+        this.altitud = "";
         this.area = "";
         this.fecha_mon = "";
         this.repercusiones = "";
@@ -139,6 +148,7 @@ public class Reporte {
         this.prueba1 = "null";
         this.prueba2 = "null";
         this.prueba3 = "null";
+        this.concepto = "";
         this.estado = "ONLINE";
     }
 
@@ -159,6 +169,8 @@ public class Reporte {
 
         return size;
     }
+
+    //@TODO: INCLUIR ALTITUD EN EL REPORTE EXCEL
 
     //==============================================================================================
     //METODO: GENERA INFORMACIÓN PARA LAS TRES PLANTILLAS DEL REPORTE
@@ -409,5 +421,21 @@ public class Reporte {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getAltitud() {
+        return altitud;
+    }
+
+    public void setAltitud(String altitud) {
+        this.altitud = altitud;
+    }
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
     }
 }

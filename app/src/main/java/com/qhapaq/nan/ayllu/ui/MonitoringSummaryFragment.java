@@ -51,7 +51,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
     Activity activity;
 
     TextView tvRep1, tvRep2, tvOrigen, tvPorcentaje, tvFrecuencia, tvLatitud, tvLongitud,
-             tvFactor, tvVariable;
+             tvAltitud, tvFactor, tvVariable;
     FloatingActionButton fabRegist;
     Task task;
     Imagen imagen;
@@ -94,6 +94,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         task.setPorcentaje(Integer.parseInt(getArguments().getString("POR_NUMBER")));
         task.setFrecuencia(Integer.parseInt(getArguments().getString("FRE_NUMBER")));
         task.setTechnicalConcept(getArguments().getString("CONCEPT"));
+        task.setAltitud(getArguments().getString("ALTITUD"));
 
         int sizeFile = Integer.parseInt(getArguments().getString("FILES_NUMBER"));
 
@@ -140,7 +141,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         if (tipo_upload.equals("NEW")) {
             task.setVariable(getArguments().getString("VAR_COD"));
             task.setArea(getArguments().getString("AREA"));
-            task.setAltitud(getArguments().getString("ALTITUD"));
         } else task.setTipo("M");
     }
 
@@ -168,6 +168,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         tvFrecuencia = view.findViewById(R.id.tv_frecuencia);
         tvLatitud = view.findViewById(R.id.tv_latitud);
         tvLongitud = view.findViewById(R.id.tv_longitud);
+        tvAltitud = view.findViewById(R.id.tvAltidude);
         tvFactor = view.findViewById(R.id.tv_factor);
         tvVariable = view.findViewById(R.id.tv_variable);
         TextView tvConcept = view.findViewById(R.id.tvConcept);
@@ -190,6 +191,7 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         tvFrecuencia.setText(fre_name);
         tvLatitud.setText(lat_name);
         tvLongitud.setText(long_name);
+        tvAltitud.setText(task.getAltitud());
         tvVariable.setText(var_name);
         tvFactor.setText(factor_name);
         tvConcept.setText(task.getTechnicalConcept());
@@ -337,9 +339,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
             //Registramos el Monitoreo en el dispositivo en caso de Desconección
             TaskDbHelper taskDbHelper = new TaskDbHelper(getActivity());
             ImagenDbHelper imagenDbHelper = new ImagenDbHelper(getActivity());
-
-            //TODO: Quitar el cambio
-            task.setAltitud("1030.34");
 
             taskDbHelper.saveTask(task);
             imagenDbHelper.saveImagen(imagen);

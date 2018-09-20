@@ -33,6 +33,7 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     Button btnVar, btnFac, btnPor, btnFre;
     RadioGroup rgRep1, rgRep2, rgOrg;
     TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3;
+    TextInputLayout tilAltitude;
+    EditText etAltitude;
     TextView tvTechnicalConcept;
     FloatingActionButton fabLat, fabLong, fabCamera1, fabCamera2, fabCamera3;
 
@@ -152,6 +155,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             variable = getArguments().getString("VAR_NAME");
             lat = getArguments().getString("LATITUD");
             logt = getArguments().getString("LONGITUD");
+            altitud = getArguments().getString("ALTITUD");
 
             ToolbarUtility.showToolbar(activity,view, getResources().getString(R.string.titleFormMonitoring),false);
 
@@ -747,10 +751,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     }
                     break;
                 case 1:
-                    if (!latitud.equals("") && !longitud.equals(""))
+                    errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
+                    float valueAltitude = Float.parseFloat(altitud);
+                    if (!latitud.equals("") && !longitud.equals("") && valueAltitude < 10000f)
                         verticalStepperForm.setStepAsCompleted(1);
                     else {
-                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
+                        if (valueAltitude > 10000f) errorMessage = getResources().getString(R.string.altitudeStepError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
@@ -817,6 +823,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         params.putString("FRE_NUMBER", seleccion_items[1] + "");
         params.putString("FILES_NUMBER", files.size() + "");
         params.putString("CONCEPT", technicalConcept);
+        params.putString("ALTITUD", altitud);
 
 
         if (files.size() >= 1) params.putString("PRUEBA1", files.get(0).getName());
@@ -833,7 +840,6 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 params.putString("LATITUD_NUMBER", processCoordinate(latitud, "LATITUD"));
                 params.putString("LONGITUD", longitud);
                 params.putString("LONGITUD_NUMBER", processCoordinate(longitud, "LONGITUD"));
-                params.putString("ALTITUD", altitud);
                 params.putString("TYPE_UPLOAD", "NEW");
 
                 fragment.setArguments(params);
@@ -904,12 +910,30 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      **/
     private View createCoordenadasView() {
         LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
-        LinearLayout coordenadasLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_coordenadas, null, false);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.item_registration_form_coordenadas, null, false);
 
-        fabLat = coordenadasLayoutContent.findViewById(R.id.fab_latitud);
-        fabLong = coordenadasLayoutContent.findViewById(R.id.fab_longitud);
-        tvLat = coordenadasLayoutContent.findViewById(R.id.tv_latitud);
-        tvLong = coordenadasLayoutContent.findViewById(R.id.tv_longitud);
+        fabLat = layout.findViewById(R.id.fab_latitud);
+        fabLong = layout.findViewById(R.id.fab_longitud);
+        tvLat = layout.findViewById(R.id.tv_latitud);
+        tvLong = layout.findViewById(R.id.tv_longitud);
+        etAltitude = layout.findViewById(R.id.etAltitude);
+
+        etAltitude.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!editable.toString().equals("")) altitud = editable.toString();
+                onStepOpening(1);
+            }
+        });
 
         fabLat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -965,7 +989,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             }
         });
 
-        return coordenadasLayoutContent;
+        return layout;
     }
 
     /**

@@ -134,6 +134,19 @@
                 android:textColor="@color/colorTextCardView"
                 android:textSize="12sp"/>
 
+            <TextView
+                android:id="@+id/tvAltidude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_select_small"
+                android:drawableStart="@drawable/ic_select_small"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorTextCardView"
+                android:textSize="12sp"/>
+
             <View
                 android:id="@+id/divisor3"
                 android:layout_width="match_parent"

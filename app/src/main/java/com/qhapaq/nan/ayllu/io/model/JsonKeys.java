@@ -72,6 +72,7 @@ public class JsonKeys {
     public static final String AREA = "area";
     public static final String LATITUD_COO = "latitud_coo";
     public static final String LONGITUD_COO = "longitud_coo";
+    public static final String ALTITUD = "altitud_coo";
     public static final String FECHA_MON = "fecha_mon";
     public static final String NOMBRE_USU = "nombre_usu";
     public static final String REPERCUSIONES = "repercusiones_mon";
@@ -89,6 +90,7 @@ public class JsonKeys {
     public static final String PRUEBA1 = "nombre_pru1";
     public static final String PRUEBA2 = "nombre_pru2";
     public static final String PRUEBA3 = "nombre_pru3";
+    public static final String CONCEPTO = "concepto_mon";
 
     //==============================================================================================
     //CONSTANTES PARA EL MANEJO DE USUARIOS

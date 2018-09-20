@@ -12,6 +12,7 @@ public class MonitoreoContract {
         public static final String VARIABLE = "variable";
         public static final String LATITUD = "latitud";
         public static final String LONGITUD = "longitud";
+        public static final String ALTITUD = "altitud";
         public static final String REPERCUSIONES = "repercusiones";
         public static final String ORIGEN = "origen";
         public static final String PORCENTAJE = "porcentaje";
@@ -20,5 +21,6 @@ public class MonitoreoContract {
         public static final String NOMBRE2 = "nombre2";
         public static final String NOMBRE3 = "nombre3";
         public static final String ESTADO = "estado";
+        public static final String CONCEPTO = "concepto";
     }
 }

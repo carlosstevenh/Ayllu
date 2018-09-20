@@ -128,17 +128,17 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_monitoring_list, container, false);
 
-        mReporteList = (RecyclerView) view.findViewById(R.id.monitoring_list);
+        mReporteList = view.findViewById(R.id.monitoring_list);
 
-        fab_new = (FloatingActionButton) view.findViewById(R.id.fab_new);
-        fab_search = (FloatingActionButton) view.findViewById(R.id.fab_search);
-        fab_tramo = (FloatingActionButton) view.findViewById(R.id.fab_tramo);
-        fab_subtramo = (FloatingActionButton) view.findViewById(R.id.fab_subtramo);
-        fab_seccion = (FloatingActionButton) view.findViewById(R.id.fab_seccion);
-        fab_area = (FloatingActionButton) view.findViewById(R.id.fab_area);
-        menu = (FloatingActionsMenu) view.findViewById(R.id.menu_fab);
+        fab_new = view.findViewById(R.id.fab_new);
+        fab_search = view.findViewById(R.id.fab_search);
+        fab_tramo = view.findViewById(R.id.fab_tramo);
+        fab_subtramo = view.findViewById(R.id.fab_subtramo);
+        fab_seccion = view.findViewById(R.id.fab_seccion);
+        fab_area = view.findViewById(R.id.fab_area);
+        menu = view.findViewById(R.id.menu_fab);
 
-        tvInfo = (TextView) view.findViewById(R.id.tv_info);
+        tvInfo = view.findViewById(R.id.tv_info);
 
         fab_new.setScaleX(0);
         fab_search.setScaleX(0);
@@ -179,6 +179,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     params.putString("FECHA", reporte.getFecha_mon());
                     params.putString("LATITUD", reporte.getLatitud());
                     params.putString("LONGITUD", reporte.getLongitud());
+                    params.putString("ALTITUD", reporte.getAltitud());
                     params.putString("MONITOR", reporte.getUsuario());
                     params.putString("REPERCUSIONES", reporte.getRepercusiones());
                     params.putString("ORIGEN", reporte.getOrigen());
@@ -188,6 +189,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     params.putString("PRUEBA2",reporte.getPrueba2());
                     params.putString("PRUEBA3",reporte.getPrueba3());
                     params.putString("ESTADO",reporte.getEstado());
+                    params.putString("CONCEPTO", reporte.getConcepto());
                     monitoringDetailFragment.setArguments(params);
 
                     //Inflamos el layout para el Fragmento MonitoringListFragment

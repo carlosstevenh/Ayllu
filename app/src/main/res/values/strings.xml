@@ -176,9 +176,12 @@
     <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
     <string name="descriptionButtonFactor">FACTOR</string>
     <string name="descriptionButtonVariable">VARIABLE</string>
+
     <string name="titlePointDialog">Establece las coordenadas para el punto de afectación</string>
     <string name="latitudePointDialog">LATITUD</string>
     <string name="lengthPointDialog">LONGITUD</string>
+    <string name="altitudePointDialog">ALTITUD</string>
+
     <string name="optionPositivasRepercusiones">Positiva</string>
     <string name="optionNegativasRepercusiones">Negativa</string>
     <string name="optionActualesRepercusiones">Actual</string>
@@ -194,6 +197,7 @@
     <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor selecciona Porcentaje</string>
     <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor selecciona Frecuencia</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
+    <string name="altitudeStepError">Por favor ingresa una altitud que no exceda los 10000 msnm</string>
     <string name="technicalConceptStepError1">Por favor escriba un concepto de la afectación</string>
     <string name="technicalConceptStepError2">Ha excedido el máximo numero de caracteres</string>
 

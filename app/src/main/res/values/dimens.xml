@@ -39,4 +39,5 @@
     <dimen name="step_height_200">200dp</dimen>
     <dimen name="normal_margin">8dp</dimen>
     <dimen name="layout_margin">16dp</dimen>
+    <dimen name="text_view_padding_16">16dp</dimen>
 </resources>

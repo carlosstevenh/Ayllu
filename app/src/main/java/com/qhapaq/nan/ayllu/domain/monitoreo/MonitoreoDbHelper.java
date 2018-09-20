@@ -37,7 +37,10 @@ public class MonitoreoDbHelper extends SQLiteOpenHelper {
                 + MonitoreoEntry.NOMBRE + " TEXT NOT NULL, "
                 + MonitoreoEntry.NOMBRE2 + " TEXT NOT NULL, "
                 + MonitoreoEntry.NOMBRE3 + " TEXT NOT NULL, "
-                + MonitoreoEntry.ESTADO + " TEXT NOT NULL )");
+                + MonitoreoEntry.ESTADO + " TEXT NOT NULL,"
+                + MonitoreoEntry.ALTITUD + " TEXT NOT NULL, "
+                + MonitoreoEntry.CONCEPTO + " TEXT NOT NULL)"
+        );
     }
 
     @Override
@@ -132,6 +135,8 @@ public class MonitoreoDbHelper extends SQLiteOpenHelper {
                 reporte.setPrueba2(cursor.getString(13));
                 reporte.setPrueba3(cursor.getString(14));
                 reporte.setEstado(cursor.getString(15));
+                reporte.setAltitud(cursor.getString(16));
+                reporte.setConcepto(cursor.getString(17));
 
                 reportes.add(reporte);
             } while (cursor.moveToNext());
