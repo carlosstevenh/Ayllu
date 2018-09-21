@@ -61,8 +61,8 @@ public class AdminListUsersFragment extends Fragment implements View.OnClickList
         View view = inflater.inflate(R.layout.fragment_admin_list_users, container, false);
 
         //Obentemos el Recycler y el RefreshLayout
-        recycler = (RecyclerView) view.findViewById(R.id.rv_users);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_container);
+        recycler = view.findViewById(R.id.rv_users);
+        refreshLayout = view.findViewById(R.id.srl_container);
 
         // Seteamos los colores que se usarán a lo largo de la animación
         refreshLayout.setColorSchemeResources(
@@ -86,8 +86,8 @@ public class AdminListUsersFragment extends Fragment implements View.OnClickList
                 }
         );
 
-        ImageButton ibNew = (ImageButton) view.findViewById(R.id.ib_new);
-        tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        ImageButton ibNew = view.findViewById(R.id.ib_new);
+        tvTitle = view.findViewById(R.id.tv_title);
 
         if (estado.equals("D")){
             ibNew.setScaleX(0);

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="com.qhapaq.nan.ayllu.ui.LoginActivity">
 
@@ -73,7 +74,8 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/til_psw"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
 
                     <EditText
                         android:id="@+id/txtPsw"
@@ -87,14 +89,6 @@
                         android:inputType="textPassword"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
-
-                <CheckBox
-                    android:id="@+id/cbCon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mostrarContrasena"
-                    android:textColor="@color/colorSecondaryText"
-                    android:textSize="12sp"/>
             </LinearLayout>
 
             <Button

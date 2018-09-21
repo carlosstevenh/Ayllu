@@ -37,7 +37,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
 
     private ArrayList<Usuario> usuarios;
     private Activity context;
-    private String id = "", name = "", surname = "", codigo = "", estado;
+    private String id = "", name = "", surname = "", email = "", work = "", codigo = "", estado;
 
     /**
      * =============================================================================================
@@ -78,6 +78,8 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                 id = usuarios.get(position).getIdentificacion_usu();
                 name = usuarios.get(position).getNombre_usu();
                 surname = usuarios.get(position).getApellido_usu();
+                email = usuarios.get(position).getEmail();
+                work = usuarios.get(position).getWork();
                 codigo = usuarios.get(position).getCodigo_usu();
 
                 if (estado.equals("H")) createMenuDialog("LIST ENABLED", position);
@@ -182,6 +184,8 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                     intent.putExtra("NAME", name);
                     intent.putExtra("SURNAME", surname);
                     intent.putExtra("CODIGO", codigo);
+                    intent.putExtra("EMAIL", email);
+                    intent.putExtra("WORK", work);
                     context.startActivity(intent);
 
                     usuarios.get(pos).setTipo_usu("E");
@@ -218,7 +222,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
     private AlertDialog createSimpleDialog(String mensaje, String titulo, final String type, final int post) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        LayoutInflater inflater = context.getLayoutInflater();
+        final LayoutInflater inflater = context.getLayoutInflater();
 
         View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
         builder.setView(v);
@@ -246,6 +250,8 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                             intent.putExtra("NAME", name);
                             intent.putExtra("SURNAME", surname);
                             intent.putExtra("CODIGO", codigo);
+                            intent.putExtra("EMAIL", email);
+                            intent.putExtra("WORK", work);
                             context.startActivity(intent);
 
                             temp_list.get(post).setTipo_usu("E");
@@ -258,7 +264,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                                 user_state = "H";
                             }
 
-                            Usuario new_usr = new Usuario(codigo,"","","","",user_state,"","");
+                            Usuario new_usr = new Usuario(codigo,"","","","","","",user_state,"","");
 
                             Retrofit retrofit = prepareRetrofit();
                             AylluApiService service = retrofit.create(AylluApiService.class);

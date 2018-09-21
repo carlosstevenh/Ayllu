@@ -13,5 +13,7 @@ public class UsuarioContract {
         public static final String ESTADO = "estado_usu";
         public static final String PAIS = "pais_usu";
         public static final String CLAVE_API = "claveapi";
+        public static final String EMAIL = "correo_usu";
+        public static final String WORK = "trabajo_usu";
     }
 }

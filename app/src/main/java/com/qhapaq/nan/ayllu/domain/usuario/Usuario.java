@@ -4,6 +4,7 @@ import android.content.ContentValues;
 
 import com.qhapaq.nan.ayllu.io.model.JsonKeys;
 import com.google.gson.annotations.SerializedName;
+import com.qhapaq.nan.ayllu.domain.usuario.UsuarioContract.UsuarioEntry;
 
 public class Usuario {
     //----------------------------------------------------------------------------------------------
@@ -16,6 +17,10 @@ public class Usuario {
     private String nombre_usu;
     @SerializedName(JsonKeys.APE_USU)
     private String apellido_usu;
+    @SerializedName(JsonKeys.EMAIL)
+    private String correo;
+    @SerializedName(JsonKeys.WORK)
+    private String trabajo;
     @SerializedName(JsonKeys.TIPO_USU)
     private String tipo_usu;
     @SerializedName(JsonKeys.ESTADO_USU)
@@ -29,11 +34,13 @@ public class Usuario {
      * =============================================================================================
      * METODO: Constructor de la clase Usuario
      */
-    public Usuario(String codigo_usu, String identificacion_usu, String nombre_usu, String apellido_usu, String tipo_usu, String estado_usu, String clave_api, String pais_usu) {
+    public Usuario(String codigo_usu, String identificacion_usu, String nombre_usu, String apellido_usu, String correo, String trabajo, String tipo_usu, String estado_usu, String clave_api, String pais_usu) {
         this.codigo_usu = codigo_usu;
         this.identificacion_usu = identificacion_usu;
         this.nombre_usu = nombre_usu;
         this.apellido_usu = apellido_usu;
+        this.correo = correo;
+        this.trabajo = trabajo;
         this.tipo_usu = tipo_usu;
         this.estado_usu = estado_usu;
         this.clave_api = clave_api;
@@ -45,6 +52,8 @@ public class Usuario {
         this.identificacion_usu = identificacion_usu;
         this.nombre_usu = "";
         this.apellido_usu = "";
+        this.correo = "";
+        this.trabajo = "";
         this.tipo_usu = "";
         this.estado_usu = "";
         this.clave_api = clave_api;
@@ -57,14 +66,16 @@ public class Usuario {
      */
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(UsuarioContract.UsuarioEntry.CODIGO, this.codigo_usu);
-        values.put(UsuarioContract.UsuarioEntry.IDENTIFICACION, this.identificacion_usu);
-        values.put(UsuarioContract.UsuarioEntry.NOMBRE, this.nombre_usu);
-        values.put(UsuarioContract.UsuarioEntry.APELLIDO, this.apellido_usu);
-        values.put(UsuarioContract.UsuarioEntry.TIPO, this.tipo_usu);
-        values.put(UsuarioContract.UsuarioEntry.ESTADO, this.estado_usu);
-        values.put(UsuarioContract.UsuarioEntry.PAIS, this.pais_usu);
-        values.put(UsuarioContract.UsuarioEntry.CLAVE_API, this.clave_api);
+        values.put(UsuarioEntry.CODIGO, this.codigo_usu);
+        values.put(UsuarioEntry.IDENTIFICACION, this.identificacion_usu);
+        values.put(UsuarioEntry.NOMBRE, this.nombre_usu);
+        values.put(UsuarioEntry.APELLIDO, this.apellido_usu);
+        values.put(UsuarioEntry.TIPO, this.tipo_usu);
+        values.put(UsuarioEntry.ESTADO, this.estado_usu);
+        values.put(UsuarioEntry.PAIS, this.pais_usu);
+        values.put(UsuarioEntry.CLAVE_API, this.clave_api);
+        values.put(UsuarioEntry.EMAIL, this.correo);
+        values.put(UsuarioEntry.WORK, this.trabajo);
         return values;
     }
 
@@ -136,5 +147,21 @@ public class Usuario {
 
     public void setEstado_usu(String estado_usu) {
         this.estado_usu = estado_usu;
+    }
+
+    public String getEmail() {
+        return correo;
+    }
+
+    public void setEmail(String correo) {
+        this.correo = correo;
+    }
+
+    public String getWork() {
+        return trabajo;
+    }
+
+    public void setWork(String trabajo) {
+        this.trabajo = trabajo;
     }
 }

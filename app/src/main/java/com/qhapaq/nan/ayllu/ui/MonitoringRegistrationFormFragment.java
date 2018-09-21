@@ -2,6 +2,7 @@ package com.qhapaq.nan.ayllu.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -615,6 +617,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                         technicalConcept = etTechnicalConcept.getText().toString();
                         tvTechnicalConcept.setText(technicalConcept);
 
+                        InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        manager.hideSoftInputFromWindow(etTechnicalConcept.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
                         if (op_reg.equals("M")) onStepOpening(5);
                         else onStepOpening(7);
 
@@ -626,6 +631,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        manager.hideSoftInputFromWindow(etTechnicalConcept.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                         builder.create().dismiss();
                     }
                 });

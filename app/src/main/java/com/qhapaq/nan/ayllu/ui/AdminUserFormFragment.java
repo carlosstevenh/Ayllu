@@ -1,17 +1,20 @@
 package com.qhapaq.nan.ayllu.ui;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qhapaq.nan.ayllu.domain.Mensaje;
@@ -20,7 +23,7 @@ import com.qhapaq.nan.ayllu.R;
 import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.AylluApiService;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.qhapaq.nan.ayllu.ui.utilities.ToolbarUtility;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -34,15 +37,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.regex.Pattern;
 
 public class AdminUserFormFragment extends Fragment implements View.OnClickListener {
+
+    Activity activity;
+
     //Views del Formulario
-    private EditText etID, etName, etSurname, etPassword, etConfirmation;
-    private TextInputLayout tilID, tilName, tilSurname, tilPassword, tilConfirmation;
-    private TextView tvToolbar;
+    private EditText etID, etName, etSurname, etEmail, etWork, etPassword, etConfirmation;
+    private TextInputLayout tilID, tilName, tilSurname, tilEmail, tilWork, tilPassword, tilConfirmation;
 
     //Variables globales
     private String transaction_type;
     private UsuarioDbHelper usuarioDbHelper;
-    private String id, name, surname, pais = "", codigo = "";
+    private String id, name, surname, email, work, pais = "", codigo = "";
 
     /**
      * =============================================================================================
@@ -61,6 +66,8 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
             name = intent.getExtras().getString("NAME");
             surname = intent.getExtras().getString("SURNAME");
             codigo = intent.getExtras().getString("CODIGO");
+            email = intent.getExtras().getString("EMAIL");
+            work = intent.getExtras().getString("WORK");
         }
 
         //--------------------------------------------------------------------------------------
@@ -79,29 +86,36 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_admin_user_form, container, false);
+        activity = getActivity();
+        ToolbarUtility.showToolbar(activity, view, getResources().getString(R.string.form_admin_title_register), false);
 
-        tvToolbar = (TextView) view.findViewById(R.id.tv_toolbar);
+        etID = view.findViewById(R.id.et_id);
+        etName = view.findViewById(R.id.et_name);
+        etSurname = view.findViewById(R.id.et_surname);
+        etEmail = view.findViewById(R.id.etEmail);
+        etWork = view.findViewById(R.id.etWork);
+        etPassword = view.findViewById(R.id.et_psw);
+        etConfirmation = view.findViewById(R.id.et_conf_psw);
 
-        etID = (EditText) view.findViewById(R.id.et_id);
-        etName = (EditText) view.findViewById(R.id.et_name);
-        etSurname = (EditText) view.findViewById(R.id.et_surname);
-        etPassword = (EditText) view.findViewById(R.id.et_psw);
-        etConfirmation = (EditText) view.findViewById(R.id.et_conf_psw);
 
-        tilID = (TextInputLayout) view.findViewById(R.id.til_id);
-        tilName = (TextInputLayout) view.findViewById(R.id.til_name);
-        tilSurname = (TextInputLayout) view.findViewById(R.id.til_surname);
-        tilPassword = (TextInputLayout) view.findViewById(R.id.til_psw);
-        tilConfirmation = (TextInputLayout) view.findViewById(R.id.til_conf_psw);
+        tilID = view.findViewById(R.id.til_id);
+        tilName = view.findViewById(R.id.til_name);
+        tilSurname = view.findViewById(R.id.til_surname);
+        tilEmail = view.findViewById(R.id.tilEmail);
+        tilWork = view.findViewById(R.id.tilWork);
+        tilPassword = view.findViewById(R.id.til_psw);
+        tilConfirmation = view.findViewById(R.id.til_conf_psw);
 
-        FloatingActionButton fbTransaction = (FloatingActionButton) view.findViewById(R.id.fab_transaction);
+        FloatingActionButton fbTransaction = view.findViewById(R.id.fab_transaction);
         if (transaction_type.equals("UPDATE")) {
-            fbTransaction.setIcon(R.drawable.ic_refresh);
-            tvToolbar.setText(getResources().getString(R.string.form_admin_title_edit));
+            fbTransaction.setImageDrawable(getResources().getDrawable(R.drawable.ic_refresh));
+            ToolbarUtility.showToolbar(activity, view, getResources().getString(R.string.form_admin_title_edit), false);
 
             etID.setText(id);
             etName.setText(name);
             etSurname.setText(surname);
+            etEmail.setText(email);
+            etWork.setText(work);
         }
         fbTransaction.setOnClickListener(this);
 
@@ -116,6 +130,9 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_transaction:
+                InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
                 processTransaction();
                 break;
         }
@@ -146,7 +163,8 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
             //String pass = SHA1.getHash(etPassword.getText().toString(), "SHA1");
             Usuario new_user = new Usuario(
                     codigo, etID.getText().toString(), etName.getText().toString(),
-                    etSurname.getText().toString(), "M", "", etPassword.getText().toString(), pais
+                    etSurname.getText().toString(), etEmail.getText().toString(), etWork.getText().toString(),
+                    "M", "", etPassword.getText().toString(), pais
             );
 
             if (transaction_type.equals("UPDATE")) {
@@ -286,21 +304,24 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
      */
     private boolean isValidFields(String type) {
         boolean equals_passwords = false;
-        boolean id, name, surname, password, confirmation;
+        boolean id, name, surname, email, work, password, confirmation;
 
         id = isValidID(etID.getText().toString(), tilID);
         name = isValidText(etName.getText().toString(), tilName);
         surname = isValidText(etSurname.getText().toString(), tilSurname);
+        email = isValidEmail(etEmail.getText().toString(), tilEmail);
+        work = isValidText(etWork.getText().toString(), tilWork);
+
 
         if (type.equals("TOTAL")){
             password = isValidPassword(etPassword.getText().toString(), tilPassword);
             confirmation = isValidPassword(etConfirmation.getText().toString(), tilConfirmation);
 
             if (password && confirmation) equals_passwords = isSamePasswords();
-            return id && name && surname && equals_passwords;
+            return id && name && surname && email && work && equals_passwords;
         }
 
-        return id && name && surname;
+        return id && name && surname && email && work;
     }
 
     /**
@@ -313,10 +334,22 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         if (!patron.matcher(texto).matches() || texto.length() > 30) {
             til.setError(getResources().getString(R.string.registration_form_alert_invalid_field));
             return false;
-        } else {
-            til.setError(null);
         }
+        else til.setError(null);
 
+        return true;
+    }
+
+    //TODO: Construir el metodo para validar un Correo electronico
+    /*----------------------------------------------------------------------------------------------
+    * Valida los si un texto es o no un correo electronico
+    *
+    * @param texto : Texto al cual se le aplica el analisis
+    * @param <code>TextInputLayout til</code> : View para enviar el error
+    *
+    * @return <code>Boolean</code> : Respuesta verdadera si cumple con el analisis o falsa en caso
+    * contrario*/
+    private boolean isValidEmail(String texto, TextInputLayout til) {
         return true;
     }
 
@@ -325,12 +358,11 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
      * METODO: Valida si una identificación es correcta
      */
     private boolean isValidID(String texto, TextInputLayout til) {
-        if (texto.length() <= 0)
-            til.setError(getResources().getString(R.string.registration_form_alert_invalid_field));
-            //Pattern patron = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
-        else {
-            til.setError(null);
+        if (texto.length() <= 0){
+            til.setError(getResources().getString(R.string.registration_form_alert_empty_field));
+            return false;
         }
+        else til.setError(null);
 
         return true;
     }
@@ -344,9 +376,8 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         if (!patron.matcher(texto).matches() || texto.length() > 30) {
             til.setError(getResources().getString(R.string.registration_form_alert_password));
             return false;
-        } else {
-            til.setError(null);
         }
+        else til.setError(null);
 
         return true;
     }

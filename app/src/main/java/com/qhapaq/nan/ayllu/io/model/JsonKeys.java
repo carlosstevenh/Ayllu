@@ -104,6 +104,8 @@ public class JsonKeys {
     public static final String ID_USU = "identificacion_usu";
     public static final String NOM_USU = "nombre_usu";
     public static final String APE_USU = "apellido_usu";
+    public static final String EMAIL = "correo_usu";
+    public static final String WORK = "trabajo_usu";
     public static final String TIPO_USU = "tipo_usu";
     public static final String ESTADO_USU = "estado_usu";
     public static final String PAIS_USU = "pais_usu";

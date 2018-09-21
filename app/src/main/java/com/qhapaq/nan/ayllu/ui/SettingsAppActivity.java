@@ -616,23 +616,25 @@ public class SettingsAppActivity extends AppCompatActivity implements View.OnCli
             InputStream is = null;
             OutputStream os = null;
 
-            try {
-                is = body.byteStream();
-                os = new FileOutputStream(destinationFile);
+            if (body != null) {
+                try {
+                    is = body.byteStream();
+                    os = new FileOutputStream(destinationFile);
 
-                byte data[] = new byte[4096];
-                int count;
-                int progress = 0;
-                while ((count = is.read(data)) != -1) {
-                    os.write(data, 0, count);
-                    progress += count;
+                    byte data[] = new byte[4096];
+                    int count;
+                    int progress = 0;
+                    while ((count = is.read(data)) != -1) {
+                        os.write(data, 0, count);
+                        progress += count;
+                    }
+                    os.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (is != null) is.close();
+                    if (os != null) os.close();
                 }
-                os.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (is != null) is.close();
-                if (os != null) os.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

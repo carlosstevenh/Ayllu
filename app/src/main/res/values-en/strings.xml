@@ -23,6 +23,8 @@
     <string name="registration_form_id">ID</string>
     <string name="registration_form_name">First name</string>
     <string name="registration_form_surname">Last name</string>
+    <string name="registration_form_email">Email</string>
+    <string name="registration_form_job">Job</string>
     <string name="registration_form_password">Password</string>
     <string name="registration_form_confpassword">Confirm Password</string>
     <string name="registration_form_button_record">To register</string>

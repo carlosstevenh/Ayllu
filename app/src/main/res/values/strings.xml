@@ -23,6 +23,8 @@
     <string name="registration_form_id">Identificación</string>
     <string name="registration_form_name">Nombre</string>
     <string name="registration_form_surname">Apellido</string>
+    <string name="registration_form_email">Correo</string>
+    <string name="registration_form_job">Trabajo</string>
     <string name="registration_form_password">Contraseña</string>
     <string name="registration_form_confpassword">Confirmar contraseña</string>
     <string name="registration_form_button_record">Registrar</string>
