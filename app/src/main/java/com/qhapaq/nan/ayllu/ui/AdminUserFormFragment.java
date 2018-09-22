@@ -11,6 +11,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -36,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.regex.Pattern;
 
-public class AdminUserFormFragment extends Fragment implements View.OnClickListener {
+public class AdminUserFormFragment extends Fragment {
 
     Activity activity;
 
@@ -56,6 +59,8 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         Intent intent = getActivity().getIntent();
         transaction_type = intent.getExtras().getString("TYPE");
@@ -87,7 +92,7 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
 
         View view = inflater.inflate(R.layout.fragment_admin_user_form, container, false);
         activity = getActivity();
-        ToolbarUtility.showToolbar(activity, view, getResources().getString(R.string.form_admin_title_register), false);
+        ToolbarUtility.showToolbar(activity, view, "",false);
 
         etID = view.findViewById(R.id.et_id);
         etName = view.findViewById(R.id.et_name);
@@ -106,10 +111,10 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         tilPassword = view.findViewById(R.id.til_psw);
         tilConfirmation = view.findViewById(R.id.til_conf_psw);
 
-        FloatingActionButton fbTransaction = view.findViewById(R.id.fab_transaction);
+
         if (transaction_type.equals("UPDATE")) {
-            fbTransaction.setImageDrawable(getResources().getDrawable(R.drawable.ic_refresh));
-            ToolbarUtility.showToolbar(activity, view, getResources().getString(R.string.form_admin_title_edit), false);
+            String[] singleName = name.split(" ");
+            ToolbarUtility.showToolbar(activity, view, singleName[0],false);
 
             etID.setText(id);
             etName.setText(name);
@@ -117,25 +122,9 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
             etEmail.setText(email);
             etWork.setText(work);
         }
-        fbTransaction.setOnClickListener(this);
+        //fbTransaction.setOnClickListener(this);
 
         return view;
-    }
-
-    /**
-     * =============================================================================================
-     * METODO:
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab_transaction:
-                InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-
-                processTransaction();
-                break;
-        }
     }
 
     /**
@@ -413,5 +402,34 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
+    }
+
+    /*----------------------------------------------------------------------------------------------
+    * Carga el menu del formulario de usuario*/
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_user_form, menu);
+        if (transaction_type.equals("UPDATE")) menu.getItem(0).setTitle(R.string.form_admin_title_edit);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /*----------------------------------------------------------------------------------------------
+    * Determina que item del menu fue seleccionado*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
+        switch (item.getItemId()) {
+            case R.id.itemTransaction:
+                processTransaction();
+                return true;
+            case R.id.itemCancel:
+                activity.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

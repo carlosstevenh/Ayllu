@@ -66,8 +66,8 @@
     <string name="menu_admin_option_title_session">CERRAR SESIÓN</string>
     <!--.........................................................................................-->
     <!--FRAGMENT ADMIN USER FORM -->
-    <string name="form_admin_title_register">Registrar monitor</string>
-    <string name="form_admin_title_edit">Editar monitor</string>
+    <string name="form_admin_title_register">Registrar</string>
+    <string name="form_admin_title_edit">Editar</string>
     <!--.........................................................................................-->
     <!--FRAGMENT -->
     <string name="item_menu_edit_monitor">Editar monitor</string>
