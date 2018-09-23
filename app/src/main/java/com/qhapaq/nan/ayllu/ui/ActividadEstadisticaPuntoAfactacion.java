@@ -1,5 +1,4 @@
 package com.qhapaq.nan.ayllu.ui;
-
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -117,8 +116,9 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                     mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                         //metodo encargado de obtener los datos del punto seleccionado
                         @Override
-                        public void onValueSelected(Entry e, Highlight h) {
-                            int aux = h.getDataSetIndex();
+                        public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+
+                            int aux = e.getXIndex();
                             if(datos.size()>=0) {
                                 int por_num = Integer.parseInt(datos.get(aux).getProcentaje());
                                 int fre_num = Integer.parseInt(datos.get(aux).getFrecuencia());
@@ -135,7 +135,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
                                 por.setText("");
                                 fre.setText("");
                             }
-                            puntaje.setText(e.getData()+"");
+                            puntaje.setText(e.getVal()+"");
 
                         }
 
@@ -216,7 +216,7 @@ public class ActividadEstadisticaPuntoAfactacion extends AppCompatActivity {
         dataSets.add(set1); // add the datasets
 
         // create a data object with the datasets
-        LineData data = new LineData(set1);
+        LineData data = new LineData(xVals, dataSets);
 
         // set data
         mChart.setData(data);
