@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.qhapaq.nan.ayllu.domain.Mensaje;
@@ -27,6 +29,7 @@ import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.AylluApiService;
 import com.qhapaq.nan.ayllu.ui.utilities.ToolbarUtility;
+import com.squareup.picasso.Picasso;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -39,18 +42,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.regex.Pattern;
 
-public class AdminUserFormFragment extends Fragment {
+public class AdminUserFormFragment extends Fragment implements View.OnClickListener{
 
+    final static int GALLERY_RESULT = 2;
     Activity activity;
 
     //Views del Formulario
     private EditText etID, etName, etSurname, etEmail, etWork, etPassword, etConfirmation;
     private TextInputLayout tilID, tilName, tilSurname, tilEmail, tilWork, tilPassword, tilConfirmation;
+    private FloatingActionButton fabUploadImage;
+    private ImageView ivAvatar;
 
     //Variables globales
     private String transaction_type;
     private UsuarioDbHelper usuarioDbHelper;
-    private String id, name, surname, email, work, pais = "", codigo = "";
+    private String id, name, surname, email, work, pais = "", codigo = "", avatar = "";
 
     /**
      * =============================================================================================
@@ -101,6 +107,8 @@ public class AdminUserFormFragment extends Fragment {
         etWork = view.findViewById(R.id.etWork);
         etPassword = view.findViewById(R.id.et_psw);
         etConfirmation = view.findViewById(R.id.et_conf_psw);
+        fabUploadImage = view.findViewById(R.id.fabUploadImage);
+        ivAvatar = view.findViewById(R.id.ivAvatar);
 
 
         tilID = view.findViewById(R.id.til_id);
@@ -122,7 +130,8 @@ public class AdminUserFormFragment extends Fragment {
             etEmail.setText(email);
             etWork.setText(work);
         }
-        //fbTransaction.setOnClickListener(this);
+
+        fabUploadImage.setOnClickListener(this);
 
         return view;
     }
@@ -388,6 +397,33 @@ public class AdminUserFormFragment extends Fragment {
         return true;
     }
 
+    /*----------------------------------------------------------------------------------------------
+     * Abre la galeria de fotos para elegir una imágen
+     *
+     * @param <code>View view</code> : Vista que invoca el metodo*/
+    public void openGallery(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent,GALLERY_RESULT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_RESULT && resultCode == Activity.RESULT_OK) {
+            String uri = data.getDataString();
+            if (uri != null) {
+                Picasso.get()
+                        .load(uri)
+                        .resize(2048, 2048)
+                        .error(R.drawable.img_configuracion)
+                        .centerCrop()
+                        .into(ivAvatar);
+            }
+        }
+    }
+
     private Retrofit prepareRetrofit() {
         //------------------------------------------------------------------------------------------
         //Preparamos el servicio de Retrofit
@@ -430,6 +466,16 @@ public class AdminUserFormFragment extends Fragment {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fabUploadImage:
+                openGallery(view);
+                break;
+            default:
         }
     }
 }

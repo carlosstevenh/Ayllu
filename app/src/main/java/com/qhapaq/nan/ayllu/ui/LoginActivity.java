@@ -113,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
      * METODO: VALIDA Y DESCARGA EL USUARIO QUE INTENTA LOGUEARSE
      */
     private void downloadUsers(final ProgressDialog progressDialog) {
-        //String pass = SHA1.getHash(et2.getText().toString(),"SHA1");
         Usuario currrentUser = new Usuario(et1.getText().toString(), et2.getText().toString());
 
         Call<UsuarioResponse> callUser = AylluApiAdapter.getApiService("USUARIOS").loginUsuario(currrentUser);

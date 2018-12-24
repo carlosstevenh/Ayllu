@@ -29,6 +29,7 @@ import com.qhapaq.nan.ayllu.domain.Reporte;
 import com.qhapaq.nan.ayllu.domain.seccion.SeccionDbHelper;
 import com.qhapaq.nan.ayllu.domain.subtramo.SubtramoDbHelper;
 import com.qhapaq.nan.ayllu.domain.tramo.TramoDbHelper;
+import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.AylluApiAdapter;
 import com.qhapaq.nan.ayllu.io.model.ReporteResponse;
 import com.qhapaq.nan.ayllu.ui.adapter.MonitoringAdapter;
@@ -409,7 +410,11 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                         loading.setIndeterminate(true);
                         loading.show();
 
-                        Call<ReporteResponse> call = AylluApiAdapter.getApiService("REPORTE").getReporte(op[0], op[1], op[2], op[3]);
+                        //Crea la URL dinamica dependiendo del pais del usuario y el servicio a solicitar
+                        ApiConstants constants = new ApiConstants();
+                        String url = constants.buildUrl(pais,"API");
+
+                        Call<ReporteResponse> call = AylluApiAdapter.getNewApiService("REPORTE",url).getReporte(op[0], op[1], op[2], op[3]);
                         call.enqueue(new Callback<ReporteResponse>() {
                             @Override
                             public void onResponse(Call<ReporteResponse> call, Response<ReporteResponse> response) {
