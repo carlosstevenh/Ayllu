@@ -18,7 +18,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AylluApiAdapter {
     private static AylluApiService API_SERVICE;
-    //==============================================================================================
+
+    /**
+     * Metodo viejo para solicitar un servicio al API-REST con una URL estatica
+     * @param op : servicio a solicitar
+     * @return
+     */
     public static AylluApiService getApiService(String op){
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
@@ -32,6 +37,34 @@ public class AylluApiAdapter {
 
         Retrofit adapter = new Retrofit.Builder()
                 .baseUrl(ApiConstants.URL_API_AYLLU)
+                .addConverterFactory(GsonConverterFactory.create(buildAylluApiGsonConverter(op)))
+                .client(httpClient.build())
+                .build();
+        API_SERVICE = adapter.create(AylluApiService.class);
+
+        return API_SERVICE;
+    }
+
+    /**
+     * Nuevo metodo para solicitar un servicio al API-REST con una URL dinamica, determinada por el
+     * pais deL usuario
+     * @param op : Serviio a solicitar
+     * @param url : Url dinamica - depende del pais del usuario
+     * @return
+     */
+    public static AylluApiService getNewApiService(String op, String url){
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.interceptors().add(logging); // <-- this is the important line!
+
+        Retrofit adapter = new Retrofit.Builder()
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create(buildAylluApiGsonConverter(op)))
                 .client(httpClient.build())
                 .build();

@@ -42,6 +42,7 @@ public class ReporteDeserializer implements JsonDeserializer<ReporteResponse>{
             String area = reporteData.get(JsonKeys.PROPIEDAD_NOMINADA).getAsString();
             String latitud = reporteData.get(JsonKeys.LATITUD_COO).getAsString();
             String longitud = reporteData.get(JsonKeys.LONGITUD_COO).getAsString();
+            String altitud = reporteData.get(JsonKeys.ALTITUD).getAsString();
             String fecha_mon = reporteData.get(JsonKeys.FECHA_MON).getAsString();
             String usuario = reporteData.get(JsonKeys.NOMBRE_USU).getAsString();
             String repercusiones = reporteData.get(JsonKeys.REPERCUSIONES).getAsString();
@@ -59,12 +60,14 @@ public class ReporteDeserializer implements JsonDeserializer<ReporteResponse>{
             String prueba1 = reporteData.get(JsonKeys.PRUEBA1).getAsString();
             String prueba2 = reporteData.get(JsonKeys.PRUEBA2).getAsString();
             String prueba3 = reporteData.get(JsonKeys.PRUEBA3).getAsString();
+            String concepto = reporteData.get(JsonKeys.CONCEPTO).getAsString();
 
             currentReporte.setCod_paf(codigo_paf);
             currentReporte.setVariable(variable);
             currentReporte.setArea(area);
             currentReporte.setLatitud(latitud);
             currentReporte.setLongitud(longitud);
+            currentReporte.setAltitud(altitud);
             currentReporte.setFecha_mon(fecha_mon);
             currentReporte.setUsuario(usuario);
             currentReporte.setRepercusiones(repercusiones);
@@ -82,6 +85,7 @@ public class ReporteDeserializer implements JsonDeserializer<ReporteResponse>{
             currentReporte.setPrueba1(prueba1);
             currentReporte.setPrueba2(prueba2);
             currentReporte.setPrueba3(prueba3);
+            currentReporte.setConcepto(concepto);
 
             reportes.add(currentReporte);
 

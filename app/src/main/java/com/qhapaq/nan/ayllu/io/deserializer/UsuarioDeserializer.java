@@ -41,6 +41,8 @@ public class UsuarioDeserializer implements JsonDeserializer<UsuarioResponse> {
                     usuarioData.get(JsonKeys.ID_USU).getAsString(),
                     usuarioData.get(JsonKeys.NOM_USU).getAsString(),
                     usuarioData.get(JsonKeys.APE_USU).getAsString(),
+                    usuarioData.get(JsonKeys.EMAIL).getAsString(),
+                    usuarioData.get(JsonKeys.WORK).getAsString(),
                     usuarioData.get(JsonKeys.TIPO_USU).getAsString(),
                     usuarioData.get(JsonKeys.ESTADO_USU).getAsString(),
                     usuarioData.get(JsonKeys.API_USU).getAsString(),

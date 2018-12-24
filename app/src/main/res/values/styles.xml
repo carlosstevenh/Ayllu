@@ -1,15 +1,12 @@
 <resources>
     <!--=========================================================================================-->
     <!-- Tema de la Aplicación -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--.....................................................................................-->
         <!-- Colores del Tema -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--.....................................................................................-->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
     <!--=========================================================================================-->
     <!-- Tema para el Boton -->
@@ -17,11 +14,12 @@
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccentLight</item>
         <item name="android:textColor">@color/colorTextIcons</item>
+        <item name="android:textSize">18sp</item>
     </style>
     <!--=========================================================================================-->
     <!-- Tema para el Boton Flotante -->
     <style name="FloatingButtonDark" parent="Theme.AppCompat.Light">
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccentLight</item>
         <item name="android:textColor">@color/colorTextIcons</item>
     </style>
@@ -46,4 +44,18 @@
     </style>
 
     <style name="analisis">Análisis</style>
+
+    <style name="EditTextBlack" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/colorEditTextBlack</item>
+        <item name="android:textColorPrimary">@color/colorEditTextBlack</item>
+        <item name="colorAccent">@color/colorEditTextBlack</item>
+        <item name="colorControlNormal">@color/colorEditTextBlack</item>
+        <item name="colorControlActivated">@color/colorEditTextBlack</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextViewBlack" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

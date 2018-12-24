@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:drawableLeft="@drawable/ic_normal"
+        android:drawablePadding="@dimen/normal_padding"
+        android:drawableStart="@drawable/ic_normal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/title_padding"
+        android:text="@string/technical_concept_hint"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorTextIcons"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilTechnicalConcept"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/layout_margin"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etTechnicalConcept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/technical_concept_hint"
+            android:inputType="text|textMultiLine"
+            android:maxLength="255"
+            android:theme="@style/EditTextBlack" />
+    </android.support.design.widget.TextInputLayout>
+
+
+</LinearLayout>

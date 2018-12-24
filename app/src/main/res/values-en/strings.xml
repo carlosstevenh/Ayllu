@@ -23,6 +23,8 @@
     <string name="registration_form_id">ID</string>
     <string name="registration_form_name">First name</string>
     <string name="registration_form_surname">Last name</string>
+    <string name="registration_form_email">Email</string>
+    <string name="registration_form_job">Job</string>
     <string name="registration_form_password">Password</string>
     <string name="registration_form_confpassword">Confirm Password</string>
     <string name="registration_form_button_record">To register</string>
@@ -64,8 +66,8 @@
     <string name="menu_admin_option_title_session">SIGN OFF</string>
     <!--.........................................................................................-->
     <!--FRAGMENT ADMIN USER FORM -->
-    <string name="form_admin_title_register">Register monitor</string>
-    <string name="form_admin_title_edit">Edit monitor</string>
+    <string name="form_admin_title_register">Register</string>
+    <string name="form_admin_title_edit">Edit</string>
     <!--.........................................................................................-->
     <!--FRAGMENT -->
     <string name="item_menu_edit_monitor">Edit monitor</string>
@@ -176,9 +178,12 @@
     <string name="titleFormFrecuencia">FREQUENCY OF APPEARANCE:</string>
     <string name="descriptionButtonFactor">FACTOR</string>
     <string name="descriptionButtonVariable">VARIABLE</string>
+
     <string name="titlePointDialog">Set the coordinates for the point of involvement</string>
     <string name="latitudePointDialog">LATITUDE</string>
     <string name="lengthPointDialog">LENGTH</string>
+    <string name="altitudePointDialog">ALTITUDE</string>
+
     <string name="optionPositivasRepercusiones">Positive</string>
     <string name="optionNegativasRepercusiones">Negative</string>
     <string name="optionActualesRepercusiones">Current</string>
@@ -190,12 +195,18 @@
     <string name="titleFormRegistrationMonitoringDialog">INFORMATION</string>
     <string name="descriptionFormRegistrationMonitoringVariableDialog">Please select variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">You must take at least one photo</string>
+
     <string name="descriptionFormRegistrationMonitoringPorcentajeError">Please select percentage</string>
     <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Please select frequency</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Please register the coordinates</string>
+    <string name="altitudeStepError">Por favor ingresa una altitud que no exceda los 10000 msnm</string>
+    <string name="technicalConceptStepError1">Por favor escriba un concepto de la afectación</string>
+    <string name="technicalConceptStepError2">Ha excedido el máximo numero de caracteres</string>
+
     <string name="titlebuttonCambiar">CHANGE</string>
     <string name="titlebuttonElegir">TO CHOOSE</string>
     <string name="titlebuttonFijar">PIN UP</string>
+
     <string name="registration_form_dialog_option_positive">COMPLETE</string>
     <string name="registration_form_dialog_option_ok">OK</string>
     <string name="registration_form_dialog_option_cancel">CANCEL</string>
@@ -233,6 +244,7 @@
         <item>FREQUENCY OF APPEARANCE</item>
         <item>ORIGIN</item>
         <item>REPERCUSSIONS</item>
+        <item>TECHNICAL CONCEPT</item>
     </string-array>
 
     <string-array name="registration_form_monitoring">
@@ -241,6 +253,7 @@
         <item>FREQUENCY OF APPEARANCE</item>
         <item>ORIGIN</item>
         <item>REPERCUSSIONS</item>
+        <item>TECHNICAL CONCEPT</item>
     </string-array>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING SUMMARY-->
@@ -478,5 +491,8 @@
     <string name="analisisVarTie">Variable time analysis</string>
     <string name="graficaVariableTramo">VariableTimeGraph</string>
     <string name="borrarDatos">¿Are you sure you want to delete downloaded monitors?</string>
+
+    <string name="technical_concept_hint">Concepto técnico</string>
+    <string name="technical_concept_text">Escriba una descripción de la afectación</string>
 
 </resources>

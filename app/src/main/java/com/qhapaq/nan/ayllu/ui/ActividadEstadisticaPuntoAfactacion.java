@@ -1,5 +1,4 @@
 package com.qhapaq.nan.ayllu.ui;
-
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;

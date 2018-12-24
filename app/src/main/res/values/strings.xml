@@ -23,6 +23,8 @@
     <string name="registration_form_id">Identificación</string>
     <string name="registration_form_name">Nombre</string>
     <string name="registration_form_surname">Apellido</string>
+    <string name="registration_form_email">Correo</string>
+    <string name="registration_form_job">Trabajo</string>
     <string name="registration_form_password">Contraseña</string>
     <string name="registration_form_confpassword">Confirmar contraseña</string>
     <string name="registration_form_button_record">Registrar</string>
@@ -64,8 +66,8 @@
     <string name="menu_admin_option_title_session">CERRAR SESIÓN</string>
     <!--.........................................................................................-->
     <!--FRAGMENT ADMIN USER FORM -->
-    <string name="form_admin_title_register">Registrar monitor</string>
-    <string name="form_admin_title_edit">Editar monitor</string>
+    <string name="form_admin_title_register">Registrar</string>
+    <string name="form_admin_title_edit">Editar</string>
     <!--.........................................................................................-->
     <!--FRAGMENT -->
     <string name="item_menu_edit_monitor">Editar monitor</string>
@@ -176,9 +178,12 @@
     <string name="titleFormFrecuencia">FRECUENCIA DE APARICIÓN:</string>
     <string name="descriptionButtonFactor">FACTOR</string>
     <string name="descriptionButtonVariable">VARIABLE</string>
+
     <string name="titlePointDialog">Establece las coordenadas para el punto de afectación</string>
     <string name="latitudePointDialog">LATITUD</string>
     <string name="lengthPointDialog">LONGITUD</string>
+    <string name="altitudePointDialog">ALTITUD</string>
+
     <string name="optionPositivasRepercusiones">Positiva</string>
     <string name="optionNegativasRepercusiones">Negativa</string>
     <string name="optionActualesRepercusiones">Actual</string>
@@ -190,12 +195,18 @@
     <string name="titleFormRegistrationMonitoringDialog">INFORMACIÓN</string>
     <string name="descriptionFormRegistrationMonitoringVariableDialog">Por favor Seleccione una Variable</string>
     <string name="descriptionFormRegistrationMonitoringCameraDialog">Debes tomar por lo menos una foto</string>
+
     <string name="descriptionFormRegistrationMonitoringPorcentajeError">Por favor selecciona Porcentaje</string>
     <string name="descriptionFormRegistrationMonitoringFrecuenciaError">Por favor selecciona Frecuencia</string>
     <string name="descriptionFormRegistrationMonitoringCoordenadasError">Por favor registra las coordenadas</string>
+    <string name="altitudeStepError">Por favor ingresa una altitud que no exceda los 10000 msnm</string>
+    <string name="technicalConceptStepError1">Por favor escriba un concepto de la afectación</string>
+    <string name="technicalConceptStepError2">Ha excedido el máximo numero de caracteres</string>
+
     <string name="titlebuttonCambiar">CAMBIAR</string>
     <string name="titlebuttonElegir">ELEGIR</string>
     <string name="titlebuttonFijar">FIJAR</string>
+
     <string name="registration_form_dialog_option_positive">HECHO</string>
     <string name="registration_form_dialog_option_ok">OK</string>
     <string name="registration_form_dialog_option_cancel">CANCELAR</string>
@@ -233,6 +244,7 @@
         <item>FRECUENCIA DE APARICIÓN</item>
         <item>ORIGEN</item>
         <item>REPERCUSIONES</item>
+        <item>CONCEPTO DEL MONITOR</item>
     </string-array>
 
     <string-array name="registration_form_monitoring">
@@ -241,6 +253,7 @@
         <item>FRECUENCIA DE APARICIÓN</item>
         <item>ORIGEN</item>
         <item>REPERCUSIONES</item>
+        <item>CONCEPTO DEL MONITOR</item>
     </string-array>
     <!--.........................................................................................-->
     <!--STRINGS: MONITORING SUMMARY-->
@@ -478,4 +491,8 @@
     <string name="analisisVarTie">Análisis variable sobre tiempo</string>
     <string name="graficaVariableTramo">graficaVariableTiempo</string>
     <string name="borrarDatos">¿Está seguro que desea borrar el paquete de datos descargado?</string>
+
+    <string name="technical_concept_hint">Concepto técnico</string>
+    <string name="technical_concept_text">Escriba una descripción de la afectación</string>
+    <string name="btn_edit_text">EDITAR</string>
 </resources>

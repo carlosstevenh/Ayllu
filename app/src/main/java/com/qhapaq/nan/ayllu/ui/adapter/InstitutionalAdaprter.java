@@ -87,7 +87,7 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
             propiedad = (TextView) itemView.findViewById(R.id.tv_property);
         }
 
-        void setPrueba(String cad) { Picasso.with(itemView.getContext()).load(cad).fit().centerCrop().into(prueba);}
+        void setPrueba(String cad) { Picasso.get().load(cad).fit().centerCrop().into(prueba);}
 
     }
 

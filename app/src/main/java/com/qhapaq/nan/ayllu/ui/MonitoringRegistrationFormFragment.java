@@ -1,6 +1,8 @@
 package com.qhapaq.nan.ayllu.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,20 +17,25 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,16 +46,17 @@ import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.domain.variable.VariableContract;
 import com.qhapaq.nan.ayllu.domain.variable.VariableDbHelper;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.qhapaq.nan.ayllu.ui.utilities.DialogUtility;
+import com.qhapaq.nan.ayllu.ui.utilities.ToolbarUtility;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.xml.datatype.Duration;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -63,7 +71,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     //VARIABLES: Componetes del Formulario de Registro
     Button btnVar, btnFac, btnPor, btnFre;
     RadioGroup rgRep1, rgRep2, rgOrg;
-    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3, tvTitle;
+    TextView tvVar, tvFac, tvPor, tvFre, tvLat, tvLong, tvImage1, tvImage2, tvImage3;
+    TextInputLayout tilAltitude;
+    EditText etAltitude;
+    TextView tvTechnicalConcept;
     FloatingActionButton fabLat, fabLong, fabCamera1, fabCamera2, fabCamera3;
 
     MonitoringSummaryFragment fragment;
@@ -72,9 +83,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     String punto_afectacion = "", area = "", monitor = "", op_reg;
     String origen = "10";
     String fecha = "";
-    String longitud = "", latitud = "";
+    String longitud = "", latitud = "", altitud = "0.0";
     int[] repercusiones = {1, 0, 0, 1};
     String factor = "", variable = "", lat = "", logt = "";
+    String technicalConcept = "";
 
     //VARIABLES: Control de la selección de opciones
     CharSequence[] items_factores, items_variables;
@@ -107,6 +119,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     private int[] pos_seleccion = {-1, -1};
 
     private VerticalStepperFormLayout verticalStepperForm;
+    private Activity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,13 +132,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        activity = getActivity();
         View view = inflater.inflate(R.layout.fragment_monitoring_registration_form, container, false);
+        ToolbarUtility.showToolbar(activity,view,getResources().getString(R.string.titleFormRegistrationMonitoring),false);
 
-        tvTitle = (TextView) view.findViewById(R.id.tv_title);
-
-        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
-        fecha = s.format(new Date());
+        fecha = DateFormat.getDateInstance().format(new Date(System.currentTimeMillis()));
 
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
@@ -136,7 +148,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         //------------------------------------------------------------------------------------------
         //Se obtiene los parametros enviados por el Motor de busqueda basico
 
-        op_reg = getArguments().getString("OPCION");
+        op_reg = getArguments() != null ? getArguments().getString("OPCION") : null;
         String[] mySteps;
 
         assert op_reg != null;
@@ -145,7 +157,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             variable = getArguments().getString("VAR_NAME");
             lat = getArguments().getString("LATITUD");
             logt = getArguments().getString("LONGITUD");
-            tvTitle.setText(getResources().getString(R.string.titleFormMonitoring));
+            altitud = getArguments().getString("ALTITUD");
+
+            ToolbarUtility.showToolbar(activity,view, getResources().getString(R.string.titleFormMonitoring),false);
 
             punto_afectacion = getArguments().getString("PUNTO");
             mySteps = getResources().getStringArray(R.array.registration_form_monitoring);
@@ -171,15 +185,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
 
         //------------------------------------------------------------------------------------------
         //Se establece el menu Vertical
-
-        int colorPrimary = ContextCompat.getColor(getActivity().getApplicationContext(), R.color.colorPrimary);
-        int colorPrimaryDark = ContextCompat.getColor(getActivity().getApplicationContext(), R.color.colorPrimaryDark);
-
-        verticalStepperForm = (VerticalStepperFormLayout) view.findViewById(R.id.vertical_stepper_form);
+        verticalStepperForm = view.findViewById(R.id.vertical_stepper_form);
 
         VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, mySteps, this, getActivity())
-                .primaryColor(colorPrimary)
-                .primaryDarkColor(colorPrimaryDark)
+                .primaryColor(getResources().getColor(R.color.colorPrimary))
+                .primaryDarkColor(getResources().getColor(R.color.colorPrimaryDark))
                 .init();
 
         return view;
@@ -277,10 +287,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: Muestra la Imagen en pantalla
      **/
     protected void bitMapImg(File file, ImageView img) {
-        int heightDp = getActivity().getResources().getDisplayMetrics().heightPixels/2;
-        int widthDp = getActivity().getResources().getDisplayMetrics().widthPixels;
+        int heightDp = getResources().getDisplayMetrics().heightPixels/2;
+        int widthDp = getResources().getDisplayMetrics().widthPixels;
 
-        Picasso.with(getActivity())
+        Picasso.get()
                 .load(file)
                 .resize(widthDp,heightDp)
                 .into(img);
@@ -382,7 +392,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
     public AlertDialog createSimpleDialog(String mensaje, String titulo) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
 
         View v = inflater.inflate(R.layout.dialog_monitoring_info, null);
         builder.setView(v);
@@ -495,7 +505,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                         seleccion_items[0] = which + 1;
                         pos_seleccion[0] = which;
                         tvPor.setText(items_porcentaje[which]);
-                        btnPor.setText(getActivity().getResources().getString(R.string.titlebuttonCambiar));
+                        btnPor.setText(getResources().getString(R.string.titlebuttonCambiar));
                         if (op_reg.equals("M")) onStepOpening(1);
                         else onStepOpening(3);
                         break;
@@ -505,7 +515,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                         seleccion_items[1] = which + 1;
                         pos_seleccion[1] = which;
                         tvFre.setText(items_frecuencia[which]);
-                        btnFre.setText(getActivity().getResources().getString(R.string.titlebuttonCambiar));
+                        btnFre.setText(getResources().getString(R.string.titlebuttonCambiar));
                         if (op_reg.equals("M")) onStepOpening(2);
                         else onStepOpening(4);
                         break;
@@ -534,14 +544,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         final int aux = pos;
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
+        LayoutInflater inflater = getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_image, null);
-
         builder.setView(v);
 
-        ImageView img = (ImageView) v.findViewById(R.id.dialogImage);
-
+        ImageView img = v.findViewById(R.id.dialogImage);
         bitMapImg(file, img);
 
         builder.setPositiveButton(getResources().getString(R.string.titlebuttonCambiar),
@@ -559,6 +566,73 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        builder.create().dismiss();
+                    }
+                });
+
+        return builder.create();
+    }
+
+    /*----------------------------------------------------------------------------------------------
+    * Crea un dialogo para el concepto técnico del monitor
+    *
+    * @return <code>AlertDialog</code> : Dialogo para el item*/
+    private AlertDialog createDialogTechnicalConcept() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_technical_concept, null);
+        builder.setView(v);
+
+        final TextInputLayout tilTechnicalConcept = v.findViewById(R.id.tilTechnicalConcept);
+        final EditText etTechnicalConcept = v.findViewById(R.id.etTechnicalConcept);
+
+        etTechnicalConcept.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() > tilTechnicalConcept.getCounterMaxLength())
+                    tilTechnicalConcept.setError(getResources().getString(R.string.technicalConceptStepError2));
+                else tilTechnicalConcept.setError(null);
+            }
+        });
+
+        String tvText = tvTechnicalConcept.getText().toString();
+        etTechnicalConcept.setText(tvText);
+
+
+        builder.setPositiveButton(getResources().getString(R.string.info_dialog_option_accept),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        technicalConcept = etTechnicalConcept.getText().toString();
+                        tvTechnicalConcept.setText(technicalConcept);
+
+                        InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        manager.hideSoftInputFromWindow(etTechnicalConcept.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
+                        if (op_reg.equals("M")) onStepOpening(5);
+                        else onStepOpening(7);
+
+                        builder.create().dismiss();
+                    }
+                });
+
+        builder.setNegativeButton(getResources().getString(R.string.info_dialog_option_cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        InputMethodManager manager = (InputMethodManager) activity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        manager.hideSoftInputFromWindow(etTechnicalConcept.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                         builder.create().dismiss();
                     }
                 });
@@ -591,6 +665,9 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 case 4:
                     view = createRepercusionesView();
                     break;
+                case 5:
+                    view = createStepTechnicalCocept();
+                    break;
             }
         } else {
             switch (stepNumber) {
@@ -615,8 +692,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 case 6:
                     view = createRepercusionesView();
                     break;
+                case 7:
+                    view = createStepTechnicalCocept();
+                    break;
             }
         }
+
         return view;
     }
 
@@ -655,42 +736,55 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                 case 4:
                     verticalStepperForm.setStepAsCompleted(4);
                     break;
+                case 5:
+                    int sizeText = technicalConcept.length();
+                    String errorMessage = getResources().getString(R.string.technicalConceptStepError1);
+
+                    if (sizeText > 0 && sizeText < 250) verticalStepperForm.setStepAsCompleted(5);
+                    else {
+                        if (sizeText > 250) errorMessage = getResources().getString(R.string.technicalConceptStepError2);
+                        verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
+                    }
+                    break;
             }
         } else {
+            String errorMessage;
             switch (stepNumber) {
                 case 0:
                     if (!opciones[1].equals("")) verticalStepperForm.setStepAsCompleted(0);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringVariableDialog);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringVariableDialog);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 1:
-                    if (!latitud.equals("") && !longitud.equals(""))
+                    errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
+                    float valueAltitude = Float.parseFloat(altitud);
+                    if (!latitud.equals("") && !longitud.equals("") && valueAltitude < 10000f)
                         verticalStepperForm.setStepAsCompleted(1);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCoordenadasError);
+                        if (valueAltitude > 10000f) errorMessage = getResources().getString(R.string.altitudeStepError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 2:
                     if (files.size() > 0) verticalStepperForm.setStepAsCompleted(2);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCameraDialog);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringCameraDialog);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 3:
                     if (seleccion_items[0] != 0) verticalStepperForm.setStepAsCompleted(3);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringPorcentajeError);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringPorcentajeError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
                 case 4:
                     if (seleccion_items[1] != 0) verticalStepperForm.setStepAsCompleted(4);
                     else {
-                        String errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringFrecuenciaError);
+                        errorMessage = getResources().getString(R.string.descriptionFormRegistrationMonitoringFrecuenciaError);
                         verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
                     }
                     break;
@@ -699,6 +793,16 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
                     break;
                 case 6:
                     verticalStepperForm.setStepAsCompleted(6);
+                    break;
+                case 7:
+                    int sizeText = technicalConcept.length();
+                    errorMessage = getResources().getString(R.string.technicalConceptStepError1);
+
+                    if (sizeText > 0 && sizeText < 250) verticalStepperForm.setStepAsCompleted(7);
+                    else {
+                        if (sizeText > 250) errorMessage = getResources().getString(R.string.technicalConceptStepError2);
+                        verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
+                    }
                     break;
             }
         }
@@ -725,6 +829,8 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         params.putString("FRE_NAME", items_frecuencia[pos_seleccion[1]]);
         params.putString("FRE_NUMBER", seleccion_items[1] + "");
         params.putString("FILES_NUMBER", files.size() + "");
+        params.putString("CONCEPT", technicalConcept);
+        params.putString("ALTITUD", altitud);
 
 
         if (files.size() >= 1) params.putString("PRUEBA1", files.get(0).getName());
@@ -779,13 +885,13 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: CREA LA INTERFAZ PARA EL FACTOR Y LA VARIABLE EN EL FORMULARIO
      **/
     private View createFactorVariable() {
-        LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
         LinearLayout factorVariableLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_factor_variable, null, false);
 
-        btnFac = (Button) factorVariableLayoutContent.findViewById(R.id.btn_factor);
-        btnVar = (Button) factorVariableLayoutContent.findViewById(R.id.btn_variable);
-        tvFac = (TextView) factorVariableLayoutContent.findViewById(R.id.tv_factor);
-        tvVar = (TextView) factorVariableLayoutContent.findViewById(R.id.tv_variable);
+        btnFac = factorVariableLayoutContent.findViewById(R.id.btn_factor);
+        btnVar = factorVariableLayoutContent.findViewById(R.id.btn_variable);
+        tvFac = factorVariableLayoutContent.findViewById(R.id.tv_factor);
+        tvVar = factorVariableLayoutContent.findViewById(R.id.tv_variable);
 
         btnVar.setEnabled(false);
 
@@ -811,12 +917,30 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      **/
     private View createCoordenadasView() {
         LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
-        LinearLayout coordenadasLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_coordenadas, null, false);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.item_registration_form_coordenadas, null, false);
 
-        fabLat = (FloatingActionButton) coordenadasLayoutContent.findViewById(R.id.fab_latitud);
-        fabLong = (FloatingActionButton) coordenadasLayoutContent.findViewById(R.id.fab_longitud);
-        tvLat = (TextView) coordenadasLayoutContent.findViewById(R.id.tv_latitud);
-        tvLong = (TextView) coordenadasLayoutContent.findViewById(R.id.tv_longitud);
+        fabLat = layout.findViewById(R.id.fab_latitud);
+        fabLong = layout.findViewById(R.id.fab_longitud);
+        tvLat = layout.findViewById(R.id.tv_latitud);
+        tvLong = layout.findViewById(R.id.tv_longitud);
+        etAltitude = layout.findViewById(R.id.etAltitude);
+
+        etAltitude.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!editable.toString().equals("")) altitud = editable.toString();
+                onStepOpening(1);
+            }
+        });
 
         fabLat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -872,7 +996,7 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
             }
         });
 
-        return coordenadasLayoutContent;
+        return layout;
     }
 
     /**
@@ -884,13 +1008,13 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
         LinearLayout pruebasLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_pruebas, null, false);
 
-        fabCamera1 = (FloatingActionButton) pruebasLayoutContent.findViewById(R.id.fab_camera1);
-        fabCamera2 = (FloatingActionButton) pruebasLayoutContent.findViewById(R.id.fab_camera2);
-        fabCamera3 = (FloatingActionButton) pruebasLayoutContent.findViewById(R.id.fab_camera3);
+        fabCamera1 = pruebasLayoutContent.findViewById(R.id.fab_camera1);
+        fabCamera2 = pruebasLayoutContent.findViewById(R.id.fab_camera2);
+        fabCamera3 = pruebasLayoutContent.findViewById(R.id.fab_camera3);
 
-        tvImage1 = (TextView) pruebasLayoutContent.findViewById(R.id.tv_image1);
-        tvImage2 = (TextView) pruebasLayoutContent.findViewById(R.id.tv_image2);
-        tvImage3 = (TextView) pruebasLayoutContent.findViewById(R.id.tv_image3);
+        tvImage1 = pruebasLayoutContent.findViewById(R.id.tv_image1);
+        tvImage2 = pruebasLayoutContent.findViewById(R.id.tv_image2);
+        tvImage3 = pruebasLayoutContent.findViewById(R.id.tv_image3);
 
         fabCamera1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -931,11 +1055,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      **/
 
     private View createPorcentajeView() {
-        LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
         LinearLayout porcentajeLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_porcentaje, null, false);
 
-        btnPor = (Button) porcentajeLayoutContent.findViewById(R.id.btn_porcentaje);
-        tvPor = (TextView) porcentajeLayoutContent.findViewById(R.id.tv_porcentaje);
+        btnPor = porcentajeLayoutContent.findViewById(R.id.btn_porcentaje);
+        tvPor = porcentajeLayoutContent.findViewById(R.id.tv_porcentaje);
 
         btnPor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -952,11 +1076,11 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: CREA LA INTERFAZ PARA LA FRECUENCIA DE APARICIÓN
      **/
     private View createFrecuenciaView() {
-        LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
         LinearLayout frecuenciaLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_frecuencia, null, false);
 
-        btnFre = (Button) frecuenciaLayoutContent.findViewById(R.id.btn_frecuencia);
-        tvFre = (TextView) frecuenciaLayoutContent.findViewById(R.id.tv_frecuencia);
+        btnFre = frecuenciaLayoutContent.findViewById(R.id.btn_frecuencia);
+        tvFre = frecuenciaLayoutContent.findViewById(R.id.tv_frecuencia);
 
         btnFre.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -973,10 +1097,10 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: CREA LA INTERFAZ PARA EL ORIGEN
      **/
     private View createOrigenView() {
-        LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
         RelativeLayout origenLayoutContent = (RelativeLayout) inflater.inflate(R.layout.item_registration_form_origen, null, false);
 
-        rgOrg = (RadioGroup) origenLayoutContent.findViewById(R.id.rg_origen);
+        rgOrg = origenLayoutContent.findViewById(R.id.rg_origen);
 
         return origenLayoutContent;
     }
@@ -986,13 +1110,34 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
      * METODO: CREA LA INTERFAZ PARA LAS REPERCUSIONES
      **/
     private View createRepercusionesView() {
-        LayoutInflater inflater = LayoutInflater.from(getActivity().getBaseContext());
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
         LinearLayout repercusionesLayoutContent = (LinearLayout) inflater.inflate(R.layout.item_registration_form_repercusiones, null, false);
 
-        rgRep1 = (RadioGroup) repercusionesLayoutContent.findViewById(R.id.rg_repercusiones1);
-        rgRep2 = (RadioGroup) repercusionesLayoutContent.findViewById(R.id.rg_repercusiones2);
+        rgRep1 = repercusionesLayoutContent.findViewById(R.id.rg_repercusiones1);
+        rgRep2 = repercusionesLayoutContent.findViewById(R.id.rg_repercusiones2);
 
         return repercusionesLayoutContent;
+    }
+
+    /*----------------------------------------------------------------------------------------------
+    * Crea la Interfaz para el concepto técnico
+    *
+    * @param <code>View view</code> : Vista creada para el formulario*/
+    private View createStepTechnicalCocept() {
+        LayoutInflater inflater = LayoutInflater.from(activity.getBaseContext());
+        LinearLayout technicalConceptStep = (LinearLayout) inflater.inflate(R.layout.step_technical_concept, null, false);
+
+        Button btnEdit = technicalConceptStep.findViewById(R.id.btnEdit);
+        tvTechnicalConcept = technicalConceptStep.findViewById(R.id.tvTechnicalConcept);
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialogTechnicalConcept().show();
+            }
+        });
+
+        return technicalConceptStep;
     }
 
     /**
@@ -1056,12 +1201,12 @@ public class MonitoringRegistrationFormFragment extends Fragment implements Vert
         View v = inflater.inflate(R.layout.dialog_coordinates, null);
         builder.setView(v);
 
-        TextView tvTitle = (TextView) v.findViewById(R.id.tv_title_dialog);
-        final RadioButton diag1 = (RadioButton) v.findViewById(R.id.rb_card1);
-        RadioButton diag2 = (RadioButton) v.findViewById(R.id.rb_card2);
-        final NumberPicker npDegrees = (NumberPicker) v.findViewById(R.id.np_degrees);
-        final NumberPicker npMinutes = (NumberPicker) v.findViewById(R.id.np_minutes);
-        final NumberPicker npSeconds = (NumberPicker) v.findViewById(R.id.np_seconds);
+        TextView tvTitle = v.findViewById(R.id.tv_title_dialog);
+        final RadioButton diag1 = v.findViewById(R.id.rb_card1);
+        RadioButton diag2 = v.findViewById(R.id.rb_card2);
+        final NumberPicker npDegrees = v.findViewById(R.id.np_degrees);
+        final NumberPicker npMinutes = v.findViewById(R.id.np_minutes);
+        final NumberPicker npSeconds = v.findViewById(R.id.np_seconds);
 
         npMinutes.setMaxValue(60);
         npMinutes.setMinValue(0);

@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         //se instancian los elementos de la vista
         et1 = (EditText) findViewById(R.id.txtName);
         et2 = (EditText) findViewById(R.id.txtPsw);
-        CheckBox contrasena = (CheckBox) findViewById(R.id.cbCon);
 
         paisDbHelper = new PaisDbHelper(this);
         tramoDbHelper = new TramoDbHelper(this);
@@ -76,14 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         factorDbHelper = new FactorDbHelper(this);
         variableDbHelper = new VariableDbHelper(this);
         usuarioDbHelper = new UsuarioDbHelper(this);
-
-        contrasena.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) et2.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                else et2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            }
-        });
 
     }
 
@@ -122,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
      * METODO: VALIDA Y DESCARGA EL USUARIO QUE INTENTA LOGUEARSE
      */
     private void downloadUsers(final ProgressDialog progressDialog) {
-        //String pass = SHA1.getHash(et2.getText().toString(),"SHA1");
         Usuario currrentUser = new Usuario(et1.getText().toString(), et2.getText().toString());
 
         Call<UsuarioResponse> callUser = AylluApiAdapter.getApiService("USUARIOS").loginUsuario(currrentUser);

@@ -1,5 +1,6 @@
 package com.qhapaq.nan.ayllu.ui;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -27,7 +29,7 @@ import com.qhapaq.nan.ayllu.domain.task.TaskDbHelper;
 import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.AylluApiService;
 import com.qhapaq.nan.ayllu.io.PostClient;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.qhapaq.nan.ayllu.ui.utilities.ToolbarUtility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,8 +47,11 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MonitoringSummaryFragment extends Fragment implements View.OnClickListener {
+
+    Activity activity;
+
     TextView tvRep1, tvRep2, tvOrigen, tvPorcentaje, tvFrecuencia, tvLatitud, tvLongitud,
-             tvFactor, tvVariable;
+             tvAltitud, tvFactor, tvVariable;
     FloatingActionButton fabRegist;
     Task task;
     Imagen imagen;
@@ -81,7 +86,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         rep2_name = getResources().getString(R.string.summary_item_description_rep_current);
         orig_name = getResources().getString(R.string.summary_item_description_org_internal);
 
-
         task.setMonitor(getArguments().getString("MONITOR"));
         task.setVariable(getArguments().getString("PUNTO_AFECTACION"));
         task.setFecha(getArguments().getString("FECHA"));
@@ -89,6 +93,8 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         task.setOrigen(getArguments().getString("ORIGEN"));
         task.setPorcentaje(Integer.parseInt(getArguments().getString("POR_NUMBER")));
         task.setFrecuencia(Integer.parseInt(getArguments().getString("FRE_NUMBER")));
+        task.setTechnicalConcept(getArguments().getString("CONCEPT"));
+        task.setAltitud(getArguments().getString("ALTITUD"));
 
         int sizeFile = Integer.parseInt(getArguments().getString("FILES_NUMBER"));
 
@@ -135,7 +141,6 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         if (tipo_upload.equals("NEW")) {
             task.setVariable(getArguments().getString("VAR_COD"));
             task.setArea(getArguments().getString("AREA"));
-
         } else task.setTipo("M");
     }
 
@@ -150,23 +155,28 @@ public class MonitoringSummaryFragment extends Fragment implements View.OnClickL
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monitoring_summary, container, false);
 
-        vpMonitoring = (ViewPager) view.findViewById(R.id.vp_monitoring);
-        dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
+        activity = getActivity();
+        ToolbarUtility.showToolbar(activity, view, getResources().getString(R.string.summary_title),false);
 
-        tvRep1 = (TextView) view.findViewById(R.id.tv_repercuciones1);
-        tvRep2 = (TextView) view.findViewById(R.id.tv_repercuciones2);
-        tvOrigen = (TextView) view.findViewById(R.id.tv_origen);
-        tvPorcentaje = (TextView) view.findViewById(R.id.tv_porcentaje);
-        tvFrecuencia = (TextView) view.findViewById(R.id.tv_frecuencia);
-        tvLatitud = (TextView) view.findViewById(R.id.tv_latitud);
-        tvLongitud = (TextView) view.findViewById(R.id.tv_longitud);
-        tvFactor = (TextView) view.findViewById(R.id.tv_factor);
-        tvVariable = (TextView) view.findViewById(R.id.tv_variable);
+        vpMonitoring = view.findViewById(R.id.vp_monitoring);
+        dotsLayout = view.findViewById(R.id.layoutDots);
 
-        fabRegist = (FloatingActionButton) view.findViewById(R.id.fab_reg);
+        tvRep1 = view.findViewById(R.id.tv_repercuciones1);
+        tvRep2 = view.findViewById(R.id.tv_repercuciones2);
+        tvOrigen = view.findViewById(R.id.tv_origen);
+        tvPorcentaje = view.findViewById(R.id.tv_porcentaje);
+        tvFrecuencia = view.findViewById(R.id.tv_frecuencia);
+        tvLatitud = view.findViewById(R.id.tv_latitud);
+        tvLongitud = view.findViewById(R.id.tv_longitud);
+        tvAltitud = view.findViewById(R.id.tvAltidude);
+        tvFactor = view.findViewById(R.id.tv_factor);
+        tvVariable = view.findViewById(R.id.tv_variable);
+        TextView tvConcept = view.findViewById(R.id.tvConcept);
+
+        fabRegist = view.findViewById(R.id.fab_reg);
         fabRegist.setOnClickListener(this);
 
-heightDp = getResources().getDisplayMetrics().heightPixels;
+        heightDp = getResources().getDisplayMetrics().heightPixels;
         widthDp = getResources().getDisplayMetrics().widthPixels;
 
         //Cargamos las Imagenes
@@ -181,12 +191,14 @@ heightDp = getResources().getDisplayMetrics().heightPixels;
         tvFrecuencia.setText(fre_name);
         tvLatitud.setText(lat_name);
         tvLongitud.setText(long_name);
+        tvAltitud.setText(task.getAltitud());
         tvVariable.setText(var_name);
         tvFactor.setText(factor_name);
+        tvConcept.setText(task.getTechnicalConcept());
 
         addBottomDots(0);
 
-        AppBarLayout appbar = (AppBarLayout) view.findViewById(R.id.app_bar);
+        AppBarLayout appbar = view.findViewById(R.id.app_bar);
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams)appbar.getLayoutParams();
         lp.height = (int)heightDp/2;
 

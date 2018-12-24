@@ -31,7 +31,10 @@ public class UsuarioDbHelper extends SQLiteOpenHelper {
                 + UsuarioEntry.TIPO + " TEXT NOT NULL, "
                 + UsuarioEntry.ESTADO + " TEXT NOT NULL, "
                 + UsuarioEntry.PAIS + " INTEGER NOT NULL, "
-                + UsuarioEntry.CLAVE_API + " TEXT NOT NULL )");
+                + UsuarioEntry.CLAVE_API + " TEXT NOT NULL, "
+                + UsuarioEntry.EMAIL + " TEXT NOT NULL, "
+                + UsuarioEntry.WORK + " TEXT NOT NULL)"
+        );
     }
 
     /**
@@ -117,7 +120,8 @@ public class UsuarioDbHelper extends SQLiteOpenHelper {
 
         return new Usuario(
                 cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6),
+                cursor.getString(4), cursor.getString(9), cursor.getString(10),
+                cursor.getString(5), cursor.getString(6),
                 cursor.getString(7), cursor.getString(8));
     }
 }

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -83,6 +84,7 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
             public void onResponse(Call<ArrayList<RespuestaInstitucional>> call, Response<ArrayList<RespuestaInstitucional>> response) {
                 loading.dismiss();
                 if(response.isSuccessful()){
+                    Log.e("Error",response.body().size()+"");
                     rp = response.body();
                     ban = true;
                     save = "E";
@@ -104,11 +106,13 @@ public class GraficaRespuestaInstitucional extends AppCompatActivity {
                         }
                     });
                 }
+                else Log.e("Error","encontro pero nada");
             }
 
             @Override
             public void onFailure(Call<ArrayList<RespuestaInstitucional>> call, Throwable t) {
                 loading.dismiss();
+                Log.e("Error","nada");
             }
         });
 
