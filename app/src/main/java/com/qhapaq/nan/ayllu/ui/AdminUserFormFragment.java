@@ -181,7 +181,12 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         final Bundle params = new Bundle();
         params.putString("TIPO","USER");
 
-        Retrofit retrofit = prepareRetrofit();
+        //TODO: ACTUALIZACIÓN METODO REGISTRAR USUARIO -- REVISAR
+        ApiConstants apiConstants = new ApiConstants();
+        apiConstants.buildUrl(pais,"API");
+        Retrofit retrofit = prepareRetrofit(apiConstants.buildUrl(pais,"API"));
+
+        //Retrofit retrofit = prepareRetrofit();
         AylluApiService service = retrofit.create(AylluApiService.class);
         Call<Mensaje> call = service.registrarUsuario(new_user);
         call.enqueue(new Callback<Mensaje>() {
@@ -245,7 +250,11 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         final Bundle params = new Bundle();
         params.putString("TIPO","EDIT");
 
-        Retrofit retrofit = prepareRetrofit();
+        //TODO: ACTUALIZACION METODO ACTUALIZAR USUARIOS -- REVISAR
+        ApiConstants apiConstants = new ApiConstants();
+        apiConstants.buildUrl(pais,"API");
+        Retrofit retrofit = prepareRetrofit(apiConstants.buildUrl(pais,"API"));
+
         AylluApiService service = retrofit.create(AylluApiService.class);
         Call<Mensaje> call = service.actualizarUsuario(new_user);
         call.enqueue(new Callback<Mensaje>() {
@@ -434,6 +443,22 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
 
         return new Retrofit.Builder()
                 .baseUrl(ApiConstants.URL_API_AYLLU)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(httpClient.build())
+                .build();
+    }
+
+    private Retrofit prepareRetrofit(String url) {
+        //------------------------------------------------------------------------------------------
+        //Preparamos el servicio de Retrofit
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        return new Retrofit.Builder()
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())

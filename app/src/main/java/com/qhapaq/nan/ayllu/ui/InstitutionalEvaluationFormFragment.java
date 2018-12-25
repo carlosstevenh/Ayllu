@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.qhapaq.nan.ayllu.R;
 import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
+import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.RestClient;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.qhapaq.nan.ayllu.io.RestClientAdapter;
 
 import java.util.ArrayList;
 
@@ -127,7 +129,17 @@ public class InstitutionalEvaluationFormFragment extends Fragment implements Vie
 
         //se realiza la peticion del registro de la respuesta institucional al servidor
         final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.institutional_response_form_process_message_upload),getResources().getString(R.string.institutional_response_form_process_message),false,false);
-        RestClient service = RestClient.retrofit.create(RestClient.class);
+        //TODO: REGISTRAR RESPUESTA INSTITUCIONAL --ACTUALIZADO -- REVISAR
+        //RestClient service = RestClient.retrofit.create(RestClient.class);
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        String pais= "";
+        if (cursor.moveToFirst()) {
+            pais = "0" + cursor.getString(7);
+        }
+        ApiConstants apiConstants = new ApiConstants();
+        //RestClient service = RestClient.retrofit.create(RestClient.class);
+        RestClient service = RestClientAdapter.getRetrofit(apiConstants.buildUrl(pais,"WEBSERVICE")).create(RestClient.class);
+
         Call<ArrayList<String>> requestUser = service.addRespuesta(pa,fm, evaluacion,personal,tiempo,presupuesto,recursos,conocimiento,cod_mon);
         requestUser.enqueue(new Callback<ArrayList<String>>() {
             @Override

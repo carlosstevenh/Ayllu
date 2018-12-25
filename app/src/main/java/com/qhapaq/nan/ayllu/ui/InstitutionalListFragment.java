@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qhapaq.nan.ayllu.R;
+import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.RestClient;
 import com.qhapaq.nan.ayllu.domain.area.AreaContract;
 import com.qhapaq.nan.ayllu.domain.area.AreaDbHelper;
@@ -31,6 +32,7 @@ import com.qhapaq.nan.ayllu.domain.subtramo.SubtramoContract;
 import com.qhapaq.nan.ayllu.domain.subtramo.SubtramoDbHelper;
 import com.qhapaq.nan.ayllu.domain.tramo.TramoContract;
 import com.qhapaq.nan.ayllu.domain.tramo.TramoDbHelper;
+import com.qhapaq.nan.ayllu.io.RestClientAdapter;
 import com.qhapaq.nan.ayllu.ui.adapter.InstitutionalAdaprter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -481,8 +483,11 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      * METODO:
      **/
     public void getListReports(String tramo, String subtramo, String seccion, String area){
+        //TODO:  URL RESPUESTA INSTITUCIONAL -- ACTILIZADO --REVISAR
         final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.institutional_list_process_message_search),getResources().getString(R.string.institutional_list_process_message),false,false);
-        RestClient service = RestClient.retrofit.create(RestClient.class);
+        ApiConstants apiConstants = new ApiConstants();
+        //RestClient service = RestClient.retrofit.create(RestClient.class);
+        RestClient service = RestClientAdapter.getRetrofit(apiConstants.buildUrl(pais_mon,"WEBSERVICE")).create(RestClient.class);
         Call<ArrayList<Monitoreo>> requestUser = service.monitoreos(tramo, subtramo, seccion, area);
         requestUser.enqueue(new Callback<ArrayList<Monitoreo>>() {
             @Override

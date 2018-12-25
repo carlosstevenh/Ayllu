@@ -99,6 +99,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
         monitoreoDbHelper = new MonitoreoDbHelper(getActivity());
         usuarioDbHelper = new UsuarioDbHelper(getActivity());
         int i = 0;
+        //TODO: Referencia de la consulta del pais del Usuario
         //------------------------------------------------------------------------------------------
         //Obtenemos el codigo del monitor y el pais del usuario en sesión
         Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
@@ -399,6 +400,7 @@ public class MonitoringListFragment extends Fragment implements View.OnClickList
                     createSimpleDialog(getResources().getString(R.string.descriptionListMonitoringDialog), getResources().getString(R.string.titleListMonitoringDialog)).show();
                 break;
             case R.id.fab_search:
+                //TODO: Referecia del uso del Servicio
                 if(wifiConected()){
                     if (op[0] == 0) createSimpleDialog(getResources().getString(R.string.institutional_list_dialog_description), getResources().getString(R.string.institutioanl_list_dialog_title)).show();
                     else {

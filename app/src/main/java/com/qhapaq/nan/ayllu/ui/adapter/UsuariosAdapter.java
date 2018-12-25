@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import com.qhapaq.nan.ayllu.domain.Mensaje;
 import com.qhapaq.nan.ayllu.domain.usuario.Usuario;
 import com.qhapaq.nan.ayllu.R;
+import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.io.ApiConstants;
+import com.qhapaq.nan.ayllu.io.AylluApiAdapter;
 import com.qhapaq.nan.ayllu.io.AylluApiService;
 import com.qhapaq.nan.ayllu.ui.AdminUserTransactionActivity;
 
@@ -38,6 +41,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
     private ArrayList<Usuario> usuarios;
     private Activity context;
     private String id = "", name = "", surname = "", email = "", work = "", codigo = "", estado;
+    private UsuarioDbHelper usuarioDbHelper;
 
     /**
      * =============================================================================================
@@ -266,7 +270,15 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
 
                             Usuario new_usr = new Usuario(codigo,"","","","","","",user_state,"","");
 
-                            Retrofit retrofit = prepareRetrofit();
+                            //TODO: URL USUARIOS (REVISAR LLAMADO) --ACTUALIZADO
+                            ApiConstants apiConstants = new ApiConstants();
+                            Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+                            String url ="";
+                            if (cursor.moveToFirst()) {
+                                String pais = "0" + cursor.getString(7);
+                                url = apiConstants.buildUrl(pais, "API");
+                            }
+                            Retrofit retrofit = prepareRetrofit(url);
                             AylluApiService service = retrofit.create(AylluApiService.class);
                             Call<Mensaje> call = service.estadoUsuario(new_usr);
                             final String finalCad = cad;
@@ -310,6 +322,22 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
 
         return new Retrofit.Builder()
                 .baseUrl(ApiConstants.URL_API_AYLLU)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(httpClient.build())
+                .build();
+    }
+
+    private Retrofit prepareRetrofit(String url) {
+        //------------------------------------------------------------------------------------------
+        //Preparamos el servicio de Retrofit
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        return new Retrofit.Builder()
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())

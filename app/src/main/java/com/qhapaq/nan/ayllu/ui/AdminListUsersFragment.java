@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Api;
 import com.qhapaq.nan.ayllu.R;
 import com.qhapaq.nan.ayllu.domain.usuario.Usuario;
 import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
+import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.qhapaq.nan.ayllu.io.AylluApiAdapter;
 import com.qhapaq.nan.ayllu.io.model.UsuarioResponse;
 import com.qhapaq.nan.ayllu.ui.adapter.UsuariosAdapter;
@@ -117,7 +119,11 @@ public class AdminListUsersFragment extends Fragment implements View.OnClickList
         if (cursor.moveToFirst() && !estado.equals("E")){
             pais = "0" + cursor.getString(7);
 
-            Call<UsuarioResponse> callUser = AylluApiAdapter.getApiService("USUARIOS").getUsuarios(pais, estado);
+            //TODO: URL USUARIOS (DESARROLLADO) -- ACTUALIZADO
+            //llamo el servicio nuevo con la url nueva
+            ApiConstants apiConstants = new ApiConstants();
+
+            Call<UsuarioResponse> callUser = AylluApiAdapter.getNewApiService("USUARIOS",apiConstants.buildUrl(pais,"API")).getUsuarios(pais, estado);
             callUser.enqueue(new Callback<UsuarioResponse>() {
                 @Override
                 public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
