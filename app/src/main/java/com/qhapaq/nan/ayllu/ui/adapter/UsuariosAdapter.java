@@ -42,6 +42,8 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
     private Activity context;
     private String id = "", name = "", surname = "", email = "", work = "", codigo = "", estado;
     private UsuarioDbHelper usuarioDbHelper;
+    String monitor = "", pais = "";
+    Cursor cursor;
 
     /**
      * =============================================================================================
@@ -53,6 +55,8 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
         this.estado = estado;
     }
 
+
+
     /**
      * =============================================================================================
      * METODO:
@@ -61,6 +65,14 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
     public UsuarioViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = LayoutInflater.from(context)
                 .inflate(R.layout.card_view_user, viewGroup, false);
+        usuarioDbHelper = new UsuarioDbHelper(context);
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        if (cursor.moveToFirst()){
+            monitor = cursor.getString(1);
+            pais = "0"+cursor.getString(7);
+        }
+        cursor.close();
+
         return new UsuarioViewHolder(v);
     }
 
@@ -270,14 +282,12 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
 
                             Usuario new_usr = new Usuario(codigo,"","","","","","",user_state,"","");
 
-                            //TODO: URL USUARIOS (REVISAR LLAMADO) --ACTUALIZADO
+                            //TODO: URL USUARIOS (REVISAR LLAMADO) --ACTUALIZADO -- OK
+
                             ApiConstants apiConstants = new ApiConstants();
-                            Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
-                            String url ="";
-                            if (cursor.moveToFirst()) {
-                                String pais = "0" + cursor.getString(7);
-                                url = apiConstants.buildUrl(pais, "API");
-                            }
+
+                            String url = apiConstants.buildUrl(pais, "API");
+
                             Retrofit retrofit = prepareRetrofit(url);
                             AylluApiService service = retrofit.create(AylluApiService.class);
                             Call<Mensaje> call = service.estadoUsuario(new_usr);
@@ -310,22 +320,6 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                         });
 
         return builder.create();
-    }
-
-    private Retrofit prepareRetrofit() {
-        //------------------------------------------------------------------------------------------
-        //Preparamos el servicio de Retrofit
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
-
-        return new Retrofit.Builder()
-                .baseUrl(ApiConstants.URL_API_AYLLU)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(httpClient.build())
-                .build();
     }
 
     private Retrofit prepareRetrofit(String url) {

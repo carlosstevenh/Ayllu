@@ -129,8 +129,9 @@ public class InstitutionalEvaluationFormFragment extends Fragment implements Vie
 
         //se realiza la peticion del registro de la respuesta institucional al servidor
         final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.institutional_response_form_process_message_upload),getResources().getString(R.string.institutional_response_form_process_message),false,false);
-        //TODO: REGISTRAR RESPUESTA INSTITUCIONAL --ACTUALIZADO -- REVISAR
+        //TODO: REGISTRAR RESPUESTA INSTITUCIONAL --ACTUALIZADO -- Ok
         //RestClient service = RestClient.retrofit.create(RestClient.class);
+        usuarioDbHelper = new UsuarioDbHelper(getContext());
         Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
         String pais= "";
         if (cursor.moveToFirst()) {

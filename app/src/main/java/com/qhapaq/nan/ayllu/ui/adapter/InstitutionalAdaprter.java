@@ -1,6 +1,7 @@
 package com.qhapaq.nan.ayllu.ui.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.qhapaq.nan.ayllu.R;
 import com.qhapaq.nan.ayllu.domain.monitoreo.Monitoreo;
+import com.qhapaq.nan.ayllu.domain.usuario.UsuarioDbHelper;
 import com.qhapaq.nan.ayllu.io.ApiConstants;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +50,16 @@ public class InstitutionalAdaprter extends RecyclerView.Adapter<InstitutionalAda
         holder.variable.setText(monitoreos.get(position).getVariable());
         holder.latitud.setText(reverseCoordinates(monitoreos.get(position).getLatitud(),"LATITUD"));
         holder.longitud.setText(reverseCoordinates(monitoreos.get(position).getLongitud(),"LONGITUD"));
-        holder.setPrueba(ApiConstants.URL_IMG+monitoreos.get(position).getPrueba());
+        //TODO: AQUI CARGA LAS IMAGENES
+        UsuarioDbHelper usuarioDbHelper = new UsuarioDbHelper(context);
+        Cursor cursor = usuarioDbHelper.generateQuery("SELECT * FROM ");
+        String pais= "";
+        if (cursor.moveToFirst()) {
+            pais = "0" + cursor.getString(7);
+        }
+        ApiConstants apiConstants = new ApiConstants();
+        String URL = apiConstants.buildUrl(pais,"IMG");
+        holder.setPrueba(URL+monitoreos.get(position).getPrueba());
         holder.propiedad.setText(monitoreos.get(position).getPropiedad());
     }
 

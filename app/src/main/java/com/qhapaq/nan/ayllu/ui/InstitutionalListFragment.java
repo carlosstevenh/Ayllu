@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -483,7 +484,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
      * METODO:
      **/
     public void getListReports(String tramo, String subtramo, String seccion, String area){
-        //TODO:  URL RESPUESTA INSTITUCIONAL -- ACTILIZADO --REVISAR
+        //TODO:  URL RESPUESTA INSTITUCIONAL -- ACTILIZADO --OK
         final ProgressDialog loading = ProgressDialog.show(getActivity(),getResources().getString(R.string.institutional_list_process_message_search),getResources().getString(R.string.institutional_list_process_message),false,false);
         ApiConstants apiConstants = new ApiConstants();
         //RestClient service = RestClient.retrofit.create(RestClient.class);
@@ -508,7 +509,7 @@ public class InstitutionalListFragment extends Fragment implements View.OnClickL
                             getActivity(),
                             getResources().getString(R.string.institutional_list_process_message_negative),
                             Toast.LENGTH_LONG).show();
-
+                            loading.dismiss();
                 }
 
             }

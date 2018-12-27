@@ -181,7 +181,7 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         final Bundle params = new Bundle();
         params.putString("TIPO","USER");
 
-        //TODO: ACTUALIZACIÓN METODO REGISTRAR USUARIO -- REVISAR
+        //TODO: ACTUALIZACIÓN METODO REGISTRAR USUARIO -- OK
         ApiConstants apiConstants = new ApiConstants();
         apiConstants.buildUrl(pais,"API");
         Retrofit retrofit = prepareRetrofit(apiConstants.buildUrl(pais,"API"));
@@ -250,9 +250,8 @@ public class AdminUserFormFragment extends Fragment implements View.OnClickListe
         final Bundle params = new Bundle();
         params.putString("TIPO","EDIT");
 
-        //TODO: ACTUALIZACION METODO ACTUALIZAR USUARIOS -- REVISAR
+        //TODO: ACTUALIZACION METODO ACTUALIZAR USUARIOS -- OK
         ApiConstants apiConstants = new ApiConstants();
-        apiConstants.buildUrl(pais,"API");
         Retrofit retrofit = prepareRetrofit(apiConstants.buildUrl(pais,"API"));
 
         AylluApiService service = retrofit.create(AylluApiService.class);
